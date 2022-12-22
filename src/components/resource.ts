@@ -10,11 +10,11 @@ export class Resource extends Serialisable<Type.Resource> {
 
   public source: Type.Config = {}
 
-  public check_every = ''
+  public check_every: string | undefined
 
-  public icon = ''
+  public icon: string | undefined
 
-  public old_name = ''
+  public old_name: string | undefined
 
   public public = false
 
@@ -22,7 +22,7 @@ export class Resource extends Serialisable<Type.Resource> {
 
   public version: Type.Version = {}
 
-  public webhook_token = ''
+  public webhook_token: string | undefined
 
   serialise() {
     const result: Type.Resource = {

@@ -33,31 +33,33 @@ export type Resource = {
   webhook_token?: string
 }
 
-type AnonymousResource = {
+export type AnonymousResource = {
   type: ResourceType['name']
   source: Config
   params?: Config
   version?: Version
 }
 
-type Command = {
+export type Command = {
   path: FilePath
   args?: string[]
   dir?: DirPath
   user?: string
 }
 
-type TaskCache = {
+export type TaskCache = {
   path: DirPath
 }
 
-type ContainerLimits = {
+export type ContainerLimits = {
   cpu?: number
-  memopry?: number
+  memory?: number
 }
 
+export type Platform = 'linux' | 'darwin' | 'windows'
+
 export type Task = {
-  platform: 'linux' | 'darwin' | 'windows'
+  platform: Platform
   image_resource: AnonymousResource
   run: Command
   inputs?: TaskInput[]
@@ -96,13 +98,13 @@ export type PutStep = {
   get_params?: Config
 } & StepBase
 
-type TaskInput = {
+export type TaskInput = {
   name: Identifier
   path?: DirPath
   optional?: boolean
 }
 
-type TaskOutput = {
+export type TaskOutput = {
   name: Identifier
   path?: DirPath
 }
