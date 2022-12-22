@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": true,
+    "resolveJsonModule": true,
+
+    "jsx": "preserve",
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    "baseUrl": "./",
+
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
