@@ -1,12 +1,27 @@
+import {VError} from 'verror'
+import {Initer} from '~/declarations/initialisable'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
+import {ResourceType} from './resource-type'
 
 export class Resource extends Serialisable<Type.Resource> {
-  constructor(private name: string) {
+  constructor(private name: string, init?: Initer<Resource>) {
     super()
+
+    if (init) {
+      init(this)
+    }
   }
 
-  public type = ''
+  public static from_resource_type(name: string, input: ResourceType) {
+    const resource = new Resource(name)
+
+    resource.type = input.name
+
+    return resource
+  }
+
+  private type: string | undefined
 
   public source: Type.Config = {}
 
@@ -25,6 +40,10 @@ export class Resource extends Serialisable<Type.Resource> {
   public webhook_token: string | undefined
 
   serialise() {
+    if (!this.type) {
+      throw new VError('Cannot serialise resource without a resource type.')
+    }
+
     const result: Type.Resource = {
       name: this.name,
       type: this.type,

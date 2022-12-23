@@ -1,3 +1,6 @@
+import {VError} from 'verror'
+
+import {Initer} from '~/declarations/initialisable'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 
@@ -5,25 +8,67 @@ import {RunNotImplementedCommand} from '~/defaults/commands/run-not-implemented'
 import {PlatformLinux} from '~/defaults/platforms/linux'
 
 export class Task extends Serialisable<Type.Task> {
-  constructor() {
+  constructor(init?: Initer<Task>) {
     super()
+
+    if (init) {
+      init(this)
+    }
   }
 
-  public image_resource: Type.AnonymousResource
+  private image_resource: Type.AnonymousResource
+
+  public set_image_resource = (input: Type.AnonymousResource) => {
+    if (this.platform !== PlatformLinux) {
+      throw new VError(
+        `Image resources cannot be created for ${this.platform}, only ${PlatformLinux}`
+      )
+    }
+
+    this.image_resource = input
+  }
 
   public platform = PlatformLinux
 
   public run = RunNotImplementedCommand
 
-  public caches: Type.TaskCache[] = []
+  private caches: Type.TaskCache[] = []
 
-  public container_limits: Type.ContainerLimits = {}
+  public add_cache = (input: Type.TaskCache) => {
+    this.caches.push(input)
+  }
 
-  public inputs: Type.TaskInput[] = []
+  private container_limits: Type.ContainerLimits = {}
 
-  public outputs: Type.TaskOutput[] = []
+  public set_cpu_limit_percent = (input: number) => {
+    this.container_limits.cpu = input
+  }
 
-  public params: Type.EnvVars = {}
+  public set_memory_limit_percent = (input: number) => {
+    this.container_limits.memory = input
+  }
+
+  private inputs: Type.TaskInput[] = []
+
+  public add_input = (input: Type.TaskInput) => {
+    this.inputs.push(input)
+  }
+
+  private outputs: Type.TaskOutput[] = []
+
+  public add_output = (input: Type.TaskOutput) => {
+    this.outputs.push(input)
+  }
+
+  private params: Type.EnvVars = {}
+
+  public set_params = (input: Type.EnvVars) => {
+    this.params = input
+  }
+
+  public set_param = (name: string, value: string) => {
+    this.params[name] = value
+  }
 
   public rootfs_uri: string | undefined
 

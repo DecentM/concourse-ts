@@ -1,7 +1,16 @@
 import * as Type from '~/declarations/types'
 import {Serialisable} from '~/declarations/serialisable'
+import {Initer, Initialisable} from '~/declarations/initialisable'
 
 export class Pipeline extends Serialisable<Type.Pipeline> {
+  constructor(init?: Initer<Pipeline>) {
+    super()
+
+    if (init) {
+      init(this)
+    }
+  }
+
   public jobs: Type.Job[] = []
 
   public display: Type.DisplayConfig = {}
