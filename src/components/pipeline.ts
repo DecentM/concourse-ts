@@ -1,6 +1,7 @@
 import * as Type from '~/declarations/types'
 import {Serialisable} from '~/declarations/serialisable'
 import {Initer, Initialisable} from '~/declarations/initialisable'
+import {Resource} from './resource'
 
 export class Pipeline extends Serialisable<Type.Pipeline> {
   constructor(init?: Initer<Pipeline>) {
@@ -11,15 +12,29 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
     }
   }
 
-  public jobs: Type.Job[] = []
+  private jobs: Type.Job[] = []
 
-  public display: Type.DisplayConfig = {}
+  public add_job = (input: Type.Job) => {
+    this.jobs.push(input)
+  }
 
-  public groups: Type.GroupConfig[] = []
+  private display: Type.DisplayConfig = {}
 
-  public resource_types: Type.ResourceType[] = []
+  public set_background_image_url = (url: string) => {
+    this.display.background_image = url
+  }
 
-  public resources: Type.Resource[] = []
+  private groups: Type.GroupConfig[] = []
+
+  public add_group = (input: Type.GroupConfig) => {
+    this.groups.push(input)
+  }
+
+  private resources: Resource[] = []
+
+  public add_resource = (input: Resource) => {
+    this.resources.push(input)
+  }
 
   public var_sources: Type.VarSource[] = []
 
@@ -28,8 +43,10 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
       jobs: this.jobs,
       display: this.display,
       groups: this.groups,
-      resource_types: this.resource_types,
-      resources: this.resources,
+      resource_types: this.resources.map((r) =>
+        r.get_resource_type().serialise()
+      ),
+      resources: this.resources.map((r) => r.serialise()),
       var_sources: this.var_sources,
     }
 

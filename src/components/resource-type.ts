@@ -1,5 +1,7 @@
+import {VError} from 'verror'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
+import {OneMinute} from '~/defaults/durations/one-minute'
 import {Resource} from './resource'
 
 export class ResourceType extends Serialisable<Type.ResourceType> {
@@ -11,11 +13,19 @@ export class ResourceType extends Serialisable<Type.ResourceType> {
     return Resource.from_resource_type(name, this)
   }
 
-  public type = ''
+  public type = 'registry-image'
 
   public source: Type.Config = {}
 
-  public check_every: string | undefined
+  private check_every: Type.Duration = OneMinute
+
+  public set_check_every = (input: string) => {
+    if (!Type.is_duration(input)) {
+      throw new VError(`Duration ${input} is malformed`)
+    }
+
+    this.check_every = input
+  }
 
   public defaults: Type.Config = {}
 
@@ -28,6 +38,12 @@ export class ResourceType extends Serialisable<Type.ResourceType> {
   public unique_version_history = false
 
   serialise() {
+    if (!this.type) {
+      throw new VError(
+        `Resource type "${this.name}" cannot be serialised without a type.`
+      )
+    }
+
     const result: Type.ResourceType = {
       name: this.name,
       type: this.type,

@@ -4,11 +4,26 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "ts-node-dev -r tsconfig-paths/register playground.ts",
+    "test": "ava",
+    "t": "yarn test"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--require",
+      "tsconfig-paths/register",
+      "--loader=ts-node/esm"
+    ]
   },
   "devDependencies": {
     "@types/verror": "^1.10.6",
+    "ava": "^5.1.0",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.1.1",
     "typescript": "^4.9.4"
   },
   "dependencies": {
