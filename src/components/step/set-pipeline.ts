@@ -24,15 +24,19 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     this.instance_vars[key] = value
   }
 
-  private vars: Type.Vars = {}
+  private vars: Type.Vars
 
   public set_var = (key: string, value: string) => {
+    if (!this.vars) this.vars = {}
+
     this.vars[key] = value
   }
 
-  private var_files: Type.FilePath[] = []
+  private var_files: Type.FilePath[]
 
   public add_var_file = (path: Type.FilePath) => {
+    if (!this.var_files) this.var_files = []
+
     this.var_files.push(path)
   }
 

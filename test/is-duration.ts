@@ -21,3 +21,11 @@ BOGUS_UNITS.forEach((unit, index) => {
     t.false(is_duration(input))
   })
 })
+
+test('is_duration > undefined', (t) => {
+  t.false(is_duration(undefined as string))
+})
+
+test('is_duration > null', (t) => {
+  t.false(is_duration(null as string))
+})

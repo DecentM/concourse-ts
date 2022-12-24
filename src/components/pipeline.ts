@@ -13,31 +13,45 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
     }
   }
 
-  private jobs: Job[] = []
+  private jobs?: Job[]
 
   public add_job = (input: Job) => {
+    if (!this.jobs) this.jobs = []
+
     this.jobs.push(input)
   }
 
-  private display: Type.DisplayConfig = {}
+  private display?: Type.DisplayConfig
 
   public set_background_image_url = (url: string) => {
+    if (!this.display) this.display = {}
+
     this.display.background_image = url
   }
 
-  private groups: Type.GroupConfig[] = []
+  private groups?: Type.GroupConfig[]
 
   public add_group = (input: Type.GroupConfig) => {
+    if (!this.groups) this.groups = []
+
     this.groups.push(input)
   }
 
-  private resources: Resource[] = []
+  private resources?: Resource[]
 
   public add_resource = (input: Resource) => {
+    if (!this.resources) this.resources = []
+
     this.resources.push(input)
   }
 
-  public var_sources: Type.VarSource[] = []
+  private var_sources?: Type.VarSource[]
+
+  public add_var_source = (var_source: Type.VarSource) => {
+    if (!this.var_sources) this.var_sources = []
+
+    this.var_sources.push(var_source)
+  }
 
   serialise() {
     const result: Type.Pipeline = {

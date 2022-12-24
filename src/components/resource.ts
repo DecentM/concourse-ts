@@ -24,9 +24,9 @@ export class Resource extends Serialisable<Type.Resource> {
 
   public get_resource_type = () => this.type
 
-  public source: Type.Config = {}
+  public source?: Type.Config
 
-  private check_every: Type.Duration = OneMinute
+  private check_every?: Type.Duration = OneMinute
 
   public set_check_every = (input: string) => {
     if (!Type.is_duration(input)) {
@@ -36,25 +36,29 @@ export class Resource extends Serialisable<Type.Resource> {
     this.check_every = input
   }
 
-  public icon: string | undefined
+  public icon?: string
 
-  public old_name: string | undefined
+  public old_name?: string
 
   public public = false
 
-  private tags: Type.Tags = []
+  private tags?: Type.Tags
 
   public add_tag = (tag: string) => {
+    if (!this.tags) this.tags = []
+
     this.tags.push(tag)
   }
 
-  private version: Type.Version = {}
+  private version?: Type.Version
 
   public set_version = (version: string, value: string) => {
+    if (!this.version) this.version = {}
+
     this.version[version] = value
   }
 
-  public webhook_token: string | undefined
+  public webhook_token?: string
 
   serialise() {
     if (!this.type) {

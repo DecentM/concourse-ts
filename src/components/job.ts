@@ -13,9 +13,11 @@ export class Job extends Serialisable<Type.Job> {
     }
   }
 
-  private plan: AnyStep[] = []
+  private plan?: AnyStep[]
 
   public add_step = (step: AnyStep) => {
+    if (!this.plan) this.plan = []
+
     this.plan.push(step)
   }
 
@@ -23,27 +25,27 @@ export class Job extends Serialisable<Type.Job> {
 
   public disable_manual_trigger = false
 
-  public ensure: AnyStep
+  public ensure?: AnyStep
 
   public interruptible = true
 
   public max_in_flight = 3
 
-  public old_name: string | undefined
+  public old_name?: string
 
-  public on_abort: AnyStep
+  public on_abort?: AnyStep
 
-  public on_error: AnyStep
+  public on_error?: AnyStep
 
-  public on_failure: AnyStep
+  public on_failure?: AnyStep
 
-  public on_success: AnyStep
+  public on_success?: AnyStep
 
   public public = false
 
   public serial = false
 
-  public serial_groups: string | undefined
+  public serial_groups?: string
 
   serialise() {
     const result: Type.Job = {

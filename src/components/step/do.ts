@@ -12,9 +12,11 @@ export class DoStep extends Step<Type.DoStep> {
     }
   }
 
-  private steps: Step<Type.Step>[] = []
+  private steps: Step<Type.Step>[]
 
   public add_do = (step: Step<Type.Step>) => {
+    if (!this.steps) this.steps = []
+
     this.steps.push(step)
   }
 

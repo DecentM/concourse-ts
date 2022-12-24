@@ -32,15 +32,19 @@ export class Task extends Serialisable<Type.Task> {
 
   public run = RunNotImplementedCommand
 
-  private caches: Type.TaskCache[] = []
+  private caches: Type.TaskCache[]
 
   public add_cache = (input: Type.TaskCache) => {
+    if (!this.caches) this.caches = []
+
     this.caches.push(input)
   }
 
-  private container_limits: Type.ContainerLimits = {}
+  private container_limits: Type.ContainerLimits
 
   public set_cpu_limit_percent = (input: number) => {
+    if (!this.container_limits) this.container_limits = {}
+
     this.container_limits.cpu = input
   }
 
@@ -48,21 +52,27 @@ export class Task extends Serialisable<Type.Task> {
     this.container_limits.memory = input
   }
 
-  private inputs: Type.TaskInput[] = []
+  private inputs: Type.TaskInput[]
 
   public add_input = (input: Type.TaskInput) => {
+    if (!this.inputs) this.inputs = []
+
     this.inputs.push(input)
   }
 
-  private outputs: Type.TaskOutput[] = []
+  private outputs: Type.TaskOutput[]
 
   public add_output = (input: Type.TaskOutput) => {
+    if (!this.outputs) this.outputs = []
+
     this.outputs.push(input)
   }
 
-  private params: Type.EnvVars = {}
+  private params: Type.EnvVars
 
   public set_params = (input: Type.EnvVars) => {
+    if (!this.params) this.params = {}
+
     this.params = input
   }
 

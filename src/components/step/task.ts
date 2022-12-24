@@ -32,15 +32,19 @@ export class TaskStep extends Step<Type.TaskStep> {
 
   public privileged = false
 
-  private vars: Type.Vars = {}
+  private vars: Type.Vars
 
   public set_var = (key: string, value: string) => {
+    if (!this.vars) this.vars = {}
+
     this.vars[key] = value
   }
 
-  private params: Type.EnvVars = {}
+  private params: Type.EnvVars
 
   public set_param = (key: string, value: string) => {
+    if (!this.params) this.params = {}
+
     this.params[key] = value
   }
 
@@ -50,6 +54,8 @@ export class TaskStep extends Step<Type.TaskStep> {
     input: Type.Identifier,
     mapped_input: Type.Identifier
   ) => {
+    if (!this.input_mapping) this.input_mapping = {}
+
     this.input_mapping[input] = mapped_input
   }
 
@@ -59,6 +65,8 @@ export class TaskStep extends Step<Type.TaskStep> {
     output: Type.Identifier,
     mapped_output: Type.Identifier
   ) => {
+    if (!this.output_mapping) this.output_mapping = {}
+
     this.output_mapping[output] = mapped_output
   }
 

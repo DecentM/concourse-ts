@@ -8,9 +8,11 @@ export abstract class Step<StepType> extends Serialisable<StepType> {
 
   public attempts: number = 3
 
-  protected tags: Type.Tags = []
+  protected tags: Type.Tags
 
   public add_tag = (tag: string) => {
+    if (!this.tags) this.tags = []
+
     this.tags.push(tag)
   }
 

@@ -29,15 +29,19 @@ export class GetStep extends Step<Type.GetStep> {
     this.resource = resource.name
   }
 
-  private passed: Type.Identifier[] = []
+  private passed: Type.Identifier[]
 
   public add_passed = (job: Job) => {
+    if (!this.passed) this.passed = []
+
     this.passed.push(job.name)
   }
 
-  private params: Type.Config = {}
+  private params: Type.Config
 
   public set_param = (key: string, value: Type.YamlValue) => {
+    if (!this.params) this.params = {}
+
     this.params[key] = value
   }
 

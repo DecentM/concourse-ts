@@ -12,9 +12,11 @@ export class InParallelStep extends Step<Type.InParallelStep> {
     }
   }
 
-  private steps: Step<Type.Step>[] = []
+  private steps: Step<Type.Step>[]
 
   public add_step = (step: Step<Type.Step>) => {
+    if (!this.steps) this.steps = []
+
     this.steps.push(step)
   }
 

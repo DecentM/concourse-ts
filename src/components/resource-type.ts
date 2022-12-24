@@ -15,7 +15,7 @@ export class ResourceType extends Serialisable<Type.ResourceType> {
 
   public type = 'registry-image'
 
-  public source: Type.Config = {}
+  public source?: Type.Config
 
   private check_every: Type.Duration = OneMinute
 
@@ -27,13 +27,31 @@ export class ResourceType extends Serialisable<Type.ResourceType> {
     this.check_every = input
   }
 
-  public defaults: Type.Config = {}
+  private defaults?: Type.Config
 
-  public params: Type.Config = {}
+  public set_default = (key: string, value: Type.YamlValue) => {
+    if (!this.defaults) this.defaults = {}
+
+    this.defaults[key] = value
+  }
+
+  private params?: Type.Config
+
+  public set_param = (key: string, value: Type.YamlValue) => {
+    if (!this.params) this.params = {}
+
+    this.params[key] = value
+  }
 
   public privileged = false
 
-  public tags: Type.Tags = []
+  private tags?: Type.Tags
+
+  public add_tag = (tag: string) => {
+    if (!this.tags) this.tags = []
+
+    this.tags.push(tag)
+  }
 
   public unique_version_history = false
 
