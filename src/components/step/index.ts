@@ -1,3 +1,5 @@
 export {GetStep} from './get'
 export {PutStep} from './put'
 export {TaskStep} from './task'
+export {SetPipelineStep} from './set-pipeline'
+export {LoadVarStep} from './load-var'

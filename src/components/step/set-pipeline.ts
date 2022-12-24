@@ -7,7 +7,7 @@ import {Step} from './_base'
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
   public set_pipeline: Type.SetPipeline = 'self'
 
-  public file: Type.FilePath
+  public file?: Type.FilePath
 
   private instance_vars: Type.Vars = {}
 
