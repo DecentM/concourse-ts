@@ -4,7 +4,7 @@ import * as Type from '~/declarations/types'
 import {LogRetentionPolicyTenBuilds} from '~/defaults/log-retention-policies/ten-builds'
 
 export class Job extends Serialisable<Type.Job> {
-  constructor(private name: string, init?: Initer<Job>) {
+  constructor(public name: string, init?: Initer<Job>) {
     super()
 
     if (init) {

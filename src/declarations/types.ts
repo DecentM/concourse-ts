@@ -1,11 +1,17 @@
 export type Identifier = string
-export type Config = Record<string, any>
-export type Version = Record<string, string>
+export type Config = Record<string, YamlValue>
+export type Version = 'latest' | 'every' | Record<string, string>
 export type DirPath = string
 export type FilePath = string
 export type EnvVars = Record<string, string>
 export type Vars = Record<string, string>
 export type Tags = string[]
+
+export type YamlValue =
+  | string
+  | number
+  | YamlValue[]
+  | {[key in string]: YamlValue}
 
 export type Duration = string & {__type: 'Duration'}
 
@@ -80,7 +86,7 @@ export type Task = {
   container_limits?: ContainerLimits
 }
 
-type StepBase = {
+export type StepBase = {
   timeout?: Duration
   attempts?: number
   tags?: Tags
@@ -97,13 +103,15 @@ export type GetStep = {
   passed?: Job['name'][]
   params?: Config
   trigger?: boolean
-  version?: 'latest' | 'every' | Version
+  version?: Version
 } & StepBase
+
+export type Inputs = 'detect' | 'all' | Identifier[]
 
 export type PutStep = {
   put: Identifier | Resource['name']
   resource?: Resource['name']
-  inputs?: 'detect' | 'all' | Identifier[]
+  inputs?: Inputs
   params?: Config
   get_params?: Config
 } & StepBase

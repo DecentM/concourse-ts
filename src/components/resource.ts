@@ -7,7 +7,7 @@ import {ResourceType} from './resource-type'
 
 export class Resource extends Serialisable<Type.Resource> {
   constructor(
-    private name: string,
+    public name: string,
     private type: ResourceType,
     init?: Initer<Resource>
   ) {
