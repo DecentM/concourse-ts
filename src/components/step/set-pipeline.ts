@@ -1,10 +1,19 @@
 import {VError} from 'verror'
+import {Initer} from '~/declarations/initialisable'
 
 import * as Type from '~/declarations/types'
 
 import {Step} from './_base'
 
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
+  constructor(init?: Initer<SetPipelineStep>) {
+    super()
+
+    if (init) {
+      init(this)
+    }
+  }
+
   public set_pipeline: Type.SetPipeline = 'self'
 
   public file?: Type.FilePath

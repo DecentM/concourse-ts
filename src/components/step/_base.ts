@@ -4,14 +4,6 @@ import * as Type from '~/declarations/types'
 import {SixHours} from '~/defaults/durations/six-hours'
 
 export abstract class Step<StepType> extends Serialisable<StepType> {
-  constructor(init?: Initer<Step<StepType>>) {
-    super()
-
-    if (init) {
-      init(this)
-    }
-  }
-
   public timeout: Type.Duration = SixHours
 
   public attempts: number = 3

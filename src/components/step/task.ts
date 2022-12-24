@@ -1,4 +1,5 @@
 import {VError} from 'verror'
+import {Initer} from '~/declarations/initialisable'
 
 import * as Type from '~/declarations/types'
 
@@ -7,6 +8,14 @@ import {Task} from '../task'
 import {Step} from './_base'
 
 export class TaskStep extends Step<Type.TaskStep> {
+  constructor(init?: Initer<TaskStep>) {
+    super()
+
+    if (init) {
+      init(this)
+    }
+  }
+
   private task?: Task
 
   public set_task = (task: Task) => {

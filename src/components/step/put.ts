@@ -1,4 +1,5 @@
 import {VError} from 'verror'
+import {Initer} from '~/declarations/initialisable'
 
 import * as Type from '~/declarations/types'
 
@@ -7,6 +8,14 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class PutStep extends Step<Type.PutStep> {
+  constructor(init?: Initer<PutStep>) {
+    super()
+
+    if (init) {
+      init(this)
+    }
+  }
+
   private put?: Type.Identifier
 
   public set_put = (resource: Resource) => {

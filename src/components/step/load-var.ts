@@ -1,11 +1,20 @@
 import {VError} from 'verror'
+import {Initer} from '~/declarations/initialisable'
 
 import * as Type from '~/declarations/types'
 
 import {Step} from './_base'
 
 export class LoadVarStep extends Step<Type.LoadVarStep> {
-  private load_var?: Type.Identifier
+  constructor(init?: Initer<LoadVarStep>) {
+    super()
+
+    if (init) {
+      init(this)
+    }
+  }
+
+  public load_var?: Type.Identifier
 
   public file?: Type.FilePath
 

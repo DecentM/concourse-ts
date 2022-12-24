@@ -1,4 +1,5 @@
 import {VError} from 'verror'
+import {Initer} from '~/declarations/initialisable'
 
 import * as Type from '~/declarations/types'
 
@@ -8,6 +9,14 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class GetStep extends Step<Type.GetStep> {
+  constructor(init?: Initer<GetStep>) {
+    super()
+
+    if (init) {
+      init(this)
+    }
+  }
+
   private get?: Type.Identifier
 
   public set_get = (resource: Resource) => {
