@@ -205,10 +205,10 @@ export type Job = {
   public?: boolean
   disable_manual_trigger?: boolean
   interruptible?: boolean
-  on_success?: DoStep // These are actually "Step"s in Concourse,
-  on_failure?: DoStep // but we interpret it as DoStep to make it
-  on_error?: DoStep // easier to work with a step type
-  on_abort?: DoStep // that's always an array
+  on_success?: Step
+  on_failure?: Step
+  on_error?: Step
+  on_abort?: Step
   ensure?: Step
 }
 

@@ -1,8 +1,40 @@
 jobs:
   - name: myjob
     plan:
-      - get: registry-image
-        attempts: 1
+      - attempts: 3
+        tags: []
+        timeout: 6h
+        get: test
+        passed: []
+        params: {}
+        trigger: true
+        version: latest
+      - attempts: 3
+        tags: []
+        timeout: 6h
+        try:
+          attempts: 3
+          tags: []
+          timeout: 6h
+          task: testtask
+          config:
+            platform: linux
+            run:
+              path: echo
+              args:
+                - '[concourse-ts] "run" not implemented, skipping...'
+              dir: .
+            caches: []
+            container_limits: {}
+            inputs:
+              - name: testi
+                optional: false
+                path: ./asd
+            outputs: []
+            params: {}
+          privileged: false
+          vars: {}
+          params: {}
     build_log_retention:
       builds: 10
       minimum_succeeded_builds: 7

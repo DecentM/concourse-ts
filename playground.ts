@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import {Job} from '~/components/job'
-import {Pipeline, Task, Resource, ResourceType, compile} from './src'
+import {GetStep, TaskStep, TryStep} from '~/components/step'
+import {Pipeline, Task, ResourceType, compile} from './src'
 
 export const pipeline = new Pipeline((pipeline) => {
   const rt = new ResourceType('test')
@@ -8,7 +9,7 @@ export const pipeline = new Pipeline((pipeline) => {
 
   pipeline.add_resource(r)
 
-  const t = new Task((task) => {
+  const t = new Task('testtask', (task) => {
     task.add_input({
       name: 'testi',
       optional: false,
@@ -17,10 +18,21 @@ export const pipeline = new Pipeline((pipeline) => {
   })
 
   const j = new Job('myjob', (job) => {
-    job.add_step({
-      get: 'registry-image',
-      attempts: 1,
+    const s = new GetStep((getStep) => {
+      getStep.set_get(r)
+      getStep.trigger = true
     })
+
+    const ts = new TryStep((ts) => {
+      ts.set_try(
+        new TaskStep((ts1) => {
+          ts1.set_task(t)
+        })
+      )
+    })
+
+    job.add_step(s)
+    job.add_step(ts)
   })
 
   pipeline.add_job(j)
