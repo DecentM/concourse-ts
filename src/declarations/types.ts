@@ -139,8 +139,10 @@ export type TaskStep = {
   output_mapping?: Record<TaskOutput['name'], Identifier>
 } & StepBase
 
+export type SetPipeline = Identifier | 'self'
+
 export type SetPipelineStep = {
-  set_pipeline: Identifier | 'self'
+  set_pipeline: SetPipeline
   file: FilePath
   instance_vars?: Vars
   vars?: Vars
@@ -148,10 +150,12 @@ export type SetPipelineStep = {
   team?: Identifier
 } & StepBase
 
+export type VarFormat = 'json' | 'yaml' | 'yml' | 'trim' | 'raw'
+
 export type LoadVarStep = {
   load_var: Identifier
   file: FilePath
-  format?: 'json' | 'yaml' | 'yml' | 'trim' | 'raw'
+  format?: VarFormat
   reveal?: boolean
 } & StepBase
 
