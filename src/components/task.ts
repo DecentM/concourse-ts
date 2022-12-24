@@ -8,7 +8,7 @@ import {RunNotImplementedCommand} from '~/defaults/commands/run-not-implemented'
 import {PlatformLinux} from '~/defaults/platforms/linux'
 
 export class Task extends Serialisable<Type.Task> {
-  constructor(init?: Initer<Task>) {
+  constructor(public name: string, init?: Initer<Task>) {
     super()
 
     if (init) {
