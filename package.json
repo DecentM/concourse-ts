@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node-dev -r tsconfig-paths/register playground.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register playground.ts && fly vp -c playground.yml",
     "test": "ava",
     "t": "yarn test"
   },
@@ -20,6 +20,7 @@
     ]
   },
   "devDependencies": {
+    "@types/node": "^18.11.17",
     "@types/verror": "^1.10.6",
     "ava": "^5.1.0",
     "ts-node-dev": "^2.0.0",

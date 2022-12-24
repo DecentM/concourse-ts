@@ -175,7 +175,7 @@ export type Step =
   | DoStep
   | TryStep
 
-type BuildLogRetentionPolicy = {
+export type BuildLogRetentionPolicy = {
   days?: number
   builds?: number
   minimum_succeeded_builds?: number

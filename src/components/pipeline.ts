@@ -2,6 +2,7 @@ import * as Type from '~/declarations/types'
 import {Serialisable} from '~/declarations/serialisable'
 import {Initer, Initialisable} from '~/declarations/initialisable'
 import {Resource} from './resource'
+import {Job} from './job'
 
 export class Pipeline extends Serialisable<Type.Pipeline> {
   constructor(init?: Initer<Pipeline>) {
@@ -12,9 +13,9 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
     }
   }
 
-  private jobs: Type.Job[] = []
+  private jobs: Job[] = []
 
-  public add_job = (input: Type.Job) => {
+  public add_job = (input: Job) => {
     this.jobs.push(input)
   }
 
@@ -40,7 +41,7 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
 
   serialise() {
     const result: Type.Pipeline = {
-      jobs: this.jobs,
+      jobs: this.jobs.map((j) => j.serialise()),
       display: this.display,
       groups: this.groups,
       resource_types: this.resources.map((r) =>

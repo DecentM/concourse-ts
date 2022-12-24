@@ -1,0 +1,34 @@
+jobs:
+  - name: myjob
+    plan:
+      - get: registry-image
+        attempts: 1
+    build_log_retention:
+      builds: 10
+      minimum_succeeded_builds: 7
+    disable_manual_trigger: false
+    interruptible: true
+    max_in_flight: 3
+    public: false
+    serial: false
+display: {}
+groups: []
+resource_types:
+  - name: test
+    type: registry-image
+    source: {}
+    check_every: 1m
+    defaults: {}
+    params: {}
+    privileged: false
+    tags: []
+    unique_version_history: false
+resources:
+  - name: test
+    type: test
+    source: {}
+    check_every: 1m
+    public: false
+    tags: []
+    version: {}
+var_sources: []

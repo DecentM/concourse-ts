@@ -1,3 +1,5 @@
+import fs from 'node:fs'
+import {Job} from '~/components/job'
 import {Pipeline, Task, Resource, ResourceType, compile} from './src'
 
 export const pipeline = new Pipeline((pipeline) => {
@@ -14,9 +16,21 @@ export const pipeline = new Pipeline((pipeline) => {
     })
   })
 
+  const j = new Job('myjob', (job) => {
+    job.add_step({
+      get: 'registry-image',
+      attempts: 1,
+    })
+  })
+
+  pipeline.add_job(j)
+
   /* pipeline.add_job({
     name: 'asd',
   }) */
 })
 
-console.log(compile(pipeline))
+const compiled = compile(pipeline)
+fs.writeFileSync('./playground.yml', compiled)
+
+console.log(compiled)
