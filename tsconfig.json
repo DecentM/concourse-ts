@@ -12,6 +12,7 @@
     "moduleResolution": "node",
 
     "baseUrl": "./",
+    "outDir": "dist",
 
     "paths": {
       "~/*": [
