@@ -1,8 +1,9 @@
 import * as Type from '~/declarations/types'
 import {Serialisable} from '~/declarations/serialisable'
-import {Initer, Initialisable} from '~/declarations/initialisable'
+import {Initer} from '~/declarations/initialisable'
 import {Resource} from './resource'
 import {Job} from './job'
+import { deduplicate_by_key } from '~/utils/array-duplicates'
 
 export class Pipeline extends Serialisable<Type.Pipeline> {
   constructor(public name: string, init?: Initer<Pipeline>) {
@@ -50,18 +51,19 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
   public add_var_source = (...var_sources: Type.VarSource[]) => {
     if (!this.var_sources) this.var_sources = []
 
-    var_sources.forEach((var_source) => this.var_sources.push(var_source))
+    this.var_sources.push(...var_sources)
   }
 
   serialise() {
     const result: Type.Pipeline = {
-      jobs: this.jobs.map((j) => j.serialise()),
+      jobs: this.jobs?.map((j) => j.serialise()),
       display: this.display,
       groups: this.groups,
-      resource_types: this.resources.map((r) =>
-        r.get_resource_type().serialise()
+      resource_types: deduplicate_by_key(
+        'name',
+        this.resources?.map((r) => r.get_resource_type().serialise())
       ),
-      resources: this.resources.map((r) => r.serialise()),
+      resources: this.resources?.map((r) => r.serialise()),
       var_sources: this.var_sources,
     }
 

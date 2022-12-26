@@ -1,5 +1,5 @@
 import test from 'ava'
-import {is_duration, VALID_DURATION_UNITS} from '~/declarations/types'
+import {is_duration, VALID_DURATION_UNITS} from '.'
 
 VALID_DURATION_UNITS.forEach((unit, index) => {
   test(`is_duration > should accept ${unit}`, (t) => {

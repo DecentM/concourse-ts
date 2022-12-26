@@ -2,6 +2,7 @@ import {VError} from 'verror'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 import {OneMinute} from '~/defaults/durations/one-minute'
+import {is_duration} from '~/utils/is-duration'
 import {Resource} from './resource'
 
 export class ResourceType extends Serialisable<Type.ResourceType> {
@@ -20,7 +21,7 @@ export class ResourceType extends Serialisable<Type.ResourceType> {
   private check_every: Type.Duration = OneMinute
 
   public set_check_every = (input: string) => {
-    if (!Type.is_duration(input)) {
+    if (!is_duration(input)) {
       throw new VError(`Duration ${input} is malformed`)
     }
 

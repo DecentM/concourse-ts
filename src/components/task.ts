@@ -34,10 +34,10 @@ export class Task extends Serialisable<Type.Task> {
 
   private caches: Type.TaskCache[]
 
-  public add_cache = (input: Type.TaskCache) => {
+  public add_cache = (...inputs: Type.TaskCache[]) => {
     if (!this.caches) this.caches = []
 
-    this.caches.push(input)
+    this.caches.push(...inputs)
   }
 
   private container_limits: Type.ContainerLimits
@@ -54,30 +54,28 @@ export class Task extends Serialisable<Type.Task> {
 
   private inputs: Type.TaskInput[]
 
-  public add_input = (input: Type.TaskInput) => {
+  public add_input = (...inputs: Type.TaskInput[]) => {
     if (!this.inputs) this.inputs = []
 
-    this.inputs.push(input)
+    this.inputs.push(...inputs)
   }
 
   private outputs: Type.TaskOutput[]
 
-  public add_output = (input: Type.TaskOutput) => {
+  public add_output = (...outputs: Type.TaskOutput[]) => {
     if (!this.outputs) this.outputs = []
 
-    this.outputs.push(input)
+    this.outputs.push(...outputs)
   }
 
   private params: Type.EnvVars
 
-  public set_params = (input: Type.EnvVars) => {
+  public set_params = (...params: Type.EnvVar[]) => {
     if (!this.params) this.params = {}
 
-    this.params = input
-  }
-
-  public set_param = (name: string, value: string) => {
-    this.params[name] = value
+    params.forEach((param) => {
+      this.params[param.key] = param.value
+    })
   }
 
   public rootfs_uri?: string

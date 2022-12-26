@@ -3,6 +3,7 @@ import {Initer} from '~/declarations/initialisable'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 import {OneMinute} from '~/defaults/durations/one-minute'
+import {is_duration} from '~/utils/is-duration'
 import {ResourceType} from './resource-type'
 
 export class Resource extends Serialisable<Type.Resource> {
@@ -29,7 +30,7 @@ export class Resource extends Serialisable<Type.Resource> {
   private check_every?: Type.Duration = OneMinute
 
   public set_check_every = (input: string) => {
-    if (!Type.is_duration(input)) {
+    if (!is_duration(input)) {
       throw new VError(`Duration ${input} is malformed`)
     }
 
@@ -60,7 +61,7 @@ export class Resource extends Serialisable<Type.Resource> {
       return
     }
 
-    this.version[version] = value
+    this.version = value as 'latest' | 'every'
   }
 
   public webhook_token?: string
