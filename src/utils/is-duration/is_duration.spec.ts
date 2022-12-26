@@ -22,10 +22,18 @@ BOGUS_UNITS.forEach((unit, index) => {
   })
 })
 
-test('is_duration > undefined', (t) => {
+test('refuses undefined', (t) => {
   t.false(is_duration(undefined as string))
 })
 
-test('is_duration > null', (t) => {
+test('refuses null', (t) => {
   t.false(is_duration(null as string))
+})
+
+test('refuses "never" by default', (t) => {
+  t.false(is_duration('never'))
+})
+
+test('accepts "never" if the valid_units are overwritten', (t) => {
+  t.true(is_duration('never', ['never']))
 })

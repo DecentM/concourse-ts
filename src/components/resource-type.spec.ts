@@ -70,6 +70,12 @@ test('stores valid Durations into check_every', (t) => {
   t.is(result.check_every, '1m' as Duration)
 })
 
+test('refuses to store "never" into check_every', (t) => {
+  const rt = new ResourceType('my-rt')
+
+  t.throws(() => rt.set_check_every('never'))
+})
+
 test('refuses to store invalid Durations into check_every', (t) => {
   const rt = new ResourceType('my-rt')
 

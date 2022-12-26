@@ -30,7 +30,11 @@ export class Resource extends Serialisable<Type.Resource> {
   private check_every?: Type.Duration = OneMinute
 
   public set_check_every = (input: string) => {
-    if (!is_duration(input)) {
+    // Accepts Duration or "never". Regular Duration does not have a concept for
+    // "never", this is a local override.
+    //
+    // concourse-ci.org/resources.html#schema.resource.check_every
+    if (!is_duration(input, ['never'])) {
       throw new VError(`Duration ${input} is malformed`)
     }
 
@@ -53,15 +57,8 @@ export class Resource extends Serialisable<Type.Resource> {
 
   private version?: Type.Version
 
-  public set_version = (version: string, value?: string) => {
-    if (!this.version) this.version = {}
-
-    if (version !== 'latest' && version !== 'every') {
-      this.version[version] = value
-      return
-    }
-
-    this.version = value as 'latest' | 'every'
+  public set_version = (version: Type.Version) => {
+    this.version = version
   }
 
   public webhook_token?: string
