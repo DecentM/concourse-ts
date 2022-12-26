@@ -17,10 +17,10 @@ export abstract class Step<
 
   protected tags: Type.Tags
 
-  public add_tag = (tag: string) => {
+  public add_tag = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
-    this.tags.push(tag)
+    this.tags.push(...tags)
   }
 
   public on_success?: Step<Type.Step>

@@ -29,28 +29,32 @@ export class ResourceType extends Serialisable<Type.ResourceType> {
 
   private defaults?: Type.Config
 
-  public set_default = (key: string, value: Type.YamlValue) => {
+  public set_default = (...defaults: Type.Param[]) => {
     if (!this.defaults) this.defaults = {}
 
-    this.defaults[key] = value
+    defaults.forEach((item) => {
+      this.defaults[item.key] = item.value
+    })
   }
 
   private params?: Type.Config
 
-  public set_param = (key: string, value: Type.YamlValue) => {
+  public set_param = (...params: Type.Param[]) => {
     if (!this.params) this.params = {}
 
-    this.params[key] = value
+    params.forEach((param) => {
+      this.params[param.key] = param.value
+    })
   }
 
   public privileged = false
 
   private tags?: Type.Tags
 
-  public add_tag = (tag: string) => {
+  public add_tag = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
-    this.tags.push(tag)
+    this.tags.push(...tags)
   }
 
   public unique_version_history = false

@@ -15,10 +15,10 @@ export class Job extends Serialisable<Type.Job> {
 
   private plan?: AnyStep[]
 
-  public add_step = (step: AnyStep) => {
+  public add_step = (...steps: AnyStep[]) => {
     if (!this.plan) this.plan = []
 
-    this.plan.push(step)
+    this.plan.push(...steps)
   }
 
   public build_log_retention = LogRetentionPolicyTenBuilds

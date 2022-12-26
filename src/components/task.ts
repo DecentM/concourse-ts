@@ -80,7 +80,7 @@ export class Task extends Serialisable<Type.Task> {
     this.params[name] = value
   }
 
-  public rootfs_uri: string | undefined
+  public rootfs_uri?: string
 
   public serialise() {
     const result: Type.Task = {

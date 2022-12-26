@@ -18,26 +18,32 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
 
   public file?: Type.FilePath
 
-  private instance_vars: Type.Vars = {}
+  private instance_vars: Type.Vars
 
-  public set_instance_var = (key: string, value: string) => {
-    this.instance_vars[key] = value
+  public set_instance_var = (...vars: Type.Param[]) => {
+    if (!this.instance_vars) this.instance_vars = {}
+
+    vars.forEach((variable) => {
+      this.instance_vars[variable.key] = variable.value
+    })
   }
 
   private vars: Type.Vars
 
-  public set_var = (key: string, value: string) => {
+  public set_var = (...vars: Type.Param[]) => {
     if (!this.vars) this.vars = {}
 
-    this.vars[key] = value
+    vars.forEach((variable) => {
+      this.vars[variable.key] = variable.value
+    })
   }
 
   private var_files: Type.FilePath[]
 
-  public add_var_file = (path: Type.FilePath) => {
+  public add_var_file = (...paths: Type.FilePath[]) => {
     if (!this.var_files) this.var_files = []
 
-    this.var_files.push(path)
+    this.var_files.push(...paths)
   }
 
   public team?: Type.Identifier

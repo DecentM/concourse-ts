@@ -31,18 +31,20 @@ export class GetStep extends Step<Type.GetStep> {
 
   private passed: Type.Identifier[]
 
-  public add_passed = (job: Job) => {
+  public add_passed = (...jobs: Job[]) => {
     if (!this.passed) this.passed = []
 
-    this.passed.push(job.name)
+    this.passed.push(...jobs.map((job) => job.name))
   }
 
   private params: Type.Config
 
-  public set_param = (key: string, value: Type.YamlValue) => {
+  public set_param = (...params: Type.Param[]) => {
     if (!this.params) this.params = {}
 
-    this.params[key] = value
+    params.forEach((param) => {
+      this.params[param.key] = param.value
+    })
   }
 
   public trigger = true

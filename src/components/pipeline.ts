@@ -5,7 +5,7 @@ import {Resource} from './resource'
 import {Job} from './job'
 
 export class Pipeline extends Serialisable<Type.Pipeline> {
-  constructor(init?: Initer<Pipeline>) {
+  constructor(public name: string, init?: Initer<Pipeline>) {
     super()
 
     if (init) {
@@ -15,10 +15,10 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
 
   private jobs?: Job[]
 
-  public add_job = (input: Job) => {
+  public add_job = (...inputs: Job[]) => {
     if (!this.jobs) this.jobs = []
 
-    this.jobs.push(input)
+    this.jobs.push(...inputs)
   }
 
   private display?: Type.DisplayConfig
@@ -31,26 +31,26 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
 
   private groups?: Type.GroupConfig[]
 
-  public add_group = (input: Type.GroupConfig) => {
+  public add_group = (...inputs: Type.GroupConfig[]) => {
     if (!this.groups) this.groups = []
 
-    this.groups.push(input)
+    this.groups.push(...inputs)
   }
 
   private resources?: Resource[]
 
-  public add_resource = (input: Resource) => {
+  public add_resource = (...inputs: Resource[]) => {
     if (!this.resources) this.resources = []
 
-    this.resources.push(input)
+    this.resources.push(...inputs)
   }
 
   private var_sources?: Type.VarSource[]
 
-  public add_var_source = (var_source: Type.VarSource) => {
+  public add_var_source = (...var_sources: Type.VarSource[]) => {
     if (!this.var_sources) this.var_sources = []
 
-    this.var_sources.push(var_source)
+    var_sources.forEach((var_source) => this.var_sources.push(var_source))
   }
 
   serialise() {

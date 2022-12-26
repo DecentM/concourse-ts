@@ -1,5 +1,6 @@
 import {Initer} from '~/declarations/initialisable'
 import * as Type from '~/declarations/types'
+import {AnyStep} from '.'
 
 import {Step} from './_base'
 
@@ -12,12 +13,12 @@ export class InParallelStep extends Step<Type.InParallelStep> {
     }
   }
 
-  private steps: Step<Type.Step>[]
+  private steps: AnyStep[]
 
-  public add_step = (step: Step<Type.Step>) => {
+  public add_step = (...steps: AnyStep[]) => {
     if (!this.steps) this.steps = []
 
-    this.steps.push(step)
+    this.steps.push(...steps)
   }
 
   public limit = 3

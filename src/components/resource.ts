@@ -44,16 +44,21 @@ export class Resource extends Serialisable<Type.Resource> {
 
   private tags?: Type.Tags
 
-  public add_tag = (tag: string) => {
+  public add_tag = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
-    this.tags.push(tag)
+    this.tags.push(...tags)
   }
 
   private version?: Type.Version
 
-  public set_version = (version: string, value: string) => {
+  public set_version = (version: string, value?: string) => {
     if (!this.version) this.version = {}
+
+    if (version !== 'latest' && version !== 'every') {
+      this.version[version] = value
+      return
+    }
 
     this.version[version] = value
   }

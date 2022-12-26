@@ -4,7 +4,7 @@ import {GetStep, PutStep, TaskStep} from '~/components/step'
 import {with_try_catch} from '~/utils/with-try'
 import {Pipeline, Task, ResourceType, compile} from './src'
 
-export const pipeline = new Pipeline((pipeline) => {
+export const pipeline = new Pipeline('playground', (pipeline) => {
   const rt = new ResourceType('test')
   const r = rt.create_resource('test')
 

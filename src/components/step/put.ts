@@ -36,18 +36,22 @@ export class PutStep extends Step<Type.PutStep> {
 
   private params: Type.Config
 
-  public set_param = (key: string, value: Type.YamlValue) => {
+  public set_param = (...params: Type.Param[]) => {
     if (!this.params) this.params = {}
 
-    this.params[key] = value
+    params.forEach((param) => {
+      this.params[param.key] = param.value
+    })
   }
 
   private get_params: Type.Config
 
-  public set_get_param = (key: string, value: Type.YamlValue) => {
+  public set_get_param = (...params: Type.Param[]) => {
     if (!this.get_params) this.get_params = {}
 
-    this.get_params[key] = value
+    params.forEach((param) => {
+      this.get_params[param.key] = param.value
+    })
   }
 
   public serialise() {

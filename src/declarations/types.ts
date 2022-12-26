@@ -4,7 +4,7 @@ export type Version = 'latest' | 'every' | Record<string, string>
 export type DirPath = string
 export type FilePath = string
 export type EnvVars = Record<string, string>
-export type Vars = Record<string, string>
+export type Vars = Record<string, YamlValue>
 export type Tags = string[]
 
 export type YamlValue =
@@ -22,6 +22,16 @@ export const is_duration = (input: string): input is Duration => {
   const DURATION_RX = /^[0-9]{0,}(ns|us|µs|ms|s|m|h)$/gu
 
   return !!DURATION_RX.exec(input)
+}
+
+export type EnvVar = {
+  key: string
+  value: string
+}
+
+export type Param = {
+  key: string
+  value: YamlValue
 }
 
 export type ResourceType = {

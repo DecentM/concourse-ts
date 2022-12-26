@@ -34,18 +34,22 @@ export class TaskStep extends Step<Type.TaskStep> {
 
   private vars: Type.Vars
 
-  public set_var = (key: string, value: string) => {
+  public set_var = (...vars: Type.Param[]) => {
     if (!this.vars) this.vars = {}
 
-    this.vars[key] = value
+    vars.forEach((variable) => {
+      this.vars[variable.key] = variable.value
+    })
   }
 
   private params: Type.EnvVars
 
-  public set_param = (key: string, value: string) => {
+  public set_param = (...params: Type.EnvVar[]) => {
     if (!this.params) this.params = {}
 
-    this.params[key] = value
+    params.forEach((param) => {
+      this.params[param.key] = param.value
+    })
   }
 
   private input_mapping?: Record<Type.TaskInput['name'], Type.Identifier>
