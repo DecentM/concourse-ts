@@ -4,8 +4,8 @@ import * as Type from '~/declarations/types'
 import {Step} from './_base'
 
 export class DoStep extends Step<Type.DoStep> {
-  constructor(init?: Initer<DoStep>) {
-    super()
+  constructor(public name: string, init?: Initer<DoStep>) {
+    super(name)
 
     if (init) {
       init(this)

@@ -9,8 +9,8 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class GetStep extends Step<Type.GetStep> {
-  constructor(init?: Initer<GetStep>) {
-    super()
+  constructor(public name: string, init?: Initer<GetStep>) {
+    super(name)
 
     if (init) {
       init(this)

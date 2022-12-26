@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && tsc-alias",
+    "build": "rimraf dist && tsc && tsc-alias",
     "dev": "ts-node-dev -r tsconfig-paths/register playground.ts && fly vp -c playground.yml",
     "test": "ava",
     "t": "yarn test"
@@ -23,6 +23,7 @@
     "@types/node": "^18.11.17",
     "@types/verror": "^1.10.6",
     "ava": "^5.1.0",
+    "rimraf": "^3.0.2",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.2",
     "tsconfig-paths": "^4.1.1",

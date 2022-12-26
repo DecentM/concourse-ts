@@ -6,8 +6,8 @@ import * as Type from '~/declarations/types'
 import {Step} from './_base'
 
 export class LoadVarStep extends Step<Type.LoadVarStep> {
-  constructor(init?: Initer<LoadVarStep>) {
-    super()
+  constructor(public name: string, init?: Initer<LoadVarStep>) {
+    super(name)
 
     if (init) {
       init(this)

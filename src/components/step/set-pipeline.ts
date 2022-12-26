@@ -6,8 +6,8 @@ import * as Type from '~/declarations/types'
 import {Step} from './_base'
 
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
-  constructor(init?: Initer<SetPipelineStep>) {
-    super()
+  constructor(public name: string, init?: Initer<SetPipelineStep>) {
+    super(name)
 
     if (init) {
       init(this)

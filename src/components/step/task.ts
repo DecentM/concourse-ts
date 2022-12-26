@@ -8,8 +8,8 @@ import {Task} from '../task'
 import {Step} from './_base'
 
 export class TaskStep extends Step<Type.TaskStep> {
-  constructor(init?: Initer<TaskStep>) {
-    super()
+  constructor(public name: string, init?: Initer<TaskStep>) {
+    super(name)
 
     if (init) {
       init(this)

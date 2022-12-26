@@ -2,28 +2,45 @@ jobs:
   - name: myjob
     plan:
       - attempts: 3
-        timeout: 6h
-        get: test
-        trigger: true
-        version: latest
-      - attempts: 3
+        on_error:
+          attempts: 3
+          tags:
+            - concourse_ts_generated
+            - concourse_ts_name_myjob_onerror
+          timeout: 6h
+          put: test
+          inputs: detect
+        tags:
+          - concourse_ts_generated
+          - concourse_ts_name_myjob_get_try
         timeout: 6h
         try:
           attempts: 3
+          tags:
+            - concourse_ts_generated
+            - concourse_ts_name_myjob_get
           timeout: 6h
-          task: testtask
-          config:
-            platform: linux
-            run:
-              path: echo
-              args:
-                - '[concourse-ts] "run" not implemented, skipping...'
-              dir: .
-            inputs:
-              - name: testi
-                optional: false
-                path: ./asd
-          privileged: false
+          get: test
+          trigger: true
+          version: latest
+      - attempts: 3
+        tags:
+          - concourse_ts_generated
+          - concourse_ts_name_the-task-yay
+        timeout: 6h
+        task: testtask
+        config:
+          platform: linux
+          run:
+            path: echo
+            args:
+              - '[concourse-ts] "run" not implemented, skipping...'
+            dir: .
+          inputs:
+            - name: testi
+              optional: false
+              path: ./asd
+        privileged: false
     build_log_retention:
       builds: 10
       minimum_succeeded_builds: 7

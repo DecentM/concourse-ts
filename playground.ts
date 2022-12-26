@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import {Job} from '~/components/job'
-import {GetStep, TaskStep, TryStep} from '~/components/step'
+import {GetStep, PutStep, TaskStep} from '~/components/step'
+import {with_try_catch} from '~/utils/with-try'
 import {Pipeline, Task, ResourceType, compile} from './src'
 
 export const pipeline = new Pipeline((pipeline) => {
@@ -18,28 +19,26 @@ export const pipeline = new Pipeline((pipeline) => {
   })
 
   const j = new Job('myjob', (job) => {
-    const s = new GetStep((getStep) => {
+    const gs = new GetStep('myjob_get', (getStep) => {
       getStep.set_get(r)
       getStep.trigger = true
     })
 
-    const ts = new TryStep((ts) => {
-      ts.set_try(
-        new TaskStep((ts1) => {
-          ts1.set_task(t)
-        })
-      )
+    const errorStep = new PutStep('myjob_onerror', (errorStep) => {
+      errorStep.set_put(r)
     })
 
-    job.add_step(s)
+    const ts = with_try_catch(gs, errorStep)
+
+    const taskStep = new TaskStep('the-task-yay', (taskStep) => {
+      taskStep.set_task(t)
+    })
+
     job.add_step(ts)
+    job.add_step(taskStep)
   })
 
   pipeline.add_job(j)
-
-  /* pipeline.add_job({
-    name: 'asd',
-  }) */
 })
 
 const compiled = compile(pipeline)

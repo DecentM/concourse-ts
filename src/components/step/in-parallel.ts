@@ -4,8 +4,8 @@ import * as Type from '~/declarations/types'
 import {Step} from './_base'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
-  constructor(init?: Initer<InParallelStep>) {
-    super()
+  constructor(public name: string, init?: Initer<InParallelStep>) {
+    super(name)
 
     if (init) {
       init(this)

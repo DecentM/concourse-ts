@@ -8,8 +8,8 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class PutStep extends Step<Type.PutStep> {
-  constructor(init?: Initer<PutStep>) {
-    super()
+  constructor(public name: string, init?: Initer<PutStep>) {
+    super(name)
 
     if (init) {
       init(this)

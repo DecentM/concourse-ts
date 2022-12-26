@@ -1,5 +1,7 @@
 import * as YAML from 'yaml'
 
+export * from './utils/with-try'
+
 import {Pipeline} from './components/pipeline'
 import {Task} from './components/task'
 
