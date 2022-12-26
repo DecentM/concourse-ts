@@ -4,29 +4,17 @@ jobs:
       - attempts: 3
         on_error:
           attempts: 3
-          tags:
-            - concourse_ts_generated
-            - concourse_ts_name_myjob_onerror
           timeout: 6h
           put: test
           inputs: detect
-        tags:
-          - concourse_ts_generated
-          - concourse_ts_name_myjob_get_try
         timeout: 6h
         try:
           attempts: 3
-          tags:
-            - concourse_ts_generated
-            - concourse_ts_name_myjob_get
           timeout: 6h
           get: test
           trigger: true
           version: latest
       - attempts: 3
-        tags:
-          - concourse_ts_generated
-          - concourse_ts_name_the-task-yay
         timeout: 6h
         task: testtask
         config:
