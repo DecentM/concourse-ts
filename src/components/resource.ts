@@ -5,6 +5,7 @@ import * as Type from '~/declarations/types'
 import {OneMinute} from '~/defaults/durations/one-minute'
 import {is_duration} from '~/utils/duration'
 import {ResourceType} from './resource-type'
+import {GetStep, PutStep, TaskStep} from './step'
 
 export class Resource<
   SourceType extends Type.Config = Type.Config
@@ -64,6 +65,18 @@ export class Resource<
   }
 
   public webhook_token?: string
+
+  public as_put_step = () => {
+    return new PutStep(`${this.name}_put`, (step) => {
+      step.set_put(this)
+    })
+  }
+
+  public as_get_step = () => {
+    return new GetStep(`${this.name}_get`, (step) => {
+      step.set_get(this)
+    })
+  }
 
   serialise() {
     if (!this.type) {
