@@ -15,6 +15,12 @@ export class Resource<
     private type: ResourceType,
     init?: Initer<Resource>
   ) {
+    if (name.includes(' ')) {
+      throw new VError(
+        `Resource name ${name} is not valid. Spaces are not allowed.`
+      )
+    }
+
     super()
 
     if (init) {
