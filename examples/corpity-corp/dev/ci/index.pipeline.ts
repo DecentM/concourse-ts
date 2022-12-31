@@ -1,4 +1,5 @@
-import {Pipeline, Resource, ResourceType} from '../sre/src'
+// import {...} from '@corpity-corp/ci'
+import {Pipeline, Resource} from '../../sre/src'
 
 export default () => {
   return new Pipeline('test', (pipeline) => {

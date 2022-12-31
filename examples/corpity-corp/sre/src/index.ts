@@ -1,3 +1,4 @@
+// import * as ConcourseTs from '@decentm/concourse-ts'
 import * as ConcourseTs from '../../../../src/index'
 
 export class Pipeline extends ConcourseTs.Pipeline {
@@ -8,5 +9,4 @@ export class Pipeline extends ConcourseTs.Pipeline {
   }
 }
 
-export * as ResourceType from './resource-types'
 export * as Resource from './resources'

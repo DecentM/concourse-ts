@@ -1,4 +1,4 @@
-// import * as Concourse from '@decentm/concourse-ts'
+// import * as ConcourseCli from '@decentm/concourse-ts/cli'
 import * as ConcourseCli from '../../../../src/cli'
 
 const main = async () => {

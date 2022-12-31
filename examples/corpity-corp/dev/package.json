@@ -1,5 +1,5 @@
 {
-  "name": "@corpity-corp/ci",
+  "name": "@corpity-corp/zeus-server",
   "license": "UNLICENSED",
   "private": true,
   "version": "1.0.0",
@@ -8,7 +8,10 @@
     "name": "John Doe",
     "url": "https://example.com/john-doe"
   },
+  "scripts": {
+    "ci": "../../../node_modules/.bin/ts-node -r tsconfig-paths/register ../sre/src/cli compile -i ./ci/**/*.ts"
+  },
   "dependencies": {
-    "@decentm/concourse-ts": "latest"
+    "@corpity-corp/ci": "latest"
   }
 }
