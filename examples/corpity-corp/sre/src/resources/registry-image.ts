@@ -1,0 +1,94 @@
+import * as ConcourseTs from '../../../../../src/index'
+
+import {RegistryImage} from '../resource-types'
+
+import {DURATION_1_MINUTE, DURATION_5_MINUTES} from '../constants/duration'
+
+export type DockerImageInput = {
+  name: string
+  repository: string
+  target?: string
+  tag?: string
+  cache?: boolean
+  implicit_get?: boolean
+  dockerfile?: string
+}
+
+/**
+ * https://github.com/concourse/registry-image-resource#source-configuration
+ */
+type SourceType = {
+  repository: string
+  insecure?: boolean
+  tag?: string
+  variant?: string
+  semver_constraint?: string
+  username?: string
+  password?: string
+  aws_access_key_id?: string
+  aws_secret_access_key?: string
+  aws_session_token?: string
+  aws_region?: string
+  aws_role_arn?: string
+  aws_role_arns?: string[]
+  platform?: {
+    /**
+     * https://pkg.go.dev/runtime#GOARCH
+     * https://pkg.go.dev/internal/goarch#GOARCH
+     */
+    architecture?: string
+    /**
+     * https://pkg.go.dev/runtime#GOOS
+     * https://pkg.go.dev/internal/goos#GOOS
+     */
+    os?: string
+  }
+  debug?: boolean
+  registry_mirror?: {
+    host: string
+    username?: string
+    password?: string
+  }
+  content_trust?: {
+    server?: string
+    repository_key_id: string
+    repository_key: string
+    repository_passphrase: string
+    tls_key?: string
+    tls_cert?: string
+    username?: string
+    password?: string
+    scopes?: ('pull' | 'push,pull' | 'catalog')[]
+  }
+  ca_certs?: string[]
+}
+
+export class PrivateQuayImage extends ConcourseTs.Resource<SourceType> {
+  constructor(name: string, input: DockerImageInput) {
+    super(name, new RegistryImage())
+
+    this.set_check_every(DURATION_1_MINUTE)
+
+    this.icon = 'ferry'
+
+    this.source = {
+      repository: `quay.io/${input.repository}`,
+      tag: input.tag ?? 'latest',
+    }
+  }
+}
+
+export class PublicDockerHubImage extends ConcourseTs.Resource<SourceType> {
+  constructor(name: string, input: DockerImageInput) {
+    super(name, new RegistryImage())
+
+    this.set_check_every(DURATION_5_MINUTES)
+
+    this.icon = 'docker'
+
+    this.source = {
+      repository: input.repository,
+      tag: input.tag ?? 'latest',
+    }
+  }
+}
