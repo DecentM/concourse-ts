@@ -12,7 +12,7 @@ export type CompileProps = {
 }
 
 export const CompileCommand: FunctionComponent<CompileProps> = (props) => {
-  const {loading, error, fileList} = useCompile(props)
+  const {loading, fileList} = useCompile(props)
   const [columns] = useStdoutDimensions()
 
   if (loading) {
@@ -20,14 +20,6 @@ export const CompileCommand: FunctionComponent<CompileProps> = (props) => {
       <Box width={columns}>
         <Text>Determining files to compile</Text>
         <Spinner type='simpleDotsScrolling' />
-      </Box>
-    )
-  }
-
-  if (error) {
-    return (
-      <Box width={columns}>
-        <Text color='red'>Error: {error.message}</Text>
       </Box>
     )
   }

@@ -1,4 +1,8 @@
 export const deduplicate_by_key = <T>(key: string, array: T[]): T[] => {
+  if (!Array.isArray(array)) {
+    return []
+  }
+
   const seen_keys: string[] = []
 
   return array.filter((item) => {

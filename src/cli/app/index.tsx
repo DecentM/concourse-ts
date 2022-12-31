@@ -1,16 +1,18 @@
 import React, {FunctionComponent, useEffect, useState} from 'react'
-import {render, Text} from 'ink'
-import {getArgv} from '../args'
+import {render} from 'ink'
 
 import {CompileCommand, CompileProps} from './commands/compile'
 import {UnknownCommand} from './commands/unknown'
+import {ErrorBoundary} from './components/error-boundary'
 
-type Props = {
-  command: string | number
+export type AppCommand = 'compile'
+
+export type AppProps = {
+  command: AppCommand
   options: CompileProps
 }
 
-const CliApp: FunctionComponent<Props> = (props) => {
+const CliApp: FunctionComponent<AppProps> = (props) => {
   switch (props.command) {
     case 'compile':
       return <CompileCommand {...props.options} />
@@ -20,17 +22,16 @@ const CliApp: FunctionComponent<Props> = (props) => {
   }
 }
 
-export const runApp = async () => {
-  const args = await getArgv(process.argv)
-
-  const {cleanup, clear, unmount, waitUntilExit} = render(
-    <CliApp command={args._[0]} options={args} />
+export const runApp = async (props: AppProps) => {
+  const {cleanup, clear, waitUntilExit} = render(
+    <ErrorBoundary>
+      <CliApp command={props.command} options={props.options} />
+    </ErrorBoundary>
   )
 
   try {
     await waitUntilExit()
 
-    unmount()
     clear()
     cleanup()
   } catch (error) {

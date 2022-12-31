@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist && tsc && tsc-alias",
     "dev": "ts-node-dev -r tsconfig-paths/register playground.ts && fly vp -c playground.yml",
-    "dev:cli": "ts-node-dev -r tsconfig-paths/register src/cli/index.ts",
+    "dev:cli": "rimraf .ci && ts-node-dev -r tsconfig-paths/register examples/corpity-corp/sre/cli.ts",
     "test": "c8 ava",
     "t": "yarn test",
     "ci:generate-config": "ts-node examples/corpity-corp/dev/index.ts"
@@ -43,6 +43,7 @@
     "ink-spinner": "^4.0.3",
     "ink-table": "^3.0.0",
     "ink-use-stdout-dimensions": "^1.0.5",
+    "mkdirp": "^1.0.4",
     "react": "^18.2.0",
     "verror": "^1.10.1",
     "yaml": "^2.2.0",

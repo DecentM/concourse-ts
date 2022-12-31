@@ -1,8 +1,9 @@
 import yargs from 'yargs/yargs'
 import {hideBin} from 'yargs/helpers'
+import {AppCommand, AppProps} from './app'
 
-export const getArgv = (argv: string[]) => {
-  return yargs(hideBin(argv))
+export const parseProps = async (argv: string[]): Promise<AppProps> => {
+  const parsed = await yargs(hideBin(argv))
     .command('compile', 'compile pipelines', (yargs) => {
       return yargs
         .option('input', {
@@ -18,4 +19,12 @@ export const getArgv = (argv: string[]) => {
         })
     })
     .parse()
+
+  return {
+    command: parsed._[0] as AppCommand,
+    options: {
+      input: parsed.input,
+      outputDirectory: parsed.outputDirectory,
+    },
+  }
 }
