@@ -1,0 +1,25 @@
+display:
+  background_image: https://picsum.photos/1920/1080.jpg
+resource_types:
+  - name: github
+    type: git
+    check_every: 1m
+    privileged: false
+    unique_version_history: false
+resources:
+  - name: my_repo
+    type: github
+    source:
+      uri: https://github.com/project-zeus/webserver.git
+      branch: main
+      ignore_paths:
+        - .ci
+        - artifacts
+      username: my-service-user
+      password: my_git_password
+      submodule_credentials:
+        - host: github.com
+          username: my-service-user
+          password: my_git_password
+    check_every: 1m
+    public: false

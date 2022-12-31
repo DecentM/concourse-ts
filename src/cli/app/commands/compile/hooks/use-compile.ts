@@ -6,10 +6,12 @@ import {useEffect, useState} from 'react'
 import glob from 'fast-glob'
 import VError from 'verror'
 import mkdirp from 'mkdirp'
+import {useApp} from 'ink'
 
 import {CompileProps} from '..'
+
 import {Pipeline} from '~/components/pipeline'
-import {useApp} from 'ink'
+import {Task} from '~/components/task'
 import {compile} from '~/index'
 
 const fileValid = (filePath: string) => {
@@ -30,15 +32,26 @@ const fileValid = (filePath: string) => {
     return false
   }
 
-  // Default export must return a Pipeline instance
-  if (!(file.default() instanceof Pipeline)) {
+  // Default export must return a Pipeline or Task instance
+  if (
+    !(file.default() instanceof Pipeline) &&
+    !(file.default() instanceof Task)
+  ) {
     return false
   }
 
   return true
 }
 
-const getPipelineFromFile = (filePath: string): Pipeline => {
+const isPipeline = (input: Pipeline | Task): input is Pipeline => {
+  return input instanceof Pipeline
+}
+
+const getType = (input: Pipeline | Task): 'pipeline' | 'task' => {
+  return isPipeline(input) ? 'pipeline' : 'task'
+}
+
+const getPipelineOrTaskFromFile = (filePath: string): Pipeline | Task => {
   if (!fileValid(filePath)) {
     throw new VError(
       `${filePath} failed validation. Make sure your glob only resolves to Typescript files with a default export that returns a Pipeline instance.`
@@ -50,7 +63,8 @@ const getPipelineFromFile = (filePath: string): Pipeline => {
 }
 
 type UseCompileFileState = {
-  pipeline: string | null
+  type: 'pipeline' | 'task' | null
+  name: string | null
   status: 'started' | 'errored' | 'failed' | 'compiled'
   error: string | null
 }
@@ -85,43 +99,50 @@ export const useCompile = (props: CompileProps) => {
     globs
       .then((result) => {
         if (!result || result.length === 0) {
-          throw new VError('Your glob input matched no files. Aborting.')
+          throw new VError('Glob input matched no files. Aborting.')
         }
 
         return Promise.all(
           result.map(async (item) => {
             try {
               setFileState(item, {
-                pipeline: null,
+                type: null,
+                name: null,
                 status: 'started',
                 error: null,
               })
 
-              const pipeline = getPipelineFromFile(item)
-              const yamlString = compile(pipeline)
+              const pipelineOrTask = getPipelineOrTaskFromFile(item)
+              const yamlString = compile(pipelineOrTask)
 
-              const outputPath = path.join(outputDir, `${pipeline.name}.yml`)
+              const outputPath = path.join(outputDir, getType(pipelineOrTask))
 
-              await mkdirp(outputDir)
-              await fs.writeFile(outputPath, yamlString)
+              await mkdirp(outputPath)
+              await fs.writeFile(
+                path.join(outputPath, `${pipelineOrTask.name}.yml`),
+                yamlString
+              )
 
               setFileState(item, {
-                pipeline: pipeline.name,
+                type: getType(pipelineOrTask),
+                name: pipelineOrTask.name,
                 status: 'compiled',
                 error: null,
               })
             } catch (error) {
               try {
-                const pipeline = getPipelineFromFile(item)
+                const pipelineOrTask = getPipelineOrTaskFromFile(item)
 
                 setFileState(item, {
-                  pipeline: pipeline.name,
+                  type: getType(pipelineOrTask),
+                  name: pipelineOrTask.name,
                   status: 'errored',
                   error: error.message,
                 })
               } catch (error2) {
                 setFileState(item, {
-                  pipeline: null,
+                  type: null,
+                  name: null,
                   status: 'failed',
                   error: error2.message,
                 })
