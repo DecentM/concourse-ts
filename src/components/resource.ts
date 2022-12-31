@@ -3,7 +3,7 @@ import {Initer} from '~/declarations/initialisable'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 import {OneMinute} from '~/defaults/durations/one-minute'
-import {is_duration} from '~/utils/is-duration'
+import {is_duration} from '~/utils/duration'
 import {ResourceType} from './resource-type'
 
 export class Resource<

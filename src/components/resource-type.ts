@@ -2,7 +2,7 @@ import {VError} from 'verror'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 import {OneMinute} from '~/defaults/durations/one-minute'
-import {is_duration} from '~/utils/is-duration'
+import {is_duration} from '~/utils/duration'
 import {Resource} from './resource'
 
 export class ResourceType extends Serialisable<Type.ResourceType> {
