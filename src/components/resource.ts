@@ -6,7 +6,9 @@ import {OneMinute} from '~/defaults/durations/one-minute'
 import {is_duration} from '~/utils/is-duration'
 import {ResourceType} from './resource-type'
 
-export class Resource extends Serialisable<Type.Resource> {
+export class Resource<
+  SourceType extends Type.Config = Type.Config
+> extends Serialisable<Type.Resource> {
   constructor(
     public name: string,
     private type: ResourceType,
@@ -25,7 +27,7 @@ export class Resource extends Serialisable<Type.Resource> {
 
   public get_resource_type = () => this.type
 
-  public source?: Type.Config
+  public source?: SourceType
 
   private check_every?: Type.Duration = OneMinute
 

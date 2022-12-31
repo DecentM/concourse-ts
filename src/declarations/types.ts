@@ -10,6 +10,7 @@ export type Tags = string[]
 export type YamlValue =
   | string
   | number
+  | boolean
   | YamlValue[]
   | {[key in string]: YamlValue}
 
