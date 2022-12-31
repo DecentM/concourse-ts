@@ -52,13 +52,15 @@ const getType = (input: Pipeline | Task): 'pipeline' | 'task' => {
 }
 
 const getPipelineOrTaskFromFile = (filePath: string): Pipeline | Task => {
-  if (!fileValid(filePath)) {
+  const fullPath = path.resolve(filePath)
+
+  if (!fileValid(fullPath)) {
     throw new VError(
       `${filePath} failed validation. Make sure your glob only resolves to Typescript files with a default export that returns a Pipeline instance.`
     )
   }
 
-  const file = require(filePath)
+  const file = require(fullPath)
   return file.default()
 }
 
