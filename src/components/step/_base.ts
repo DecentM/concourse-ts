@@ -2,6 +2,7 @@ import {Initer} from '~/declarations/initialisable'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 import {SixHours} from '~/defaults/durations/six-hours'
+import {AnyStep, DoStep} from '.'
 import {TryStep} from './try'
 
 export abstract class Step<
@@ -23,15 +24,47 @@ export abstract class Step<
     this.tags.push(...tags)
   }
 
-  public on_success?: Step<Type.Step>
+  protected on_success?: DoStep
 
-  public on_failure?: Step<Type.Step>
+  public add_on_success = (step: AnyStep) => {
+    if (!this.on_success)
+      this.on_success = new DoStep(`${this.name}_on_success`)
 
-  public on_error?: Step<Type.Step>
+    this.on_success.add_do(step)
+  }
 
-  public on_abort?: Step<Type.Step>
+  protected on_failure?: DoStep
 
-  public ensure?: Step<Type.Step>
+  public add_on_failure = (step: AnyStep) => {
+    if (!this.on_failure)
+      this.on_failure = new DoStep(`${this.name}_on_failure`)
+
+    this.on_failure.add_do(step)
+  }
+
+  protected on_error?: DoStep
+
+  public add_on_error = (step: AnyStep) => {
+    if (!this.on_error) this.on_error = new DoStep(`${this.name}_on_error`)
+
+    this.on_error.add_do(step)
+  }
+
+  protected on_abort?: DoStep
+
+  public add_on_abort = (step: AnyStep) => {
+    if (!this.on_abort) this.on_abort = new DoStep(`${this.name}_on_abort`)
+
+    this.on_abort.add_do(step)
+  }
+
+  protected ensure?: DoStep
+
+  public add_ensure = (step: AnyStep) => {
+    if (!this.ensure) this.ensure = new DoStep(`${this.name}_ensure`)
+
+    this.ensure.add_do(step)
+  }
 
   protected serialise_base = () => {
     const result: Type.StepBase = {
