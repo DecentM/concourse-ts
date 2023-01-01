@@ -27,6 +27,12 @@ jobs:
           restore-keys: |
             lock-
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
       - name: Dependencies
         run: |
           set -exu
@@ -40,13 +46,6 @@ jobs:
       - name: Automatic GitHub Release
         uses: justincy/github-action-npm-release@2.0.1
         id: release
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        if: steps.release.outputs.released == 'true'
-        with:
-          node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Publish to NPM
         if: steps.release.outputs.released == 'true'
