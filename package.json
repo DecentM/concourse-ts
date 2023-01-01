@@ -8,8 +8,7 @@
     "dev": "yarn ts-node-dev playground.ts && fly vp -c playground.yml",
     "dev:cli": "yarn rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/**/*.ts",
     "test": "yarn c8 ava",
-    "t": "yarn test",
-    "prepublishOnly": "yarn build"
+    "t": "yarn test"
   },
   "files": [
     "dist"
