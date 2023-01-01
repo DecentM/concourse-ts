@@ -9,9 +9,10 @@
     "url": "https://example.com/john-doe"
   },
   "scripts": {
+    "prepare": "cd ../../.. && husky install examples/corpity-corp/dev/.husky && cd -",
     "ci": "../../../node_modules/.bin/ts-node -r tsconfig-paths/register ../sre/src/cli compile -i ./ci/**/*.ts"
   },
-  "dependencies": {
-    "@corpity-corp/ci": "latest"
+  "devDependencies": {
+    "husky": "^8"
   }
 }
