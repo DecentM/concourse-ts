@@ -9,6 +9,6 @@
     "url": "https://example.com/john-doe"
   },
   "dependencies": {
-    "@decentm/concourse-ts": "latest"
+    "@decentm/concourse-ts": "^0.0.4"
   }
 }
