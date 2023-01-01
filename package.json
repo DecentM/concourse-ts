@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist && tsc && tsc-alias",
     "dev": "ts-node-dev -r tsconfig-paths/register playground.ts && fly vp -c playground.yml",
-    "dev:cli": "rimraf .ci && ts-node-dev -r tsconfig-paths/register examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/*.ts",
+    "dev:cli": "rimraf .ci && ts-node-dev -r tsconfig-paths/register examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/**/*.ts",
     "test": "c8 ava",
     "t": "yarn test",
     "ci:generate-config": "ts-node examples/corpity-corp/dev/index.ts"

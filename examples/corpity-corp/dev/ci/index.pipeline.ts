@@ -1,14 +1,26 @@
 // import {...} from '@corpity-corp/ci'
-import {Pipeline, Resource} from '../../sre/src'
+import {Pipeline, Resource, Job} from '../../sre/src'
 
 export default () => {
   return new Pipeline('test', (pipeline) => {
-    const gitResource = new Resource.GitRepo('my_repo', {
+    const git = new Resource.GitRepo('my_repo', {
       repository: 'project-zeus/webserver',
       branch: 'main',
       ignore_paths: ['.ci', 'artifacts'],
     })
 
-    pipeline.add_resource(gitResource)
+    const slack = new Resource.SlackNotification()
+
+    pipeline.add_resource(git)
+    pipeline.add_resource(slack)
+
+    const testJob = new Job('test-job')
+    const getRepo = git.as_get_step({})
+
+    testJob.add_step(getRepo)
+
+    slack.install_as_handlers(testJob)
+
+    pipeline.add_job(testJob)
   })
 }

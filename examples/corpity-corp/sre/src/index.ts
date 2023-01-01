@@ -10,3 +10,5 @@ export class Pipeline extends ConcourseTs.Pipeline {
 }
 
 export * as Resource from './resources'
+
+export class Job extends ConcourseTs.Job {}

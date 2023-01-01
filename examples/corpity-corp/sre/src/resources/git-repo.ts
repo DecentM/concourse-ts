@@ -13,6 +13,68 @@ export type GitRepoInput = {
 }
 
 /**
+ * https://github.com/concourse/git-resource#parameters
+ */
+type GitGetParams = {
+  depth?: number
+  fetch_tags?: boolean
+  submodules?: 'all' | 'none' | string[]
+  submodule_recursive?: boolean
+  disable_git_lfs?: boolean
+  clean_tags?: boolean
+  /**
+   * printf format
+   *
+   * Default: %s
+   */
+  short_ref_format?: string
+  /**
+   * Default: iso8601
+   */
+  timestamp_format?: string
+  /**
+   * Default: --always --dirty --broken
+   */
+  describe_ref_options?: string
+}
+
+type GitPutRebase = {
+  rebase?: boolean
+}
+
+type GitPutMerge = {
+  merge?: boolean
+}
+
+/**
+ * https://github.com/concourse/git-resource#parameters-1
+ */
+type GitPutParams = (GitPutRebase | GitPutMerge) & {
+  repository: string
+  returning?: 'merged' | 'unmerged'
+  /**
+   * Path to a file containing the name of the tag
+   */
+  tag?: string
+  only_tag?: boolean
+  tag_prefix?: string
+  force?: boolean
+  /**
+   * Path to a file containing the annotation message.
+   */
+  annotate?: string
+  /**
+   * Path to a file containing the notes
+   */
+  notes?: string
+  branch?: string
+  /**
+   * Default: refs/heads
+   */
+  refs_prefix?: string
+}
+
+/**
  * https://github.com/concourse/git-resource#source-configuration
  */
 type GitSource = {
@@ -55,7 +117,11 @@ type GitSource = {
   search_remote_refs?: boolean
 }
 
-export class GitRepo extends ConcourseTs.Resource<GitSource> {
+export class GitRepo extends ConcourseTs.Resource<
+  GitSource,
+  GitPutParams,
+  GitGetParams
+> {
   constructor(name: string, input: GitRepoInput) {
     const type = new Git()
 
