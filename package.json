@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,7 @@
     "dev:cli": "rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/**/*.ts",
     "test": "c8 ava",
     "t": "yarn test",
-    "prepublish": "yarn build"
+    "prepublishOnly": "yarn build"
   },
   "files": [
     "dist"
