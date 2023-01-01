@@ -18,7 +18,7 @@ export const is_duration = (
 export const get_duration = (
   input: string,
   fallback: Duration = '1m' as Duration
-) => {
+): Duration => {
   if (!is_duration(input)) {
     return fallback
   }
