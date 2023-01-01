@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "inlineSourceMap": true,
     "resolveJsonModule": true,
+    "declaration": true,
 
     "jsx": "react",
     "target": "es2015",
