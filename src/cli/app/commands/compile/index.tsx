@@ -1,5 +1,5 @@
-import React, {FunctionComponent, useEffect} from 'react'
-import {Box, Text, useApp} from 'ink'
+import React, {FunctionComponent} from 'react'
+import {Box, Text} from 'ink'
 import Spinner from 'ink-spinner'
 import useStdoutDimensions from 'ink-use-stdout-dimensions'
 import Table from 'ink-table'
