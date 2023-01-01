@@ -94,6 +94,8 @@ export class SlackNotification extends ConcourseTs.Resource<
     this.source = {
       url: 'https://hooks.slack.com/services/XXXXX',
     }
+
+    this.set_check_every(ConcourseTs.Utils.get_duration({hours: 1}))
   }
 
   public install_as_handlers = (

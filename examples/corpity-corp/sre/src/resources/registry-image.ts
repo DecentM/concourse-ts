@@ -80,7 +80,7 @@ export class PublicDockerHubImage extends ConcourseTs.Resource<SourceType> {
   constructor(name: string, input: DockerImageInput) {
     super(name, new RegistryImage())
 
-    this.set_check_every(ConcourseTs.Utils.get_duration({minutes: 5}))
+    this.set_check_every(ConcourseTs.Utils.get_duration({minutes: 15}))
 
     this.icon = 'docker'
 
