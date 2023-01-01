@@ -27,6 +27,11 @@ jobs:
           restore-keys: |
             lock-
 
+      - name: Dependencies
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
       - name: Automatic GitHub Release
         uses: justincy/github-action-npm-release@2.0.1
         id: release
@@ -37,14 +42,11 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@decentm'
 
       - name: Publish to NPM
         if: steps.release.outputs.released == 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
-          yarn build
           yarn publish dist --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
