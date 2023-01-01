@@ -8,8 +8,8 @@ export const with_try_catch = (
   return new TryStep(`${tryStep.name}_try`, (ts) => {
     ts.set_try(tryStep)
 
-    if (catchStep) ts.on_error = catchStep
+    if (catchStep) ts.add_on_error(catchStep)
 
-    if (finallyStep) ts.ensure = finallyStep
+    if (finallyStep) ts.add_ensure(finallyStep)
   })
 }
