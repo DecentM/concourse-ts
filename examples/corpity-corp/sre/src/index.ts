@@ -11,7 +11,16 @@ export class Pipeline extends ConcourseTs.Pipeline {
 
 export * as Resource from './resources'
 
-export class Job extends ConcourseTs.Job {}
+export class Job extends ConcourseTs.Job {
+  constructor(name: string, init?: ConcourseTs.Initer<Job>) {
+    super(name, init)
+
+    this.build_log_retention = {
+      builds: 5,
+      minimum_succeeded_builds: 3,
+    }
+  }
+}
 
 export class Task extends ConcourseTs.Task {
   constructor(name: string, init?: ConcourseTs.Initer<Task>) {
