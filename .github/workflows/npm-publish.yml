@@ -44,6 +44,7 @@ jobs:
         run: |
           set -exu
           yarn --frozen-lockfile --non-interactive
+          yarn build
           yarn publish dist --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
