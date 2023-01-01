@@ -1,4 +1,4 @@
-import * as ConcourseTs from '../../../../../src/index'
+import * as ConcourseTs from '@decentm/concourse-ts'
 
 export class Git extends ConcourseTs.ResourceType {
   constructor() {

@@ -1,4 +1,4 @@
-import * as ConcourseTs from '../../../../../src'
+import * as ConcourseTs from '@decentm/concourse-ts'
 
 type SlackTypeSource = {
   repository: string

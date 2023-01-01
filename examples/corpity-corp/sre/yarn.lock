@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@decentm/concourse-ts@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@decentm/concourse-ts/-/concourse-ts-0.0.7.tgz#275ec40acb085fa91fb10e2c6bc069bb69120495"
-  integrity sha512-AY8bwW4tsSjuoSpEJfUciCQwZKgKwRnbLvmLzUlPI8RzRiq6iyFmSYiF+3tn5CFo5qzl3+eH4P3Od0vB6a+S9Q==
+"@decentm/concourse-ts@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@decentm/concourse-ts/-/concourse-ts-0.0.8.tgz#dedf3b0494ed56c0e2e8f0b78d97f7d59d630af5"
+  integrity sha512-3l/j8TZpHnpRwMjXY5alhRzoiC7wz6dSNnB84HjMKAGoq4SQ+0tcemrhjzt2IYvsi+A1f74UY/0qRnzWqzoy2A==
   dependencies:
     fast-glob "^3.2.12"
     ink "^3.2.0"

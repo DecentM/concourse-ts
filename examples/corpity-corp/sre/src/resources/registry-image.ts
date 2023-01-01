@@ -1,4 +1,4 @@
-import * as ConcourseTs from '../../../../../src/index'
+import * as ConcourseTs from '@decentm/concourse-ts'
 
 import {RegistryImage} from '../resource-types'
 
