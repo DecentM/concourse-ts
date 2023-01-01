@@ -8,12 +8,14 @@ import {ResourceType} from './resource-type'
 import {GetStep, PutStep, TaskStep} from './step'
 
 export class Resource<
-  SourceType extends Type.Config = Type.Config
+  SourceType extends Type.Config = Type.Config,
+  PutParams extends Type.Config = Type.Config,
+  GetParams extends Type.Config = Type.Config
 > extends Serialisable<Type.Resource> {
   constructor(
     public name: string,
     private type: ResourceType,
-    init?: Initer<Resource>
+    init?: Initer<Resource<SourceType, PutParams, GetParams>>
   ) {
     if (name.includes(' ')) {
       throw new VError(
@@ -72,15 +74,17 @@ export class Resource<
 
   public webhook_token?: string
 
-  public as_put_step = () => {
-    return new PutStep(`${this.name}_put`, (step) => {
+  public as_put_step = (params: PutParams) => {
+    return new PutStep<PutParams>(`${this.name}_put`, (step) => {
       step.set_put(this)
+      step.set_params(params)
     })
   }
 
-  public as_get_step = () => {
-    return new GetStep(`${this.name}_get`, (step) => {
+  public as_get_step = (params: GetParams) => {
+    return new GetStep<GetParams>(`${this.name}_get`, (step) => {
       step.set_get(this)
+      step.set_params(params)
     })
   }
 

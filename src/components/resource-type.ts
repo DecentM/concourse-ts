@@ -5,7 +5,9 @@ import {OneMinute} from '~/defaults/durations/one-minute'
 import {is_duration} from '~/utils/duration'
 import {Resource} from './resource'
 
-export class ResourceType extends Serialisable<Type.ResourceType> {
+export class ResourceType<
+  SourceType extends Type.Config = Type.Config
+> extends Serialisable<Type.ResourceType> {
   constructor(public name: string) {
     super()
   }
@@ -16,7 +18,7 @@ export class ResourceType extends Serialisable<Type.ResourceType> {
 
   public type = 'registry-image'
 
-  public source?: Type.Config
+  public source?: SourceType
 
   private check_every: Type.Duration = OneMinute
 

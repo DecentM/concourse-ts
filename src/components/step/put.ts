@@ -7,8 +7,10 @@ import {Resource} from '../resource'
 
 import {Step} from './_base'
 
-export class PutStep extends Step<Type.PutStep> {
-  constructor(public name: string, init?: Initer<PutStep>) {
+export class PutStep<
+  ParamType extends Type.Config = never
+> extends Step<Type.PutStep> {
+  constructor(public name: string, init?: Initer<PutStep<ParamType>>) {
     super(name)
 
     if (init) {
@@ -18,13 +20,17 @@ export class PutStep extends Step<Type.PutStep> {
 
   private put?: Type.Identifier
 
-  public set_put = (resource: Resource) => {
+  public set_put = <ResourceType extends Resource<any, ParamType, any>>(
+    resource: ResourceType
+  ) => {
     this.put = resource.name
   }
 
   private resource?: Type.Identifier
 
-  public set_resource = (resource: Resource) => {
+  public set_resource = <ResourceType extends Resource>(
+    resource: ResourceType
+  ) => {
     this.resource = resource.name
   }
 
@@ -34,14 +40,10 @@ export class PutStep extends Step<Type.PutStep> {
     this.inputs = inputs
   }
 
-  private params: Type.Config
+  private params: ParamType
 
-  public set_param = (...params: Type.Param[]) => {
-    if (!this.params) this.params = {}
-
-    params.forEach((param) => {
-      this.params[param.key] = param.value
-    })
+  public set_params = (params: ParamType) => {
+    this.params = params
   }
 
   private get_params: Type.Config

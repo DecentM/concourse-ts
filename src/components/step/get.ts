@@ -8,8 +8,10 @@ import {Resource} from '../resource'
 
 import {Step} from './_base'
 
-export class GetStep extends Step<Type.GetStep> {
-  constructor(public name: string, init?: Initer<GetStep>) {
+export class GetStep<
+  ParamType extends Type.Config = never
+> extends Step<Type.GetStep> {
+  constructor(public name: string, init?: Initer<GetStep<ParamType>>) {
     super(name)
 
     if (init) {
@@ -19,7 +21,9 @@ export class GetStep extends Step<Type.GetStep> {
 
   private get?: Type.Identifier
 
-  public set_get = (resource: Resource) => {
+  public set_get = <ResourceType extends Resource<any, any, ParamType>>(
+    resource: ResourceType
+  ) => {
     this.get = resource.name
   }
 
@@ -37,14 +41,10 @@ export class GetStep extends Step<Type.GetStep> {
     this.passed.push(...jobs.map((job) => job.name))
   }
 
-  private params: Type.Config
+  private params: ParamType
 
-  public set_param = (...params: Type.Param[]) => {
-    if (!this.params) this.params = {}
-
-    params.forEach((param) => {
-      this.params[param.key] = param.value
-    })
+  public set_params = (params: ParamType) => {
+    this.params = params
   }
 
   public trigger = true
