@@ -6,7 +6,6 @@ import {useEffect, useState} from 'react'
 import glob from 'fast-glob'
 import VError from 'verror'
 import mkdirp from 'mkdirp'
-import {useApp} from 'ink'
 
 import {CompileProps} from '..'
 
@@ -76,14 +75,59 @@ export const useCompile = (props: CompileProps) => {
   const [fileState, _setFileState] = useState<{
     [key in string]: UseCompileFileState
   }>({})
-  const {exit} = useApp()
 
   const setFileState = (name: string, state: UseCompileFileState) => {
-    _setFileState({
-      ...fileState,
+    _setFileState((prev) => ({
+      ...prev,
       [name]: state,
-    })
+    }))
   }
+
+  useEffect(() => {
+    const outputDir = path.resolve(props.outputDirectory)
+
+    Object.entries(fileState)
+      .filter(([file, state]) => state.status === 'started')
+      .map(async ([file, state]) => {
+        try {
+          const pipelineOrTask = getPipelineOrTaskFromFile(file)
+          const yamlString = compile(pipelineOrTask)
+
+          const outputPath = path.join(outputDir, getType(pipelineOrTask))
+
+          await mkdirp(outputPath)
+          await fs.writeFile(
+            path.join(outputPath, `${pipelineOrTask.name}.yml`),
+            yamlString
+          )
+
+          setFileState(file, {
+            type: getType(pipelineOrTask),
+            name: pipelineOrTask.name,
+            status: 'compiled',
+            error: null,
+          })
+        } catch (error) {
+          try {
+            const pipelineOrTask = getPipelineOrTaskFromFile(file)
+
+            setFileState(file, {
+              type: getType(pipelineOrTask),
+              name: pipelineOrTask.name,
+              status: 'errored',
+              error: error.message,
+            })
+          } catch (error2) {
+            setFileState(file, {
+              type: null,
+              name: null,
+              status: 'failed',
+              error: error2.message,
+            })
+          }
+        }
+      })
+  }, [fileState])
 
   useEffect(() => {
     const globs = glob(props.input, {
@@ -98,69 +142,22 @@ export const useCompile = (props: CompileProps) => {
       )
     }
 
-    globs
-      .then((result) => {
-        if (!result || result.length === 0) {
-          throw new VError('Glob input matched no files. Aborting.')
-        }
+    globs.then((result) => {
+      if (!result || result.length === 0) {
+        throw new VError('Glob input matched no files. Aborting.')
+      }
 
-        return Promise.all(
-          result.map(async (item) => {
-            try {
-              setFileState(item, {
-                type: null,
-                name: null,
-                status: 'started',
-                error: null,
-              })
+      setLoading(false)
 
-              const pipelineOrTask = getPipelineOrTaskFromFile(item)
-              const yamlString = compile(pipelineOrTask)
-
-              const outputPath = path.join(outputDir, getType(pipelineOrTask))
-
-              await mkdirp(outputPath)
-              await fs.writeFile(
-                path.join(outputPath, `${pipelineOrTask.name}.yml`),
-                yamlString
-              )
-
-              setFileState(item, {
-                type: getType(pipelineOrTask),
-                name: pipelineOrTask.name,
-                status: 'compiled',
-                error: null,
-              })
-            } catch (error) {
-              try {
-                const pipelineOrTask = getPipelineOrTaskFromFile(item)
-
-                setFileState(item, {
-                  type: getType(pipelineOrTask),
-                  name: pipelineOrTask.name,
-                  status: 'errored',
-                  error: error.message,
-                })
-              } catch (error2) {
-                setFileState(item, {
-                  type: null,
-                  name: null,
-                  status: 'failed',
-                  error: error2.message,
-                })
-              }
-            }
-          })
-        )
+      result.forEach((item) => {
+        setFileState(item, {
+          type: null,
+          name: null,
+          status: 'started',
+          error: null,
+        })
       })
-      .then(() => {
-        setTimeout(() => {
-          exit()
-        }, 0)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    })
   }, [])
 
   return {
