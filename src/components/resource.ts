@@ -1,9 +1,9 @@
 import {VError} from 'verror'
-import {Initer} from '~/declarations/initialisable'
-import {Serialisable} from '~/declarations/serialisable'
-import * as Type from '~/declarations/types'
-import {OneMinute} from '~/defaults/durations/one-minute'
-import {is_duration} from '~/utils/duration'
+import {Initer} from '../declarations/initialisable'
+import {Serialisable} from '../declarations/serialisable'
+import * as Type from '../declarations/types'
+import {OneMinute} from '../defaults/durations/one-minute'
+import {is_duration} from '../utils/duration'
 import {ResourceType} from './resource-type'
 import {GetStep, PutStep} from './step'
 
@@ -40,7 +40,7 @@ export class Resource<
 
   private check_every?: Type.Duration = OneMinute
 
-  public set_check_every = (input: Type.Duration | 'never') => {
+  public set_check_every = (input: Type.Duration) => {
     // Accepts Duration or "never". Regular Duration does not have a concept for
     // "never", this is a local override.
     //
@@ -52,11 +52,14 @@ export class Resource<
     this.check_every = input
   }
 
+  /**
+   * https://materialdesignicons.com/
+   */
   public icon?: string
 
   public old_name?: string
 
-  public public = false
+  public public: boolean
 
   private tags?: Type.Tags
 

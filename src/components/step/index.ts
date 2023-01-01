@@ -1,5 +1,5 @@
 import {Step} from './_base'
-import * as Type from '~/declarations/types'
+import * as Type from '../../declarations/types'
 
 export {GetStep} from './get'
 export {PutStep} from './put'

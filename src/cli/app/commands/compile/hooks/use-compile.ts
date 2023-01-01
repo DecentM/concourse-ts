@@ -10,9 +10,9 @@ import {useApp} from 'ink'
 
 import {CompileProps} from '..'
 
-import {Pipeline} from '~/components/pipeline'
-import {Task} from '~/components/task'
-import {compile} from '~/index'
+import {Pipeline} from '../../../../../components/pipeline'
+import {Task} from '../../../../../components/task'
+import {compile} from '../../../../../index'
 
 const fileValid = (filePath: string) => {
   // Must be a Typescript file

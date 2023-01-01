@@ -1,5 +1,5 @@
 import {VError} from 'verror'
-import {Duration} from '~/declarations/types'
+import {Duration} from '../../declarations/types'
 
 export {Duration}
 

@@ -1,4 +1,4 @@
-import {name} from '~/../package.json'
+import {name} from '../../package.json'
 
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 enum Colour {

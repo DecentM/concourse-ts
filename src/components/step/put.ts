@@ -1,7 +1,7 @@
 import {VError} from 'verror'
-import {Initer} from '~/declarations/initialisable'
 
-import * as Type from '~/declarations/types'
+import {Initer} from '../../declarations/initialisable'
+import * as Type from '../../declarations/types'
 
 import {Resource} from '../resource'
 

@@ -1,4 +1,4 @@
-import {BuildLogRetentionPolicy} from '~/declarations/types'
+import {BuildLogRetentionPolicy} from '../../declarations/types'
 
 export const LogRetentionPolicyTenBuilds: BuildLogRetentionPolicy = {
   builds: 10,

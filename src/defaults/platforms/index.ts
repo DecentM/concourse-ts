@@ -1,4 +1,4 @@
-import {Platform} from '~/declarations/types'
+import {Platform} from '../../declarations/types'
 
 export const PlatformLinux: Platform = 'linux'
 export const PlatformDarwin: Platform = 'darwin'

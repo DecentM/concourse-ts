@@ -1,4 +1,4 @@
-import {AnyStep, TryStep} from '~/components/step'
+import {AnyStep, TryStep} from '../components/step'
 
 export const with_try_catch = (
   tryStep: AnyStep,

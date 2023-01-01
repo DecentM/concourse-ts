@@ -1,4 +1,4 @@
-import {Command} from '~/declarations/types'
+import {Command} from '../../declarations/types'
 
 export const RunNotImplementedCommand: Command = {
   path: 'echo',

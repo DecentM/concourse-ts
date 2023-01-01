@@ -13,13 +13,7 @@
     "moduleResolution": "node",
 
     "baseUrl": "./",
-    "outDir": "dist",
-
-    "paths": {
-      "~/*": [
-        "./src/*"
-      ]
-    }
+    "outDir": "dist"
   },
 
   "include": [

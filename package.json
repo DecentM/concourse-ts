@@ -4,12 +4,11 @@
   "main": "dist/src/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && tsc && tsc-alias",
-    "dev": "ts-node-dev -r tsconfig-paths/register playground.ts && fly vp -c playground.yml",
-    "dev:cli": "rimraf .ci && ts-node-dev -r tsconfig-paths/register examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/**/*.ts",
+    "build": "rimraf dist && tsc",
+    "dev": "ts-node-dev playground.ts && fly vp -c playground.yml",
+    "dev:cli": "rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/**/*.ts",
     "test": "c8 ava",
-    "t": "yarn test",
-    "ci:generate-config": "ts-node examples/corpity-corp/dev/index.ts"
+    "t": "yarn test"
   },
   "ava": {
     "extensions": {
@@ -34,8 +33,6 @@
     "c8": "^7.12.0",
     "rimraf": "^3.0.2",
     "ts-node-dev": "^2.0.0",
-    "tsc-alias": "^1.8.2",
-    "tsconfig-paths": "^4.1.1",
     "typescript": "^4.9.4"
   },
   "dependencies": {

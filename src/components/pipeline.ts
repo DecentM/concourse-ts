@@ -1,9 +1,9 @@
-import * as Type from '~/declarations/types'
-import {Serialisable} from '~/declarations/serialisable'
-import {Initer} from '~/declarations/initialisable'
+import * as Type from '../declarations/types'
+import {Serialisable} from '../declarations/serialisable'
+import {Initer} from '../declarations/initialisable'
 import {Resource} from './resource'
 import {Job} from './job'
-import {deduplicate_by_key} from '~/utils/array-duplicates'
+import {deduplicate_by_key} from '../utils/array-duplicates'
 
 export class Pipeline extends Serialisable<Type.Pipeline> {
   constructor(public name: string, init?: Initer<Pipeline>) {

@@ -1,9 +1,8 @@
-import {Initer} from '~/declarations/initialisable'
-import {Serialisable} from '~/declarations/serialisable'
-import * as Type from '~/declarations/types'
-import {SixHours} from '~/defaults/durations/six-hours'
+import {Initer} from '../../declarations/initialisable'
+import {Serialisable} from '../../declarations/serialisable'
+import * as Type from '../../declarations/types'
+import {SixHours} from '../../defaults/durations/six-hours'
 import {AnyStep, DoStep} from '.'
-import {TryStep} from './try'
 
 export abstract class Step<
   StepType extends Type.Step

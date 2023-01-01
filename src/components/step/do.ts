@@ -1,5 +1,5 @@
-import {Initer} from '~/declarations/initialisable'
-import * as Type from '~/declarations/types'
+import {Initer} from '../../declarations/initialisable'
+import * as Type from '../../declarations/types'
 import {AnyStep} from '.'
 
 import {Step} from './_base'

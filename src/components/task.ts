@@ -1,11 +1,11 @@
 import {VError} from 'verror'
 
-import {Initer} from '~/declarations/initialisable'
-import {Serialisable} from '~/declarations/serialisable'
-import * as Type from '~/declarations/types'
+import {Initer} from '../declarations/initialisable'
+import {Serialisable} from '../declarations/serialisable'
+import * as Type from '../declarations/types'
 
-import {RunNotImplementedCommand} from '~/defaults/commands/run-not-implemented'
-import {PlatformLinux} from '~/defaults/platforms'
+import {RunNotImplementedCommand} from '../defaults/commands/run-not-implemented'
+import {PlatformLinux} from '../defaults/platforms'
 
 export class Task extends Serialisable<Type.Task> {
   constructor(public name: string, init?: Initer<Task>) {
