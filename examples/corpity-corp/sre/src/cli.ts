@@ -1,5 +1,4 @@
-// import * as ConcourseCli from '@decentm/concourse-ts/cli'
-import * as ConcourseCli from '../../../../src/cli'
+import * as ConcourseCli from '@decentm/concourse-ts/src/cli'
 
 const main = async () => {
   const props = await ConcourseCli.parseProps(process.argv)

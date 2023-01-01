@@ -1,5 +1,3 @@
-import {name} from '../../package.json'
-
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 enum Colour {
   Reset = '\x1b[0m',
@@ -18,7 +16,7 @@ enum Colour {
 
 // Reset before writing anything to prevent previous terminal output from
 // interfering with us.
-const Prefix = `${Colour.Reset}[${Colour.FgCyan}${Colour.BgBlack}${name}${Colour.Reset}] `
+const Prefix = `${Colour.Reset}[${Colour.FgCyan}${Colour.BgBlack}concourse-ts${Colour.Reset}] `
 
 type TemplateStringInserts = Array<string | number>
 
