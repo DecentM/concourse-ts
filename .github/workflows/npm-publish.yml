@@ -43,12 +43,12 @@ jobs:
           set -exu
           yarn build
 
-      - name: Automatic GitHub Release
-        uses: justincy/github-action-npm-release@2.0.1
-        id: release
+      - name: Check if version has been updated
+        id: check
+        uses: EndBug/version-check@v2
 
       - name: Publish to NPM
-        if: steps.release.outputs.released == 'true'
+        if: steps.check.outputs.changed == 'true'
         run: |
           set -exu
           yarn publish dist --access public
