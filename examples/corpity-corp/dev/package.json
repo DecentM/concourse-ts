@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepare": "cd ../../.. && husky install examples/corpity-corp/dev/.husky && cd -",
-    "ci": "../../../node_modules/.bin/ts-node -r tsconfig-paths/register ../sre/src/cli compile -i ./ci/**/*.ts"
+    "ci": "../../../node_modules/.bin/ts-node ../sre/src/cli compile -i ./ci/**/*.ts"
   },
   "devDependencies": {
     "husky": "^8",
