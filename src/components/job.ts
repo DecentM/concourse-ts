@@ -2,7 +2,8 @@ import {Initer} from '~/declarations/initialisable'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 import {LogRetentionPolicyTenBuilds} from '~/defaults/log-retention-policies/ten-builds'
-import {AnyStep} from './step'
+
+import {AnyStep, DoStep} from './step'
 
 export class Job extends Serialisable<Type.Job> {
   constructor(public name: string, init?: Initer<Job>) {
@@ -25,21 +26,53 @@ export class Job extends Serialisable<Type.Job> {
 
   public disable_manual_trigger = false
 
-  public ensure?: AnyStep
-
   public interruptible = true
 
   public max_in_flight = 3
 
   public old_name?: string
 
-  public on_abort?: AnyStep
+  private on_success?: DoStep
 
-  public on_error?: AnyStep
+  public add_on_success = (step: AnyStep) => {
+    if (!this.on_success)
+      this.on_success = new DoStep(`${this.name}_on_success`)
 
-  public on_failure?: AnyStep
+    this.on_success.add_do(step)
+  }
 
-  public on_success?: AnyStep
+  private on_failure?: DoStep
+
+  public add_on_failure = (step: AnyStep) => {
+    if (!this.on_failure)
+      this.on_failure = new DoStep(`${this.name}_on_failure`)
+
+    this.on_failure.add_do(step)
+  }
+
+  private on_error?: DoStep
+
+  public add_on_error = (step: AnyStep) => {
+    if (!this.on_error) this.on_error = new DoStep(`${this.name}_on_error`)
+
+    this.on_error.add_do(step)
+  }
+
+  private on_abort?: DoStep
+
+  public add_on_abort = (step: AnyStep) => {
+    if (!this.on_abort) this.on_abort = new DoStep(`${this.name}_on_abort`)
+
+    this.on_abort.add_do(step)
+  }
+
+  private ensure?: DoStep
+
+  public add_ensure = (step: AnyStep) => {
+    if (!this.ensure) this.ensure = new DoStep(`${this.name}_ensure`)
+
+    this.ensure.add_do(step)
+  }
 
   public public = false
 
