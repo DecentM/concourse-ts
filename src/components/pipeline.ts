@@ -38,9 +38,9 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
     this.groups.push(...inputs)
   }
 
-  private resources?: Resource[]
+  private resources?: Resource<any, any, any>[]
 
-  public add_resource = (...inputs: Resource[]) => {
+  public add_resource = (...inputs: Resource<any, any, any>[]) => {
     if (!this.resources) this.resources = []
 
     this.resources.push(...inputs)
