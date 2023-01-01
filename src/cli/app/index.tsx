@@ -38,6 +38,6 @@ export const runApp = async (props: AppProps) => {
     clear()
     cleanup()
 
-    process.exit(1)
+    process.exit(2)
   }
 }

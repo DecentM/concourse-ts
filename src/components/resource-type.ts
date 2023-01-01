@@ -2,7 +2,7 @@ import {VError} from 'verror'
 import {Serialisable} from '~/declarations/serialisable'
 import * as Type from '~/declarations/types'
 import {OneMinute} from '~/defaults/durations/one-minute'
-import {is_duration} from '~/utils/duration'
+import {is_duration} from '~/utils'
 import {Resource} from './resource'
 
 export class ResourceType<
@@ -22,7 +22,7 @@ export class ResourceType<
 
   private check_every: Type.Duration = OneMinute
 
-  public set_check_every = (input: string) => {
+  public set_check_every = (input: Type.Duration) => {
     if (!is_duration(input)) {
       throw new VError(`Duration ${input} is malformed`)
     }

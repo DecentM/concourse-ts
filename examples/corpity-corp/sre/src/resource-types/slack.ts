@@ -1,4 +1,4 @@
-import * as ConcourseTs from '../../../../../src/index'
+import * as ConcourseTs from '../../../../../src'
 
 type SlackTypeSource = {
   repository: string
@@ -15,5 +15,7 @@ export class Slack extends ConcourseTs.ResourceType<SlackTypeSource> {
       repository: 'cfcommunity/slack-notification-resource',
       tag: 'latest',
     }
+
+    this.set_check_every(ConcourseTs.Utils.get_duration({hours: 24}))
   }
 }

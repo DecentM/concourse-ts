@@ -13,6 +13,7 @@
     "ci": "../../../node_modules/.bin/ts-node -r tsconfig-paths/register ../sre/src/cli compile -i ./ci/**/*.ts"
   },
   "devDependencies": {
-    "husky": "^8"
+    "husky": "^8",
+    "rimraf": "^3.0.2"
   }
 }

@@ -1,7 +1,9 @@
 import test from 'ava'
-import {Duration} from '~/declarations/types'
-import {has_duplicates_by_key} from '~/utils/array-duplicates'
-import {ResourceType, Pipeline, Type} from '..'
+
+import {ResourceType, Pipeline} from '..'
+import {Duration} from '../declarations/types'
+import {get_duration} from '../utils'
+import {has_duplicates_by_key} from '../utils/array-duplicates'
 
 test('does not serialise duplicate resource types', (t) => {
   const p = new Pipeline('my-pipeline')
@@ -62,22 +64,28 @@ test('stores defaults', (t) => {
 
 test('stores valid Durations into check_every', (t) => {
   const rt = new ResourceType('my-rt')
+  const one_minute = get_duration({minutes: 1})
 
-  rt.set_check_every('1m')
+  rt.set_check_every(one_minute)
 
   const result = rt.serialise()
 
-  t.is(result.check_every, '1m' as Duration)
+  t.is(result.check_every, one_minute)
 })
 
 test('refuses to store "never" into check_every', (t) => {
   const rt = new ResourceType('my-rt')
+  const never = get_duration('never')
 
-  t.throws(() => rt.set_check_every('never'))
+  t.throws(() => rt.set_check_every(never), {
+    message: 'Duration never is malformed',
+  })
 })
 
 test('refuses to store invalid Durations into check_every', (t) => {
   const rt = new ResourceType('my-rt')
 
-  t.throws(() => rt.set_check_every('1a'))
+  t.throws(() => rt.set_check_every('1a' as Duration), {
+    message: 'Duration 1a is malformed',
+  })
 })

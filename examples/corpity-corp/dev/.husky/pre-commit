@@ -4,5 +4,5 @@
 set -e
 
 cd examples/corpity-corp/dev
-yarn ci
+yarn rimraf .ci && yarn ci
 cd -

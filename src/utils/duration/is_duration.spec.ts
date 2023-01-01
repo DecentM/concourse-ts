@@ -16,18 +16,16 @@ BOGUS_UNITS.forEach((unit, index) => {
     const input = `${index}${unit}`
     const result = is_duration(input)
 
-    if (result) console.log({input})
-
-    t.false(is_duration(input))
+    t.false(result)
   })
 })
 
 test('refuses undefined', (t) => {
-  t.false(is_duration(undefined as string))
+  t.false(is_duration(undefined as unknown as string))
 })
 
 test('refuses null', (t) => {
-  t.false(is_duration(null as string))
+  t.false(is_duration(null as unknown as string))
 })
 
 test('refuses "never" by default', (t) => {
@@ -36,4 +34,12 @@ test('refuses "never" by default', (t) => {
 
 test('accepts "never" if the valid_units are overwritten', (t) => {
   t.true(is_duration('never', ['never']))
+})
+
+test('accepts concatenated duration values', (t) => {
+  t.true(is_duration('2h23m'))
+})
+
+test('rejects invalid concatenated duration values', (t) => {
+  t.false(is_duration('2d23m'))
 })

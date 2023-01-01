@@ -18,6 +18,8 @@ export default function Catch<Props extends ErrorState>(
     }
 
     componentDidCatch(error: Error, info: React.ErrorInfo) {
+      process.exitCode = 1
+
       if (errorHandler) {
         errorHandler(error, info)
       }

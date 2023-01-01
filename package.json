@@ -16,6 +16,7 @@
       "ts": "module"
     },
     "nodeArguments": [
+      "--no-warnings",
       "--require",
       "tsconfig-paths/register",
       "--loader=ts-node/esm"

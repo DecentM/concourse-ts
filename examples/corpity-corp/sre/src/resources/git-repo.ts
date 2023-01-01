@@ -1,6 +1,5 @@
-import * as ConcourseTs from '../../../../../src/index'
+import * as ConcourseTs from '../../../../../src'
 
-import {DURATION_1_MINUTE} from '../constants/duration'
 import {GIT_PASSWORD, GIT_HOST, GIT_USERNAME} from '../constants/git'
 
 import {Git} from '../resource-types/git'
@@ -127,7 +126,7 @@ export class GitRepo extends ConcourseTs.Resource<
 
     super(name, type)
 
-    this.set_check_every(DURATION_1_MINUTE)
+    this.set_check_every(ConcourseTs.Utils.get_duration({minutes: 1}))
 
     const dotGit = input.repository.endsWith('.git')
 

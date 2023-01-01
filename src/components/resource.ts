@@ -5,7 +5,7 @@ import * as Type from '~/declarations/types'
 import {OneMinute} from '~/defaults/durations/one-minute'
 import {is_duration} from '~/utils/duration'
 import {ResourceType} from './resource-type'
-import {GetStep, PutStep, TaskStep} from './step'
+import {GetStep, PutStep} from './step'
 
 export class Resource<
   SourceType extends Type.Config = Type.Config,
@@ -40,7 +40,7 @@ export class Resource<
 
   private check_every?: Type.Duration = OneMinute
 
-  public set_check_every = (input: string) => {
+  public set_check_every = (input: Type.Duration | 'never') => {
     // Accepts Duration or "never". Regular Duration does not have a concept for
     // "never", this is a local override.
     //

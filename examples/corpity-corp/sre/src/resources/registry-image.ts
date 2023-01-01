@@ -2,8 +2,6 @@ import * as ConcourseTs from '../../../../../src/index'
 
 import {RegistryImage} from '../resource-types'
 
-import {DURATION_1_MINUTE, DURATION_5_MINUTES} from '../constants/duration'
-
 export type DockerImageInput = {
   name: string
   repository: string
@@ -67,7 +65,7 @@ export class PrivateQuayImage extends ConcourseTs.Resource<SourceType> {
   constructor(name: string, input: DockerImageInput) {
     super(name, new RegistryImage())
 
-    this.set_check_every(DURATION_1_MINUTE)
+    this.set_check_every(ConcourseTs.Utils.get_duration({minutes: 1}))
 
     this.icon = 'ferry'
 
@@ -82,7 +80,7 @@ export class PublicDockerHubImage extends ConcourseTs.Resource<SourceType> {
   constructor(name: string, input: DockerImageInput) {
     super(name, new RegistryImage())
 
-    this.set_check_every(DURATION_5_MINUTES)
+    this.set_check_every(ConcourseTs.Utils.get_duration({minutes: 5}))
 
     this.icon = 'docker'
 
