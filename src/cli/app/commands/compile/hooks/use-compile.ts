@@ -24,13 +24,8 @@ const fileValid = async (filePath: string) => {
     useCache: false,
   })
 
-  // Must have a default export
-  if (!('default' in file)) {
-    return false
-  }
-
   // Default export must be a function
-  if (typeof file.default !== 'function') {
+  if (typeof file !== 'function') {
     return false
   }
 
@@ -67,7 +62,8 @@ const getPipelineOrTaskFromFile = async (
   const file = await tsImport.load(fullPath, {
     useCache: false,
   })
-  return file.default()
+
+  return file()
 }
 
 type UseCompileFileState = {
