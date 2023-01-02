@@ -22,6 +22,7 @@ const fileValid = async (filePath: string) => {
 
   const file = await tsImport.load(filePath, {
     useCache: false,
+    mode: tsImport.LoadMode.Compile,
   })
 
   // Default export must be a function
@@ -61,6 +62,7 @@ const getPipelineOrTaskFromFile = async (
 
   const file = await tsImport.load(fullPath, {
     useCache: false,
+    mode: tsImport.LoadMode.Compile,
   })
 
   return file()
