@@ -14,13 +14,15 @@ import {Pipeline} from '../../../../../components/pipeline'
 import {Task} from '../../../../../components/task'
 import {compile} from '../../../../../index'
 
-const fileValid = (filePath: string) => {
+const fileValid = async (filePath: string) => {
   // Must be a Typescript file
   if (!filePath.endsWith('.ts')) {
     return false
   }
 
-  const file = tsImport.loadSync(filePath)
+  const file = await tsImport.load(filePath, {
+    useCache: false,
+  })
 
   // Must have a default export
   if (!('default' in file)) {
@@ -51,7 +53,9 @@ const getType = (input: Pipeline | Task): 'pipeline' | 'task' => {
   return isPipeline(input) ? 'pipeline' : 'task'
 }
 
-const getPipelineOrTaskFromFile = (filePath: string): Pipeline | Task => {
+const getPipelineOrTaskFromFile = async (
+  filePath: string
+): Promise<Pipeline | Task> => {
   const fullPath = path.resolve(filePath)
 
   if (!fileValid(fullPath)) {
@@ -60,7 +64,9 @@ const getPipelineOrTaskFromFile = (filePath: string): Pipeline | Task => {
     )
   }
 
-  const file = tsImport.loadSync(fullPath)
+  const file = await tsImport.load(fullPath, {
+    useCache: false,
+  })
   return file.default()
 }
 
@@ -91,7 +97,7 @@ export const useCompile = (props: CompileProps) => {
       .filter(([file, state]) => state.status === 'started')
       .map(async ([file, state]) => {
         try {
-          const pipelineOrTask = getPipelineOrTaskFromFile(file)
+          const pipelineOrTask = await getPipelineOrTaskFromFile(file)
           const yamlString = compile(pipelineOrTask)
 
           const outputPath = path.join(outputDir, getType(pipelineOrTask))
@@ -110,7 +116,7 @@ export const useCompile = (props: CompileProps) => {
           })
         } catch (error) {
           try {
-            const pipelineOrTask = getPipelineOrTaskFromFile(file)
+            const pipelineOrTask = await getPipelineOrTaskFromFile(file)
 
             setFileState(file, {
               type: getType(pipelineOrTask),
