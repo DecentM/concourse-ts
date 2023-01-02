@@ -255,7 +255,7 @@ export type VarSource = VarSourceDummy | VarSourceVault
 
 export type GroupConfig = {
   name: Identifier
-  jobs?: Job['name']
+  jobs?: Job['name'][]
 }
 
 export type DisplayConfig = {
