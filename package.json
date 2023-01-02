@@ -22,8 +22,6 @@
     },
     "nodeArguments": [
       "--no-warnings",
-      "--require",
-      "tsconfig-paths/register",
       "--loader=ts-node/esm"
     ]
   },
@@ -50,6 +48,7 @@
     "ink-use-stdout-dimensions": "^1.0.5",
     "mkdirp": "^1.0.4",
     "react": "^18.2.0",
+    "ts-import": "^4.0.0-beta.10",
     "verror": "^1.10.1",
     "yaml": "^2.2.0",
     "yargs": "^17.6.2"

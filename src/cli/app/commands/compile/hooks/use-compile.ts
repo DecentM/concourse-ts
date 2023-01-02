@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises'
 import {existsSync} from 'node:fs'
 import path from 'node:path'
 
+import * as tsImport from 'ts-import'
 import {useEffect, useState} from 'react'
 import glob from 'fast-glob'
 import VError from 'verror'
@@ -19,7 +20,7 @@ const fileValid = (filePath: string) => {
     return false
   }
 
-  const file = require(filePath)
+  const file = tsImport.loadSync(filePath)
 
   // Must have a default export
   if (!('default' in file)) {
@@ -59,7 +60,7 @@ const getPipelineOrTaskFromFile = (filePath: string): Pipeline | Task => {
     )
   }
 
-  const file = require(fullPath)
+  const file = tsImport.loadSync(fullPath)
   return file.default()
 }
 
