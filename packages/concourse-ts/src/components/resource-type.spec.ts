@@ -20,8 +20,14 @@ test('does not serialise duplicate resource types', (t) => {
   t.truthy(result)
   t.truthy(result.resource_types)
 
-  t.is(result.resource_types.length, 1)
-  t.false(has_duplicates_by_key('name', p.serialise().resource_types))
+  t.is(result.resource_types?.length, 1)
+
+  if (!result.resource_types) {
+    t.fail('no resource types generated')
+    return
+  }
+
+  t.false(has_duplicates_by_key('name', result.resource_types))
 })
 
 test('throws if the type is unassigned', (t) => {
@@ -39,7 +45,7 @@ test('stores tags', (t) => {
 
   const result = rt.serialise()
 
-  t.true(result.tags.includes('my tag 1'))
+  t.true(result.tags?.includes('my tag 1'))
 })
 
 test('stores params', (t) => {
@@ -49,7 +55,7 @@ test('stores params', (t) => {
 
   const result = rt.serialise()
 
-  t.is(result.params.name, '33')
+  t.is(result.params?.['name'], '33')
 })
 
 test('stores defaults', (t) => {
@@ -59,7 +65,7 @@ test('stores defaults', (t) => {
 
   const result = rt.serialise()
 
-  t.is(result.defaults.name, '33')
+  t.is(result.defaults?.['name'], '33')
 })
 
 test('stores valid Durations into check_every', (t) => {

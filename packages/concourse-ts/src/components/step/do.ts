@@ -5,7 +5,7 @@ import {AnyStep} from '.'
 import {Step} from './_base'
 
 export class DoStep extends Step<Type.DoStep> {
-  constructor(public name: string, init?: Initer<DoStep>) {
+  constructor(public override name: string, init?: Initer<DoStep>) {
     super(name)
 
     if (init) {

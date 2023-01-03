@@ -7,7 +7,7 @@ import {log} from '../../utils/log'
 import {Step} from './_base'
 
 export class TryStep extends Step<Type.TryStep> {
-  constructor(public name: string, init?: Initer<TryStep>) {
+  constructor(public override name: string, init?: Initer<TryStep>) {
     super(name)
 
     if (init) {

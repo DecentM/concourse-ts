@@ -8,6 +8,5 @@ module.exports = {
   quoteProps: 'consistent',
   bracketSpacing: false,
   jsxSingleQuote: true,
-  jsxBracketSameLine: true,
   arrowParens: 'always',
 }

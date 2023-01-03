@@ -8,7 +8,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  affected:
+    name: Determine affected packages
+    runs-on: ubuntu-latest
+
+    if: ${{ !contains(github.event.head_commit.message, 'chore(release)') }}
+
+    outputs:
+      hasChanges: ${{ steps.affected.outputs.hasChanges }}
+      matrix: ${{ steps.affected.outputs.matrix }}
+
+    steps:
+      - name: Calculate Affected Projects
+        uses: e-square-io/nx-affected-matrix@v2
+        id: affected
+        with:
+          targets: 'test,build'
+          maxDistribution: 1
+
   publish:
+    name: Publish ${{ matrix.target }}
+
+    needs:
+      - affected
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.affected.outputs.matrix) }}
+
     runs-on: ubuntu-latest
 
     defaults:
@@ -33,25 +60,20 @@ jobs:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
 
+      - uses: nrwl/nx-set-shas@v3
+
+      - run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+
       - name: Dependencies
         run: |
           set -exu
           yarn --frozen-lockfile --non-interactive
 
-      - name: Build
-        run: |
-          set -exu
-          yarn build
-          tar -czf build.tar.gz dist/
+      - run: yarn nx workspace-lint
+      - run: yarn nx format:check
 
-      - name: Check if version has been updated
-        id: check
-        uses: EndBug/version-check@v2
-
-      - name: Publish to NPM
-        if: steps.check.outputs.changed == 'true'
-        run: |
-          set -exu
-          yarn publish build.tar.gz --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn nx affected --target=lint --parallel=3
+      - run: yarn nx affected --target=test --parallel=3 --ci --code-coverage
+      - run: yarn nx affected --target=build --parallel=3

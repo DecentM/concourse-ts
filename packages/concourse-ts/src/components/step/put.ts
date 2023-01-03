@@ -10,7 +10,7 @@ import {Step} from './_base'
 export class PutStep<
   ParamType extends Type.Config = never
 > extends Step<Type.PutStep> {
-  constructor(public name: string, init?: Initer<PutStep<ParamType>>) {
+  constructor(public override name: string, init?: Initer<PutStep<ParamType>>) {
     super(name)
 
     if (init) {

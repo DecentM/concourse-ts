@@ -1,4 +1,7 @@
-export const deduplicate_by_key = <T>(key: string, array: T[]): T[] => {
+export const deduplicate_by_key = <T extends Record<string, any>>(
+  key: string,
+  array: T[]
+): T[] => {
   if (!Array.isArray(array)) {
     return []
   }
@@ -15,7 +18,10 @@ export const deduplicate_by_key = <T>(key: string, array: T[]): T[] => {
   })
 }
 
-export const has_duplicates_by_key = <T>(key: string, array: T[]) => {
+export const has_duplicates_by_key = <T extends Record<string, any>>(
+  key: string,
+  array: T[]
+) => {
   const seen_keys: string[] = []
 
   return array.some((item) => {

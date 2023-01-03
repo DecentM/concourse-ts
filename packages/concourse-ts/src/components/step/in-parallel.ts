@@ -5,7 +5,7 @@ import {AnyStep} from '.'
 import {Step} from './_base'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
-  constructor(public name: string, init?: Initer<InParallelStep>) {
+  constructor(public override name: string, init?: Initer<InParallelStep>) {
     super(name)
 
     if (init) {

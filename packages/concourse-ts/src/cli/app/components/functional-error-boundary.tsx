@@ -9,7 +9,7 @@ export default function Catch<Props extends ErrorState>(
   errorHandler?: ErrorHandler
 ): React.ComponentType<Props> {
   return class extends React.Component<Props, ErrorState> {
-    state: ErrorState = {
+    override state: ErrorState = {
       error: undefined,
     }
 
@@ -17,7 +17,7 @@ export default function Catch<Props extends ErrorState>(
       return {error}
     }
 
-    componentDidCatch(error: Error, info: React.ErrorInfo) {
+    override componentDidCatch(error: Error, info: React.ErrorInfo) {
       process.exitCode = 1
 
       if (errorHandler) {
@@ -25,7 +25,7 @@ export default function Catch<Props extends ErrorState>(
       }
     }
 
-    render() {
+    override render() {
       return <ErrorComponent {...this.props} error={this.state.error} />
     }
   }

@@ -5,7 +5,7 @@ export * from './utils/with-try'
 import {Pipeline} from './components/pipeline'
 import {Task} from './components/task'
 
-export {AnyStep} from './components/step'
+export * from './components/step'
 export {Initer} from './declarations/initialisable'
 
 export * as Type from './declarations/types'

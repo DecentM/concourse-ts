@@ -11,7 +11,7 @@ import {Step} from './_base'
 export class GetStep<
   ParamType extends Type.Config = never
 > extends Step<Type.GetStep> {
-  constructor(public name: string, init?: Initer<GetStep<ParamType>>) {
+  constructor(public override name: string, init?: Initer<GetStep<ParamType>>) {
     super(name)
 
     if (init) {

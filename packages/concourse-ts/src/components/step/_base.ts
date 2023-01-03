@@ -1,4 +1,3 @@
-import {Initer} from '../../declarations/initialisable'
 import {Serialisable} from '../../declarations/serialisable'
 import * as Type from '../../declarations/types'
 import {SixHours} from '../../defaults/durations/six-hours'
@@ -13,7 +12,7 @@ export abstract class Step<
 
   public timeout: Type.Duration = SixHours
 
-  public attempts: number = 3
+  public attempts = 3
 
   protected tags: Type.Tags
 
@@ -80,5 +79,5 @@ export abstract class Step<
     return result
   }
 
-  public abstract serialise(): StepType
+  public abstract override serialise(): StepType
 }
