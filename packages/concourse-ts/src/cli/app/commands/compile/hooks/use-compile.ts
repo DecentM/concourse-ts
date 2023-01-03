@@ -21,7 +21,6 @@ const fileValid = async (filePath: string) => {
   }
 
   const file = await tsImport.load(filePath, {
-    useCache: false,
     mode: tsImport.LoadMode.Compile,
   })
 
@@ -61,7 +60,6 @@ const getPipelineOrTaskFromFile = async (
   }
 
   const file = await tsImport.load(fullPath, {
-    useCache: false,
     mode: tsImport.LoadMode.Compile,
   })
 
@@ -93,7 +91,7 @@ export const useCompile = (props: CompileProps) => {
 
     Object.entries(fileState)
       .filter(([file, state]) => state.status === 'started')
-      .map(async ([file, state]) => {
+      .forEach(async ([file, state]) => {
         try {
           const pipelineOrTask = await getPipelineOrTaskFromFile(file)
           const yamlString = compile(pipelineOrTask)
