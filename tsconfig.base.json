@@ -15,12 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@decentm/concourse-presets": [
-        "packages/concourse-presets/src/index.ts"
-      ],
-      "@decentm/concourse-ts": [
-        "packages/concourse-ts/src/index.ts"
-      ]
+      "@decentm/concourse-presets": ["packages/concourse-presets/src/index.ts"],
+      "@decentm/concourse-ts": ["packages/concourse-ts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
