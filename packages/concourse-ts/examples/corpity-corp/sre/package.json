@@ -1,0 +1,14 @@
+{
+  "name": "@corpity-corp/ci",
+  "license": "UNLICENSED",
+  "private": true,
+  "version": "1.0.0",
+  "author": {
+    "email": "john.doe@corpity-corp.com",
+    "name": "John Doe",
+    "url": "https://example.com/john-doe"
+  },
+  "dependencies": {
+    "@decentm/concourse-ts": "^0.0.8"
+  }
+}
