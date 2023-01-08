@@ -1,1 +1,1 @@
-export * from "./oci-build";
+export * from './oci-build'
