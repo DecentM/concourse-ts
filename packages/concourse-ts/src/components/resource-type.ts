@@ -60,8 +60,6 @@ export class ResourceType<
     this.tags.push(...tags)
   }
 
-  public unique_version_history = false
-
   serialise() {
     if (!this.type) {
       throw new VError(
@@ -78,7 +76,6 @@ export class ResourceType<
       params: this.params,
       privileged: this.privileged,
       tags: this.tags,
-      unique_version_history: this.unique_version_history,
     }
 
     return result

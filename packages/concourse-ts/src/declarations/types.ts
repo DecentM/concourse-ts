@@ -34,7 +34,6 @@ export type ResourceType = {
   params?: Config
   check_every?: Duration
   tags?: Tags
-  unique_version_history?: boolean
   defaults?: Config
 }
 
