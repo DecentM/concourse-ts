@@ -40,7 +40,7 @@ export class PutStep<
     return result
   }
 
-  private inputs: Type.Inputs = 'detect'
+  private inputs: Type.Inputs
 
   public set_inputs = (inputs: Type.Inputs) => {
     this.inputs = inputs
