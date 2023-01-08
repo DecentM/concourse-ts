@@ -2,6 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
+import {Resource} from '../resource'
 
 import {Step} from './_base'
 
@@ -47,6 +48,10 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
   }
 
   public team?: Type.Identifier
+
+  public get_resources(): Resource[] {
+    return this.get_base_resources()
+  }
 
   public serialise() {
     if (!this.set_pipeline) {

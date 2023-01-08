@@ -2,6 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
+import {Resource} from '../resource'
 
 import {Task} from '../task'
 
@@ -72,6 +73,10 @@ export class TaskStep extends Step<Type.TaskStep> {
     if (!this.output_mapping) this.output_mapping = {}
 
     this.output_mapping[output] = mapped_output
+  }
+
+  public get_resources(): Resource[] {
+    return this.get_base_resources()
   }
 
   public serialise() {

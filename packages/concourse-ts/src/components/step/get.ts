@@ -9,7 +9,7 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class GetStep<
-  ParamType extends Type.Config = never
+  ParamType extends Type.Config = Type.Config
 > extends Step<Type.GetStep> {
   constructor(public override name: string, init?: Initer<GetStep<ParamType>>) {
     super(name)
@@ -29,8 +29,16 @@ export class GetStep<
 
   private resource?: Resource
 
-  public get_resource = () => {
-    return this.resource
+  public get_resources = () => {
+    const result = this.get_base_resources()
+
+    if (!this.resource) {
+      return result
+    }
+
+    result.push(this.resource)
+
+    return result
   }
 
   private passed: Type.Identifier[]

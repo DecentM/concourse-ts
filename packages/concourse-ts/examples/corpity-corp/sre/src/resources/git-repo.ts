@@ -1,4 +1,4 @@
-import * as ConcourseTs from '@decentm/concourse-ts'
+import * as ConcourseTs from '../../../../../src'
 
 import {GIT_PASSWORD, GIT_HOST, GIT_USERNAME} from '../constants/git'
 

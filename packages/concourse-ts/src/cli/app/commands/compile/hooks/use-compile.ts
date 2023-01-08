@@ -22,10 +22,11 @@ const fileValid = async (filePath: string) => {
 
   const file = await tsImport.load(filePath, {
     mode: tsImport.LoadMode.Compile,
+    useCache: false,
   })
 
   // Default export must be a function
-  if (typeof file !== 'function') {
+  if (!('default' in file) || typeof file.default !== 'function') {
     return false
   }
 
@@ -61,9 +62,10 @@ const getPipelineOrTaskFromFile = async (
 
   const file = await tsImport.load(fullPath, {
     mode: tsImport.LoadMode.Compile,
+    useCache: false,
   })
 
-  return file()
+  return file.default()
 }
 
 type UseCompileFileState = {
@@ -90,8 +92,8 @@ export const useCompile = (props: CompileProps) => {
     const outputDir = path.resolve(props.outputDirectory)
 
     Object.entries(fileState)
-      .filter(([file, state]) => state.status === 'started')
-      .forEach(async ([file, state]) => {
+      .filter(([, state]) => state.status === 'started')
+      .forEach(async ([file]) => {
         try {
           const pipelineOrTask = await getPipelineOrTaskFromFile(file)
           const yamlString = compile(pipelineOrTask)

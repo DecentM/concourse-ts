@@ -1,4 +1,4 @@
-import * as ConcourseTs from '@decentm/concourse-ts'
+import * as ConcourseTs from '../../../../../src'
 import {Slack} from '../resource-types'
 
 type SlackSource = {
@@ -88,8 +88,8 @@ export class SlackNotification extends ConcourseTs.Resource<
   SlackSource,
   PutParams
 > {
-  constructor() {
-    super('slack', new Slack())
+  constructor(name: string) {
+    super(name, new Slack())
 
     this.source = {
       url: 'https://hooks.slack.com/services/XXXXX',

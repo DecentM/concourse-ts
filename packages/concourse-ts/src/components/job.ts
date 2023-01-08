@@ -4,7 +4,7 @@ import * as Type from '../declarations/types'
 import {LogRetentionPolicyTenBuilds} from '../defaults/log-retention-policies/ten-builds'
 
 import {Resource} from './resource'
-import {AnyStep, DoStep, GetStep, PutStep} from './step'
+import {AnyStep, DoStep} from './step'
 
 export class Job extends Serialisable<Type.Job> {
   constructor(public name: string, init?: Initer<Job>) {
@@ -81,14 +81,38 @@ export class Job extends Serialisable<Type.Job> {
 
   public serial_groups?: string
 
-  public get_resources = (): Resource[] => {
+  private get_base_resources(): Resource[] {
     const result: Resource[] = []
+
+    if (this.on_success) {
+      result.push(...this.on_success.get_resources())
+    }
+
+    if (this.on_failure) {
+      result.push(...this.on_failure.get_resources())
+    }
+
+    if (this.on_error) {
+      result.push(...this.on_error.get_resources())
+    }
+
+    if (this.on_abort) {
+      result.push(...this.on_abort.get_resources())
+    }
+
+    if (this.ensure) {
+      result.push(...this.ensure.get_resources())
+    }
+
+    return result
+  }
+
+  public get_resources = (): Resource[] => {
+    const result = this.get_base_resources()
 
     this.plan.forEach((step) => {
       // Get and Put steps hold resources, so we extract those here.
-      if (step instanceof GetStep || step instanceof PutStep) {
-        result.push(step.get_resource())
-      }
+      result.push(...step.get_resources())
     })
 
     return result

@@ -8,7 +8,7 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class PutStep<
-  ParamType extends Type.Config = never
+  ParamType extends Type.Config = Type.Config
 > extends Step<Type.PutStep> {
   constructor(public override name: string, init?: Initer<PutStep<ParamType>>) {
     super(name)
@@ -28,8 +28,16 @@ export class PutStep<
 
   private resource?: Resource
 
-  public get_resource = () => {
-    return this.resource
+  public get_resources = (): Resource[] => {
+    const result = this.get_base_resources()
+
+    if (!this.resource) {
+      return result
+    }
+
+    result.push(this.resource)
+
+    return result
   }
 
   private inputs: Type.Inputs = 'detect'

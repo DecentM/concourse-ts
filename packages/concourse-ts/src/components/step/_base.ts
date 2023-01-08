@@ -2,6 +2,7 @@ import {Serialisable} from '../../declarations/serialisable'
 import * as Type from '../../declarations/types'
 import {SixHours} from '../../defaults/durations/six-hours'
 import {AnyStep, DoStep} from '.'
+import {Resource} from '../resource'
 
 export abstract class Step<
   StepType extends Type.Step
@@ -10,11 +11,39 @@ export abstract class Step<
     super()
   }
 
+  public abstract get_resources(): Resource[]
+
   public timeout: Type.Duration = SixHours
 
   public attempts = 3
 
   protected tags: Type.Tags
+
+  protected get_base_resources(): Resource[] {
+    const result: Resource[] = []
+
+    if (this.on_success) {
+      result.push(...this.on_success.get_resources())
+    }
+
+    if (this.on_failure) {
+      result.push(...this.on_failure.get_resources())
+    }
+
+    if (this.on_error) {
+      result.push(...this.on_error.get_resources())
+    }
+
+    if (this.on_abort) {
+      result.push(...this.on_abort.get_resources())
+    }
+
+    if (this.ensure) {
+      result.push(...this.ensure.get_resources())
+    }
+
+    return result
+  }
 
   public add_tag = (...tags: string[]) => {
     if (!this.tags) this.tags = []

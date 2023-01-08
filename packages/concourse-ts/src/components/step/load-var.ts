@@ -2,6 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
+import {Resource} from '../resource'
 
 import {Step} from './_base'
 
@@ -21,6 +22,10 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
   public format?: Type.VarFormat
 
   public reveal = false
+
+  public get_resources(): Resource[] {
+    return this.get_base_resources()
+  }
 
   public serialise() {
     if (!this.load_var) {
