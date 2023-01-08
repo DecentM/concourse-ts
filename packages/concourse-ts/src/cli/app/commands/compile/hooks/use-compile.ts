@@ -13,6 +13,7 @@ import {CompileProps} from '..'
 import {Pipeline} from '../../../../../components/pipeline'
 import {Task} from '../../../../../components/task'
 import {compile} from '../../../../../index'
+import {type_of} from '../../../../../utils/type-of'
 
 const fileValid = async (filePath: string) => {
   // Must be a Typescript file
