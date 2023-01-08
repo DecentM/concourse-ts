@@ -11,6 +11,8 @@ export type YamlValue =
   | string
   | number
   | boolean
+  | null
+  | undefined
   | YamlValue[]
   | {[key in string]: YamlValue}
 
