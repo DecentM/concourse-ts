@@ -7,7 +7,7 @@
     "build": "nx build",
     "dev": "ts-node-dev playground.ts && fly vp -c playground.yml",
     "dev:cli": "rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/**/*.ts",
-    "test": "ava",
+    "test": "c8 ava",
     "t": "yarn test"
   },
   "repository": {
