@@ -54,3 +54,16 @@ jobs:
       - run: yarn nx affected --target=lint --parallel=3
       - run: yarn nx affected --target=test --parallel=3 --ci --code-coverage
       - run: yarn nx affected --target=build --parallel=3
+
+      # Publish new versions of affected packages
+      - run: |
+          set -exu
+          cd dist
+
+          for d in */ ; do
+              [ -L "${d%/}" ] && continue
+
+              cd "$d"
+              yarn publish --new-version
+          done
+
