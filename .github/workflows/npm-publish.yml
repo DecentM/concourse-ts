@@ -57,7 +57,7 @@ jobs:
       # Publish new versions of affected packages
       - run: |
           set -exu
-          cd dist
+          cd dist/packages
 
           for d in */ ; do
               [ -L "${d%/}" ] && continue
