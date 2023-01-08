@@ -35,7 +35,7 @@ test('does not serialise duplicate resource types', (t) => {
     return
   }
 
-  t.false(has_duplicates_by_key('name', result.resource_types))
+  t.false(has_duplicates_by_key((item) => item.name, result.resource_types))
 })
 
 test('throws if the type is unassigned', (t) => {

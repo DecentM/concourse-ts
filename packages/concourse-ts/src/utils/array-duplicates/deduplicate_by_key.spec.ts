@@ -13,40 +13,47 @@ test('filters duplicates', (t) => {
     },
   ]
 
-  t.deepEqual(deduplicate_by_key('key', data), [
-    {
-      key: '1',
-      a: '1'
-    }
-  ])
+  t.deepEqual(
+    deduplicate_by_key((item) => item.key, data),
+    [
+      {
+        key: '1',
+        a: '1',
+      },
+    ]
+  )
 })
 
 test('no false positives', (t) => {
-  const data = [
-    {
-      key: '1',
-      a: '1',
-    },
-    {
-      key: '2',
-      b: '1',
-    },
-    {
-      asd: '1',
-    },
-  ]
-
-  t.deepEqual(deduplicate_by_key('key', data), [
-    {
-      key: '1',
-      a: '1',
-    },
-    {
-      key: '2',
-      b: '1',
-    },
-    {
-      asd: '1',
-    },
-  ])
+  t.deepEqual(
+    deduplicate_by_key(
+      (item) => item.key ?? '-1',
+      [
+        {
+          key: '1',
+          a: '1',
+        },
+        {
+          key: '2',
+          b: '1',
+        },
+        {
+          asd: '1',
+        },
+      ]
+    ),
+    [
+      {
+        key: '1',
+        a: '1',
+      },
+      {
+        key: '2',
+        b: '1',
+      },
+      {
+        asd: '1',
+      },
+    ]
+  )
 })

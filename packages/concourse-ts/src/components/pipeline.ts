@@ -66,11 +66,11 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
       display: this.display,
       groups: this.groups,
       resource_types: deduplicate_by_key(
-        'name',
+        (item) => item.name,
         this.resources?.map((r) => r.get_resource_type().serialise())
       ),
       resources: deduplicate_by_key(
-        'name',
+        (item) => item.name,
         this.resources?.map((r) => r.serialise())
       ),
       var_sources: this.var_sources,
