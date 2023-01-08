@@ -1,4 +1,7 @@
-import * as ConcourseTs from '@decentm/concourse-ts'
+import {Job} from '../../components/job'
+import {Resource} from '../../components/resource'
+import {AnyStep} from '../../components/step'
+import {get_duration} from '../../utils'
 import {Slack} from '../resource-types'
 
 type SlackSource = {
@@ -84,10 +87,7 @@ type PutParams = (
   always_notify?: boolean
 }
 
-export class SlackNotification extends ConcourseTs.Resource<
-  SlackSource,
-  PutParams
-> {
+export class SlackNotification extends Resource<SlackSource, PutParams> {
   constructor() {
     super('slack', new Slack())
 
@@ -95,12 +95,10 @@ export class SlackNotification extends ConcourseTs.Resource<
       url: 'https://hooks.slack.com/services/XXXXX',
     }
 
-    this.set_check_every(ConcourseTs.Utils.get_duration({hours: 1}))
+    this.set_check_every(get_duration({hours: 1}))
   }
 
-  public install_as_handlers = (
-    stepOrJob: ConcourseTs.AnyStep | ConcourseTs.Job
-  ) => {
+  public install_as_handlers = (stepOrJob: AnyStep | Job) => {
     stepOrJob.add_on_abort(
       this.as_put_step({
         text: 'Pipeline $BUILD_PIPELINE_NAME - manually aborted!\nhttp://ci.corpity-corp.com/builds/$BUILD_ID',

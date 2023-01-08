@@ -1,11 +1,12 @@
-import * as ConcourseTs from '@decentm/concourse-ts'
+import {ResourceType} from '../../components/resource-type'
+import {get_duration} from '../../utils'
 
 type SlackTypeSource = {
   repository: string
   tag: string
 }
 
-export class Slack extends ConcourseTs.ResourceType<SlackTypeSource> {
+export class Slack extends ResourceType<SlackTypeSource> {
   constructor() {
     super('slack-notification')
 
@@ -16,6 +17,6 @@ export class Slack extends ConcourseTs.ResourceType<SlackTypeSource> {
       tag: 'latest',
     }
 
-    this.set_check_every(ConcourseTs.Utils.get_duration({hours: 24}))
+    this.set_check_every(get_duration({hours: 24}))
   }
 }
