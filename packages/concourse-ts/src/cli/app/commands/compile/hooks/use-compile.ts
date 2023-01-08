@@ -43,10 +43,30 @@ const fileValid = async (filePath: string) => {
 }
 
 const isPipeline = (input: Pipeline | Task): input is Pipeline => {
-  return input instanceof Pipeline
+  if (type_of(input) !== 'object') {
+    throw new VError(`Input must be an object. Got ${type_of(input)}`)
+  }
+
+  if (!input || !('constructor' in input)) {
+    throw new VError(
+      `The passed object must be an instance of a class. Got ${type_of(input)}`
+    )
+  }
+
+  if (input.constructor.name === Task.name) {
+    return false
+  }
+
+  if (input.constructor.name === Pipeline.name) {
+    return true
+  }
+
+  throw new VError(
+    `Either a Pipeline or Task must be passed, but got ${type_of(input)}`
+  )
 }
 
-const getType = (input: Pipeline | Task): 'pipeline' | 'task' => {
+export const getType = (input: Pipeline | Task): 'pipeline' | 'task' => {
   return isPipeline(input) ? 'pipeline' : 'task'
 }
 
