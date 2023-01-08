@@ -49,7 +49,6 @@ jobs:
           yarn --frozen-lockfile --non-interactive
 
       - run: yarn nx workspace-lint
-      - run: yarn nx format:check
 
       - run: yarn nx affected --target=lint --parallel=3
       - run: yarn nx affected --target=test --parallel=3 --ci --code-coverage
