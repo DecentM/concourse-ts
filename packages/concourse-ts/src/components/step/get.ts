@@ -61,7 +61,9 @@ export class GetStep<
     const result: Type.GetStep = {
       ...this.serialise_base(),
       get: this.resource.name,
-      resource: this.resource.name,
+
+      // This will rename the resource, but it's the same as "get" above.
+      resource: undefined,
       passed: this.passed,
       params: this.params,
       trigger: this.trigger,

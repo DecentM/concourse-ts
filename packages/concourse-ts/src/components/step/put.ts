@@ -18,20 +18,18 @@ export class PutStep<
     }
   }
 
-  private put?: Type.Identifier
-
-  public set_put = <ResourceType extends Resource<any, ParamType, any>>(
+  public set_put = <
+    ResourceType extends Resource<Type.Config, ParamType, Type.Config>
+  >(
     resource: ResourceType
   ) => {
-    this.put = resource.name
+    this.resource = resource
   }
 
-  private resource?: Type.Identifier
+  private resource?: Resource
 
-  public set_resource = <ResourceType extends Resource>(
-    resource: ResourceType
-  ) => {
-    this.resource = resource.name
+  public get_resource = () => {
+    return this.resource
   }
 
   private inputs: Type.Inputs = 'detect'
@@ -57,7 +55,7 @@ export class PutStep<
   }
 
   public serialise() {
-    if (!this.put) {
+    if (!this.resource) {
       throw new VError(
         'Cannot serialise PutStep because "put" has not been set'
       )
@@ -65,8 +63,10 @@ export class PutStep<
 
     const result: Type.PutStep = {
       ...this.serialise_base(),
-      put: this.put,
-      resource: this.resource,
+      put: this.resource.name,
+
+      // This will rename the resource, but it's the same as "put" above.
+      resource: undefined,
       params: this.params,
       inputs: this.inputs,
       get_params: this.get_params,

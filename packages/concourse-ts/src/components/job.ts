@@ -4,7 +4,7 @@ import * as Type from '../declarations/types'
 import {LogRetentionPolicyTenBuilds} from '../defaults/log-retention-policies/ten-builds'
 
 import {Resource} from './resource'
-import {AnyStep, DoStep, GetStep} from './step'
+import {AnyStep, DoStep, GetStep, PutStep} from './step'
 
 export class Job extends Serialisable<Type.Job> {
   constructor(public name: string, init?: Initer<Job>) {
@@ -85,7 +85,8 @@ export class Job extends Serialisable<Type.Job> {
     const result: Resource[] = []
 
     this.plan.forEach((step) => {
-      if (step instanceof GetStep) {
+      // Get and Put steps hold resources, so we extract those here.
+      if (step instanceof GetStep || step instanceof PutStep) {
         result.push(step.get_resource())
       }
     })
