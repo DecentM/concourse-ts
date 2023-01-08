@@ -30,7 +30,7 @@ type RequireAtLeastOne<T> = {
   [K in keyof T]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>>
 }[keyof T]
 
-type DurationInput = RequireAtLeastOne<{
+export type DurationInput = RequireAtLeastOne<{
   nanoseconds?: number
   microseconds?: number
   miliseconds?: number

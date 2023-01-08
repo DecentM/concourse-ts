@@ -1,6 +1,6 @@
 import test from 'ava'
 import {Duration} from '../../declarations/types'
-import {get_duration} from '.'
+import {DurationInput, get_duration} from '.'
 
 test('creates durations with one component', (t) => {
   t.is(get_duration({minutes: 1}), '1m' as Duration)
@@ -39,14 +39,14 @@ test('throws when invalid durations are created', (t) => {
 })
 
 test('throws when an empty object is passed', (t) => {
-  t.throws(() => get_duration({} as any), {
+  t.throws(() => get_duration({} as unknown as DurationInput), {
     message:
       'Result "" is not a valid Duration. If you used the "as" keyword while using get_duration, remove it. Otherwise, this is probably a concourse-ts internal error, please report!',
   })
 })
 
 test('throws when undefined is passed', (t) => {
-  t.throws(() => get_duration(undefined as any), {
+  t.throws(() => get_duration(undefined as unknown as DurationInput), {
     message:
       'Result "" is not a valid Duration. If you used the "as" keyword while using get_duration, remove it. Otherwise, this is probably a concourse-ts internal error, please report!',
   })
