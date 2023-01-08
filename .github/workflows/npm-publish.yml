@@ -55,14 +55,13 @@ jobs:
       - run: yarn nx affected --target=build --parallel=3
 
       # Publish new versions of affected packages
-      - run: |
+      - env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
           set -exu
-          cd dist/packages
 
-          for d in */ ; do
-              [ -L "${d%/}" ] && continue
-
-              cd "$d"
-              yarn publish --new-version
+          for d in dist/packages/* ; do
+            cd "$d"
+            yarn publish . --access public
+            cd -
           done
-
