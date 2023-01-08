@@ -69,11 +69,11 @@ will be able to install everything easily and have the same version
 
 Create a `cli.ts` file with the following contents:
 ```typescript
-import * as ConcourseCli from '@decentm/concourse-ts/cli'
+import {Cli} from '@decentm/concourse-ts'
 
 const main = async () => {
-  const props = await ConcourseCli.parseProps(process.argv)
-  await ConcourseCli.runApp(props)
+  const props = await Cli.parseProps(process.argv)
+  await Cli.runApp(props)
 }
 
 main().catch(console.error)

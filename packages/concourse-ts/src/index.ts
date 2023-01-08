@@ -17,6 +17,8 @@ export * from './components/resource-type'
 export * from './components/task'
 export * from './components/job'
 
+export * as Cli from './cli'
+
 export const compile = (input: Pipeline | Task) => {
   return YAML.stringify(input.serialise())
 }
