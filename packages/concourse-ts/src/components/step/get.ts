@@ -19,18 +19,18 @@ export class GetStep<
     }
   }
 
-  private get?: Type.Identifier
-
-  public set_get = <ResourceType extends Resource<any, any, ParamType>>(
+  public set_get = <
+    ResourceType extends Resource<Type.Config, Type.Config, ParamType>
+  >(
     resource: ResourceType
   ) => {
-    this.get = resource.name
+    this.resource = resource
   }
 
-  private resource?: Type.Identifier
+  private resource?: Resource
 
-  public set_resource = (resource: Resource) => {
-    this.resource = resource.name
+  public get_resource = () => {
+    return this.resource
   }
 
   private passed: Type.Identifier[]
@@ -52,7 +52,7 @@ export class GetStep<
   public version: Type.Version = 'latest'
 
   public serialise() {
-    if (!this.get) {
+    if (!this.resource) {
       throw new VError(
         'Cannot serialise GetStep because "get" has not been set'
       )
@@ -60,8 +60,8 @@ export class GetStep<
 
     const result: Type.GetStep = {
       ...this.serialise_base(),
-      get: this.get,
-      resource: this.resource,
+      get: this.resource.name,
+      resource: this.resource.name,
       passed: this.passed,
       params: this.params,
       trigger: this.trigger,

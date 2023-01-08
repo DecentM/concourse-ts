@@ -38,20 +38,26 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
     this.groups.push(...inputs)
   }
 
-  private resources?: Resource<any, any, any>[]
-
-  public add_resource = (...inputs: Resource<any, any, any>[]) => {
-    if (!this.resources) this.resources = []
-
-    this.resources.push(...inputs)
-  }
-
   private var_sources?: Type.VarSource[]
 
   public add_var_source = (...var_sources: Type.VarSource[]) => {
     if (!this.var_sources) this.var_sources = []
 
     this.var_sources.push(...var_sources)
+  }
+
+  private get resources(): Resource[] {
+    const result: Resource[] = []
+
+    if (!this.jobs || this.jobs.length < 1) {
+      return result
+    }
+
+    this.jobs.forEach((job) => {
+      result.push(...job.get_resources())
+    })
+
+    return result
   }
 
   serialise() {

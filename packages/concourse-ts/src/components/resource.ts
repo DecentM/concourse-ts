@@ -30,7 +30,10 @@ export class Resource<
     }
   }
 
-  public static from_resource_type(name: string, input: ResourceType) {
+  public static from_resource_type(
+    name: string,
+    input: ResourceType
+  ): Resource {
     return new Resource(name, input)
   }
 

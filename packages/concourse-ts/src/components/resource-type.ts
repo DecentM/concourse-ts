@@ -12,7 +12,7 @@ export class ResourceType<
     super()
   }
 
-  public create_resource = (name: string) => {
+  public create_resource = (name: string): Resource => {
     return Resource.from_resource_type(name, this)
   }
 

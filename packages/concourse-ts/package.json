@@ -1,12 +1,10 @@
 {
   "name": "@decentm/concourse-ts",
   "version": "0.1.4",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
-    "build": "rimraf dist && tsc && cpy package.json README.md dist/",
+    "build": "nx build",
     "dev": "ts-node-dev playground.ts && fly vp -c playground.yml",
     "dev:cli": "rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/**/*.ts",
     "test": "ava",
@@ -15,9 +13,6 @@
   "repository": {
     "url": "https://github.com/DecentM/concourse-ts"
   },
-  "files": [
-    "dist"
-  ],
   "ava": {
     "extensions": {
       "ts": "module"

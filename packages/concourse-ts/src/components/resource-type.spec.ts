@@ -1,7 +1,7 @@
 import test from 'ava'
 
-import {ResourceType, Pipeline} from '..'
-import {Duration} from '../declarations/types'
+import {ResourceType, Pipeline, Job, GetStep} from '..'
+import {Config, Duration} from '../declarations/types'
 import {get_duration} from '../utils'
 import {has_duplicates_by_key} from '../utils/array-duplicates'
 
@@ -9,11 +9,19 @@ test('does not serialise duplicate resource types', (t) => {
   const p = new Pipeline('my-pipeline')
   const rt = new ResourceType('my-rt')
 
+  const j = new Job('asd')
   const r1 = rt.create_resource('r1')
   const r2 = rt.create_resource('r2')
+  const gs1 = new GetStep<Config>('task-step')
+  const gs2 = new GetStep<Config>('task-step-2')
 
-  p.add_resource(r1)
-  p.add_resource(r2)
+  gs1.set_get(r1)
+  gs2.set_get(r2)
+
+  j.add_step(gs1)
+  j.add_step(gs2)
+
+  p.add_job(j)
 
   const result = p.serialise()
 

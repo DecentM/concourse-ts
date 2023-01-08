@@ -3,7 +3,8 @@ import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 import {LogRetentionPolicyTenBuilds} from '../defaults/log-retention-policies/ten-builds'
 
-import {AnyStep, DoStep} from './step'
+import {Resource} from './resource'
+import {AnyStep, DoStep, GetStep} from './step'
 
 export class Job extends Serialisable<Type.Job> {
   constructor(public name: string, init?: Initer<Job>) {
@@ -79,6 +80,18 @@ export class Job extends Serialisable<Type.Job> {
   public serial = false
 
   public serial_groups?: string
+
+  public get_resources = (): Resource[] => {
+    const result: Resource[] = []
+
+    this.plan.forEach((step) => {
+      if (step instanceof GetStep) {
+        result.push(step.get_resource())
+      }
+    })
+
+    return result
+  }
 
   serialise() {
     const result: Type.Job = {
