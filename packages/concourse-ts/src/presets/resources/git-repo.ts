@@ -1,4 +1,5 @@
 import {Resource} from '../../components/resource'
+import * as Type from '../../declarations/types'
 import {get_duration} from '../../utils'
 import {Git} from '../resource-types/git'
 
@@ -114,5 +115,12 @@ export class GitRepo extends Resource<GitSource, GitPutParams, GitGetParams> {
     this.set_check_every(get_duration({minutes: 1}))
 
     this.source = source
+  }
+
+  override serialise(): Type.Resource {
+    return {
+      ...super.serialise(),
+      type: 'git',
+    }
   }
 }

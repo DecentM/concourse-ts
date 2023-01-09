@@ -1,4 +1,5 @@
 import {Resource} from '../../components/resource'
+import * as Type from '../../declarations/types'
 import {get_duration} from '../../utils'
 import {RegistryImage} from '../resource-types'
 
@@ -68,5 +69,12 @@ export class PublicDockerHubImage extends Resource<SourceType> {
     this.set_check_every(get_duration({minutes: 15}))
 
     this.source = source
+  }
+
+  override serialise(): Type.Resource {
+    return {
+      ...super.serialise(),
+      type: 'registry-image',
+    }
   }
 }
