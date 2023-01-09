@@ -6,6 +6,7 @@ import * as Type from '../declarations/types'
 
 import {RunNotImplementedCommand} from '../defaults/commands/run-not-implemented'
 import {PlatformLinux} from '../defaults/platforms'
+import {TaskStep} from './step'
 
 export class Task extends Serialisable<Type.Task> {
   constructor(public name: string, init?: Initer<Task>) {
@@ -79,6 +80,12 @@ export class Task extends Serialisable<Type.Task> {
   }
 
   public rootfs_uri?: string
+
+  public as_task_step = () => {
+    return new TaskStep(`${this.name}_step`, (taskStep) => {
+      taskStep.set_task(this)
+    })
+  }
 
   public serialise() {
     const result: Type.Task = {
