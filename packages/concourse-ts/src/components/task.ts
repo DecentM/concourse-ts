@@ -81,9 +81,13 @@ export class Task extends Serialisable<Type.Task> {
 
   public rootfs_uri?: string
 
-  public as_task_step = () => {
+  public as_task_step = (init?: Initer<TaskStep>) => {
     return new TaskStep(`${this.name}_step`, (taskStep) => {
       taskStep.set_task(this)
+
+      if (init) {
+        init(taskStep)
+      }
     })
   }
 
