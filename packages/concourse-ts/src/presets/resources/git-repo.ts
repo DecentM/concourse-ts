@@ -109,9 +109,7 @@ type GitSource = {
 
 export class GitRepo extends Resource<GitSource, GitPutParams, GitGetParams> {
   constructor(name: string, source: GitSource) {
-    const type = new Git()
-
-    super(name, type)
+    super(name, new Git(`${name}_type`))
 
     this.set_check_every(get_duration({minutes: 1}))
 
