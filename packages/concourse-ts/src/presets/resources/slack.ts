@@ -88,12 +88,10 @@ type PutParams = (
 }
 
 export class SlackNotification extends Resource<SlackSource, PutParams> {
-  constructor() {
-    super('slack', new Slack())
+  constructor(name: string, source: SlackSource) {
+    super(name, new Slack())
 
-    this.source = {
-      url: 'https://hooks.slack.com/services/XXXXX',
-    }
+    this.source = source
 
     this.set_check_every(get_duration({hours: 1}))
   }

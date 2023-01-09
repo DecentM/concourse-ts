@@ -62,11 +62,11 @@ export class PrivateQuayImage extends Resource<SourceType> {
 }
 
 export class PublicDockerHubImage extends Resource<SourceType> {
-  constructor(name: string) {
+  constructor(name: string, source: SourceType) {
     super(name, new RegistryImage())
 
     this.set_check_every(get_duration({minutes: 15}))
 
-    this.icon = 'docker'
+    this.source = source
   }
 }
