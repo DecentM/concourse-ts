@@ -215,44 +215,63 @@ export type Job = {
   ensure?: Step
 }
 
-type VaultConfig = {
-  url: string
-  ca_cert?: string
-  path_prefix?: string
-  lookup_templates?: string[]
-  shared_path?: string
-  namespace?: string
-  client_cert?: string
-  client_key?: string
-  server_name?: string
-  insecure_skip_verify?: boolean
-  client_token?: string
-  auth_backend?: string
-  auth_params?: Record<string, string>
-  auth_max_ttl?: Duration
-  auth_retry_max?: Duration
-  auth_retry_initial?: Duration
-}
-
 type VarSourceBase = {
   name: string
 }
 
 type VarSourceVault = VarSourceBase & {
   type: 'vault'
-  config: VaultConfig
-}
-
-type DummyConfig = {
-  vars: Vars
+  config: {
+    url: string
+    ca_cert?: string
+    path_prefix?: string
+    lookup_templates?: string[]
+    shared_path?: string
+    namespace?: string
+    client_cert?: string
+    client_key?: string
+    server_name?: string
+    insecure_skip_verify?: boolean
+    client_token?: string
+    auth_backend?: string
+    auth_params?: Record<string, string>
+    auth_max_ttl?: Duration
+    auth_retry_max?: Duration
+    auth_retry_initial?: Duration
+  }
 }
 
 type VarSourceDummy = VarSourceBase & {
   type: 'dummy'
-  config: DummyConfig
+  config: {
+    vars: Vars
+  }
 }
 
-export type VarSource = VarSourceDummy | VarSourceVault
+type VarSourceSsm = VarSourceBase & {
+  type: 'ssm'
+  config: {
+    region: string
+  }
+}
+
+type VarSourceSecretsManager = VarSourceBase & {
+  type: 'secretsmanager'
+  config: {
+    'aws-secretsmanager-access-key'?: string
+    'aws-secretsmanager-secret-key'?: string
+    'aws-secretsmanager-session-token'?: string
+    'aws-secretsmanager-region'?: string
+    'aws-secretsmanager-pipeline-secret-template'?: string
+    'aws-secretsmanager-team-secret-template'?: string
+  }
+}
+
+export type VarSource =
+  | VarSourceDummy
+  | VarSourceVault
+  | VarSourceSsm
+  | VarSourceSecretsManager
 
 export type GroupConfig = {
   name: Identifier
