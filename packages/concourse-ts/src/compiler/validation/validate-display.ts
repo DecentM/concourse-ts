@@ -1,0 +1,55 @@
+// https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L475
+
+import * as Type from '../../declarations/types'
+import {ValidationWarningType, WarningStore} from './declarations'
+
+export const validateDisplay = (c: Type.Pipeline): WarningStore => {
+  const warnings = new WarningStore()
+
+  if (!c.display || !c.display.background_image) {
+    return warnings
+  }
+
+  // Node and Go URL parsing differ. The WHATWG URL class only accepts absolute
+  // URLs, so we filter those here.
+  if (
+    c.display.background_image.startsWith('/') ||
+    c.display.background_image.startsWith('.')
+  ) {
+    return warnings
+  }
+
+  let url: URL
+
+  try {
+    url = new URL(c.display.background_image)
+  } catch (error) {
+    if (error instanceof Error) {
+      return warnings.add_warning(
+        ValidationWarningType.Fatal,
+        `background_image is not a valid URL: ${c.display.background_image}`
+      )
+    }
+
+    return warnings.add_warning(
+      ValidationWarningType.Fatal,
+      `Unknown internal error occurred while validating display.background_image`,
+      error
+    )
+  }
+
+  switch (url.protocol) {
+    case 'http:':
+    case 'https:':
+    case '':
+      break
+
+    default:
+      return warnings.add_warning(
+        ValidationWarningType.Fatal,
+        'background_image scheme must be either http, https or relative'
+      )
+  }
+
+  return warnings
+}
