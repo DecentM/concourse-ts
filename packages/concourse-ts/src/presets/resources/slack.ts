@@ -89,7 +89,7 @@ type PutParams = (
 
 export class SlackNotification extends Resource<SlackSource, PutParams> {
   constructor(name: string, source: SlackSource) {
-    super(name, new Slack())
+    super(name, new Slack(`${name}_type`))
 
     this.source = source
 
