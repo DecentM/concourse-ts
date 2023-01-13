@@ -7,7 +7,9 @@ import {useEffect, useState} from 'react'
 import glob from 'fast-glob'
 import VError from 'verror'
 import mkdirp from 'mkdirp'
+import {CompilerOptions} from 'typescript'
 
+import tsconfig from '../../../../../../tsconfig.json'
 import {CompileProps} from '..'
 
 import {Pipeline} from '../../../../../components/pipeline'
@@ -15,16 +17,23 @@ import {Task} from '../../../../../components/task'
 import {compile} from '../../../../../index'
 import {type_of} from '../../../../../utils/type-of'
 
+const loadTypescript = (filePath: string) => {
+  return tsImport.load(filePath, {
+    mode: tsImport.LoadMode.Compile,
+    useCache: false,
+    compileOptions: tsconfig as unknown as {
+      compilerOptions: CompilerOptions
+    },
+  })
+}
+
 const fileValid = async (filePath: string) => {
   // Must be a Typescript file
   if (!filePath.endsWith('.ts')) {
     return false
   }
 
-  const file = await tsImport.load(filePath, {
-    mode: tsImport.LoadMode.Compile,
-    useCache: false,
-  })
+  const file = await loadTypescript(filePath)
 
   // Default export must be a function
   if (!('default' in file) || typeof file.default !== 'function') {
@@ -81,10 +90,7 @@ const getPipelineOrTaskFromFile = async (
     )
   }
 
-  const file = await tsImport.load(fullPath, {
-    mode: tsImport.LoadMode.Compile,
-    useCache: false,
-  })
+  const file = await loadTypescript(filePath)
 
   return file.default()
 }
