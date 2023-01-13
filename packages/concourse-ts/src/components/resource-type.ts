@@ -1,4 +1,5 @@
 import {VError} from 'verror'
+import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 import {OneMinute} from '../defaults/durations/one-minute'
@@ -8,8 +9,12 @@ import {Resource} from './resource'
 export class ResourceType<
   SourceType extends Type.Config = Type.Config
 > extends Serialisable<Type.ResourceType> {
-  constructor(public name: string) {
+  constructor(public name: string, init?: Initer<ResourceType<SourceType>>) {
     super()
+
+    if (init) {
+      init(this)
+    }
   }
 
   public create_resource = (name: string): Resource => {
