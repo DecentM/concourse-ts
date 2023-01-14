@@ -1,0 +1,7 @@
+{
+  "default": true,
+  "MD033": { "allowed_elements": ["h1", "div"] },
+  "MD007": { "indent": 2 },
+  "no-hard-tabs": false,
+  "whitespace": false
+}

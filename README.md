@@ -5,7 +5,8 @@
 <div align="center">
 
   A set of libraries for SRE/DevOps teams to generate Concourse pipelines, task
-  yaml files, and set or enforce[*](#security) defaults.
+  yaml files, and set or enforce[\*](#security) defaults.
+
 </div>
 
 - [`concourse-ts`](#concourse-ts)
@@ -44,7 +45,7 @@ when talking about a theoretical organisation using `concourse-ts`.
   - `npm init`
 
 - Install the package as a production dependency. This will make sure your users
-will be able to install everything easily and have the same version
+    will be able to install everything easily and have the same version
   - `yarn add @decentm/concourse-ts`
   - `npm i --save @decentm/concourse-ts`
 
@@ -55,19 +56,20 @@ will be able to install everything easily and have the same version
   - `Job`
   - `Task`
 
-- Implement enforced defaults[*](#security) by calling class methods after the
-  `super()` call. For example, you can call `this.set_cpu_limit_percent(50)` in
-  your `Task` constructor to make all tasks limit CPU usage on workers.
+- Implement enforced defaults[\*](#security) by calling class methods after the
+    `super()` call. For example, you can call `this.set_cpu_limit_percent(50)` in
+    your `Task` constructor to make all tasks limit CPU usage on workers.
 
 - Extend `Resource` and `ResourceType` as many times as needed to implement
-  organisation-specific configuration, like e-mail notifications, webhooks, SCM
-  repos, build processes, and test automation.
+    organisation-specific configuration, like e-mail notifications, webhooks, SCM
+    repos, build processes, and test automation.
   - Use the Slack resource type and resource implementation as a starting point
-    from `examples/corpity-corp/sre/src/resources/slack.ts` and `examples/corpity-corp/sre/src/resource-types/slack.ts`
+        from `examples/corpity-corp/sre/src/resources/slack.ts` and `examples/corpity-corp/sre/src/resource-types/slack.ts`
 
 #### CLI / Compiler
 
 Create a `cli.ts` file with the following contents:
+
 ```typescript
 import {Cli} from '@decentm/concourse-ts'
 
@@ -78,6 +80,7 @@ const main = async () => {
 
 main().catch(console.error)
 ```
+
 By default, the CLI will accept `--help`, `--version`, `-i|--input`, and
 `-o|--output-directory` arguments. However, if you need to, you can create your
 own interface, or use the CLI programmatically by removing the `parseProps` line
@@ -92,6 +95,7 @@ The CLI accepts a glob input (such as `ci/**/*.ts`), and validates each file
 that matches. If there are no issues, it will serialise the pipeline found in
 each file and output them under the `outputDirectory` path in a `pipeline` and
 `task` directory. Given this input:
+
 ```typescript
 repo
   |- .git/
@@ -100,7 +104,9 @@ repo
     |- foo.ts // contains a () => pipeline
     |- bar.ts // contains a () => task
 ```
+
 The output will be:
+
 ```typescript
 repo
   |- .git/
@@ -125,16 +131,17 @@ regenerate the yaml configuration during a commit. For an example, see the
 `examples/corpity-corp/dev/package.json`, as well as
 `examples/corpity-corp/dev/.husky`.
 
-> See the manual for `husky` to learn more about git hooks in this context: https://typicode.github.io/husky/#/?id=automatic-recommended
+> See the manual for `husky` to learn more about git hooks in this context: <https://typicode.github.io/husky/#/?id=automatic-recommended>
 
 ### Security
 
 Important to note, that enforced defaults only apply to the initialiser
 function. Each class can be interacted in two ways by the end user (in this
-case, the developer using the `@corpity-corp/ci` package). First, when a `concourse-ts` class is
-instantiated, it accepts an optional initialiser function that can be used to
-access the constructed object. Second, class instances are available to modify
-after they've been created. To make it clear:
+case, the developer using the `@corpity-corp/ci` package). First, when a
+`concourse-ts` class is instantiated, it accepts an optional initialiser
+function that can be used to access the constructed object. Second, class
+instances are available to modify  after they've been created. To make it clear:
+
 ```typescript
 let thing = null
 
@@ -144,10 +151,13 @@ const task = new Task('my_task', (my_task) => {
 
 task === thing // true
 ```
+
 When you set defaults after the `super` call, those statements run after the
 initialiser function, but that's not a guarantee that those values will never be
 modified. If the end user sets properties or calls functions after the `new`
-statement and uses its return value, they can override defaults set here. Take this for example:
+statement and uses its return value, they can override defaults set here. Take
+this for example:
+
 ```typescript
 // @corpity-corp/ci > src/build-task.ts
 class BuildTask extends ConcourseTs.Task {
@@ -164,11 +174,14 @@ class BuildTask extends ConcourseTs.Task {
 import {BuildTask} from '@corpity-corp/ci'
 
 const buildTask = new BuildTask('my_build', (task) => {
-  task.set_cpu_limit_percent(50) // This will be overwritten with 25 by the base class
+  // This will be overwritten with 25 by the base class
+  task.set_cpu_limit_percent(50)
 })
 
-buildTask.set_cpu_limit_percent(75) // This will overwrite the value from the base class
+// This will overwrite the value from the base class
+buildTask.set_cpu_limit_percent(75)
 ```
+
 In this above case, the final value for the cpu_limit_percent will be 75. Since the
 configuration for projects is stored in each project's repo, this library or any
 project-level check is not appropriate for security checks. Also avoid directly

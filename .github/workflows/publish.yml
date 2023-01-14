@@ -161,8 +161,17 @@ jobs:
       - run: yarn nx affected --target=lint --parallel=3
       - run: yarn nx affected --target=build --parallel=3
 
+      - name: Compare npm with local (versions)
+        uses: Rober19/compare-npm-versions-ci@master
+        id: package_version
+        with:
+          path: ./packages/concourse-ts
+          npm_package_name: '@decentm/concourse-ts'
+
       # Publish new versions of affected packages
-      - env:
+      - name: Publish to NPM
+        if: steps.package_version.outputs.npm_is_greater == 'false'
+        env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -exu

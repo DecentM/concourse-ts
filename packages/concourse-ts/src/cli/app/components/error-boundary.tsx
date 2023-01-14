@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, ReactNode} from 'react'
+import React, {PropsWithChildren} from 'react'
 import {Box, Text} from 'ink'
 import useStdoutDimensions from 'ink-use-stdout-dimensions'
 
