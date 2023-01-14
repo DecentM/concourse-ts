@@ -15,7 +15,8 @@ export default () => {
 
     testJob.add_step(getRepo)
 
-    slack.install_as_handlers(testJob)
+    slack.as_failure_handler(testJob, slack.get_params_for('failure'))
+    slack.as_success_handler(testJob, slack.get_params_for('success'))
 
     pipeline.add_job(testJob)
   })

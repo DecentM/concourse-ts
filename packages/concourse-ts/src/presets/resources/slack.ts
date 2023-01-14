@@ -68,7 +68,7 @@ type PutAttachmentsFile = {
 /**
  * https://github.com/cloudfoundry-community/slack-notification-resource#parameters
  */
-type PutParams = (
+export type SlackPutParams = (
   | PutText
   | PutTextFile
   | PutAttachments
@@ -84,7 +84,7 @@ type PutParams = (
   always_notify?: boolean
 }
 
-export class SlackNotification extends Resource<SlackSource, PutParams> {
+export class SlackNotification extends Resource<SlackSource, SlackPutParams> {
   constructor(name: string, source: SlackSource) {
     super(name, new Slack(`${name}_resource`))
 
