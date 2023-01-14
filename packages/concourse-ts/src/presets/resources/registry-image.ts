@@ -1,7 +1,6 @@
 import {Resource} from '../../components/resource'
-import * as Type from '../../declarations/types'
-import {get_duration} from '../../utils'
-import {RegistryImage} from '../resource-types'
+import {Secret} from '../../utils'
+import {RegistryImage as RegistryImageType} from '../resource-types'
 
 /**
  * https://github.com/concourse/registry-image-resource#source-configuration
@@ -12,12 +11,15 @@ type SourceType = {
   tag?: string
   variant?: string
   semver_constraint?: string
-  username?: string
-  password?: string
-  aws_access_key_id?: string
-  aws_secret_access_key?: string
-  aws_session_token?: string
+  username?: Secret
+  password?: Secret
+  aws_access_key_id?: Secret
+  aws_secret_access_key?: Secret
+  aws_session_token?: Secret
   aws_region?: string
+  /**
+   * @deprecated Use `aws_role_arns`
+   */
   aws_role_arn?: string
   aws_role_arns?: string[]
   platform?: {
@@ -35,46 +37,45 @@ type SourceType = {
   debug?: boolean
   registry_mirror?: {
     host: string
-    username?: string
-    password?: string
+    username?: Secret
+    password?: Secret
   }
   content_trust?: {
     server?: string
-    repository_key_id: string
-    repository_key: string
-    repository_passphrase: string
-    tls_key?: string
-    tls_cert?: string
-    username?: string
-    password?: string
+    repository_key_id: Secret
+    repository_key: Secret
+    repository_passphrase: Secret
+    tls_key?: Secret
+    tls_cert?: Secret
+    username?: Secret
+    password?: Secret
     scopes?: ('pull' | 'push,pull' | 'catalog')[]
   }
   ca_certs?: string[]
 }
 
-export class PrivateQuayImage extends Resource<SourceType> {
-  constructor(name: string) {
-    super(name, new RegistryImage())
-
-    this.set_check_every(get_duration({minutes: 1}))
-
-    this.icon = 'ferry'
-  }
+/**
+ * https://github.com/concourse/registry-image-resource#put-steps-params
+ */
+type PutParams = {
+  image: string
+  version?: string
+  bump_aliases?: boolean
+  additional_tags?: string
 }
 
-export class PublicDockerHubImage extends Resource<SourceType> {
-  constructor(name: string, source: SourceType) {
-    super(name, new RegistryImage())
+/**
+ * https://github.com/concourse/registry-image-resource#get-step-params
+ */
+type GetParams = {
+  format?: 'rootfs' | 'oci'
+  skip_download?: boolean
+}
 
-    this.set_check_every(get_duration({minutes: 15}))
+export class RegistryImage extends Resource<SourceType, PutParams, GetParams> {
+  constructor(name: string, source: SourceType) {
+    super(name, new RegistryImageType(`${name}_resource`))
 
     this.source = source
-  }
-
-  override serialise(): Type.Resource {
-    return {
-      ...super.serialise(),
-      type: 'registry-image',
-    }
   }
 }

@@ -1,7 +1,4 @@
-import {Job} from '../../components/job'
 import {Resource} from '../../components/resource'
-import {AnyStep} from '../../components/step'
-import {get_duration} from '../../utils'
 import {Slack} from '../resource-types'
 
 type SlackSource = {
@@ -89,36 +86,8 @@ type PutParams = (
 
 export class SlackNotification extends Resource<SlackSource, PutParams> {
   constructor(name: string, source: SlackSource) {
-    super(name, new Slack(`${name}_type`))
+    super(name, new Slack(`${name}_resource`))
 
     this.source = source
-
-    this.set_check_every(get_duration({hours: 1}))
-  }
-
-  public install_as_handlers = (stepOrJob: AnyStep | Job) => {
-    stepOrJob.add_on_abort(
-      this.as_put_step({
-        text: 'Pipeline $BUILD_PIPELINE_NAME - manually aborted!\nhttp://ci.corpity-corp.com/builds/$BUILD_ID',
-      })
-    )
-
-    stepOrJob.add_on_error(
-      this.as_put_step({
-        text: 'Pipeline $BUILD_PIPELINE_NAME - errored!\nhttp://ci.corpity-corp.com/builds/$BUILD_ID',
-      })
-    )
-
-    stepOrJob.add_on_failure(
-      this.as_put_step({
-        text: 'Pipeline $BUILD_PIPELINE_NAME - failure!\nhttp://ci.corpity-corp.com/builds/$BUILD_ID',
-      })
-    )
-
-    stepOrJob.add_on_success(
-      this.as_put_step({
-        text: 'Pipeline $BUILD_PIPELINE_NAME - success!\nhttp://ci.corpity-corp.com/builds/$BUILD_ID',
-      })
-    )
   }
 }
