@@ -2,14 +2,10 @@ import * as fs from 'node:fs/promises'
 import {existsSync} from 'node:fs'
 import path from 'node:path'
 
-import * as tsImport from 'ts-import'
 import {useEffect, useState} from 'react'
 import glob from 'fast-glob'
-import VError from 'verror'
+import {VError} from 'verror'
 import mkdirp from 'mkdirp'
-import {CompilerOptions} from 'typescript'
-
-import tsconfig from '../../../../../../tsconfig.json'
 import {CompileProps} from '..'
 
 import {Pipeline} from '../../../../../components/pipeline'
@@ -18,13 +14,11 @@ import {compile} from '../../../../../index'
 import {type_of} from '../../../../../utils/type-of'
 
 const loadTypescript = (filePath: string) => {
-  return tsImport.load(filePath, {
-    mode: tsImport.LoadMode.Compile,
-    useCache: false,
-    compileOptions: tsconfig as unknown as {
-      compilerOptions: CompilerOptions
-    },
-  })
+  if (!path.isAbsolute(filePath)) {
+    throw new VError('Internal error', 'Only absolute paths can be imported')
+  }
+
+  return import(filePath)
 }
 
 const fileValid = async (filePath: string) => {
@@ -122,7 +116,9 @@ export const useCompile = (props: CompileProps) => {
       .filter(([, state]) => state.status === 'started')
       .forEach(async ([file]) => {
         try {
-          const pipelineOrTask = await getPipelineOrTaskFromFile(file)
+          const pipelineOrTask = await getPipelineOrTaskFromFile(
+            path.resolve(file)
+          )
           const yamlString = compile(pipelineOrTask)
 
           const outputPath = path.join(outputDir, getType(pipelineOrTask))
