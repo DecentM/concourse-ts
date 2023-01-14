@@ -20,6 +20,4 @@ export * from './components/job'
 export * as Cli from './cli'
 export * as Presets from './presets'
 
-export const compile = (input: Pipeline | Task) => {
-  return YAML.stringify(input.serialise())
-}
+export {compile} from './compiler'
