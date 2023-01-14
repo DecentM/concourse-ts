@@ -1,11 +1,15 @@
 import {VError} from 'verror'
+
 import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 import {OneMinute} from '../defaults/durations/one-minute'
+
 import {is_duration} from '../utils/duration'
+
 import {ResourceType} from './resource-type'
-import {GetStep, PutStep} from './step'
+import {AnyStep, DoStep, GetStep, PutStep} from './step'
+import {Job} from './job'
 
 export class Resource<
   SourceType extends Type.Config = Type.Config,
@@ -92,6 +96,30 @@ export class Resource<
       step.set_get(this)
       step.set_params(params)
     })
+  }
+
+  public as_abort_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
+    stepOrJob.add_on_abort(this.as_put_step(params))
+  }
+
+  public as_error_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
+    stepOrJob.add_on_error(this.as_put_step(params))
+  }
+
+  public as_failure_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
+    stepOrJob.add_on_failure(this.as_put_step(params))
+  }
+
+  public as_success_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
+    stepOrJob.add_on_success(this.as_put_step(params))
+  }
+
+  public as_start_handler = (stepOrJob: DoStep | Job, params: PutParams) => {
+    if (stepOrJob instanceof Job) {
+      stepOrJob.add_step_first(this.as_put_step(params))
+    } else {
+      stepOrJob.add_do_first(this.as_put_step(params))
+    }
   }
 
   serialise() {

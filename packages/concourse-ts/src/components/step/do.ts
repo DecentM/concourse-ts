@@ -22,6 +22,12 @@ export class DoStep extends Step<Type.DoStep> {
     this.steps.push(step)
   }
 
+  public add_do_first = (step: AnyStep) => {
+    if (!this.steps) this.steps = []
+
+    this.steps.unshift(step)
+  }
+
   public get_resources(): Resource[] {
     const result = this.get_base_resources()
 

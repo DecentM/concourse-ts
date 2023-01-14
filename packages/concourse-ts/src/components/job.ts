@@ -23,6 +23,12 @@ export class Job extends Serialisable<Type.Job> {
     this.plan.push(...steps)
   }
 
+  public add_step_first = (...steps: AnyStep[]) => {
+    if (!this.plan) this.plan = []
+
+    this.plan.unshift(...steps)
+  }
+
   public build_log_retention = LogRetentionPolicyTenBuilds
 
   public disable_manual_trigger = false

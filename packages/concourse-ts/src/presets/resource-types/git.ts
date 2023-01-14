@@ -9,12 +9,12 @@ export class Git extends ResourceType {
   constructor(name: string, input?: GitInput, init?: Initer<Git>) {
     super(`${name}_type`)
 
+    this.type = 'git'
+
     this.source = {
       repository: 'concourse/git-resource',
       tag: input?.tag ?? 'latest',
     }
-
-    this.type = 'git'
 
     if (init) {
       init(this)
