@@ -1,0 +1,174 @@
+name: npm-publish
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
+      - uses: nrwl/nx-set-shas@v3
+
+      - run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+
+      - name: Tests
+        run: |
+          set -exu
+          yarn nx run-many --target=test --parallel=3
+
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          # or
+          # api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: packages/concourse-ts/coverage/lcov.info
+          # or a comma-separated list for multiple reports
+          # coverage-reports: <PATH_TO_REPORT>, <PATH_TO_REPORT>
+
+  codacy-security-scan:
+    name: Codacy Security Scan
+    runs-on: ubuntu-latest
+
+    needs:
+      - tests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
+        with:
+          output: results.sarif
+          format: sarif
+          # Adjust severity of non-security issues
+          gh-code-scanning-compat: true
+          # Force 0 exit code to allow SARIF file generation
+          # This will hand over control about PR rejection to the GitHub side
+          max-allowed-issues: 2147483647
+
+      # Upload the SARIF file generated in the previous step
+      - name: Upload SARIF results file
+        uses: github/codeql-action/upload-sarif@main
+        with:
+          sarif_file: results.sarif
+
+  publish:
+    name: Publish packages
+
+    needs:
+      - tests
+      - codacy-security-scan
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
+      - uses: nrwl/nx-set-shas@v3
+
+      - run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+
+      - run: yarn nx workspace-lint
+
+      - run: yarn nx affected --target=lint --parallel=3
+      - run: yarn nx affected --target=build --parallel=3
+
+      # Publish new versions of affected packages
+      - env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -exu
+
+          for d in dist/packages/* ; do
+            cd "$d"
+            yarn publish . --access public
+            cd -
+          done

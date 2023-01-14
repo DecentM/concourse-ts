@@ -7,7 +7,7 @@
     "build": "nx build",
     "dev": "ts-node-dev playground.ts && fly vp -c playground.yml",
     "dev:cli": "rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/ci/**.ts",
-    "test": "c8 ava",
+    "test": "c8 --reporter=lcov --reporter=text ava",
     "t": "yarn test",
     "prepublishOnly": "rm -f README.md && cp ../../../README.md ."
   },
