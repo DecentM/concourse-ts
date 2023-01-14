@@ -26,11 +26,11 @@ export class Compilation {
   }
 
   public validate = () => {
-    const warnings = new WarningStore()
-
-    if (this.input instanceof Pipeline) {
-      warnings.copy_from(validate(this.input.serialise()))
+    if (!this.input || this.input?.constructor.name === Pipeline.name) {
+      return validate((this.input as Pipeline)?.serialise())
     }
+
+    const warnings = new WarningStore()
 
     // TODO: Validate tasks
     warnings.add_warning(
