@@ -17,7 +17,7 @@ export class RegistryImage extends ResourceType {
 
     this.source = {
       repository: 'concourse/registry-image-resource',
-      tag: input?.tag ?? 'latest',
+      tag: input?.tag ?? 'alpine',
     }
 
     if (init) {

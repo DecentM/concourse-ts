@@ -13,7 +13,7 @@ export class Git extends ResourceType {
 
     this.source = {
       repository: 'concourse/git-resource',
-      tag: input?.tag ?? 'latest',
+      tag: input?.tag ?? 'alpine',
     }
 
     if (init) {
