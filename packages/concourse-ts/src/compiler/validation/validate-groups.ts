@@ -47,9 +47,8 @@ export const validateGroups = (c: Type.Pipeline) => {
   const jobsGrouped: Record<string, boolean> = {}
 
   c.jobs?.forEach((job) => {
-    jobsGrouped[job.name] = c.groups.some((group) =>
-      group.jobs.includes(job.name)
-    )
+    jobsGrouped[job.name] =
+      c.groups?.some((group) => group.jobs?.includes(job.name)) ?? false
   })
 
   if (c.groups?.length) {
