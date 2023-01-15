@@ -1,10 +1,12 @@
 import test from 'ava'
 import {Compilation} from './compilation'
 
-import mainPipeline from '../../examples/corpity-corp/dev/ci/index.pipeline'
+import mainPipeline, {
+  Group,
+} from '../../examples/corpity-corp/dev/ci/index.pipeline'
 
 test('compiles example pipeline with no warnings', (t) => {
-  const compilation = new Compilation()
+  const compilation = new Compilation<Group>()
 
   compilation.set_input(mainPipeline())
 

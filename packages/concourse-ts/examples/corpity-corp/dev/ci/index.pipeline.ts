@@ -1,7 +1,7 @@
 // import {...} from '@corpity-corp/ci'
 import {Pipeline, Resource, Job} from '../../sre/src'
 
-type Group = 'static_analysis' | 'aws_deployment' | 'vercel_deployment'
+export type Group = 'static_analysis' | 'aws_deployment' | 'vercel_deployment'
 
 export default () => {
   return new Pipeline<Group>('test', (pipeline) => {
