@@ -9,7 +9,7 @@ export class Slack extends ResourceType {
   constructor(name: string, input?: SlackInput, init?: Initer<Slack>) {
     super(`${name}_type`)
 
-    this.type = 'docker-image'
+    this.type = 'registry-image'
 
     this.source = {
       repository: 'cfcommunity/slack-notification-resource',

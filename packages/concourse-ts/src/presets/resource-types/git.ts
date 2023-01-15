@@ -9,7 +9,7 @@ export class Git extends ResourceType {
   constructor(name: string, input?: GitInput, init?: Initer<Git>) {
     super(`${name}_type`)
 
-    this.type = 'git'
+    this.type = 'registry-image'
 
     this.source = {
       repository: 'concourse/git-resource',
