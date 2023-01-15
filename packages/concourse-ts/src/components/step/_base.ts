@@ -15,7 +15,7 @@ export abstract class Step<
 
   public timeout: Type.Duration = SixHours
 
-  public attempts = 3
+  public attempts: number
 
   protected tags: Type.Tags
 
