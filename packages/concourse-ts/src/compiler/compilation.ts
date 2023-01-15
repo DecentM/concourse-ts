@@ -6,10 +6,10 @@ import {Task} from '../components/task'
 import {validate} from './validation'
 import {ValidationWarningType, WarningStore} from './validation/declarations'
 
-export class Compilation {
-  private input?: Pipeline | Task
+export class Compilation<Group extends string = string> {
+  private input?: Pipeline<Group> | Task
 
-  public set_input(input: Pipeline | Task) {
+  public set_input(input: Pipeline<Group> | Task) {
     if (this.input) {
       throw new VError(
         'This compilation already has an input. Create a new compilation.'
@@ -27,7 +27,7 @@ export class Compilation {
 
   public validate = () => {
     if (!this.input || this.input?.constructor.name === Pipeline.name) {
-      return validate((this.input as Pipeline)?.serialise())
+      return validate((this.input as Pipeline<Group>)?.serialise())
     }
 
     const warnings = new WarningStore()
