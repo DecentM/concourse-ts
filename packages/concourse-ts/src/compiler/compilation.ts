@@ -35,7 +35,7 @@ export class Compilation<Group extends string = string> {
     // TODO: Validate tasks
     warnings.add_warning(
       ValidationWarningType.NonFatal,
-      'Task validation skipped, the input is not an instance of Pipeline'
+      'Task validation skipped, input is not an instance of Pipeline'
     )
 
     return warnings

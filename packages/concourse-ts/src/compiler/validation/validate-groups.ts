@@ -11,12 +11,7 @@ import {validateIdentifier} from './validate-identifier'
 
 export const validateGroups = (c: Type.Pipeline) => {
   const warnings = new WarningStore()
-  const jobsGrouped: Record<string, boolean> = {}
   const groupNames: Record<string, number> = {}
-
-  c.jobs?.forEach((job) => {
-    jobsGrouped[job.name] = false
-  })
 
   c.groups?.forEach((group, index) => {
     const location: Location = {section: 'groups', index}
@@ -45,6 +40,16 @@ export const validateGroups = (c: Type.Pipeline) => {
         `group '${groupName}' appears ${groupCount} times. Duplicate names are not allowed.`
       )
     }
+  })
+
+  // Check for ungrouped jobs. If at least one job is grouped, ALL jobs must be
+  // grouped.
+  const jobsGrouped: Record<string, boolean> = {}
+
+  c.jobs?.forEach((job) => {
+    jobsGrouped[job.name] = c.groups.some((group) =>
+      group.jobs.includes(job.name)
+    )
   })
 
   if (c.groups?.length) {
