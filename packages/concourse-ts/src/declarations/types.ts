@@ -273,8 +273,8 @@ export type VarSource =
   | VarSourceSsm
   | VarSourceSecretsManager
 
-export type GroupConfig = {
-  name: Identifier
+export type GroupConfig<GroupName extends Identifier = Identifier> = {
+  name: GroupName
   jobs?: Job['name'][]
 }
 

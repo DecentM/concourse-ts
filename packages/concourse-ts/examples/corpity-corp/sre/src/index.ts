@@ -1,7 +1,9 @@
 import * as ConcourseTs from '../../../../src'
 
-export class Pipeline extends ConcourseTs.Pipeline {
-  constructor(name: string, init?: ConcourseTs.Initer<Pipeline>) {
+export class Pipeline<
+  Group extends string = string
+> extends ConcourseTs.Pipeline<Group> {
+  constructor(name: string, init?: ConcourseTs.Initer<Pipeline<Group>>) {
     super(name, init)
 
     this.set_background_image_url('https://picsum.photos/1920/1080.jpg')

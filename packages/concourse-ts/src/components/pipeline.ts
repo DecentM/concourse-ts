@@ -6,8 +6,10 @@ import {Job} from './job'
 import {ResourceType} from './resource-type'
 import {deduplicate_by_identity} from '../utils/array-duplicates'
 
-export class Pipeline extends Serialisable<Type.Pipeline> {
-  constructor(public name: string, init?: Initer<Pipeline>) {
+export class Pipeline<
+  Group extends string = string
+> extends Serialisable<Type.Pipeline> {
+  constructor(public name: string, init?: Initer<Pipeline<Group>>) {
     super()
 
     if (init) {
@@ -17,10 +19,32 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
 
   private jobs?: Job[]
 
-  public add_job = (...inputs: Job[]) => {
+  public add_job = (job: Job, group?: Group) => {
     if (!this.jobs) this.jobs = []
 
-    this.jobs.push(...inputs)
+    this.jobs.push(job)
+
+    if (!group) return
+
+    // Find the group this job belongs to, and if there isn't one, push a new
+    // group to the groups list
+    const groupIndex = this.groups.findIndex(
+      (groupConfig) => groupConfig.name === group
+    )
+
+    if (groupIndex === -1) {
+      this.groups.push({
+        name: group,
+        jobs: [job.name],
+      })
+
+      return
+    }
+
+    this.groups[groupIndex] = {
+      name: group,
+      jobs: [...this.groups[groupIndex].jobs, job.name],
+    }
   }
 
   private display?: Type.DisplayConfig
@@ -31,13 +55,7 @@ export class Pipeline extends Serialisable<Type.Pipeline> {
     this.display.background_image = url
   }
 
-  private groups?: Type.GroupConfig[]
-
-  public add_group = (...inputs: Type.GroupConfig[]) => {
-    if (!this.groups) this.groups = []
-
-    this.groups.push(...inputs)
-  }
+  private groups?: Type.GroupConfig<Group>[]
 
   private var_sources?: Type.VarSource[]
 
