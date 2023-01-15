@@ -26,6 +26,10 @@ export class Pipeline<
 
     if (!group) return
 
+    if (!this.groups) {
+      this.groups = []
+    }
+
     // Find the group this job belongs to, and if there isn't one, push a new
     // group to the groups list
     const groupIndex = this.groups.findIndex(
