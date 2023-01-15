@@ -31,13 +31,10 @@ export const runApp = async (props: AppProps) => {
 
   try {
     await waitUntilExit()
-
-    clear()
-    cleanup()
   } catch (error) {
+    process.exitCode = 2
+  } finally {
     clear()
     cleanup()
-
-    process.exit(2)
   }
 }
