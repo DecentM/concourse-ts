@@ -117,7 +117,6 @@ jobs:
 
     needs:
       - tests
-      - codacy-security-scan
 
     runs-on: ubuntu-latest
 
