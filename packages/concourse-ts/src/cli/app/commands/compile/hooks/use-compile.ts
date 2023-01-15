@@ -84,7 +84,7 @@ const getPipelineOrTaskFromFile = async (
     )
   }
 
-  const file = await loadTypescript(filePath)
+  const file = await loadTypescript(fullPath)
 
   return file.default()
 }
