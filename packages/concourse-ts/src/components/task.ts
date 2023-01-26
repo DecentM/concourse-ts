@@ -20,9 +20,18 @@ export class Task<
     }
   }
 
+  public get filename() {
+    return `${this.name}.yml`
+  }
+
   private image_resource: Type.AnonymousResource
 
   public set_image_resource = (input: Type.AnonymousResource) => {
+    // TODO: Implement this as a validator instead of throwing here.
+    // https://concourse-ci.org/tasks.html#schema.task-config.image_resource
+
+    // This field is only required for tasks targeting the Linux platform.
+    // This field will be ignored for Windows and Darwin workers.
     if (this.platform !== PlatformLinux) {
       throw new VError(
         `Image resources cannot be created for ${this.platform}, only ${PlatformLinux}`

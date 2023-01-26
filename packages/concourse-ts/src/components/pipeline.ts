@@ -5,6 +5,7 @@ import {Resource} from './resource'
 import {Job} from './job'
 import {ResourceType} from './resource-type'
 import {deduplicate_by_identity} from '../utils/array-duplicates'
+import {Task} from './task'
 
 export class Pipeline<
   Group extends string = string
@@ -18,6 +19,10 @@ export class Pipeline<
   }
 
   private jobs?: Job[]
+
+  public get filename() {
+    return `${this.name}.yml`
+  }
 
   public add_job = (job: Job, group?: Group) => {
     if (!this.jobs) this.jobs = []
@@ -85,6 +90,16 @@ export class Pipeline<
 
   private get resource_types(): ResourceType[] {
     return this.resources?.map((r) => r.get_resource_type())
+  }
+
+  public get_tasks = () => {
+    const result: Task[] = []
+
+    this.jobs?.forEach((job) => {
+      result.push(...job.get_tasks())
+    })
+
+    return result
   }
 
   serialise() {

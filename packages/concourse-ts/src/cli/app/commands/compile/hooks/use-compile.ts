@@ -73,12 +73,10 @@ export const getType = (input: Pipeline | Task): 'pipeline' | 'task' => {
   return isPipeline(input) ? 'pipeline' : 'task'
 }
 
-const getPipelineOrTaskFromFile = async (
-  filePath: string
-): Promise<Pipeline | Task> => {
+const getPipelineFromFile = async (filePath: string): Promise<Pipeline> => {
   const fullPath = path.resolve(filePath)
 
-  if (!fileValid(fullPath)) {
+  if (!(await fileValid(fullPath))) {
     throw new VError(
       `${filePath} failed validation. Make sure your glob only resolves to Typescript files with a default export that returns a Pipeline instance.`
     )
@@ -116,32 +114,39 @@ export const useCompile = (props: CompileProps) => {
       .filter(([, state]) => state.status === 'started')
       .forEach(async ([file]) => {
         try {
-          const pipelineOrTask = await getPipelineOrTaskFromFile(
-            path.resolve(file)
-          )
-          const yamlString = compile(pipelineOrTask)
+          const pipeline = await getPipelineFromFile(path.resolve(file))
 
-          const outputPath = path.join(outputDir, getType(pipelineOrTask))
+          const compileResult = compile(pipeline, props.outputDirectory)
 
-          await mkdirp(outputPath)
-          await fs.writeFile(
-            path.join(outputPath, `${pipelineOrTask.name}.yml`),
-            yamlString
-          )
+          await Promise.all([
+            mkdirp(path.join(outputDir, 'pipeline')),
+            mkdirp(path.join(outputDir, 'task')),
+          ])
+
+          await Promise.all([
+            fs.writeFile(
+              compileResult.pipeline.filepath,
+              compileResult.pipeline.content
+            ),
+
+            ...compileResult.tasks.map((taskResult) =>
+              fs.writeFile(taskResult.filepath, taskResult.content)
+            ),
+          ])
 
           setFileState(file, {
-            type: getType(pipelineOrTask),
-            name: pipelineOrTask.name,
+            type: 'pipeline',
+            name: pipeline.name,
             status: 'compiled',
             error: null,
           })
         } catch (error) {
           try {
-            const pipelineOrTask = await getPipelineOrTaskFromFile(file)
+            const pipeline = await getPipelineFromFile(file)
 
             setFileState(file, {
-              type: getType(pipelineOrTask),
-              name: pipelineOrTask.name,
+              type: 'pipeline',
+              name: pipeline.name,
               status: 'errored',
               error: error.message,
             })

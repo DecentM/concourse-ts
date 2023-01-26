@@ -1,11 +1,11 @@
 import {Pipeline} from '../components/pipeline'
-import {Task} from '../components/task'
 import {Compilation} from './compilation'
 
 export const compile = <Group extends string = string>(
-  input: Pipeline<Group> | Task
+  input: Pipeline<Group>,
+  workdir: string
 ) => {
-  const compilation = new Compilation()
+  const compilation = new Compilation(workdir)
 
   compilation.set_input(input)
 

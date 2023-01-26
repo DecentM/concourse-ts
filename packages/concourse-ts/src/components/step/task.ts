@@ -29,10 +29,16 @@ export class TaskStep<
     this.task = task
   }
 
-  private task_path?: string
+  public get_task = () => {
+    return this.task
+  }
 
-  public set_task_path = (path: string) => {
-    this.task_path = path
+  public get filename() {
+    return `${this.name}.yml`
+  }
+
+  private get task_path() {
+    return this.task?.filename
   }
 
   public image?: Type.Identifier
