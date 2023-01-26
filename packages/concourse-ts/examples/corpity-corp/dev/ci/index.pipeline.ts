@@ -1,5 +1,5 @@
 // import {...} from '@corpity-corp/ci'
-import {Pipeline, Resource, Job, Task, Command} from '../../sre/src'
+import {Pipeline, Resource, Job, Task, ShellScript} from '../../sre/src'
 
 export type Group = 'static_analysis' | 'aws_deployment' | 'vercel_deployment'
 
@@ -8,7 +8,7 @@ export default () => {
     const git = new Resource.GitRepo('my_repo', {
       repository: 'project-zeus/webserver',
       branch: 'main',
-      ignore_paths: ['.ci', 'artifacts'],
+      ignore_paths: ['.ci', 'ci', 'artifacts'],
     })
 
     const slack = new Resource.SlackNotification('slack')
@@ -26,16 +26,10 @@ export default () => {
         },
       })
 
-      task.run = new Command('oci-build-script', (command) => {
-        command.path = '/bin/sh'
-
-        command.add_arg('-c')
-        command.add_arg(`
-          set -exu
-
-          echo Hellowo!
-        `)
-      })
+      task.run = new ShellScript(
+        'examples/corpity-corp/dev/ci',
+        'some-script.sh'
+      )
     })
 
     testJob.add_step(

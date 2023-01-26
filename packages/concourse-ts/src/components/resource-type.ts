@@ -2,7 +2,6 @@ import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
-import {OneMinute} from '../defaults/durations/one-minute'
 import {is_duration} from '../utils'
 import {Resource} from './resource'
 
@@ -25,7 +24,7 @@ export class ResourceType<
 
   public source?: SourceType
 
-  private check_every: Type.Duration = OneMinute
+  private check_every?: Type.Duration
 
   public set_check_every = (input: Type.Duration) => {
     if (!is_duration(input)) {

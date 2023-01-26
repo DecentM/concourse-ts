@@ -1,7 +1,6 @@
 import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
-import {LogRetentionPolicyTenBuilds} from '../defaults/log-retention-policies/ten-builds'
 
 import {Resource} from './resource'
 import {AnyStep, DoStep, TaskStep} from './step'
@@ -29,13 +28,13 @@ export class Job extends Serialisable<Type.Job> {
     this.plan.unshift(...steps)
   }
 
-  public build_log_retention = LogRetentionPolicyTenBuilds
+  public build_log_retention?: Type.BuildLogRetentionPolicy
 
-  public disable_manual_trigger = false
+  public disable_manual_trigger?: boolean
 
-  public interruptible = true
+  public interruptible?: boolean
 
-  public max_in_flight = 3
+  public max_in_flight?: number
 
   public old_name?: string
 

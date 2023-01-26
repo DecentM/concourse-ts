@@ -3,7 +3,7 @@ import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
-import {OneMinute} from '../defaults/durations/one-minute'
+import {OneMinute} from '../presets/durations/one-minute'
 
 import {is_duration} from '../utils/duration'
 

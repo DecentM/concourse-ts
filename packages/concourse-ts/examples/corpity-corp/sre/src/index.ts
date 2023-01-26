@@ -33,3 +33,5 @@ export class Task extends ConcourseTs.Task {
 }
 
 export class Command extends ConcourseTs.Command {}
+
+export class ShellScript extends ConcourseTs.Presets.Command.ShellScript {}
