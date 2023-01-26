@@ -6,6 +6,7 @@ import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 import * as Commands from '../presets/commands'
 import * as Platforms from '../presets/platforms'
+import {BytesInput, get_bytes} from '../utils/bytes'
 
 import {Command} from './command'
 import {TaskStep} from './step'
@@ -59,8 +60,8 @@ export class Task<
     this.container_limits.cpu = input
   }
 
-  public set_memory_limit_percent = (input: number) => {
-    this.container_limits.memory = input
+  public set_memory_limit = (input: BytesInput) => {
+    this.container_limits.memory = get_bytes(input)
   }
 
   private inputs: Type.TaskInput<Input>[]

@@ -28,7 +28,7 @@ export class Task extends ConcourseTs.Task {
     super(name, init)
 
     this.set_cpu_limit_percent(50)
-    this.set_memory_limit_percent(50)
+    this.set_memory_limit({mb: 10})
   }
 }
 

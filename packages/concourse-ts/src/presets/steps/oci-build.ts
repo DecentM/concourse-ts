@@ -11,7 +11,7 @@ export class OciBuildTaskStep extends TaskStep {
       task.platform = 'linux'
 
       task.set_cpu_limit_percent(50)
-      task.set_memory_limit_percent(50)
+      task.set_memory_limit({mb: 10})
 
       task.set_image_resource({
         type: 'registry-image',
