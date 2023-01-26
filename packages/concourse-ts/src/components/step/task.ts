@@ -33,12 +33,10 @@ export class TaskStep<
     return this.task
   }
 
-  public get filename() {
-    return `${this.name}.yml`
-  }
+  private file?: string
 
-  private get task_path() {
-    return this.task?.filename
+  public set_file = (file: string) => {
+    this.file = file
   }
 
   public image?: Type.Identifier
@@ -91,17 +89,17 @@ export class TaskStep<
   }
 
   public serialise() {
-    if (!this.task && !this.task_path) {
+    if (!this.task && !this.file) {
       throw new VError(
-        'Cannot serialise TaskStep because it has no task. Either set "task" or "task_path"'
+        'Cannot serialise TaskStep because it has no task. Either set "task" or "file"'
       )
     }
 
     const result: Type.TaskStep = {
       ...this.serialise_base(),
-      task: this.task?.name ?? this.task_path,
-      config: this.task?.serialise() ?? undefined,
-      file: this.task_path,
+      task: this.task?.name ?? this.file,
+      config: this.file ? undefined : this.task?.serialise(),
+      file: this.file,
       image: this.image,
       privileged: this.privileged,
       vars: this.vars,

@@ -31,3 +31,5 @@ export class Task extends ConcourseTs.Task {
     this.set_memory_limit_percent(50)
   }
 }
+
+export class Command extends ConcourseTs.Command {}

@@ -6,6 +6,7 @@ import * as Type from '../declarations/types'
 
 import {RunNotImplementedCommand} from '../defaults/commands/run-not-implemented'
 import {PlatformLinux} from '../defaults/platforms'
+import {Command} from './command'
 import {TaskStep} from './step'
 
 export class Task<
@@ -18,10 +19,6 @@ export class Task<
     if (init) {
       init(this)
     }
-  }
-
-  public get filename() {
-    return `${this.name}.yml`
   }
 
   private image_resource: Type.AnonymousResource
@@ -43,7 +40,7 @@ export class Task<
 
   public platform = PlatformLinux
 
-  public run = RunNotImplementedCommand
+  public run: Command = RunNotImplementedCommand
 
   private caches: Type.TaskCache[]
 
@@ -107,7 +104,7 @@ export class Task<
     const result: Type.Task<Input, Output> = {
       image_resource: this.image_resource,
       platform: this.platform,
-      run: this.run,
+      run: this.run.serialise(),
       caches: this.caches,
       container_limits: this.container_limits,
       inputs: this.inputs,

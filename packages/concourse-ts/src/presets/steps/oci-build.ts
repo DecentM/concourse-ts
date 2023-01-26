@@ -1,3 +1,4 @@
+import {Command} from '../../components/command'
 import {TaskStep} from '../../components/step'
 import {Task} from '../../components/task'
 import {Initer} from '../../declarations/initialisable'
@@ -23,9 +24,9 @@ export class OciBuildTaskStep extends TaskStep {
         name: 'image',
       })
 
-      task.run = {
-        path: 'build',
-      }
+      task.run = new Command('oci-build', (command) => {
+        command.path = 'build'
+      })
     })
 
     this.privileged = true

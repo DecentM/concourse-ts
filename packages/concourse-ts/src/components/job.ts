@@ -5,7 +5,6 @@ import {LogRetentionPolicyTenBuilds} from '../defaults/log-retention-policies/te
 
 import {Resource} from './resource'
 import {AnyStep, DoStep, TaskStep} from './step'
-import {Task} from './task'
 
 export class Job extends Serialisable<Type.Job> {
   constructor(public name: string, init?: Initer<Job>) {
@@ -125,12 +124,12 @@ export class Job extends Serialisable<Type.Job> {
     return result
   }
 
-  public get_tasks = (): Task[] => {
-    const result: Task[] = []
+  public get_task_steps = () => {
+    const result: TaskStep[] = []
 
     this.plan?.forEach((step) => {
       if (step instanceof TaskStep) {
-        result.push(step.get_task())
+        result.push(step)
       }
     })
 

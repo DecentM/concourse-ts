@@ -1,5 +1,5 @@
 // import {...} from '@corpity-corp/ci'
-import {Pipeline, Resource, Job, Task} from '../../sre/src'
+import {Pipeline, Resource, Job, Task, Command} from '../../sre/src'
 
 export type Group = 'static_analysis' | 'aws_deployment' | 'vercel_deployment'
 
@@ -26,17 +26,16 @@ export default () => {
         },
       })
 
-      task.run = {
-        path: '/bin/sh',
+      task.run = new Command('oci-build-script', (command) => {
+        command.path = '/bin/sh'
 
-        args: [
-          '-c',
-          `
-            set -exu
-            echo Hellowo!
-          `,
-        ],
-      }
+        command.add_arg('-c')
+        command.add_arg(`
+          set -exu
+
+          echo Hellowo!
+        `)
+      })
     })
 
     testJob.add_step(

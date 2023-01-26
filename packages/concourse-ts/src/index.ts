@@ -12,6 +12,7 @@ export * from './components/resource'
 export * from './components/resource-type'
 export * from './components/task'
 export * from './components/job'
+export * from './components/command'
 
 export * as Cli from './cli'
 export * as Presets from './presets'
