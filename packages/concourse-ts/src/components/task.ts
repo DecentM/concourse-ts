@@ -8,8 +8,11 @@ import {RunNotImplementedCommand} from '../defaults/commands/run-not-implemented
 import {PlatformLinux} from '../defaults/platforms'
 import {TaskStep} from './step'
 
-export class Task extends Serialisable<Type.Task> {
-  constructor(public name: string, init?: Initer<Task>) {
+export class Task<
+  Input extends Type.Identifier = Type.Identifier,
+  Output extends Type.Identifier = Type.Identifier
+> extends Serialisable<Type.Task<Input, Output>> {
+  constructor(public name: string, init?: Initer<Task<Input, Output>>) {
     super()
 
     if (init) {
@@ -53,17 +56,17 @@ export class Task extends Serialisable<Type.Task> {
     this.container_limits.memory = input
   }
 
-  private inputs: Type.TaskInput[]
+  private inputs: Type.TaskInput<Input>[]
 
-  public add_input = (...inputs: Type.TaskInput[]) => {
+  public add_input = (...inputs: Type.TaskInput<Input>[]) => {
     if (!this.inputs) this.inputs = []
 
     this.inputs.push(...inputs)
   }
 
-  private outputs: Type.TaskOutput[]
+  private outputs: Type.TaskOutput<Output>[]
 
-  public add_output = (...outputs: Type.TaskOutput[]) => {
+  public add_output = (...outputs: Type.TaskOutput<Output>[]) => {
     if (!this.outputs) this.outputs = []
 
     this.outputs.push(...outputs)
@@ -81,8 +84,8 @@ export class Task extends Serialisable<Type.Task> {
 
   public rootfs_uri?: string
 
-  public as_task_step = (init?: Initer<TaskStep>) => {
-    return new TaskStep(`${this.name}_step`, (taskStep) => {
+  public as_task_step = (init?: Initer<TaskStep<Input, Output>>) => {
+    return new TaskStep<Input, Output>(`${this.name}_step`, (taskStep) => {
       taskStep.set_task(this)
 
       if (init) {
@@ -92,7 +95,7 @@ export class Task extends Serialisable<Type.Task> {
   }
 
   public serialise() {
-    const result: Type.Task = {
+    const result: Type.Task<Input, Output> = {
       image_resource: this.image_resource,
       platform: this.platform,
       run: this.run,

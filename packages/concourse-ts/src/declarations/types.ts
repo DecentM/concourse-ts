@@ -77,12 +77,12 @@ export type ContainerLimits = {
 
 export type Platform = 'linux' | 'darwin' | 'windows'
 
-export type Task = {
+export type Task<Input extends Identifier, Output extends Identifier> = {
   platform: Platform
   image_resource: AnonymousResource
   run: Command
-  inputs?: TaskInput[]
-  outputs?: TaskOutput[]
+  inputs?: TaskInput<Input>[]
+  outputs?: TaskOutput<Output>[]
   caches?: TaskCache[]
   params?: EnvVars
   rootfs_uri?: string
@@ -119,27 +119,30 @@ export type PutStep = {
   get_params?: Config
 } & StepBase
 
-export type TaskInput = {
-  name: Identifier
+export type TaskInput<TransferType extends Identifier> = {
+  name: TransferType
   path?: DirPath
   optional?: boolean
 }
 
-export type TaskOutput = {
-  name: Identifier
+export type TaskOutput<TransferType extends Identifier> = {
+  name: TransferType
   path?: DirPath
 }
 
-export type TaskStep = {
+export type TaskStep<
+  Input extends Identifier = Identifier,
+  Output extends Identifier = Identifier
+> = {
   task: Identifier
-  config?: Task
+  config?: Task<Input, Output>
   file?: FilePath
   image?: Identifier
   privileged?: boolean
   vars?: Vars
   params?: EnvVars
-  input_mapping?: Record<TaskInput['name'], Identifier>
-  output_mapping?: Record<TaskOutput['name'], Identifier>
+  input_mapping?: Record<Input, Identifier>
+  output_mapping?: Record<Output, Identifier>
 } & StepBase
 
 export type SetPipeline = Identifier | 'self'

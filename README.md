@@ -21,10 +21,9 @@
 ### About
 
 Concourse by default accepts yaml as its configuration, which makes it nearly
-impossible to reuse code for it. However, the main advantage in this is that
-since Concourse is stateless, full pipeline configuration, along with extensions
-are completely contained within the yaml file. We can fix the code reusability
-issue by creating a library that generates yaml config files.
+impossible to reuse code for it. Its main advantage is its statelessness and
+self-contained nature, but this makes config reuse diffucult. We can fix the
+code reusability issue by creating a library that generates yaml using code.
 
 This is a meta-package that's designed to be used to create a library that's
 specific to an organisation's infrastructure. The dependency chain looks like

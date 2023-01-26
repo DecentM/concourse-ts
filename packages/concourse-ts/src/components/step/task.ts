@@ -8,8 +8,14 @@ import {Task} from '../task'
 
 import {Step} from './_base'
 
-export class TaskStep extends Step<Type.TaskStep> {
-  constructor(public override name: string, init?: Initer<TaskStep>) {
+export class TaskStep<
+  Input extends Type.Identifier = Type.Identifier,
+  Output extends Type.Identifier = Type.Identifier
+> extends Step<Type.TaskStep> {
+  constructor(
+    public override name: string,
+    init?: Initer<TaskStep<Input, Output>>
+  ) {
     super(name)
 
     if (init) {
@@ -17,9 +23,9 @@ export class TaskStep extends Step<Type.TaskStep> {
     }
   }
 
-  private task?: Task
+  private task?: Task<Input, Output>
 
-  public set_task = (task: Task) => {
+  public set_task = (task: Task<Input, Output>) => {
     this.task = task
   }
 
@@ -53,24 +59,23 @@ export class TaskStep extends Step<Type.TaskStep> {
     })
   }
 
-  private input_mapping?: Record<Type.TaskInput['name'], Type.Identifier>
+  private input_mapping?: Record<Input, Type.Identifier>
 
-  public set_input_mapping = (
-    input: Type.Identifier,
-    mapped_input: Type.Identifier
-  ) => {
-    if (!this.input_mapping) this.input_mapping = {}
+  public set_input_mapping = (input: Input, mapped_input: Type.Identifier) => {
+    if (!this.input_mapping)
+      this.input_mapping = {} as Record<Input, Type.Identifier>
 
     this.input_mapping[input] = mapped_input
   }
 
-  private output_mapping?: Record<Type.TaskOutput['name'], Type.Identifier>
+  private output_mapping?: Record<Output, Type.Identifier>
 
   public set_output_mapping = (
-    output: Type.Identifier,
+    output: Output,
     mapped_output: Type.Identifier
   ) => {
-    if (!this.output_mapping) this.output_mapping = {}
+    if (!this.output_mapping)
+      this.output_mapping = {} as Record<Output, Type.Identifier>
 
     this.output_mapping[output] = mapped_output
   }
