@@ -2,10 +2,11 @@ import {VError} from 'verror'
 
 import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
-import * as Type from '../declarations/types'
 
-import {RunNotImplementedCommand} from '../defaults/commands/run-not-implemented'
-import {PlatformLinux} from '../defaults/platforms'
+import * as Type from '../declarations/types'
+import * as Commands from '../presets/commands'
+import * as Platforms from '../presets/platforms'
+
 import {Command} from './command'
 import {TaskStep} from './step'
 
@@ -29,18 +30,18 @@ export class Task<
 
     // This field is only required for tasks targeting the Linux platform.
     // This field will be ignored for Windows and Darwin workers.
-    if (this.platform !== PlatformLinux) {
+    if (this.platform !== Platforms.Linux) {
       throw new VError(
-        `Image resources cannot be created for ${this.platform}, only ${PlatformLinux}`
+        `Image resources cannot be created for ${this.platform}, only ${Platforms.Linux}`
       )
     }
 
     this.image_resource = input
   }
 
-  public platform = PlatformLinux
+  public platform = Platforms.Linux
 
-  public run: Command = RunNotImplementedCommand
+  public run: Command = new Commands.RunNotImplemented()
 
   private caches: Type.TaskCache[]
 

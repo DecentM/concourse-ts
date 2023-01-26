@@ -1,6 +1,6 @@
 import {BuildLogRetentionPolicy} from '../../declarations/types'
 
-export const LogRetentionPolicyOneMonth: BuildLogRetentionPolicy = {
-  days: 30,
+export const TenBuilds: BuildLogRetentionPolicy = {
+  builds: 10,
   minimum_succeeded_builds: 7,
 }

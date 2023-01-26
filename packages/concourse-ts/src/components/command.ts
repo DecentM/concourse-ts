@@ -5,7 +5,7 @@ import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 
 export class Command extends Serialisable<Type.Command> {
-  constructor(public name: string, init: Initer<Command>) {
+  constructor(public name: string, init?: Initer<Command>) {
     super()
 
     if (init) {

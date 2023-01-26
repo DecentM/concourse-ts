@@ -1,5 +1,3 @@
-export * from './utils/with-try'
-
 export * from './components/step'
 export {Initer} from './declarations/initialisable'
 export {BuildMetadata} from './declarations/metadata'

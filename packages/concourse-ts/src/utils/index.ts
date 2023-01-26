@@ -1,2 +1,5 @@
 export * from './duration'
 export * from './secret'
+export * from './array-duplicates'
+export * from './with-try'
+export * from './type-of'
