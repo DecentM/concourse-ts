@@ -5,6 +5,10 @@ export type BytesInput = {
   gb?: number
 }
 
+const kb = 1_000
+const mb = kb * 1000
+const gb = mb * 1000
+
 export const get_bytes = (input: BytesInput): number => {
   let value = 0
 
@@ -13,15 +17,15 @@ export const get_bytes = (input: BytesInput): number => {
   }
 
   if (input.kb) {
-    value += input.kb * 1000
+    value += input.kb * kb
   }
 
   if (input.mb) {
-    value += input.mb * 100_000
+    value += input.mb * mb
   }
 
   if (input.gb) {
-    value += input.gb * 100_000_000
+    value += input.gb * gb
   }
 
   return value
