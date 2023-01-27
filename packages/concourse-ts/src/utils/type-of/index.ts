@@ -41,9 +41,14 @@ export const type_of = (input: unknown): Type => {
     // Throws if the input is not an object
     Object.getPrototypeOf(input)
     return 'object'
+
+    // We should never get further than this because all types should be covered
+    // with the code so far. Additional discovered types should be added before this.
+    /* c8 ignore start */
   } catch {
     // skip
   }
 
   return 'unknown'
+  /* c8 ignore end */
 }

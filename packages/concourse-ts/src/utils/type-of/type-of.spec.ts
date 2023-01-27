@@ -1,5 +1,5 @@
 import test from 'ava'
-import {type_of} from './type-of'
+import {type_of} from '.'
 
 test('null', (t) => {
   t.is(type_of(null), 'null')
@@ -39,9 +39,8 @@ test('function', (t) => {
     'function'
   )
   t.is(
-    type_of(function () {
-      return null
-    }),
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    type_of(function () {}),
     'function'
   )
 })
