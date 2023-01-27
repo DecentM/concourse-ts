@@ -3,9 +3,8 @@ import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
-import {OneMinute} from '../presets/durations/one-minute'
 
-import {is_duration} from '../utils/duration'
+import {DurationInput, get_duration} from '../utils/duration'
 
 import {ResourceType} from './resource-type'
 import {AnyStep, DoStep, GetStep, PutStep} from './step'
@@ -45,18 +44,10 @@ export class Resource<
 
   public source?: SourceType
 
-  private check_every?: Type.Duration = OneMinute
+  private check_every?: Type.Duration
 
-  public set_check_every = (input: Type.Duration) => {
-    // Accepts Duration or "never". Regular Duration does not have a concept for
-    // "never", this is a local override.
-    //
-    // concourse-ci.org/resources.html#schema.resource.check_every
-    if (!is_duration(input, ['never'])) {
-      throw new VError(`Duration ${input} is malformed`)
-    }
-
-    this.check_every = input
+  public set_check_every = (input: DurationInput | 'never') => {
+    this.check_every = get_duration(input)
   }
 
   /**

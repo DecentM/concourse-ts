@@ -1,5 +1,5 @@
 import {VError} from 'verror'
-import {Presets, Utils, BuildMetadata} from '../../../../../src'
+import {Presets, BuildMetadata} from '../../../../../src'
 
 export class SlackNotification extends Presets.Resource.SlackNotification {
   constructor(name: string) {
@@ -7,7 +7,7 @@ export class SlackNotification extends Presets.Resource.SlackNotification {
       url: 'https://hooks.slack.com/services/XXXXX',
     })
 
-    this.set_check_every(Utils.get_duration({hours: 1}))
+    this.set_check_every({hours: 1})
   }
 
   public readonly abort_string = `Job "${BuildMetadata.BuildJobName}" in pipeline "${BuildMetadata.BuildPipelineName}" - manually aborted!\n${BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`

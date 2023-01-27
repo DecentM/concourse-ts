@@ -2,7 +2,7 @@ import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
 import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
-import {is_duration} from '../utils'
+import {DurationInput, get_duration} from '../utils'
 import {Resource} from './resource'
 
 export class ResourceType<
@@ -26,12 +26,14 @@ export class ResourceType<
 
   private check_every?: Type.Duration
 
-  public set_check_every = (input: Type.Duration) => {
-    if (!is_duration(input)) {
-      throw new VError(`Duration ${input} is malformed`)
+  public set_check_every = (input: DurationInput | 'never') => {
+    if (input === 'never') {
+      throw new VError(
+        `Duration "${input}" given to ${this.name} is not allowed`
+      )
     }
 
-    this.check_every = input
+    this.check_every = get_duration(input)
   }
 
   private defaults?: Type.Config

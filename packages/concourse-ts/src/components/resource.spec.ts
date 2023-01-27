@@ -1,7 +1,6 @@
 import test from 'ava'
 import {Config, Duration} from '../declarations/types'
 import {ResourceType, Resource} from '..'
-import {get_duration} from '../utils'
 
 test('throws if the type is unassigned', (t) => {
   const r = new Resource('my-r', null as unknown as ResourceType<Config>)
@@ -34,30 +33,28 @@ test('stores tags', (t) => {
 
 test('stores valid Durations into check_every', (t) => {
   const r = new ResourceType('my-rt').create_resource('r')
-  const one_minute = get_duration({minutes: 1})
 
-  r.set_check_every(one_minute)
+  r.set_check_every({minutes: 1})
 
   const result = r.serialise()
 
-  t.is(result.check_every, one_minute)
+  t.is(result.check_every, '1m' as Duration)
 })
 
 test('stores "never" into check_every', (t) => {
   const r = new ResourceType('my-rt').create_resource('r')
-  const never = get_duration('never')
 
-  r.set_check_every(never)
+  r.set_check_every('never')
 
   const result = r.serialise()
 
-  t.is(result.check_every, never)
+  t.is(result.check_every, 'never')
 })
 
 test('refuses to store invalid Durations into check_every', (t) => {
   const r = new ResourceType('my-rt').create_resource('r')
 
-  t.throws(() => r.set_check_every('1a' as Duration))
+  t.throws(() => r.set_check_every({hours: -1}))
 })
 
 test('initialiser passes reference to "this"', (t) => {

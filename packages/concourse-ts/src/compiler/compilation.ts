@@ -7,7 +7,7 @@ import {validate} from './validation'
 import {ValidationWarningType, WarningStore} from './validation/declarations'
 
 export class Compilation<Group extends string = string> {
-  constructor(private output_dir: string) {}
+  constructor(private output_dir = '.') {}
 
   private input?: Pipeline<Group>
 
@@ -65,7 +65,9 @@ export class Compilation<Group extends string = string> {
   }
 
   public validate = () => {
-    if (!this.input || this.input?.constructor.name !== Pipeline.name) {
+    // Validate already checks for falsiness, we just want to check for its
+    // constructor here if input exists.
+    if (this.input && this.input?.constructor.name !== Pipeline.name) {
       const warnings = new WarningStore()
 
       return warnings.add_warning(

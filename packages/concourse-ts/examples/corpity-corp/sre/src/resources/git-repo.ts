@@ -32,6 +32,6 @@ export class GitRepo extends ConcourseTs.Presets.Resource.GitRepo {
       ],
     })
 
-    this.set_check_every(ConcourseTs.Utils.get_duration({minutes: 5}))
+    this.set_check_every({minutes: 5})
   }
 }

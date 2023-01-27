@@ -19,10 +19,6 @@ export const is_duration = (
   return !!DURATION_RX.exec(input)
 }
 
-export const is_never = (input: Duration): input is never => {
-  return input === 'never'
-}
-
 /**
  * https://learn.microsoft.com/en-us/javascript/api/@azure/keyvault-certificates/requireatleastone?view=azure-node-latest
  */

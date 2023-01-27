@@ -1,4 +1,4 @@
-import {Presets, Utils} from '../../../../../src'
+import {Presets} from '../../../../../src'
 
 export type DockerImageInput = {
   name: string
@@ -17,7 +17,7 @@ export class PrivateQuayImage extends Presets.Resource.RegistryImage {
       tag: input.tag ?? 'latest',
     })
 
-    this.set_check_every(Utils.get_duration({minutes: 5}))
+    this.set_check_every({minutes: 5})
 
     this.icon = 'ferry'
   }
