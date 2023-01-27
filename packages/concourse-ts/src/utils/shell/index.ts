@@ -8,7 +8,10 @@ export const is_shebang = (line: string) => {
 
 export const parse_shebang = (shebang: string) => {
   if (!is_shebang(shebang)) {
-    throw new VError('Shebang must start with #!')
+    return {
+      path: '',
+      args: [],
+    }
   }
 
   const cmdline = shebang.slice(2)
