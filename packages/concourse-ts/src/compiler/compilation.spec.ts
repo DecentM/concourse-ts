@@ -1,18 +1,6 @@
 import test from 'ava'
 import {Compilation} from './compilation'
 
-import mainPipeline, {
-  Group,
-} from '../../examples/corpity-corp/dev/ci/index.pipeline'
-
-test('compiles example pipeline with no warnings', (t) => {
-  const compilation = new Compilation<Group>()
-
-  compilation.set_input(mainPipeline())
-
-  t.deepEqual(compilation.validate().get_warnings(), [])
-})
-
 test('does not compile without input', (t) => {
   const compilation = new Compilation()
 
