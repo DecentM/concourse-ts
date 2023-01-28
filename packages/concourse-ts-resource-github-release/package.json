@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-resource-github-release",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "commonjs",
   "license": "MIT",
   "scripts": {
