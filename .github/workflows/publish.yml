@@ -207,6 +207,6 @@ jobs:
         run: |
           set -exu
 
-          cd "${{ matrix.project }}"
+          cd "packages/${{ matrix.project }}"
           yarn publish . --access public
           cd -

@@ -9,7 +9,7 @@
     "dev:cli": "rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/ci/**.ts",
     "test": "c8 --reporter=lcov --reporter=text ava",
     "t": "yarn test",
-    "prepublishOnly": "rm -f README.md && cp ../../../README.md ."
+    "prepublishOnly": "rm -f README.md && cp ../../README.md ."
   },
   "repository": {
     "url": "https://github.com/DecentM/concourse-ts"
