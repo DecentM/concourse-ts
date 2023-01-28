@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-resource-slack",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "commonjs",
   "license": "MIT",
   "scripts": {
