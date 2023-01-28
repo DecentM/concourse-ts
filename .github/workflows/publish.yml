@@ -150,8 +150,8 @@ jobs:
         with:
           sarif_file: results.sarif
 
-  publish:
-    name: Publish packages
+  build:
+    name: Build packages
 
     needs:
       - tests
@@ -190,13 +190,43 @@ jobs:
           set -exu
           yarn --frozen-lockfile --non-interactive
 
-      - run: yarn nx run ${{ matrix.project }}:build
+      - name: Build ${{ matrix.project }}
+        run: yarn nx run ${{ matrix.project }}:build
+
+      - name: Upload build result
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-${{ matrix.project }}
+          path: dist
+
+  publish:
+    name: Publish packages
+
+    needs:
+      - build
+      - determine-matrix
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.determine-matrix.outputs.affected) }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: dist-${{ matrix.project }}
+          path: dist
 
       - name: Compare npm with local (versions)
         uses: Rober19/compare-npm-versions-ci@master
         id: package_version
         with:
-          path: ./packages/${{ matrix.project }}
+          path: dist/packages/${{ matrix.project }}
           npm_package_name: '@decentm/${{ matrix.project }}'
 
       # Publish new versions of affected packages
@@ -207,6 +237,6 @@ jobs:
         run: |
           set -exu
 
-          cd "packages/${{ matrix.project }}"
+          cd "dist/packages/${{ matrix.project }}"
           yarn publish . --access public
           cd -
