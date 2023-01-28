@@ -64,13 +64,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Cache
+      - name: Cache node_modules
         uses: actions/cache@v3
         with:
           path: node_modules
           key: lock-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             lock-
+
+      - name: Cache NX computations
+        uses: actions/cache@v3
+        with:
+          path: .nx-cache
+          key: nx-cache
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -135,6 +141,12 @@ jobs:
           key: lock-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             lock-
+
+      - name: Cache NX computations
+        uses: actions/cache@v3
+        with:
+          path: .nx-cache
+          key: nx-cache
 
       - name: Setup Node
         uses: actions/setup-node@v3
