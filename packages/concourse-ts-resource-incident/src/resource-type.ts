@@ -4,8 +4,12 @@ export type Input = {
   tag?: string
 }
 
-export class Incident.yamlResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<Incident.yamlResourceType>) {
+export class IncidentResourceType extends ResourceType {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<IncidentResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'

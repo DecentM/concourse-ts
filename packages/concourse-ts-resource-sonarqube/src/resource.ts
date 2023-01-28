@@ -1,5 +1,5 @@
 import { Resource } from '@decentm/concourse-ts'
-import { Appcenter.yamlResourceType } from './resource-type'
+import { SonarqubeResourceType } from './resource-type'
 
 type Source = {
   // TODO: Fill this out
@@ -9,10 +9,10 @@ export type PutParams = {
   // TODO: Fill this out
 }
 
-export class Appcenter.yamlResource extends Resource<Source, PutParams> {
+export class SonarqubeResource extends Resource<Source, PutParams> {
   constructor(
     public override name: string,
-    type: Appcenter.yamlResourceType,
+    type: SonarqubeResourceType,
     source: Source
   ) {
     super(name, type)

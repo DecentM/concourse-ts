@@ -1,5 +1,5 @@
 {
-  "name": "@decentm/concourse-ts-resource-appcenter.yaml",
+  "name": "@decentm/concourse-ts-resource-incident",
   "version": "0.0.1",
   "type": "commonjs",
   "license": "MIT",

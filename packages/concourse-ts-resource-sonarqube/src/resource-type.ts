@@ -4,8 +4,12 @@ export type Input = {
   tag?: string
 }
 
-export class Appcenter.yamlResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<Appcenter.yamlResourceType>) {
+export class SonarqubeResourceType extends ResourceType {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<SonarqubeResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'

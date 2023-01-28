@@ -1,5 +1,5 @@
 {
-  "name": "@decentm/concourse-ts-resource-sonarqube.yaml",
+  "name": "@decentm/concourse-ts-resource-appcenter",
   "version": "0.0.1",
   "type": "commonjs",
   "license": "MIT",

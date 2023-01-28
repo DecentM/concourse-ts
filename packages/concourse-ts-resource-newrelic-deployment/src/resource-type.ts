@@ -4,8 +4,12 @@ export type Input = {
   tag?: string
 }
 
-export class 22NewrelicDeploymentResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<22NewrelicDeploymentResourceType>) {
+export class NewrelicDeploymentResourceType extends ResourceType {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<NewrelicDeploymentResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'

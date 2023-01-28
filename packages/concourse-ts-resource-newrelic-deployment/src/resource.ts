@@ -1,5 +1,5 @@
 import { Resource } from '@decentm/concourse-ts'
-import { 22NewrelicDeploymentResourceType } from './resource-type'
+import { NewrelicDeploymentResourceType } from './resource-type'
 
 type Source = {
   // TODO: Fill this out
@@ -9,10 +9,10 @@ export type PutParams = {
   // TODO: Fill this out
 }
 
-export class 22NewrelicDeploymentResource extends Resource<Source, PutParams> {
+export class NewrelicDeploymentResource extends Resource<Source, PutParams> {
   constructor(
     public override name: string,
-    type: 22NewrelicDeploymentResourceType,
+    type: NewrelicDeploymentResourceType,
     source: Source
   ) {
     super(name, type)
