@@ -238,14 +238,15 @@ jobs:
           path: dist
 
       - name: Compare npm with local (versions)
-        uses: Rober19/compare-npm-versions-ci@master
-        id: package_version
+        id: check
+        uses: EndBug/version-check@v2
         with:
-          path: dist/packages/${{ matrix.project }}
-          npm_package_name: '@decentm/${{ matrix.project }}'
+          file-url: https://unpkg.com/@decentm/${{ matrix.project }}@latest/package.json
+          static-checking: localIsNew
+          file-name: ./dist/package.json
 
       - name: Setup Node
-        if: steps.package_version.outputs.npm_is_greater == 'false'
+        if: steps.check.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
@@ -253,7 +254,7 @@ jobs:
 
       # Publish new versions of affected packages
       - name: Publish to NPM
-        if: steps.package_version.outputs.npm_is_greater == 'false'
+        if: steps.check.outputs.changed == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
