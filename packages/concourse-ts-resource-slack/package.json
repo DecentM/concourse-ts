@@ -20,7 +20,7 @@
       "tsconfig-paths/register"
     ]
   },
-  "dependencies": {
+  "peerDependencies": {
     "@decentm/concourse-ts": "0.x"
   },
   "devDependencies": {
