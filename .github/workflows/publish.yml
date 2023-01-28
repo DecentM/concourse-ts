@@ -61,6 +61,10 @@ jobs:
     needs:
       - determine-matrix
 
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.determine-matrix.outputs.affected) }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -73,8 +77,8 @@ jobs:
         with:
           path: |
             node_modules
-            packages/*/node_modules
-          key: lock-${{ hashFiles('yarn.lock') }}
+            packages/${{ matrix.project }}/node_modules
+          key: lock-${{ matrix.project }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             lock-
 
@@ -99,17 +103,15 @@ jobs:
 
       - uses: nrwl/nx-set-shas@v3
 
-      - run: yarn nx workspace-lint
+      - run: yarn nx run ${{ matrix.project }}:lint
 
-      - run: yarn nx affected --target=lint --parallel=3
-
-      - run: yarn nx affected --target=test --parallel=3
+      - run: yarn nx run ${{ matrix.project }}:test
 
       - name: Upload coverage result
         uses: actions/upload-artifact@v3
         with:
-          name: coverage-reports
-          path: packages/*/coverage/lcov.info
+          name: coverage-report-${{ matrix.project }}
+          path: packages/${{ matrix.project }}/coverage
 
       - name: Save NX compute cache
         id: cache-nx-save
@@ -128,15 +130,14 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: coverage-reports
-          path: packages/*/coverage/lcov.info
+          path: .
 
       - name: Create coverage reports list
         id: reports
         run: |
           set -exu
 
-          list=$(echo ${{ toJson(needs.determine-matrix.outputs.affected) }} | jq -c 'map("packages/" + . + "/coverage/lcov.info")')
+          list=$(echo ${{ toJson(needs.determine-matrix.outputs.affected) }} | jq -c 'map("coverage-report-" + . + "/lcov.info")')
           echo list="$list" >> $GITHUB_OUTPUT
 
       - name: Run codacy-coverage-reporter
@@ -151,7 +152,6 @@ jobs:
     name: build-${{ matrix.project }}
 
     needs:
-      - tests
       - determine-matrix
 
     runs-on: ubuntu-latest
@@ -174,8 +174,8 @@ jobs:
         with:
           path: |
             node_modules
-            packages/*/node_modules
-          key: lock-${{ hashFiles('yarn.lock') }}
+            packages/${{ matrix.project }}/node_modules
+          key: lock-${{ matrix.project }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             lock-
 
@@ -205,7 +205,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-${{ matrix.project }}
-          path: dist
+          path: dist/packages/${{ matrix.project }}
 
       - name: Save NX compute cache
         id: cache-nx-save
@@ -218,6 +218,7 @@ jobs:
     name: Publish packages
 
     needs:
+      - tests
       - build
       - determine-matrix
 
@@ -260,6 +261,6 @@ jobs:
         run: |
           set -exu
 
-          cd "dist/packages/${{ matrix.project }}"
+          cd dist
           yarn publish . --access public
           cd -
