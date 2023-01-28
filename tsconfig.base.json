@@ -16,7 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@decentm/concourse-presets": ["packages/concourse-presets/src/index.ts"],
-      "@decentm/concourse-ts": ["packages/concourse-ts/src/index.ts"]
+      "@decentm/concourse-ts": ["packages/concourse-ts/src/index.ts"],
+      "@decentm/concourse-ts-resource-type-slack": [
+        "packages/concourse-ts-resource-type-slack/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

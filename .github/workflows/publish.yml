@@ -20,11 +20,32 @@ jobs:
         shell: bash
 
     outputs:
-      affected: ${{ steps.jobs.affected.projects }}
+      affected: ${{ steps.affected.outputs.projects }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
 
       - uses: nrwl/nx-set-shas@v3
 
@@ -41,6 +62,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Cache
         uses: actions/cache@v3
@@ -147,8 +170,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Cache
         uses: actions/cache@v3
@@ -169,7 +190,7 @@ jobs:
           set -exu
           yarn --frozen-lockfile --non-interactive
 
-      - run: yarn run ${{ matrix.project }}:build
+      - run: yarn nx run ${{ matrix.project }}:build
 
       - name: Compare npm with local (versions)
         uses: Rober19/compare-npm-versions-ci@master

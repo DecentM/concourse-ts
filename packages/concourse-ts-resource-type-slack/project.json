@@ -1,0 +1,34 @@
+{
+  "name": "concourse-ts-resource-type-slack",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/concourse-ts-resource-type-slack/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/concourse-ts-resource-type-slack",
+        "main": "packages/concourse-ts-resource-type-slack/src/index.ts",
+        "tsConfig": "packages/concourse-ts-resource-type-slack/tsconfig.lib.json",
+        "assets": [
+          "packages/concourse-ts-resource-type-slack/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/concourse-ts-resource-type-slack/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
