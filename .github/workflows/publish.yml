@@ -26,8 +26,11 @@ jobs:
 
       - name: Cache
         uses: actions/cache@v3
+        id: cache-node-modules
         with:
-          path: node_modules
+          path: |
+            node_modules
+            packages/*/node_modules
           key: lock-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             lock-
@@ -39,6 +42,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
           yarn --frozen-lockfile --non-interactive
@@ -49,7 +53,6 @@ jobs:
         id: affected
         run: |
           set -exu
-
           echo projects=$(yarn --silent nx print-affected | jq -c '.projects') >> $GITHUB_OUTPUT
 
   tests:
@@ -66,14 +69,18 @@ jobs:
 
       - name: Cache node_modules
         uses: actions/cache@v3
+        id: cache-node-modules
         with:
-          path: node_modules
+          path: |
+            node_modules
+            packages/*/node_modules
           key: lock-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             lock-
 
-      - name: Cache NX computations
-        uses: actions/cache@v3
+      - name: Restore NX compute cache
+        id: cache-nx-restore
+        uses: actions/cache/restore@v3
         with:
           path: .nx-cache
           key: nx-cache
@@ -85,6 +92,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
           yarn --frozen-lockfile --non-interactive
@@ -96,6 +104,32 @@ jobs:
       - run: yarn nx affected --target=lint --parallel=3
 
       - run: yarn nx affected --target=test --parallel=3
+
+      - name: Upload coverage result
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-reports
+          path: packages/*/coverage/lcov.info
+
+      - name: Save NX compute cache
+        id: cache-nx-save
+        uses: actions/cache/save@v3
+        with:
+          path: .nx-cache
+          key: nx-cache
+
+  coverage-report-submission:
+    runs-on: ubuntu-latest
+
+    needs:
+      - tests
+      - determine-matrix
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: coverage-reports
+          path: packages/*/coverage/lcov.info
 
       - name: Create coverage reports list
         id: reports
@@ -114,7 +148,7 @@ jobs:
           coverage-reports: ${{ join(fromJson(steps.reports.outputs.list), ',') }}
 
   build:
-    name: Build packages
+    name: build-${{ matrix.project }}
 
     needs:
       - tests
@@ -136,14 +170,18 @@ jobs:
 
       - name: Cache
         uses: actions/cache@v3
+        id: cache-node-modules
         with:
-          path: node_modules
+          path: |
+            node_modules
+            packages/*/node_modules
           key: lock-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             lock-
 
-      - name: Cache NX computations
-        uses: actions/cache@v3
+      - name: Restore NX compute cache
+        id: cache-nx-restore
+        uses: actions/cache/restore@v3
         with:
           path: .nx-cache
           key: nx-cache
@@ -155,6 +193,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
           yarn --frozen-lockfile --non-interactive
@@ -167,6 +206,13 @@ jobs:
         with:
           name: dist-${{ matrix.project }}
           path: dist
+
+      - name: Save NX compute cache
+        id: cache-nx-save
+        uses: actions/cache/save@v3
+        with:
+          path: .nx-cache
+          key: nx-cache
 
   publish:
     name: Publish packages
