@@ -186,6 +186,13 @@ jobs:
           path: dist/packages/${{ matrix.project }}
           npm_package_name: '@decentm/${{ matrix.project }}'
 
+      - name: Setup Node
+        if: steps.package_version.outputs.npm_is_greater == 'false'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
       # Publish new versions of affected packages
       - name: Publish to NPM
         if: steps.package_version.outputs.npm_is_greater == 'false'

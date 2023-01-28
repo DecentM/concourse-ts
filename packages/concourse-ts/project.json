@@ -11,7 +11,7 @@
         "outputPath": "dist/packages/concourse-ts",
         "main": "packages/concourse-ts/src/index.ts",
         "tsConfig": "packages/concourse-ts/tsconfig.lib.json",
-        "assets": ["packages/concourse-ts/*.md"]
+        "assets": ["packages/concourse-ts/*.md", "README.md"]
       }
     },
     "lint": {
