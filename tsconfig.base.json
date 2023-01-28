@@ -13,9 +13,11 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@decentm/concourse-presets": ["packages/concourse-presets/src/index.ts"],
       "@decentm/concourse-ts": ["packages/concourse-ts/src/index.ts"],
       "@decentm/concourse-ts-resource-slack": [
         "packages/concourse-ts-resource-slack/src/index.ts"

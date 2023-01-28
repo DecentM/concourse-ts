@@ -85,7 +85,11 @@ export type PutParams = (
 }
 
 export class SlackResource extends Resource<Source, PutParams> {
-  constructor(name: string, type: SlackResourceType, source: Source) {
+  constructor(
+    public override name: string,
+    type: SlackResourceType,
+    source: Source
+  ) {
     super(name, type)
 
     this.source = source

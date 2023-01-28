@@ -7,10 +7,7 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
-    "jsx": "react",
-    "resolveJsonModule": true
+    "noFallthroughCasesInSwitch": true
   },
   "files": [],
   "include": [],

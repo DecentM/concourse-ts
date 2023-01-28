@@ -439,7 +439,7 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/node@*", "@types/node@^18.11.17":
+"@types/node@*", "@types/node@^18.11.17", "@types/node@^18.11.18":
   version "18.11.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
   integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
@@ -848,6 +848,57 @@ ava@^5.1.0:
     write-file-atomic "^5.0.0"
     yargs "^17.6.2"
 
+ava@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/ava/-/ava-5.1.1.tgz#41b1e1f60965b0701aca3a48bc63cb4c94f7ee6d"
+  integrity sha512-od1CWgWVIKZSdEc1dhQWhbsd6KBs0EYjek7eqZNGPvy+NyC9Q1bXixcadlgOXwDG9aM0zLMQZwRXfe9gMb1LQQ==
+  dependencies:
+    acorn "^8.8.1"
+    acorn-walk "^8.2.0"
+    ansi-styles "^6.2.1"
+    arrgv "^1.0.2"
+    arrify "^3.0.0"
+    callsites "^4.0.0"
+    cbor "^8.1.0"
+    chalk "^5.2.0"
+    chokidar "^3.5.3"
+    chunkd "^2.0.1"
+    ci-info "^3.7.1"
+    ci-parallel-vars "^1.0.1"
+    clean-yaml-object "^0.1.0"
+    cli-truncate "^3.1.0"
+    code-excerpt "^4.0.0"
+    common-path-prefix "^3.0.0"
+    concordance "^5.0.4"
+    currently-unhandled "^0.4.1"
+    debug "^4.3.4"
+    del "^7.0.0"
+    emittery "^1.0.1"
+    figures "^5.0.0"
+    globby "^13.1.3"
+    ignore-by-default "^2.1.0"
+    indent-string "^5.0.0"
+    is-error "^2.2.2"
+    is-plain-object "^5.0.0"
+    is-promise "^4.0.0"
+    matcher "^5.0.0"
+    mem "^9.0.2"
+    ms "^2.1.3"
+    p-event "^5.0.1"
+    p-map "^5.5.0"
+    picomatch "^2.3.1"
+    pkg-conf "^4.0.0"
+    plur "^5.1.0"
+    pretty-ms "^8.0.0"
+    resolve-cwd "^3.0.0"
+    slash "^3.0.0"
+    stack-utils "^2.0.6"
+    strip-ansi "^7.0.1"
+    supertap "^3.0.1"
+    temp-dir "^3.0.0"
+    write-file-atomic "^5.0.0"
+    yargs "^17.6.2"
+
 axios@^1.0.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.2.tgz#72681724c6e6a43a9fea860fc558127dbe32f9f1"
@@ -1009,7 +1060,7 @@ chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^5.1.2:
+chalk@^5.1.2, chalk@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.2.0.tgz#249623b7d66869c673699fb66d65723e54dfcfb3"
   integrity sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==
@@ -1044,7 +1095,7 @@ ci-info@^2.0.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-ci-info@^3.6.1:
+ci-info@^3.6.1, ci-info@^3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.7.1.tgz#708a6cdae38915d597afdf3b145f2f8e1ff55f3f"
   integrity sha512-4jYS4MOAaCIStSRwiuxc4B8MYhIe676yO1sYGzARnjXkWpmzZMMYxY6zu8WYWDhSuth5zhrQ1rhNSibyyvv4/w==
@@ -1908,7 +1959,7 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-globby@^13.1.1, globby@^13.1.2:
+globby@^13.1.1, globby@^13.1.2, globby@^13.1.3:
   version "13.1.3"
   resolved "https://registry.yarnpkg.com/globby/-/globby-13.1.3.tgz#f62baf5720bcb2c1330c8d4ef222ee12318563ff"
   integrity sha512-8krCNHXvlCgHDpegPzleMq07yMYTO2sXKASmZmquEYWEmCx6J5UTRbp5RwMJkTJGtcQ44YpiUYUiN0b9mzy8Bw==
@@ -2323,6 +2374,11 @@ json5@^1.0.1:
   integrity sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==
   dependencies:
     minimist "^1.2.0"
+
+json5@^2.2.2:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
+  integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
 jsonc-parser@3.2.0:
   version "3.2.0"
@@ -3545,7 +3601,7 @@ ts-node-dev@^2.0.0:
     ts-node "^10.4.0"
     tsconfig "^7.0.0"
 
-ts-node@^10.4.0:
+ts-node@^10.4.0, ts-node@^10.9.1:
   version "10.9.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.9.1.tgz#e73de9102958af9e1f0b168a6ff320e25adcff4b"
   integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
@@ -3576,6 +3632,15 @@ tsconfig-paths@^3.9.0:
   dependencies:
     "@types/json5" "^0.0.29"
     json5 "^1.0.1"
+    minimist "^1.2.6"
+    strip-bom "^3.0.0"
+
+tsconfig-paths@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-4.1.2.tgz#4819f861eef82e6da52fb4af1e8c930a39ed979a"
+  integrity sha512-uhxiMgnXQp1IR622dUXI+9Ehnws7i/y6xvpZB9IbUVOPy0muvdvgXeZOn88UcGPiT98Vp3rJPTa8bFoalZ3Qhw==
+  dependencies:
+    json5 "^2.2.2"
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
