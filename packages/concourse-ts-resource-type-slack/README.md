@@ -1,7 +1,8 @@
-# concourse-ts-resource-type-slack
+<h1 align="center">
+  concourse-ts-resource-type-slack
+</h1>
 
-This library was generated with [Nx](https://nx.dev).
+<div align="center">
 
-## Building
-
-Run `nx build concourse-ts-resource-type-slack` to build the library.
+  Typed Slack resource type for concourse-ts
+</div>

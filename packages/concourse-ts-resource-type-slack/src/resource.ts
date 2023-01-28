@@ -1,13 +1,13 @@
-import {Resource} from '../../components/resource'
-import {Slack} from '../resource-types'
+import { Resource } from '@decentm/concourse-ts'
+import { SlackResourceType } from './resource-type'
 
-type SlackSource = {
+type Source = {
   url: string
   insecure?: boolean
   proxy?: string
   proxy_https_tunnel?: boolean
   disable?: boolean
-  ca_certs?: Array<{domain: string; cert: string}>
+  ca_certs?: Array<{ domain: string; cert: string }>
 }
 
 type PutText = {
@@ -21,7 +21,7 @@ type PutTextFile = {
   text_file: string
 }
 
-type SlackAttachment = {
+type Attachment = {
   mrkdwn_in: string[]
   color: string
   pretext: string
@@ -58,7 +58,7 @@ type SlackAttachment = {
 }
 
 type PutAttachments = {
-  attachments: SlackAttachment[]
+  attachments: Attachment[]
 }
 
 type PutAttachmentsFile = {
@@ -68,7 +68,7 @@ type PutAttachmentsFile = {
 /**
  * https://github.com/cloudfoundry-community/slack-notification-resource#parameters
  */
-export type SlackPutParams = (
+export type PutParams = (
   | PutText
   | PutTextFile
   | PutAttachments
@@ -84,9 +84,9 @@ export type SlackPutParams = (
   always_notify?: boolean
 }
 
-export class SlackNotification extends Resource<SlackSource, SlackPutParams> {
-  constructor(name: string, source: SlackSource) {
-    super(name, new Slack(`${name}_resource`))
+export class SlackResource extends Resource<Source, PutParams> {
+  constructor(name: string, type: SlackResourceType, source: Source) {
+    super(name, type)
 
     this.source = source
   }
