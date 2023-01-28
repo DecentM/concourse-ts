@@ -12,14 +12,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
+  determine-matrix:
     runs-on: ubuntu-latest
-    name: tests
+
+    defaults:
+      run:
+        shell: bash
+
+    outputs:
+      affected: ${{ steps.jobs.affected.projects }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
+
+      - uses: nrwl/nx-set-shas@v3
+
+      - name: Determine affected packages
+        id: affected
+        run: |
+          set -exu
+
+          echo projects=$(yarn --silent nx print-affected | jq -c '.projects') >> $GITHUB_OUTPUT
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Cache
         uses: actions/cache@v3
@@ -42,14 +63,14 @@ jobs:
 
       - uses: nrwl/nx-set-shas@v3
 
-      - run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
+      - run: yarn nx workspace-lint
+
+      - run: yarn nx affected --target=lint --parallel=3
 
       - name: Tests
         run: |
           set -exu
-          yarn nx run-many --target=test --parallel=3
+          yarn nx affected --target=test
 
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@v1
@@ -57,11 +78,7 @@ jobs:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          # or
-          # api-token: ${{ secrets.CODACY_API_TOKEN }}
-          coverage-reports: packages/concourse-ts/coverage/lcov.info
-          # or a comma-separated list for multiple reports
-          # coverage-reports: <PATH_TO_REPORT>, <PATH_TO_REPORT>
+          coverage-reports: packages/*/coverage/lcov.info
 
   codacy-security-scan:
     name: Codacy Security Scan
@@ -72,9 +89,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
 
       - name: Cache
         uses: actions/cache@v3
@@ -117,8 +132,13 @@ jobs:
 
     needs:
       - tests
+      - determine-matrix
 
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.determine-matrix.outputs.affected) }}
 
     defaults:
       run:
@@ -126,7 +146,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -149,23 +169,14 @@ jobs:
           set -exu
           yarn --frozen-lockfile --non-interactive
 
-      - uses: nrwl/nx-set-shas@v3
-
-      - run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
-
-      - run: yarn nx workspace-lint
-
-      - run: yarn nx affected --target=lint --parallel=3
-      - run: yarn nx affected --target=build --parallel=3
+      - run: yarn run ${{ matrix.project }}:build
 
       - name: Compare npm with local (versions)
         uses: Rober19/compare-npm-versions-ci@master
         id: package_version
         with:
-          path: ./packages/concourse-ts
-          npm_package_name: '@decentm/concourse-ts'
+          path: ./packages/${{ matrix.project }}
+          npm_package_name: '@decentm/${{ matrix.project }}'
 
       # Publish new versions of affected packages
       - name: Publish to NPM
@@ -175,8 +186,6 @@ jobs:
         run: |
           set -exu
 
-          for d in dist/packages/* ; do
-            cd "$d"
-            yarn publish . --access public
-            cd -
-          done
+          cd "${{ matrix.project }}"
+          yarn publish . --access public
+          cd -
