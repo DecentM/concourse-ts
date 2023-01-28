@@ -1,8 +1,0 @@
-{
-  "name": "@decentm/concourse-ts-resource-type-slack",
-  "version": "0.1.0",
-  "type": "commonjs",
-  "peerDependencies": {
-    "@decentm/concourse-ts": "^0.5.0"
-  }
-}

@@ -1,5 +1,5 @@
 <h1 align="center">
-  concourse-ts-resource-type-slack
+  concourse-ts-resource-slack
 </h1>
 
 <div align="center">
@@ -10,9 +10,9 @@
 
 ## Installation
 
-`npm i --save-dev @decentm/concourse-ts @decentm/concourse-ts-resource-type-slack`
+`npm i --save-dev @decentm/concourse-ts @decentm/concourse-ts-resource-slack`
 
-`yarn add -D @decentm/concourse-ts @decentm/concourse-ts-resource-type-slack`
+`yarn add -D @decentm/concourse-ts @decentm/concourse-ts-resource-slack`
 
 ## Usage
 
@@ -21,7 +21,7 @@ Therefore, it has the same properties. See the Resource documentation for detail
 
 ```typescript
 import {Type} from '@decentm/concourse-ts'
-import {SlackResource, SlackResourceType} from '@decentm/concourse-ts-resource-type-slack'
+import {SlackResource, SlackResourceType} from '@decentm/concourse-ts-resource-slack'
 
 export class CorpityCorpSlack extends SlackResource {
   constructor(name: string, init?: Type.Initer<CorpityCorpSlack>) {

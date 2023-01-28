@@ -1,0 +1,11 @@
+{
+  "name": "@decentm/concourse-ts-resource-slack",
+  "version": "0.1.1",
+  "type": "commonjs",
+  "scripts": {
+    "build": "nx build"
+  },
+  "peerDependencies": {
+    "@decentm/concourse-ts": "^0.5.0"
+  }
+}
