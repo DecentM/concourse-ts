@@ -1,3 +1,4 @@
+import {Platform} from '..'
 import {Command} from '../../components/command'
 import {TaskStep} from '../../components/step'
 import {Task} from '../../components/task'
@@ -8,7 +9,7 @@ export class OciBuildTaskStep extends TaskStep {
     super(name, init)
 
     const task = new Task(`${name}_task`, (task) => {
-      task.platform = 'linux'
+      task.platform = Platform.Linux
 
       task.set_cpu_limit_percent(50)
       task.set_memory_limit({mb: 10})
@@ -24,7 +25,7 @@ export class OciBuildTaskStep extends TaskStep {
         name: 'image',
       })
 
-      task.run = new Command('oci-build', (command) => {
+      task.run = new Command(`${name}_oci-build`, (command) => {
         command.path = 'build'
       })
     })
