@@ -1,5 +1,5 @@
 import {VError} from 'verror'
-import {Presets, BuildMetadata} from '../../../../../src'
+import {Presets, Type} from '../../../../../src'
 
 export class SlackNotification extends Presets.Resource.SlackNotification {
   constructor(name: string) {
@@ -10,13 +10,13 @@ export class SlackNotification extends Presets.Resource.SlackNotification {
     this.set_check_every({hours: 1})
   }
 
-  public readonly abort_string = `Job "${BuildMetadata.BuildJobName}" in pipeline "${BuildMetadata.BuildPipelineName}" - manually aborted!\n${BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
+  public readonly abort_string = `Job "${Type.BuildMetadata.BuildJobName}" in pipeline "${Type.BuildMetadata.BuildPipelineName}" - manually aborted!\n${Type.BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
 
-  public readonly error_string = `Job "${BuildMetadata.BuildJobName}" in pipeline "${BuildMetadata.BuildPipelineName}" - errored!\n${BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
+  public readonly error_string = `Job "${Type.BuildMetadata.BuildJobName}" in pipeline "${Type.BuildMetadata.BuildPipelineName}" - errored!\n${Type.BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
 
-  public readonly failure_string = `Job "${BuildMetadata.BuildJobName}" in pipeline "${BuildMetadata.BuildPipelineName}" - failed!\n${BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
+  public readonly failure_string = `Job "${Type.BuildMetadata.BuildJobName}" in pipeline "${Type.BuildMetadata.BuildPipelineName}" - failed!\n${Type.BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
 
-  public readonly success_string = `Job "${BuildMetadata.BuildJobName}" in pipeline "${BuildMetadata.BuildPipelineName}" - succeeded!\n${BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
+  public readonly success_string = `Job "${Type.BuildMetadata.BuildJobName}" in pipeline "${Type.BuildMetadata.BuildPipelineName}" - succeeded!\n${Type.BuildMetadata.AtcExternalUrl}/builds/$BUILD_ID`
 
   public get_params_for = (
     result: 'success' | 'failure' | 'error' | 'abort'

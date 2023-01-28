@@ -6,8 +6,27 @@ import {Pipeline} from '../components/pipeline'
 import {validate} from './validation'
 import {ValidationWarningType, WarningStore} from './validation/declarations'
 
+export type CompilationOptions = {
+  output_dir?: string
+  extract_tasks?: boolean
+}
+
+const defaultCompilationOptions: CompilationOptions = {
+  output_dir: '.',
+  extract_tasks: false,
+}
+
 export class Compilation<Group extends string = string> {
-  constructor(private output_dir = '.') {}
+  constructor(
+    private _options: CompilationOptions = defaultCompilationOptions
+  ) {}
+
+  private get options() {
+    return {
+      defaultCompilationOptions,
+      ...this._options,
+    }
+  }
 
   private input?: Pipeline<Group>
 
@@ -24,11 +43,11 @@ export class Compilation<Group extends string = string> {
   }
 
   private get_task_path = (filename: string) => {
-    return path.join(this.output_dir, 'task', filename)
+    return path.join(this.options.output_dir, 'task', filename)
   }
 
   private get_pipeline_path = (filename: string) => {
-    return path.join(this.output_dir, 'pipeline', filename)
+    return path.join(this.options.output_dir, 'pipeline', filename)
   }
 
   /**
@@ -45,23 +64,6 @@ export class Compilation<Group extends string = string> {
 
       task_step.set_file(this.get_task_path(`${task.name}.yml`))
     })
-  }
-
-  private get_result() {
-    const tasks = this.input?.get_tasks()
-
-    this.transform_task_paths(this.input)
-
-    return {
-      pipeline: {
-        filename: this.get_pipeline_path(`${this.input.name}.yml`),
-        serialised: this.input.serialise(),
-      },
-      tasks: tasks?.map((task) => ({
-        filename: this.get_task_path(`${task.name}.yml`),
-        serialised: task.serialise(),
-      })),
-    }
   }
 
   public validate = () => {
@@ -93,7 +95,22 @@ export class Compilation<Group extends string = string> {
       )
     }
 
-    const result = this.get_result()
+    const tasks = this.input?.get_tasks()
+
+    if (this.options.extract_tasks) {
+      this.transform_task_paths(this.input)
+    }
+
+    const result = {
+      pipeline: {
+        filename: this.get_pipeline_path(`${this.input.name}.yml`),
+        serialised: this.input.serialise(),
+      },
+      tasks: tasks?.map((task) => ({
+        filename: this.get_task_path(`${task.name}.yml`),
+        serialised: task.serialise(),
+      })),
+    }
 
     return {
       pipeline: {

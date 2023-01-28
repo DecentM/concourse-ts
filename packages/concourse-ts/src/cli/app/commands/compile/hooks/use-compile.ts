@@ -10,8 +10,8 @@ import {CompileProps} from '..'
 
 import {Pipeline} from '../../../../../components/pipeline'
 import {Task} from '../../../../../components/task'
-import {compile} from '../../../../../index'
 import {type_of} from '../../../../../utils/type-of'
+import {Compilation} from '../../../../../compiler/compilation'
 
 const loadTypescript = (filePath: string) => {
   if (!path.isAbsolute(filePath)) {
@@ -108,15 +108,21 @@ export const useCompile = (props: CompileProps) => {
   }
 
   useEffect(() => {
-    const outputDir = path.resolve(props.outputDirectory)
+    const outputDir = path.resolve(props.output_directory)
 
     Object.entries(fileState)
       .filter(([, state]) => state.status === 'started')
       .forEach(async ([file]) => {
         try {
           const pipeline = await getPipelineFromFile(path.resolve(file))
+          const compilation = new Compilation({
+            output_dir: props.output_directory,
+            extract_tasks: props.extract_tasks,
+          })
 
-          const compileResult = compile(pipeline, props.outputDirectory)
+          compilation.set_input(pipeline)
+
+          const compileResult = compilation.compile()
 
           await Promise.all([
             mkdirp(path.join(outputDir, 'pipeline')),
@@ -167,7 +173,7 @@ export const useCompile = (props: CompileProps) => {
       cwd: process.cwd(),
     })
 
-    const outputDir = path.resolve(props.outputDirectory)
+    const outputDir = path.resolve(props.output_directory)
 
     if (existsSync(outputDir)) {
       throw new VError(

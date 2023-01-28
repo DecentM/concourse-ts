@@ -3,7 +3,7 @@ import * as ConcourseTs from '../../../../src'
 export class Pipeline<
   Group extends string = string
 > extends ConcourseTs.Pipeline<Group> {
-  constructor(name: string, init?: ConcourseTs.Initer<Pipeline<Group>>) {
+  constructor(name: string, init?: ConcourseTs.Type.Initer<Pipeline<Group>>) {
     super(name, init)
 
     this.set_background_image_url('https://picsum.photos/1920/1080.jpg')
@@ -13,7 +13,7 @@ export class Pipeline<
 export * as Resource from './resources'
 
 export class Job extends ConcourseTs.Job {
-  constructor(name: string, init?: ConcourseTs.Initer<Job>) {
+  constructor(name: string, init?: ConcourseTs.Type.Initer<Job>) {
     super(name, init)
 
     this.build_log_retention = {
@@ -24,7 +24,7 @@ export class Job extends ConcourseTs.Job {
 }
 
 export class Task extends ConcourseTs.Task {
-  constructor(name: string, init?: ConcourseTs.Initer<Task>) {
+  constructor(name: string, init?: ConcourseTs.Type.Initer<Task>) {
     super(name, init)
 
     this.set_cpu_limit_percent(50)

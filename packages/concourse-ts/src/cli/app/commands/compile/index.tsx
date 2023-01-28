@@ -7,7 +7,8 @@ import Table from 'ink-table'
 import {useCompile} from './hooks/use-compile'
 
 export type CompileProps = {
-  outputDirectory: string
+  output_directory?: string
+  extract_tasks?: boolean
   input: string
 }
 

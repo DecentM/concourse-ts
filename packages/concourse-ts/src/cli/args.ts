@@ -11,11 +11,20 @@ export const parseProps = async (argv: string[]): Promise<AppProps> => {
           type: 'string',
           description:
             'Glob of .ts files containing a default export of a function that returns a Pipeline',
+          demandOption: '-i is required',
         })
         .option('output-directory', {
           alias: 'o',
           type: 'string',
           description: 'The directory to output all pipelines to',
+          default: '.',
+        })
+        .option('extract-tasks', {
+          alias: 'e',
+          type: 'boolean',
+          description:
+            'If set, tasks within the pipeline will be extracted and replaced with a file reference',
+          default: false,
         })
     })
     .parse()
@@ -24,7 +33,7 @@ export const parseProps = async (argv: string[]): Promise<AppProps> => {
     command: parsed._[0] as AppCommand,
     options: {
       input: parsed.input,
-      outputDirectory: parsed.outputDirectory,
+      output_directory: parsed.outputDirectory,
     },
   }
 }
