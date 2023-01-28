@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-resource-slack",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "commonjs",
   "license": "MIT",
   "scripts": {
@@ -21,7 +21,7 @@
     ]
   },
   "peerDependencies": {
-    "@decentm/concourse-ts": "0.6.0"
+    "@decentm/concourse-ts": "0.x"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
