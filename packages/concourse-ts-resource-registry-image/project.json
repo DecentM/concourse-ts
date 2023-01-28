@@ -1,0 +1,35 @@
+{
+  "name": "concourse-ts-resource-registry-image",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/concourse-ts-resource-registry-image/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "updateBuildableProjectDepsInPackageJson": false,
+        "outputPath": "dist/packages/concourse-ts-resource-registry-image",
+        "main": "packages/concourse-ts-resource-registry-image/src/index.ts",
+        "tsConfig": "packages/concourse-ts-resource-registry-image/tsconfig.lib.json",
+        "assets": [
+          "packages/concourse-ts-resource-registry-image/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/concourse-ts-resource-registry-image/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

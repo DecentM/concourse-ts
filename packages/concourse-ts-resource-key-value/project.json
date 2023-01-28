@@ -1,0 +1,35 @@
+{
+  "name": "concourse-ts-resource-key-value",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/concourse-ts-resource-key-value/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "updateBuildableProjectDepsInPackageJson": false,
+        "outputPath": "dist/packages/concourse-ts-resource-key-value",
+        "main": "packages/concourse-ts-resource-key-value/src/index.ts",
+        "tsConfig": "packages/concourse-ts-resource-key-value/tsconfig.lib.json",
+        "assets": [
+          "packages/concourse-ts-resource-key-value/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/concourse-ts-resource-key-value/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,35 @@
+{
+  "name": "concourse-ts-resource-sentry-releases",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/concourse-ts-resource-sentry-releases/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "updateBuildableProjectDepsInPackageJson": false,
+        "outputPath": "dist/packages/concourse-ts-resource-sentry-releases",
+        "main": "packages/concourse-ts-resource-sentry-releases/src/index.ts",
+        "tsConfig": "packages/concourse-ts-resource-sentry-releases/tsconfig.lib.json",
+        "assets": [
+          "packages/concourse-ts-resource-sentry-releases/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/concourse-ts-resource-sentry-releases/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

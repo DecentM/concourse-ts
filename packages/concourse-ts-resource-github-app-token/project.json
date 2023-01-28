@@ -1,0 +1,35 @@
+{
+  "name": "concourse-ts-resource-github-app-token",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/concourse-ts-resource-github-app-token/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "updateBuildableProjectDepsInPackageJson": false,
+        "outputPath": "dist/packages/concourse-ts-resource-github-app-token",
+        "main": "packages/concourse-ts-resource-github-app-token/src/index.ts",
+        "tsConfig": "packages/concourse-ts-resource-github-app-token/tsconfig.lib.json",
+        "assets": [
+          "packages/concourse-ts-resource-github-app-token/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/concourse-ts-resource-github-app-token/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

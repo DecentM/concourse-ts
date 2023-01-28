@@ -1,0 +1,22 @@
+import { Resource } from '@decentm/concourse-ts'
+import { VrealizeAutomationResourceType } from './resource-type'
+
+type Source = {
+  // TODO: Fill this out
+}
+
+export type PutParams = {
+  // TODO: Fill this out
+}
+
+export class VrealizeAutomationResource extends Resource<Source, PutParams> {
+  constructor(
+    public override name: string,
+    type: VrealizeAutomationResourceType,
+    source: Source
+  ) {
+    super(name, type)
+
+    this.source = source
+  }
+}

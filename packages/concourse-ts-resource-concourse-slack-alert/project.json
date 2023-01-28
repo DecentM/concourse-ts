@@ -1,0 +1,35 @@
+{
+  "name": "concourse-ts-resource-concourse-slack-alert",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/concourse-ts-resource-concourse-slack-alert/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "updateBuildableProjectDepsInPackageJson": false,
+        "outputPath": "dist/packages/concourse-ts-resource-concourse-slack-alert",
+        "main": "packages/concourse-ts-resource-concourse-slack-alert/src/index.ts",
+        "tsConfig": "packages/concourse-ts-resource-concourse-slack-alert/tsconfig.lib.json",
+        "assets": [
+          "packages/concourse-ts-resource-concourse-slack-alert/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/concourse-ts-resource-concourse-slack-alert/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

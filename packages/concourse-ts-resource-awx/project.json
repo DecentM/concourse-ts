@@ -1,0 +1,35 @@
+{
+  "name": "concourse-ts-resource-awx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/concourse-ts-resource-awx/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "updateBuildableProjectDepsInPackageJson": false,
+        "outputPath": "dist/packages/concourse-ts-resource-awx",
+        "main": "packages/concourse-ts-resource-awx/src/index.ts",
+        "tsConfig": "packages/concourse-ts-resource-awx/tsconfig.lib.json",
+        "assets": [
+          "packages/concourse-ts-resource-awx/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/concourse-ts-resource-awx/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
