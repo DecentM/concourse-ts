@@ -6,7 +6,11 @@ import { AptlyCliResourceType } from './resource-type'
 test('stores name', (t) => {
   const rt = new AptlyCliResourceType('my-aptly-cli-resource_type')
   const r = new AptlyCliResource('my-aptly-cli-resource', rt, {
-    // TODO: Fill this out
+    api_uri: '',
+    component: '',
+    distribution: '',
+    package: '',
+    repo_uri: '',
   })
 
   t.is(r.name, 'my-aptly-cli-resource')

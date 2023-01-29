@@ -5,15 +5,18 @@ export type Input = {
 }
 
 export class AptlyCliResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<AptlyCliResourceType>) {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<AptlyCliResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'shyxormz/aptly-cli-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {
