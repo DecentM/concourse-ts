@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nx run-many --target=build"
+    "build": "nx run-many --target=build",
+    "test": "nx affected --target=test"
   },
   "private": true,
   "workspaces": [

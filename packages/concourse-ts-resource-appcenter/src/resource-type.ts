@@ -14,10 +14,9 @@ export class AppcenterResourceType extends ResourceType {
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'tomoyukim/concourse-appcenter-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {
