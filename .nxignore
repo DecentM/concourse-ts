@@ -1,0 +1,13 @@
+/.editorconfig
+/.gitattributes
+/.nvmrc
+/.nxignore
+/.prettierignore
+/.prettierrc.js
+
+/README.md
+/yarn.lock
+
+/.github/
+/.husky/
+/.vscode/
