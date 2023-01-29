@@ -1,6 +1,9 @@
 import { ResourceType, Type } from '@decentm/concourse-ts'
 
 export type Input = {
+  /**
+   * https://quay.io/repository/mamercad/concourse-awx-resource?tab=tags&tag=latest
+   */
   tag?: string
 }
 
@@ -10,10 +13,9 @@ export class AwxResourceType extends ResourceType {
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'quay.io/mamercad/concourse-awx-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {
