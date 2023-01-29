@@ -1,7 +1,7 @@
 import { Resource } from '@decentm/concourse-ts'
 import { BitbucketBuildStatusNotificationResourceType } from './resource-type'
 
-type Source = {
+export type Source = {
   // TODO: Fill this out
 }
 
@@ -9,7 +9,14 @@ export type PutParams = {
   // TODO: Fill this out
 }
 
-export class BitbucketBuildStatusNotificationResource extends Resource<Source, PutParams> {
+export type GetParams = {
+  // TODO: Fill this out
+}
+
+export class BitbucketBuildStatusNotificationResource extends Resource<
+  Source,
+  PutParams
+> {
   constructor(
     public override name: string,
     type: BitbucketBuildStatusNotificationResourceType,

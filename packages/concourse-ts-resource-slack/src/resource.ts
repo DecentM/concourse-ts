@@ -1,7 +1,7 @@
 import { Resource } from '@decentm/concourse-ts'
 import { SlackResourceType } from './resource-type'
 
-type Source = {
+export type Source = {
   url: string
   insecure?: boolean
   proxy?: string
@@ -84,7 +84,9 @@ export type PutParams = (
   always_notify?: boolean
 }
 
-export class SlackResource extends Resource<Source, PutParams> {
+export type GetParams = never
+
+export class SlackResource extends Resource<Source, PutParams, GetParams> {
   constructor(
     public override name: string,
     type: SlackResourceType,
