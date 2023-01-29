@@ -5,15 +5,18 @@ export type Input = {
 }
 
 export class AnsiblePlaybookResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<AnsiblePlaybookResourceType>) {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<AnsiblePlaybookResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'troykinsella/concourse-ansible-playbook-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {

@@ -7,6 +7,10 @@
   Typed AnsiblePlaybook resource for concourse-ts
 </div>
 
+## Source
+
+This package implements typings for [concourse-ansible-playbook-resource](https://github.com/troykinsella/concourse-ansible-playbook-resource).
+
 ## Installation
 
 `npm i --save-dev @decentm/concourse-ts @decentm/concourse-ts-resource-ansible-playbook`
