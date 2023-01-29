@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-resource-artifactory",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "type": "commonjs",
   "license": "MIT",
   "scripts": {
