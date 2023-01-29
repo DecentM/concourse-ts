@@ -1,7 +1,7 @@
 {
-  "name": "@decentm/concourse-ts-resource-becker-dhall",
-  "version": "0.0.2",
-  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-becker-dhall",
+  "name": "@decentm/concourse-ts-resource-dhall",
+  "version": "0.1.0",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-dhall",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
   "type": "commonjs",

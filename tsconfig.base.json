@@ -31,8 +31,8 @@
       "@decentm/concourse-ts-resource-concourse-slack-alert": [
         "packages/concourse-ts-resource-concourse-slack-alert/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-becker-dhall": [
-        "packages/concourse-ts-resource-becker-dhall/src/index.ts"
+      "@decentm/concourse-ts-resource-dhall": [
+        "packages/concourse-ts-resource-dhall/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-becker-github-list-repos": [
         "packages/concourse-ts-resource-becker-github-list-repos/src/index.ts"
