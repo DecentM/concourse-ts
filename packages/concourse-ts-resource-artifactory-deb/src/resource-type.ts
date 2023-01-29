@@ -5,15 +5,18 @@ export type Input = {
 }
 
 export class ArtifactoryDebResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<ArtifactoryDebResourceType>) {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<ArtifactoryDebResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'troykinsella/concourse-artifactory-deb-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {
