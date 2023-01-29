@@ -61,6 +61,8 @@ jobs:
   tests:
     name: test-${{ matrix.project }}
 
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
+
     runs-on: ubuntu-latest
 
     needs:
@@ -137,6 +139,8 @@ jobs:
 
   build:
     name: build-${{ matrix.project }}
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
 
     needs:
       - determine-matrix

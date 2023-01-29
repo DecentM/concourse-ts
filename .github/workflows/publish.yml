@@ -63,6 +63,8 @@ jobs:
     needs:
       - determine-matrix
 
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
+
     strategy:
       matrix:
         project: ${{ fromJson(needs.determine-matrix.outputs.affected) }}
@@ -162,6 +164,8 @@ jobs:
 
   build:
     name: build-${{ matrix.project }}
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
 
     needs:
       - determine-matrix
