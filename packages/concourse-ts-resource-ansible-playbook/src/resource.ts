@@ -1,5 +1,4 @@
-import { Resource } from '@decentm/concourse-ts'
-import { Utils } from '@decentm/concourse-ts'
+import { Resource, Utils } from '@decentm/concourse-ts'
 import { AnsiblePlaybookResourceType } from './resource-type'
 
 /**
