@@ -1,17 +1,16 @@
 {
   "name": "@decentm/concourse-ts",
   "version": "0.6.1",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts",
+  "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
     "build": "nx build",
     "dev": "ts-node-dev playground.ts && fly vp -c playground.yml",
     "dev:cli": "rimraf .ci && ts-node-dev examples/corpity-corp/sre/src/cli.ts compile -i examples/corpity-corp/dev/ci/**.ts",
-    "test": "c8 --reporter=lcov --reporter=text ava",
-    "t": "yarn test"
-  },
-  "repository": {
-    "url": "https://github.com/DecentM/concourse-ts"
+    "t": "yarn test",
+    "test": "c8 --reporter=lcov --reporter=text ava"
   },
   "ava": {
     "extensions": {
@@ -24,18 +23,6 @@
   },
   "resolutions": {
     "react": "18.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.17",
-    "@types/react": "^18.0.26",
-    "@types/verror": "^1.10.6",
-    "@types/yargs": "^17.0.17",
-    "ava": "^5.1.0",
-    "c8": "^7.12.0",
-    "cpy-cli": "^4.2.0",
-    "husky": "^8.0.2",
-    "rimraf": "^3.0.2",
-    "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
     "fast-glob": "^3.2.12",
@@ -50,5 +37,17 @@
     "verror": "^1.10.1",
     "yaml": "^2.2.0",
     "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "@types/react": "^18.0.26",
+    "@types/verror": "^1.10.6",
+    "@types/yargs": "^17.0.17",
+    "ava": "^5.1.0",
+    "c8": "^7.12.0",
+    "cpy-cli": "^4.2.0",
+    "husky": "^8.0.2",
+    "rimraf": "^3.0.2",
+    "ts-node-dev": "^2.0.0"
   }
 }

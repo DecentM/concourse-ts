@@ -1,12 +1,14 @@
 {
   "name": "@decentm/concourse-ts-resource-semver",
   "version": "0.0.2",
-  "type": "commonjs",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-semver",
+  "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
+  "type": "commonjs",
   "scripts": {
     "build": "nx build",
-    "test": "c8 --reporter=lcov --reporter=text ava",
-    "t": "yarn test"
+    "t": "yarn test",
+    "test": "c8 --reporter=lcov --reporter=text ava"
   },
   "ava": {
     "extensions": {
@@ -20,9 +22,6 @@
       "tsconfig-paths/register"
     ]
   },
-  "peerDependencies": {
-    "@decentm/concourse-ts": "0.x"
-  },
   "devDependencies": {
     "@types/node": "^18.11.18",
     "ava": "^5.1.1",
@@ -30,5 +29,8 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "typescript": "^4.9.4"
+  },
+  "peerDependencies": {
+    "@decentm/concourse-ts": "0.x"
   }
 }
