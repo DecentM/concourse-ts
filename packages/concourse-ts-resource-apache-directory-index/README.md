@@ -15,7 +15,8 @@
 
 ## Usage
 
-The ApacheDirectoryIndex resource is a typed class that extends the base Resource class.
+The ApacheDirectoryIndex resource is a typed class that extends the base
+Resource class.
 Therefore, it has the same properties. See the Resource documentation for details.
 
 ```typescript

@@ -5,15 +5,18 @@ export type Input = {
 }
 
 export class ApacheDirectoryIndexResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<ApacheDirectoryIndexResourceType>) {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<ApacheDirectoryIndexResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'mastertinner/apache-directory-index-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {
