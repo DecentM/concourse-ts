@@ -5,15 +5,18 @@ export type Input = {
 }
 
 export class ArtifacthubResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<ArtifacthubResourceType>) {
+  constructor(
+    name: string,
+    input?: Input,
+    init?: Type.Initer<ArtifacthubResourceType>
+  ) {
     super(`${name}_type`)
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'ghcr.io/hdisysteme/artifacthub-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {

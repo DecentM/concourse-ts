@@ -2,16 +2,23 @@ import { Resource } from '@decentm/concourse-ts'
 import { ArtifacthubResourceType } from './resource-type'
 
 export type Source = {
-  // TODO: Fill this out
+  /**
+   * the repository name of the package
+   */
+  repository_name: string
+  /**
+   * the package name
+   */
+  package_name: string
+  /**
+   * an api key
+   */
+  api_key?: string
 }
 
-export type PutParams = {
-  // TODO: Fill this out
-}
+export type PutParams = never
 
-export type GetParams = {
-  // TODO: Fill this out
-}
+export type GetParams = Record<string, never>
 
 export class ArtifacthubResource extends Resource<Source, PutParams, GetParams> {
   constructor(
