@@ -1,6 +1,9 @@
 import { ResourceType, Type } from '@decentm/concourse-ts'
 
 export type Input = {
+  /**
+   * https://hub.docker.com/r/concourse/time-resource/tags
+   */
   tag?: string
 }
 
@@ -10,10 +13,9 @@ export class TimeResourceType extends ResourceType {
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'concourse/time-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {
