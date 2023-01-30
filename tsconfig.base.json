@@ -19,9 +19,6 @@
     "baseUrl": ".",
     "paths": {
       "@decentm/concourse-ts": ["packages/concourse-ts/src/index.ts"],
-      "@decentm/concourse-ts-resource-slack": [
-        "packages/concourse-ts-resource-slack/src/index.ts"
-      ],
       "@decentm/concourse-ts-resource-paas-grafana-annotation": [
         "packages/concourse-ts-resource-paas-grafana-annotation/src/index.ts"
       ],
