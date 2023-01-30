@@ -1,6 +1,9 @@
 import { ResourceType, Type } from '@decentm/concourse-ts'
 
 export type Input = {
+  /**
+   * https://hub.docker.com/r/cathive/concourse-sonarqube-resource/tags
+   */
   tag?: string
 }
 
@@ -14,10 +17,9 @@ export class SonarqubeResourceType extends ResourceType {
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'cathive/concourse-sonarqube-resource',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {
