@@ -1,6 +1,9 @@
 import { ResourceType, Type } from '@decentm/concourse-ts'
 
 export type Input = {
+  /**
+   * https://hub.docker.com/r/srinivasavasu/concourse-k8s/tags
+   */
   tag?: string
 }
 
@@ -10,10 +13,9 @@ export class K8sResourceType extends ResourceType {
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'srinivasavasu/concourse-k8s',
+      tag: input?.tag ?? 'latest',
     }
 
     if (init) {

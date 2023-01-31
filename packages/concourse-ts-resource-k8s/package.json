@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-resource-k8s",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-k8s",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
