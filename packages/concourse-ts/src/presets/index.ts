@@ -1,5 +1,3 @@
-export * as ResourceType from './resource-types'
-export * as Resource from './resources'
 export * as Step from './steps'
 export * as Platform from './platforms'
 export * as LogRetentionPolicy from './log-retention-policies'
