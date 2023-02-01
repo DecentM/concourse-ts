@@ -1,19 +1,21 @@
 import { ResourceType, Type } from '@decentm/concourse-ts'
 
 export type Input = {
-  tag?: string
+  /**
+   * https://hub.docker.com/r/concourse/git-resource/tags
+   */
+  tag: string
 }
 
 export class GitResourceType extends ResourceType {
-  constructor(name: string, input?: Input, init?: Type.Initer<GitResourceType>) {
+  constructor(name: string, input: Input, init?: Type.Initer<GitResourceType>) {
     super(`${name}_type`)
 
     this.type = 'registry-image'
 
-    // TODO: Fill this out
     this.source = {
-      repository: '',
-      tag: input?.tag ?? '',
+      repository: 'concourse/git-resource',
+      tag: input.tag,
     }
 
     if (init) {
