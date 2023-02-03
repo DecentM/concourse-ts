@@ -1,9 +1,9 @@
 import test from 'ava'
-import {Config, Duration} from '../declarations/types'
+import {Duration} from '../declarations/types'
 import {ResourceType, Resource} from '..'
 
 test('throws if the type is unassigned', (t) => {
-  const r = new Resource('my-r', null as unknown as ResourceType<Config>)
+  const r = new Resource('my-r', null as never)
 
   t.throws(() => r.serialise())
 })
