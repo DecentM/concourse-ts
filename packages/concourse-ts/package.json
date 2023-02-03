@@ -12,6 +12,12 @@
     "t": "yarn test",
     "test": "c8 --reporter=lcov --reporter=text ava"
   },
+  "typedoc": {
+    "entryPoint": "./src/index.ts",
+    "readmeFile": "./README.md",
+    "displayName": "Child Package",
+    "tsconfig": "./tsconfig.lib.json"
+  },
   "ava": {
     "extensions": {
       "ts": "module"

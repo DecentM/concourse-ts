@@ -19,6 +19,7 @@
     "esModuleInterop": true,
     "jsx": "react",
     "resolveJsonModule": true,
+    "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
       "@decentm/concourse-ts": [
