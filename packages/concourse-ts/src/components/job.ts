@@ -1,14 +1,12 @@
 import {Initer} from '../declarations/initialisable'
-import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 
 import {Resource} from './resource'
 import {AnyStep, DoStep, TaskStep} from './step'
+import {Step} from './step/_base'
 
-export class Job extends Serialisable<Type.Job> {
+export class Job {
   constructor(public name: string, init?: Initer<Job>) {
-    super()
-
     if (init) {
       init(this)
     }
@@ -158,5 +156,71 @@ export class Job extends Serialisable<Type.Job> {
     }
 
     return result
+  }
+
+  public static deserialise(input: Type.Job, resourcePool: Resource[]) {
+    return new Job(input.name, (job) => {
+      job.plan = input.plan.map((step, index) =>
+        Step.deserialise_any(`${input.name}_step_${index}`, resourcePool, step)
+      )
+
+      job.build_log_retention = input.build_log_retention
+
+      // Upgrade deprecated config to non-deprecated format
+      if (input.build_logs_to_retain && !job.build_log_retention.builds) {
+        job.build_log_retention = {
+          ...job.build_log_retention,
+          builds: input.build_logs_to_retain,
+        }
+      }
+
+      if (input.ensure) {
+        job.ensure = Step.deserialise_prefer_do(
+          `${job.name}_ensure`,
+          resourcePool,
+          input.ensure
+        )
+      }
+
+      job.interruptible = input.interruptible
+      job.max_in_flight = input.max_in_flight
+      job.old_name = input.old_name
+
+      if (input.on_abort) {
+        job.on_abort = Step.deserialise_prefer_do(
+          `${job.name}_on_abort`,
+          resourcePool,
+          input.on_abort
+        )
+      }
+
+      if (input.on_error) {
+        job.on_error = Step.deserialise_prefer_do(
+          `${job.name}_on_error`,
+          resourcePool,
+          input.on_error
+        )
+      }
+
+      if (input.on_failure) {
+        job.on_failure = Step.deserialise_prefer_do(
+          `${job.name}_on_failure`,
+          resourcePool,
+          input.on_failure
+        )
+      }
+
+      if (input.on_success) {
+        job.on_success = Step.deserialise_prefer_do(
+          `${job.name}_on_success`,
+          resourcePool,
+          input.on_success
+        )
+      }
+
+      job.public = input.public
+      job.serial = input.serial
+      job.serial_groups = input.serial_groups
+    })
   }
 }

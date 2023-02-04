@@ -58,4 +58,12 @@ export class TryStep extends Step<Type.TryStep> {
 
     return result
   }
+
+  public static deserialise(name: string, input: Type.TryStep) {
+    return new TryStep(name, (step) => {
+      this.deserialise_base(step, input)
+
+      step.step = super.deserialise_any(`${name}_try`, input.try)
+    })
+  }
 }

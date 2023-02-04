@@ -110,4 +110,21 @@ export class TaskStep<
 
     return result
   }
+
+  public static deserialise(name: string, input: Type.TaskStep) {
+    return new TaskStep(name, (step) => {
+      this.deserialise_base(step, input)
+
+      // TODO: Deserialise tasks
+      // step.task = input.task
+
+      step.file = input.file
+      step.image = input.image
+      step.privileged = input.privileged
+      step.vars = input.vars
+      step.params = input.params
+      step.input_mapping = input.input_mapping
+      step.output_mapping = input.output_mapping
+    })
+  }
 }

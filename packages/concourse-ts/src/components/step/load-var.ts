@@ -50,4 +50,15 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
 
     return result
   }
+
+  public static deserialise(name: string, input: Type.LoadVarStep) {
+    return new LoadVarStep(name, (step) => {
+      this.deserialise_base(step, input)
+
+      step.load_var = input.load_var
+      step.file = input.file
+      step.format = input.format
+      step.reveal = input.reveal
+    })
+  }
 }

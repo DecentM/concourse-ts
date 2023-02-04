@@ -14,24 +14,24 @@ export class DoStep extends Step<Type.DoStep> {
     }
   }
 
-  private steps: AnyStep[]
+  private do: AnyStep[]
 
   public add_do = (step: AnyStep) => {
-    if (!this.steps) this.steps = []
+    if (!this.do) this.do = []
 
-    this.steps.push(step)
+    this.do.push(step)
   }
 
   public add_do_first = (step: AnyStep) => {
-    if (!this.steps) this.steps = []
+    if (!this.do) this.do = []
 
-    this.steps.unshift(step)
+    this.do.unshift(step)
   }
 
   public get_resources(): Resource[] {
     const result = this.get_base_resources()
 
-    this.steps.forEach((step) => {
+    this.do.forEach((step) => {
       result.push(...step.get_resources())
     })
 
@@ -41,9 +41,27 @@ export class DoStep extends Step<Type.DoStep> {
   public serialise() {
     const result: Type.DoStep = {
       ...this.serialise_base(),
-      do: this.steps.map((s) => s.serialise()),
+      do: this.do.map((s) => s.serialise()),
     }
 
     return result
+  }
+
+  public static deserialise(
+    name: string,
+    resourcePool: Resource[],
+    input: Type.DoStep
+  ) {
+    return new DoStep(name, (step) => {
+      this.deserialise_base(step, input)
+
+      step.do = input.do.map((planStep, index) => {
+        return super.deserialise_any(
+          `${name}_plan_${index}`,
+          resourcePool,
+          planStep
+        )
+      })
+    })
   }
 }

@@ -1,16 +1,11 @@
 import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
-import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 import {DurationInput, get_duration} from '../utils'
 import {Resource} from './resource'
 
-export class ResourceType<
-  SourceType extends Type.Config = Type.Config
-> extends Serialisable<Type.ResourceType> {
+export class ResourceType<SourceType extends Type.Config = Type.Config> {
   constructor(public name: string, init?: Initer<ResourceType<SourceType>>) {
-    super()
-
     if (init) {
       init(this)
     }
@@ -85,5 +80,17 @@ export class ResourceType<
     }
 
     return result
+  }
+
+  public static deserialise(input: Type.ResourceType) {
+    return new ResourceType(input.name, (rt) => {
+      rt.type = input.type
+      rt.source = input.source
+      rt.check_every = input.check_every
+      rt.defaults = input.defaults
+      rt.params = input.params
+      rt.privileged = input.privileged
+      rt.tags = input.tags
+    })
   }
 }

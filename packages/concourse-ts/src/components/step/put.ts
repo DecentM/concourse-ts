@@ -82,4 +82,22 @@ export class PutStep<
 
     return result
   }
+
+  public static deserialise(
+    name: string,
+    resourcePool: Resource[],
+    input: Type.PutStep
+  ) {
+    return new PutStep(name, (step) => {
+      this.deserialise_base(step, input)
+
+      step.resource = resourcePool.find(
+        (resource) => resource.name === input.resource
+      )
+
+      step.params = input.params
+      step.inputs = input.inputs
+      step.get_params = input.get_params
+    })
+  }
 }

@@ -1,15 +1,32 @@
-import {Serialisable} from '../../declarations/serialisable'
 import * as Type from '../../declarations/types'
 import {SixHours} from '../../presets/durations/six-hours'
-import {AnyStep, DoStep} from '.'
+import {
+  AnyStep,
+  DoStep,
+  GetStep,
+  InParallelStep,
+  LoadVarStep,
+  PutStep,
+  SetPipelineStep,
+  TaskStep,
+  TryStep,
+} from '.'
+
 import {Resource} from '../resource'
 
-export abstract class Step<
-  StepType extends Type.Step
-> extends Serialisable<StepType> {
-  constructor(public name: string) {
-    super()
-  }
+import {
+  is_do_step,
+  is_get_step,
+  is_in_parallel_step,
+  is_load_var_step,
+  is_put_step,
+  is_set_pipeline_step,
+  is_task_step,
+  is_try_step,
+} from '../../utils/step-type/get-step-type'
+
+export abstract class Step<StepType extends Type.Step> {
+  constructor(public name: string) {}
 
   public abstract get_resources(): Resource[]
 
@@ -108,5 +125,107 @@ export abstract class Step<
     return result
   }
 
-  public abstract override serialise(): StepType
+  public abstract serialise(): StepType
+
+  public static deserialise_any(
+    name: string,
+    resourcePool: Resource[],
+    input: Type.Step
+  ) {
+    if (is_do_step(input)) return DoStep.deserialise(name, resourcePool, input)
+
+    if (is_get_step(input))
+      return GetStep.deserialise(name, resourcePool, input)
+
+    if (is_in_parallel_step(input))
+      return InParallelStep.deserialise(name, resourcePool, input)
+
+    if (is_load_var_step(input)) return LoadVarStep.deserialise(name, input)
+
+    if (is_put_step(input))
+      return PutStep.deserialise(name, resourcePool, input)
+
+    if (is_set_pipeline_step(input))
+      return SetPipelineStep.deserialise(name, input)
+
+    if (is_task_step(input)) return TaskStep.deserialise(name, input)
+
+    if (is_try_step(input)) return TryStep.deserialise(name, input)
+
+    // TODO: Warn user that this step will be missing because it's unrecognised
+
+    return null
+  }
+
+  public static deserialise_prefer_do(
+    name: string,
+    resourcePool: Resource[],
+    input: Type.Step
+  ): DoStep {
+    if (is_do_step(input)) {
+      return DoStep.deserialise(name, resourcePool, input)
+    } else if (input) {
+      return new DoStep(name, (doStep) => {
+        doStep.add_do(
+          Step.deserialise_any(`${doStep.name}_do`, resourcePool, input)
+        )
+      })
+    }
+
+    // TODO: Warn user that this step will be missing because it's nullish
+
+    return null
+  }
+
+  protected static deserialise_base(
+    step: AnyStep,
+    resourcePool: Resource[],
+    input: Type.Step
+  ) {
+    step.attempts = input.attempts
+
+    step.tags = input.tags
+
+    step.timeout = input.timeout
+
+    if (is_do_step(input.ensure)) {
+      step.ensure = DoStep.deserialise(
+        `${step.name}_ensure`,
+        resourcePool,
+        input.ensure
+      )
+    }
+
+    if (is_do_step(input.on_abort)) {
+      step.on_abort = DoStep.deserialise(
+        `${step.name}_on_abort`,
+        resourcePool,
+        input.on_abort
+      )
+    }
+
+    if (is_do_step(input.on_error)) {
+      step.on_error = DoStep.deserialise(
+        `${step.name}_on_error`,
+        resourcePool,
+        input.on_error
+      )
+    }
+
+    if (is_do_step(input.on_failure)) {
+      step.on_error = DoStep.deserialise(
+        `${step.name}_on_failure`,
+        resourcePool,
+        input.on_failure
+      )
+    }
+
+    if (is_do_step(input.on_success)) {
+      step.on_error = DoStep.deserialise(
+        `${step.name}_on_success`,
+        resourcePool,
+        input.on_success
+      )
+    }
+  }
 }
