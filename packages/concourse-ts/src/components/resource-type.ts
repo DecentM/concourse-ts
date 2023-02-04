@@ -1,7 +1,7 @@
 import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
-import {DurationInput, get_duration} from '../utils'
+import {DurationInput, get_duration, parse_duration, type_of} from '../utils'
 import {Resource} from './resource'
 
 export class ResourceType<SourceType extends Type.Config = Type.Config> {
@@ -92,5 +92,57 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
       rt.privileged = input.privileged
       rt.tags = input.tags
     })
+  }
+
+  public write() {
+    return `new ResourceType(${JSON.stringify(this.name)}, (rt) => {
+      ${
+        type_of(this.type) !== 'undefined'
+          ? `rt.type = ${JSON.stringify(this.type)}`
+          : ''
+      }
+
+      ${
+        type_of(this.source) !== 'undefined'
+          ? `rt.source = ${JSON.stringify(this.source)}`
+          : ''
+      }
+
+      ${
+        type_of(this.check_every) !== 'undefined'
+          ? `rt.check_every = ${JSON.stringify(
+              parse_duration(this.check_every)
+            )}`
+          : ''
+      }
+
+      ${Object.entries(this.defaults)
+        .map(([name, value]) => {
+          return `rt.set_default(${JSON.stringify(name)}, ${JSON.stringify(
+            value
+          )}})`
+        })
+        .join('\n')}
+
+      ${Object.entries(this.params)
+        .map(([name, value]) => {
+          return `rt.set_param(${JSON.stringify(name)}, ${JSON.stringify(
+            value
+          )}})`
+        })
+        .join('\n')}
+
+      ${
+        type_of(this.privileged) !== 'undefined'
+          ? `rt.privileged = ${this.privileged}`
+          : ''
+      }
+
+      ${
+        type_of(this.tags) === 'array' && this.tags.length
+          ? `rt.add_tag(...${this.tags})`
+          : ''
+      }
+    })`
   }
 }

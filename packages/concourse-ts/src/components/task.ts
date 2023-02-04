@@ -5,7 +5,8 @@ import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
 import * as Commands from '../presets/commands'
 import * as Platforms from '../presets/platforms'
-import {BytesInput, get_bytes} from '../utils/bytes'
+import {type_of} from '../utils'
+import {BytesInput, get_bytes, parse_bytes} from '../utils/bytes'
 
 import {Command} from './command'
 import {TaskStep} from './step'
@@ -127,5 +128,73 @@ export class Task<
       task.params = input.params
       task.rootfs_uri = input.rootfs_uri
     })
+  }
+
+  public write() {
+    return `new Task(${JSON.stringify(this.name)}, (task) => {
+      ${
+        type_of(this.image_resource) !== 'undefined'
+          ? `task.set_image_resource(${JSON.stringify(this.image_resource)})`
+          : ''
+      }
+
+      ${
+        type_of(this.platform) !== 'undefined'
+          ? `task.platform = ${JSON.stringify(this.platform)}`
+          : ''
+      }
+
+      ${
+        type_of(this.run) !== 'undefined'
+          ? `task.run = ${this.run.write()}`
+          : ''
+      }
+
+      ${
+        type_of(this.caches) === 'array' && this.caches.length
+          ? `task.add_cache(...${JSON.stringify(this.caches)})`
+          : ''
+      }
+
+      ${
+        type_of(this.container_limits?.cpu) !== 'undefined'
+          ? `task.set_cpu_limit_percent(${this.container_limits.cpu})`
+          : ''
+      }
+
+      ${
+        type_of(this.container_limits?.memory) !== 'undefined'
+          ? `task.set_memory_limit(${JSON.stringify(
+              parse_bytes(this.container_limits.memory)
+            )})`
+          : ''
+      }
+
+      ${
+        type_of(this.caches) === 'array' && this.caches.length
+          ? `task.add_input(...${JSON.stringify(this.inputs)})`
+          : ''
+      }
+
+      ${
+        type_of(this.outputs) === 'array' && this.outputs.length
+          ? `task.add_output(...${JSON.stringify(this.outputs)})`
+          : ''
+      }
+
+      ${Object.entries(this.params)
+        .map(([name, value]) => {
+          return `task.set_param(${JSON.stringify(name)}, ${JSON.stringify(
+            value
+          )}})`
+        })
+        .join('\n')}
+
+      ${
+        type_of(this.rootfs_uri) !== 'undefined'
+          ? `task.rootfs_uri = ${JSON.stringify(this.rootfs_uri)}`
+          : ''
+      }
+    })`
   }
 }

@@ -1,5 +1,6 @@
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
+import {type_of} from '../utils'
 
 import {Resource} from './resource'
 import {AnyStep, DoStep, TaskStep} from './step'
@@ -39,6 +40,11 @@ export class Job {
   private on_success?: DoStep
 
   public add_on_success = (step: AnyStep) => {
+    if (!this.on_success && step instanceof DoStep) {
+      this.on_success = step
+      return
+    }
+
     if (!this.on_success)
       this.on_success = new DoStep(`${this.name}_on_success`)
 
@@ -48,6 +54,11 @@ export class Job {
   private on_failure?: DoStep
 
   public add_on_failure = (step: AnyStep) => {
+    if (!this.on_failure && step instanceof DoStep) {
+      this.on_failure = step
+      return
+    }
+
     if (!this.on_failure)
       this.on_failure = new DoStep(`${this.name}_on_failure`)
 
@@ -57,6 +68,11 @@ export class Job {
   private on_error?: DoStep
 
   public add_on_error = (step: AnyStep) => {
+    if (!this.on_error && step instanceof DoStep) {
+      this.on_error = step
+      return
+    }
+
     if (!this.on_error) this.on_error = new DoStep(`${this.name}_on_error`)
 
     this.on_error.add_do(step)
@@ -65,6 +81,11 @@ export class Job {
   private on_abort?: DoStep
 
   public add_on_abort = (step: AnyStep) => {
+    if (!this.on_abort && step instanceof DoStep) {
+      this.on_abort = step
+      return
+    }
+
     if (!this.on_abort) this.on_abort = new DoStep(`${this.name}_on_abort`)
 
     this.on_abort.add_do(step)
@@ -73,6 +94,11 @@ export class Job {
   private ensure?: DoStep
 
   public add_ensure = (step: AnyStep) => {
+    if (!this.ensure && step instanceof DoStep) {
+      this.ensure = step
+      return
+    }
+
     if (!this.ensure) this.ensure = new DoStep(`${this.name}_ensure`)
 
     this.ensure.add_do(step)
@@ -222,5 +248,75 @@ export class Job {
       job.serial = input.serial
       job.serial_groups = input.serial_groups
     })
+  }
+
+  public write() {
+    return `new Job(${JSON.stringify(this.name)}, (job) => {
+      ${this.plan
+        ?.map((step) => {
+          return step ? `job.add_step(${step.write()})` : ''
+        })
+        .join('\n')}
+
+      ${
+        type_of(this.build_log_retention) !== 'undefined'
+          ? `job.build_log_retention = ${JSON.stringify(
+              this.build_log_retention
+            )}`
+          : ''
+      }
+
+      ${
+        type_of(this.disable_manual_trigger) !== 'undefined'
+          ? `job.disable_manual_trigger = ${this.disable_manual_trigger}`
+          : ''
+      }
+
+      ${
+        type_of(this.interruptible) !== 'undefined'
+          ? `job.interruptible = ${this.interruptible}`
+          : ''
+      }
+
+      ${
+        type_of(this.max_in_flight) !== 'undefined'
+          ? `job.max_in_flight = ${this.max_in_flight}`
+          : ''
+      }
+
+      ${
+        type_of(this.old_name) !== 'undefined'
+          ? `job.old_name = ${JSON.stringify(this.old_name)}`
+          : ''
+      }
+
+      ${this.on_success ? `job.add_on_success(${this.on_success.write()})` : ''}
+
+      ${this.on_failure ? `job.add_on_failure(${this.on_failure.write()})` : ''}
+
+      ${this.on_error ? `job.add_on_error(${this.on_error.write()})` : ''}
+
+      ${this.on_abort ? `job.add_on_abort(${this.on_abort.write()})` : ''}
+
+      ${this.ensure ? `job.add_ensure(${this.ensure.write()})` : ''}
+
+      ${
+        type_of(this.public) !== 'undefined'
+          ? `job.public = ${this.public}`
+          : ''
+      }
+
+      ${
+        type_of(this.serial) !== 'undefined'
+          ? `job.serial = ${this.serial}`
+          : ''
+      }
+
+      ${
+        type_of(this.serial_groups) !== 'undefined'
+          ? `job.serial_groups = ${this.serial_groups}`
+          : ''
+      }
+    })`
   }
 }

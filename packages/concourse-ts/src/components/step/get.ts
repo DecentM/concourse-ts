@@ -2,6 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
+import {type_of} from '../../utils'
 
 import {Job} from '../job'
 import {Resource} from '../resource'
@@ -87,7 +88,7 @@ export class GetStep<
     input: Type.GetStep
   ) {
     return new GetStep(name, (step) => {
-      this.deserialise_base(step, input)
+      this.deserialise_base(step, resourcePool, input)
 
       step.resource = resourcePool.find((resource) => resource.name === name)
 
@@ -96,5 +97,41 @@ export class GetStep<
       step.trigger = input.trigger
       step.version = input.version
     })
+  }
+
+  public write() {
+    return `new GetStep(${JSON.stringify(this.name)}, (step) => {
+      ${this.write_base('step')}
+
+      ${
+        type_of(this.resource) !== 'undefined'
+          ? `step.set_get(${this.resource.write()})`
+          : ''
+      }
+
+      ${this.passed
+        .map((job) => {
+          return `step.add_passed(${JSON.stringify(job)})`
+        })
+        .join('\n')}
+
+      ${
+        type_of(this.params) !== 'undefined'
+          ? `step.set_params(${JSON.stringify(this.params)})`
+          : ''
+      }
+
+      ${
+        type_of(this.trigger) !== 'undefined'
+          ? `step.trigger = ${JSON.stringify(this.trigger)}`
+          : ''
+      }
+
+      ${
+        type_of(this.version) !== 'undefined'
+          ? `step.version = ${JSON.stringify(this.version)}`
+          : ''
+      }
+    })`
   }
 }

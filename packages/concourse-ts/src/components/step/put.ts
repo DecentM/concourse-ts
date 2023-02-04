@@ -2,6 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
+import {type_of} from '../../utils'
 
 import {Resource} from '../resource'
 
@@ -89,7 +90,7 @@ export class PutStep<
     input: Type.PutStep
   ) {
     return new PutStep(name, (step) => {
-      this.deserialise_base(step, input)
+      this.deserialise_base(step, resourcePool, input)
 
       step.resource = resourcePool.find(
         (resource) => resource.name === input.resource
@@ -99,5 +100,31 @@ export class PutStep<
       step.inputs = input.inputs
       step.get_params = input.get_params
     })
+  }
+
+  public write() {
+    return `new PutStep(${JSON.stringify(this.name)}, (step) => {
+      ${super.write_base('step')}
+
+      ${this.resource ? `step.set_put(${this.resource.write()})` : ''}
+
+      ${
+        type_of(this.inputs) !== 'undefined'
+          ? `step.set_inputs(${JSON.stringify(this.inputs)})`
+          : ''
+      }
+
+      ${
+        type_of(this.params) !== 'undefined'
+          ? `step.set_params(${JSON.stringify(this.params)})`
+          : ''
+      }
+
+      ${
+        type_of(this.get_params) !== 'undefined'
+          ? `step.set_get_param(...${JSON.stringify(this.get_params)})`
+          : ''
+      }
+    })`
   }
 }

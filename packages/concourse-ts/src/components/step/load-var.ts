@@ -2,6 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
+import {type_of} from '../../utils'
 import {Resource} from '../resource'
 
 import {Step} from './_base'
@@ -21,7 +22,7 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
 
   public format?: Type.VarFormat
 
-  public reveal = false
+  public reveal: boolean
 
   public get_resources(): Resource[] {
     return this.get_base_resources()
@@ -51,14 +52,48 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
     return result
   }
 
-  public static deserialise(name: string, input: Type.LoadVarStep) {
+  public static deserialise(
+    name: string,
+    resourcePool: Resource[],
+    input: Type.LoadVarStep
+  ) {
     return new LoadVarStep(name, (step) => {
-      this.deserialise_base(step, input)
+      this.deserialise_base(step, resourcePool, input)
 
       step.load_var = input.load_var
       step.file = input.file
       step.format = input.format
       step.reveal = input.reveal
     })
+  }
+
+  public write() {
+    return `new LoadVarStep(${JSON.stringify(this.name)}, (step) => {
+      ${super.write_base('step')}
+
+      ${
+        type_of(this.load_var) !== 'undefined'
+          ? `step.load_var = ${JSON.stringify(this.load_var)}`
+          : ''
+      }
+
+      ${
+        type_of(this.file) !== 'undefined'
+          ? `step.file = ${JSON.stringify(this.file)}`
+          : ''
+      }
+
+      ${
+        type_of(this.format) !== 'undefined'
+          ? `step.format = ${JSON.stringify(this.format)}`
+          : ''
+      }
+
+      ${
+        type_of(this.reveal) !== 'undefined'
+          ? `step.reveal = ${this.reveal ?? 'undefined'}`
+          : ''
+      }
+    })`
   }
 }
