@@ -1,5 +1,4 @@
 import * as Type from '../declarations/types'
-import {Serialisable} from '../declarations/serialisable'
 import {Initer} from '../declarations/initialisable'
 import {Resource} from './resource'
 import {Job} from './job'
@@ -8,12 +7,8 @@ import {deduplicate_by_identity} from '../utils/array-duplicates'
 import {Task} from './task'
 import {TaskStep} from './step'
 
-export class Pipeline<
-  Group extends string = string
-> extends Serialisable<Type.Pipeline> {
+export class Pipeline<Group extends string = string> {
   constructor(public name: string, init?: Initer<Pipeline<Group>>) {
-    super()
-
     if (init) {
       init(this)
     }
@@ -71,7 +66,7 @@ export class Pipeline<
     this.var_sources.push(...var_sources)
   }
 
-  private get resources(): Resource[] {
+  private get_resources(): Resource[] {
     const result: Resource[] = []
 
     if (!this.jobs || this.jobs.length < 1) {
@@ -85,8 +80,8 @@ export class Pipeline<
     return result
   }
 
-  private get resource_types(): ResourceType[] {
-    return this.resources?.map((r) => r.get_resource_type())
+  private get_resource_types(): ResourceType[] {
+    return this.get_resources().map((r) => r.get_resource_type())
   }
 
   public get_tasks = (): Task[] => {
@@ -110,15 +105,35 @@ export class Pipeline<
       jobs: this.jobs?.map((j) => j.serialise()),
       display: this.display,
       groups: this.groups,
-      resource_types: deduplicate_by_identity(this.resource_types).map((rt) =>
-        rt.serialise()
+      resource_types: deduplicate_by_identity(this.get_resource_types()).map(
+        (rt) => rt.serialise()
       ),
-      resources: deduplicate_by_identity(this.resources).map((r) =>
+      resources: deduplicate_by_identity(this.get_resources()).map((r) =>
         r.serialise()
       ),
       var_sources: this.var_sources,
     }
 
     return result
+  }
+
+  public static deserialise(name: string, input: Type.Pipeline) {
+    const rtPool = input.resource_types?.map((resourceType) =>
+      ResourceType.deserialise(resourceType)
+    )
+
+    const rPool = input.resources?.map((resource) =>
+      Resource.deserialise(
+        resource,
+        rtPool.find((resourceType) => resourceType.name === resource.type)
+      )
+    )
+
+    return new Pipeline(name, (pipeline) => {
+      pipeline.jobs = input.jobs.map((job) => Job.deserialise(job, rPool))
+      pipeline.display = input.display
+      pipeline.groups = input.groups
+      pipeline.var_sources = input.var_sources
+    })
   }
 }

@@ -1,13 +1,10 @@
 import {VError} from 'verror'
 
 import {Initer} from '../declarations/initialisable'
-import {Serialisable} from '../declarations/serialisable'
 import * as Type from '../declarations/types'
 
-export class Command extends Serialisable<Type.Command> {
+export class Command {
   constructor(public name: string, init?: Initer<Command>) {
-    super()
-
     if (init) {
       init(this)
     }
@@ -40,5 +37,14 @@ export class Command extends Serialisable<Type.Command> {
     }
 
     return result
+  }
+
+  static deserialise(name: string, input: Type.Command) {
+    return new Command(name, (command) => {
+      command.args = input.args
+      command.path = input.path
+      command.dir = input.dir
+      command.user = input.user
+    })
   }
 }

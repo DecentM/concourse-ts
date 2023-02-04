@@ -80,4 +80,21 @@ export class GetStep<
 
     return result
   }
+
+  public static deserialise(
+    name: string,
+    resourcePool: Resource[],
+    input: Type.GetStep
+  ) {
+    return new GetStep(name, (step) => {
+      this.deserialise_base(step, input)
+
+      step.resource = resourcePool.find((resource) => resource.name === name)
+
+      step.passed = input.passed
+      step.params = input.params
+      step.trigger = input.trigger
+      step.version = input.version
+    })
+  }
 }

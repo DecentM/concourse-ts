@@ -1,7 +1,6 @@
 import {VError} from 'verror'
 
 import {Initer} from '../declarations/initialisable'
-import {Serialisable} from '../declarations/serialisable'
 
 import * as Type from '../declarations/types'
 import * as Commands from '../presets/commands'
@@ -14,10 +13,8 @@ import {TaskStep} from './step'
 export class Task<
   Input extends Type.Identifier = Type.Identifier,
   Output extends Type.Identifier = Type.Identifier
-> extends Serialisable<Type.Task<Input, Output>> {
+> {
   constructor(public name: string, init?: Initer<Task<Input, Output>>) {
-    super()
-
     if (init) {
       init(this)
     }
@@ -116,5 +113,19 @@ export class Task<
     }
 
     return result
+  }
+
+  public static deserialise(name: string, input: Type.Task<string, string>) {
+    return new Task(name, (task) => {
+      task.image_resource = input.image_resource
+      task.platform = input.platform
+      task.run = Command.deserialise(`${name}_run`, input.run)
+      task.caches = input.caches
+      task.container_limits = input.container_limits
+      task.inputs = input.inputs
+      task.outputs = input.outputs
+      task.params = input.params
+      task.rootfs_uri = input.rootfs_uri
+    })
   }
 }
