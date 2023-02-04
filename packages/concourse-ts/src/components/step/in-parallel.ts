@@ -4,6 +4,7 @@ import {AnyStep} from '.'
 
 import {Step} from './_base'
 import {Resource} from '../resource'
+import {type_of} from '../../utils'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
   constructor(public override name: string, init?: Initer<InParallelStep>) {
@@ -22,9 +23,9 @@ export class InParallelStep extends Step<Type.InParallelStep> {
     this.steps.push(...steps)
   }
 
-  public limit = 3
+  public limit: number
 
-  public fail_fast = true
+  public fail_fast: boolean
 
   public get_resources(): Resource[] {
     const result = this.get_base_resources()
@@ -55,7 +56,7 @@ export class InParallelStep extends Step<Type.InParallelStep> {
     input: Type.InParallelStep
   ) {
     return new InParallelStep(name, (step) => {
-      this.deserialise_base(step, input)
+      this.deserialise_base(step, resourcePool, input)
 
       if (Array.isArray(input.in_parallel)) {
         step.steps = input.in_parallel.map((inParallelStep, index) => {
@@ -80,5 +81,29 @@ export class InParallelStep extends Step<Type.InParallelStep> {
       step.fail_fast = input.in_parallel.fail_fast
       step.limit = input.in_parallel.limit
     })
+  }
+
+  public write() {
+    return `new InParallelStep(${JSON.stringify(this.name)}, (step) => {
+      ${super.write_base('step')}
+
+      ${
+        this.steps
+          ? this.steps
+              .map((step) => {
+                return `step.add_step(${step.write()})`
+              })
+              .join('\n')
+          : ''
+      }
+
+      ${type_of(this.limit) !== 'undefined' ? `step.limit = ${this.limit}` : ''}
+
+      ${
+        type_of(this.fail_fast) !== 'undefined'
+          ? `step.fail_fast = ${this.fail_fast}`
+          : ''
+      }
+    })`
   }
 }

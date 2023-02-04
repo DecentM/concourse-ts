@@ -53,7 +53,7 @@ export class DoStep extends Step<Type.DoStep> {
     input: Type.DoStep
   ) {
     return new DoStep(name, (step) => {
-      this.deserialise_base(step, input)
+      super.deserialise_base(step, resourcePool, input)
 
       step.do = input.do.map((planStep, index) => {
         return super.deserialise_any(
@@ -63,5 +63,17 @@ export class DoStep extends Step<Type.DoStep> {
         )
       })
     })
+  }
+
+  public write() {
+    return `new DoStep(${JSON.stringify(this.name)}, (step) => {
+      ${super.write_base('step')}
+
+      ${this.do
+        .map((step) => {
+          return `step.add_do(${step.write()})`
+        })
+        .join('\n')}
+    })`
   }
 }

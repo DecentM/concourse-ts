@@ -2,6 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
+import {type_of} from '../../utils'
 import {Resource} from '../resource'
 
 import {Task} from '../task'
@@ -41,7 +42,7 @@ export class TaskStep<
 
   public image?: Type.Identifier
 
-  public privileged = false
+  public privileged: boolean
 
   private vars: Type.Vars
 
@@ -111,9 +112,13 @@ export class TaskStep<
     return result
   }
 
-  public static deserialise(name: string, input: Type.TaskStep) {
+  public static deserialise(
+    name: string,
+    resourcePool: Resource[],
+    input: Type.TaskStep
+  ) {
     return new TaskStep(name, (step) => {
-      this.deserialise_base(step, input)
+      this.deserialise_base(step, resourcePool, input)
 
       // TODO: Deserialise tasks
       // step.task = input.task
@@ -126,5 +131,63 @@ export class TaskStep<
       step.input_mapping = input.input_mapping
       step.output_mapping = input.output_mapping
     })
+  }
+
+  public write() {
+    return `new TaskStep(${JSON.stringify(this.name)}, (step) => {
+      ${super.write_base('step')}
+
+      ${this.task ? `step.set_task(${this.task.write()})` : ''}
+
+      ${
+        type_of(this.file) !== 'undefined'
+          ? `step.set_file(${JSON.stringify(this.file)})`
+          : ''
+      }
+
+      ${
+        type_of(this.image) !== 'undefined'
+          ? `step.image = ${JSON.stringify(this.image)}`
+          : ''
+      }
+
+      ${
+        type_of(this.privileged) !== 'undefined'
+          ? `step.privileged = ${this.privileged}`
+          : ''
+      }
+
+      ${Object.entries(this.vars ?? {})
+        .map(([varName, varValue]) => {
+          return `step.set_var(${JSON.stringify(varName)}, ${JSON.stringify(
+            varValue
+          )})`
+        })
+        .join('\n')}
+
+      ${Object.entries(this.params ?? {})
+        .map(([paramName, paramValue]) => {
+          return `step.set_param(${JSON.stringify(paramName)}, ${JSON.stringify(
+            paramValue
+          )})`
+        })
+        .join('\n')}
+
+      ${Object.entries(this.input_mapping ?? {})
+        .map(([name, value]) => {
+          return `step.set_input_mapping(${JSON.stringify(
+            name
+          )}, ${JSON.stringify(value)})`
+        })
+        .join('\n')}
+
+      ${Object.entries(this.output_mapping ?? {})
+        .map(([name, value]) => {
+          return `step.set_output_mapping(${JSON.stringify(
+            name
+          )}, ${JSON.stringify(value)})`
+        })
+        .join('\n')}
+    })`
   }
 }
