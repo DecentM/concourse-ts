@@ -32,5 +32,8 @@
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x"
+  },
+  "dependencies": {
+    "@swc/helpers": "~0.4.11"
   }
 }

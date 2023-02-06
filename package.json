@@ -10,13 +10,17 @@
     "build": "nx run-many --target=build",
     "test": "nx affected --target=test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@swc/helpers": "~0.4.11"
+  },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "15.6.3",
     "@nrwl/js": "15.6.3",
     "@nrwl/linter": "15.6.3",
     "@nrwl/vite": "15.6.3",
     "@nrwl/workspace": "15.6.3",
+    "@swc/cli": "~0.1.55",
+    "@swc/core": "^1.2.173",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vitest/coverage-c8": "~0.28.3",

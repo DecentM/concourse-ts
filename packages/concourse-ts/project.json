@@ -5,20 +5,29 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/concourse-ts",
         "main": "packages/concourse-ts/src/index.ts",
         "tsConfig": "packages/concourse-ts/tsconfig.lib.json",
-        "assets": ["packages/concourse-ts/*.md", "README.md"]
+        "assets": [
+          "packages/concourse-ts/*.md",
+          "README.md"
+        ]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/concourse-ts/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/concourse-ts/**/*.ts"
+        ]
       }
     }
   },
