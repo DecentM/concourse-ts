@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vitest/coverage-c8": "~0.28.3",
-    "@vitest/ui": "^0.28.3",
+    "@vitest/ui": "^0.28.4",
     "eslint": "~8.34.0",
     "eslint-config-prettier": "8.6.0",
     "jsdom": "~21.1.0",
