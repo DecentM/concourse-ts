@@ -1,11 +1,13 @@
 import React, {FunctionComponent} from 'react'
 import {render} from 'ink'
 
-import {CompileCommand, CompileProps} from './commands/compile'
-import {UnknownCommand} from './commands/unknown'
 import {ErrorBoundary} from './components/error-boundary'
 
-export type AppCommand = 'compile'
+import {CompileCommand, CompileProps} from './commands/compile'
+import {UnknownCommand} from './commands/unknown'
+import {ImportCommand} from './commands/import'
+
+export type AppCommand = 'compile' | 'import'
 
 export type AppProps = {
   command: AppCommand
@@ -16,6 +18,9 @@ const CliApp: FunctionComponent<AppProps> = (props) => {
   switch (props.command) {
     case 'compile':
       return <CompileCommand {...props.options} />
+
+    case 'import':
+      return <ImportCommand {...props.options} />
 
     default:
       return <UnknownCommand />

@@ -27,6 +27,21 @@ export const parseProps = async (argv: string[]): Promise<AppProps> => {
           default: false,
         })
     })
+    .command('import', 'convert existing yaml pipelines as code', (yargs) => {
+      return yargs
+        .option('input', {
+          alias: 'i',
+          type: 'string',
+          description: 'Glob of .yml files containing a single pipeline each',
+          demandOption: '-i is required',
+        })
+        .option('output-directory', {
+          alias: 'o',
+          type: 'string',
+          description: 'The directory to output Typescript code to',
+          default: '.',
+        })
+    })
     .parse()
 
   return {
