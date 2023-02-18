@@ -2,7 +2,7 @@ import {VError} from 'verror'
 import * as YAML from 'yaml'
 import prettier from 'prettier'
 
-import {Pipeline} from '../components'
+import * as Components from '../components'
 import {is_pipeline} from '../utils/is-pipeline'
 
 export class Decompilation {
@@ -59,16 +59,26 @@ export class Decompilation {
       throw new VError('Input is not a pipeline!')
     }
 
-    const pipeline = Pipeline.deserialise(
+    const pipeline = Components.Pipeline.deserialise(
       this.name ?? Date.now().toString(),
       parsed
     )
 
+    const pipelineString = pipeline.write()
+    const allComponents = Object.keys(Components)
+    const usedComponents: string[] = []
+
+    allComponents.forEach((component) => {
+      if (pipelineString.includes(`new ${component}(`)) {
+        usedComponents.push(component)
+      }
+    })
+
     const file_contents = `
-      import { Pipeline } from '@decentm/concourse-ts'
+      import { ${usedComponents.join(', ')} } from '@decentm/concourse-ts'
 
       export default () => {
-        return ${pipeline.write()}
+        return ${pipelineString}
       }
     `
 
