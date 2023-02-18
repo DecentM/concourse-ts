@@ -1,29 +1,29 @@
 import {VError} from 'verror'
 import {Duration} from '../../declarations/types'
+import {type_of} from '../type-of'
 
 export {Duration}
 
 // https://pkg.go.dev/time#ParseDuration
 export const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']
 
-// TODO: ^([0-9]{0,}(ns|us|µs|ms|s|m|h))+$
-
-const create_duration_rx = (valid_units: string[], isGlobal: boolean) => {
-  return new RegExp(
-    `^([0-9]{0,}(${valid_units.join('|')}))+$`,
-    isGlobal ? 'ug' : 'u'
-  )
-}
-// new RegExp(`([0-9]{0,})(${valid_units.join('|')})`, 'gu')
-
 export const is_duration = (
   input: string,
   extra_valid_units: string[] = []
 ): input is Duration => {
-  const valid_units = [...VALID_DURATION_UNITS, ...extra_valid_units]
-  const DURATION_RX = create_duration_rx(valid_units, false)
+  if (
+    input === 'never' &&
+    [...VALID_DURATION_UNITS, ...extra_valid_units].includes('never')
+  ) {
+    return true
+  }
 
-  return DURATION_RX.test(input)
+  try {
+    parse_duration(input, extra_valid_units)
+    return true
+  } catch (e) {
+    return false
+  }
 }
 
 /**
@@ -94,59 +94,117 @@ export const get_duration = (input: DurationInput | 'never'): Duration => {
   return result
 }
 
+type ParseNode = {
+  unit: string
+  value: number
+}
+
 export const parse_duration = (
-  input: Duration,
+  input: string,
   extra_valid_units: string[] = []
-): DurationInput => {
-  if (!is_duration(input)) {
-    throw new VError('parse_duration input is not a valid Duration')
+) => {
+  if (!input) {
+    throw new VError(
+      `value of type ${type_of(input)} cannot be parsed as a duration`
+    )
   }
 
-  const valid_units = [...VALID_DURATION_UNITS, ...extra_valid_units]
-  const DURATION_RX = create_duration_rx(valid_units, true)
+  const tokens = []
+  let cursor = 0
 
-  const matches = [...input.matchAll(DURATION_RX)]
-  const result: DurationInput = {} as DurationInput
+  while (cursor < input.length) {
+    let token = ''
 
-  matches.forEach((match) => {
-    const number = Number.parseInt(match[1], 10)
-
-    if (Number.isNaN(number)) {
-      return
+    while (/\d/u.exec(input[cursor]) && cursor < input.length) {
+      token += input[cursor]
+      cursor++
     }
 
-    switch (match[2]) {
+    if (token) {
+      tokens.push(token)
+      continue
+    }
+
+    while (!/\d/u.exec(input[cursor]) && cursor < input.length) {
+      token += input[cursor]
+      cursor++
+    }
+
+    if (token) {
+      tokens.push(token)
+      continue
+    }
+
+    cursor++
+  }
+
+  cursor = 0
+
+  const nodes: ParseNode[] = []
+  let temp: ParseNode = {
+    unit: '',
+    value: 0,
+  }
+
+  while (cursor < tokens.length) {
+    const token = tokens[cursor]
+    const number = Number.parseInt(token, 10)
+
+    if (Number.isNaN(number)) {
+      temp.unit = token
+    } else {
+      temp.value = number
+    }
+
+    if (temp.unit && type_of(temp.value) === 'number') {
+      nodes.push(temp)
+
+      temp = {
+        unit: '',
+        value: 0,
+      }
+    }
+
+    cursor++
+  }
+
+  const result: Partial<DurationInput> = {}
+
+  nodes.forEach((node) => {
+    if (![...extra_valid_units, ...VALID_DURATION_UNITS].includes(node.unit)) {
+      throw new VError(`${node.unit} is not a valid duration unit`)
+    }
+
+    switch (node.unit) {
       case 'ns':
-        result.nanoseconds = number
+        result.nanoseconds = node.value
         break
 
+      case 'µs':
       case 'us':
-        result.microseconds = number
+        result.microseconds = node.value
         break
 
       case 'ms':
-        result.miliseconds = number
+        result.miliseconds = node.value
         break
 
       case 's':
-        result.seconds = number
+        result.seconds = node.value
         break
 
       case 'm':
-        result.minutes = number
+        result.minutes = node.value
         break
 
       case 'h':
-        result.hours = number
+        result.hours = node.value
         break
     }
   })
 
-  if (Object.keys(result).length < 1) {
-    throw new VError('parse_duration could not parse input', {
-      input,
-      result,
-    })
+  if (Object.keys(result).length === 0) {
+    throw new VError(`${input} cannot be parsed into a valid duration input`)
   }
 
   return result
