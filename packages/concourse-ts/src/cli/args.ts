@@ -27,7 +27,7 @@ export const parseProps = async (argv: string[]): Promise<AppProps> => {
           default: false,
         })
     })
-    .command('import', 'convert existing yaml pipelines as code', (yargs) => {
+    .command('import', 'convert existing yaml pipelines to code', (yargs) => {
       return yargs
         .option('input', {
           alias: 'i',
@@ -41,6 +41,12 @@ export const parseProps = async (argv: string[]): Promise<AppProps> => {
           description: 'The directory to output Typescript code to',
           default: '.',
         })
+        .option('concourse-ts', {
+          alias: 'c',
+          type: 'string',
+          description: 'The string to use for importing concourse-ts',
+          default: '@decentm/concourse-ts',
+        })
     })
     .parse()
 
@@ -49,6 +55,8 @@ export const parseProps = async (argv: string[]): Promise<AppProps> => {
     options: {
       input: parsed.input,
       output_directory: parsed.outputDirectory,
+      concourse_ts: parsed.concourseTs,
+      extract_tasks: parsed.extractTasks,
     },
-  }
+  } as AppProps
 }

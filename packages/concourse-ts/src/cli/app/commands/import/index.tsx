@@ -6,13 +6,13 @@ import Table from 'ink-table'
 
 import {useCompile} from './hooks/use-decompile'
 
-export type CompileProps = {
+export type ImportProps = {
   output_directory?: string
-  extract_tasks?: boolean
+  concourse_ts: string
   input: string
 }
 
-export const ImportCommand: FunctionComponent<CompileProps> = (props) => {
+export const ImportCommand: FunctionComponent<ImportProps> = (props) => {
   const {loading, fileList} = useCompile(props)
   const [columns] = useStdoutDimensions()
 

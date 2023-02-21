@@ -5,32 +5,38 @@ import {ErrorBoundary} from './components/error-boundary'
 
 import {CompileCommand, CompileProps} from './commands/compile'
 import {UnknownCommand} from './commands/unknown'
-import {ImportCommand} from './commands/import'
+import {ImportCommand, ImportProps} from './commands/import'
 
 export type AppCommand = 'compile' | 'import'
 
-export type AppProps = {
-  command: AppCommand
+type AppPropsCompile = {
+  command: 'compile'
   options: CompileProps
 }
 
+type AppPropsImport = {
+  command: 'import'
+  options: ImportProps
+}
+
+export type AppProps = AppPropsCompile | AppPropsImport
+
 const CliApp: FunctionComponent<AppProps> = (props) => {
-  switch (props.command) {
-    case 'compile':
-      return <CompileCommand {...props.options} />
-
-    case 'import':
-      return <ImportCommand {...props.options} />
-
-    default:
-      return <UnknownCommand />
+  if (props.command === 'compile') {
+    return <CompileCommand {...props.options} />
   }
+
+  if (props.command === 'import') {
+    return <ImportCommand {...props.options} />
+  }
+
+  return <UnknownCommand />
 }
 
 export const runApp = async (props: AppProps) => {
   const {cleanup, clear, waitUntilExit} = render(
     <ErrorBoundary>
-      <CliApp command={props.command} options={props.options} />
+      <CliApp {...props} />
     </ErrorBoundary>
   )
 
