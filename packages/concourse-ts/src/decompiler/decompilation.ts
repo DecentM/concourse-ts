@@ -2,6 +2,8 @@ import {VError} from 'verror'
 import * as YAML from 'yaml'
 import prettier from 'prettier'
 
+import pkg from '../../package.json'
+
 import * as Components from '../components'
 import {is_pipeline} from '../utils/is-pipeline'
 
@@ -15,6 +17,14 @@ export class Decompilation {
 
   public set_name(name: string) {
     this.name = name
+
+    return this
+  }
+
+  private import_path?: string = pkg.name
+
+  public set_import_path(path: string) {
+    this.import_path = path
 
     return this
   }
@@ -88,7 +98,7 @@ export class Decompilation {
     })
 
     const file_contents = `
-      import { ${usedComponents.join(', ')} } from '@decentm/concourse-ts'
+      import { ${usedComponents.join(', ')} } from '${this.import_path}'
 
       export default () => {
         return ${pipelineString}

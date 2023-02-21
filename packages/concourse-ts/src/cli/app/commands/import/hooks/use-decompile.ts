@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react'
 import glob from 'fast-glob'
 import {VError} from 'verror'
 import mkdirp from 'mkdirp'
-import {CompileProps} from '..'
+import {ImportProps} from '..'
 
 import {Decompilation} from '../../../../../decompiler/decompilation'
 
@@ -14,7 +14,7 @@ type UseDecompileFileState = {
   status: 'started' | 'errored' | 'failed' | 'imported'
 }
 
-export const useCompile = (props: CompileProps) => {
+export const useCompile = (props: ImportProps) => {
   const [loading, setLoading] = useState(true)
   const [fileState, _setFileState] = useState<{
     [key in string]: UseDecompileFileState
@@ -39,6 +39,7 @@ export const useCompile = (props: CompileProps) => {
           const pathInfo = path.parse(file)
 
           decompilation
+            .set_import_path(props.concourse_ts)
             .set_name(pathInfo.name)
             .set_input(fileContents.toString('utf-8'))
             .set_prettier_config()
