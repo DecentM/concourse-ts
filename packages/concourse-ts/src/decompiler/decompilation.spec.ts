@@ -10,9 +10,11 @@ test('decompilation', async (t) => {
     path.resolve(__dirname, 'test/pipeline.yml')
   )
 
-  decompilation.set_input(pipelineFile.toString('utf8'))
-  decompilation.set_name('pipeline')
-  decompilation.set_prettier_config()
+  decompilation
+    .set_input(pipelineFile.toString('utf8'))
+    .set_name('pipeline')
+    .set_prettier_config()
+    .set_work_dir('src/decompiler/test')
 
   t.notThrows(() => {
     decompilation.decompile()
@@ -25,9 +27,11 @@ test('decompilation does not produce undefined assignments', async (t) => {
     path.resolve(__dirname, 'test/pipeline.yml')
   )
 
-  decompilation.set_input(pipelineFile.toString('utf8'))
-  decompilation.set_name('pipeline')
-  decompilation.set_prettier_config()
+  decompilation
+    .set_input(pipelineFile.toString('utf8'))
+    .set_name('pipeline')
+    .set_prettier_config()
+    .set_work_dir('src/decompiler/test')
 
   const result = decompilation.decompile()
 

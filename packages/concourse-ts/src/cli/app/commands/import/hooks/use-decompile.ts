@@ -36,12 +36,13 @@ export const useCompile = (props: CompileProps) => {
         try {
           const decompilation = new Decompilation()
           const fileContents = await fs.readFile(file)
-          const pipelineName = path.parse(file).name
+          const pathInfo = path.parse(file)
 
           decompilation
-            .set_name(pipelineName)
+            .set_name(pathInfo.name)
             .set_input(fileContents.toString('utf-8'))
             .set_prettier_config()
+            .set_work_dir(pathInfo.dir)
 
           const decompileResult = decompilation.decompile()
 

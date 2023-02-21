@@ -70,12 +70,4 @@ export class TryStep extends Step<Type.TryStep> {
       step.step = super.deserialise_any(`${name}_try`, resourcePool, input.try)
     })
   }
-
-  public write() {
-    return `new TryStep(${JSON.stringify(this.name)}, (step) => {
-      ${super.write_base('step')}
-
-      step.set_try(${this.step.write()})
-    })`
-  }
 }

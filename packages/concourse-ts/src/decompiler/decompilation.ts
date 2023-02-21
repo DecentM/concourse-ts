@@ -5,6 +5,9 @@ import prettier from 'prettier'
 import * as Components from '../components'
 import {is_pipeline} from '../utils/is-pipeline'
 
+import {write_pipeline} from './writers/pipeline'
+import {hoist_all_tasks} from './hoist-task'
+
 export class Decompilation {
   private input?: string // yaml
 
@@ -28,6 +31,14 @@ export class Decompilation {
     return this
   }
 
+  private work_dir = '.'
+
+  public set_work_dir = (work_dir: string) => {
+    this.work_dir = work_dir
+
+    return this
+  }
+
   private prettier_config: prettier.Options
 
   public set_prettier_config = (
@@ -44,6 +55,8 @@ export class Decompilation {
     }
   ) => {
     this.prettier_config = config
+
+    return this
   }
 
   public decompile = () => {
@@ -59,12 +72,12 @@ export class Decompilation {
       throw new VError('Input is not a pipeline!')
     }
 
-    const pipeline = Components.Pipeline.deserialise(
-      this.name ?? Date.now().toString(),
-      parsed
-    )
+    // Load task configs from disk if they're defined in a separate yaml file
+    hoist_all_tasks(this.work_dir, parsed)
 
-    const pipelineString = pipeline.write()
+    const pipelineName = this.name ?? Date.now().toString()
+    const pipelineString = write_pipeline(pipelineName, parsed)
+
     const allComponents = Object.keys(Components)
     const usedComponents: string[] = []
 
@@ -83,7 +96,7 @@ export class Decompilation {
     `
 
     return {
-      filename: `${pipeline.name}.pipeline.ts`,
+      filename: `${pipelineName}.pipeline.ts`,
       pipeline: this.prettier_config
         ? prettier.format(file_contents, this.prettier_config)
         : file_contents,

@@ -1,6 +1,5 @@
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
-import {type_of} from '../utils'
 
 import {Resource} from './resource'
 import {AnyStep, DoStep, TaskStep} from './step'
@@ -248,75 +247,5 @@ export class Job {
       job.serial = input.serial
       job.serial_groups = input.serial_groups
     })
-  }
-
-  public write() {
-    return `new Job(${JSON.stringify(this.name)}, (job) => {
-      ${this.plan
-        ?.map((step) => {
-          return step ? `job.add_step(${step.write()})` : ''
-        })
-        .join('\n')}
-
-      ${
-        type_of(this.build_log_retention) !== 'undefined'
-          ? `job.build_log_retention = ${JSON.stringify(
-              this.build_log_retention
-            )}`
-          : ''
-      }
-
-      ${
-        type_of(this.disable_manual_trigger) !== 'undefined'
-          ? `job.disable_manual_trigger = ${this.disable_manual_trigger}`
-          : ''
-      }
-
-      ${
-        type_of(this.interruptible) !== 'undefined'
-          ? `job.interruptible = ${this.interruptible}`
-          : ''
-      }
-
-      ${
-        type_of(this.max_in_flight) !== 'undefined'
-          ? `job.max_in_flight = ${this.max_in_flight}`
-          : ''
-      }
-
-      ${
-        type_of(this.old_name) !== 'undefined'
-          ? `job.old_name = ${JSON.stringify(this.old_name)}`
-          : ''
-      }
-
-      ${this.on_success ? `job.add_on_success(${this.on_success.write()})` : ''}
-
-      ${this.on_failure ? `job.add_on_failure(${this.on_failure.write()})` : ''}
-
-      ${this.on_error ? `job.add_on_error(${this.on_error.write()})` : ''}
-
-      ${this.on_abort ? `job.add_on_abort(${this.on_abort.write()})` : ''}
-
-      ${this.ensure ? `job.add_ensure(${this.ensure.write()})` : ''}
-
-      ${
-        type_of(this.public) !== 'undefined'
-          ? `job.public = ${this.public}`
-          : ''
-      }
-
-      ${
-        type_of(this.serial) !== 'undefined'
-          ? `job.serial = ${this.serial}`
-          : ''
-      }
-
-      ${
-        type_of(this.serial_groups) !== 'undefined'
-          ? `job.serial_groups = ${this.serial_groups}`
-          : ''
-      }
-    })`
   }
 }

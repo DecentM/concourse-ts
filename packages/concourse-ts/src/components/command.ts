@@ -2,7 +2,6 @@ import {VError} from 'verror'
 
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
-import {type_of} from '../utils'
 
 export class Command {
   constructor(public name: string, init?: Initer<Command>) {
@@ -47,31 +46,5 @@ export class Command {
       command.dir = input.dir
       command.user = input.user
     })
-  }
-
-  public write() {
-    return `new Command(${JSON.stringify(this.name)}, (command) => {
-      ${JSON.stringify(
-        this.args.map((arg) => `command.add_arg(${JSON.stringify(arg)})`)
-      )}
-
-      ${
-        type_of(this.path) !== 'undefined'
-          ? `command.path = ${JSON.stringify(this.path)}`
-          : ''
-      }
-
-      ${
-        type_of(this.dir) !== 'undefined'
-          ? `command.dir = ${JSON.stringify(this.dir)}`
-          : ''
-      }
-
-      ${
-        type_of(this.user) !== 'undefined'
-          ? `command.user = ${JSON.stringify(this.user)}`
-          : ''
-      }
-    })`
   }
 }
