@@ -2,7 +2,6 @@ import {VError} from 'verror'
 
 import {Initer} from '../../declarations/initialisable'
 import * as Type from '../../declarations/types'
-import {type_of} from '../../utils'
 import {Resource} from '../resource'
 
 import {Step} from './_base'
@@ -95,51 +94,5 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
       step.var_files = input.var_files
       step.team = input.team
     })
-  }
-
-  public write() {
-    return `new SetPipelineStep(${JSON.stringify(this.name)}, (step) => {
-      ${super.write_base('step')}
-
-      ${
-        type_of(this.set_pipeline) !== 'undefined'
-          ? `step.set_pipeline = ${JSON.stringify(this.set_pipeline)}`
-          : ''
-      }
-
-      ${
-        type_of(this.file) !== 'undefined'
-          ? `step.file = ${JSON.stringify(this.file)}`
-          : ''
-      }
-
-      ${Object.entries(this.instance_vars)
-        .map(([varName, varValue]) => {
-          return `step.set_instance_var(${JSON.stringify(
-            varName
-          )}, ${JSON.stringify(varValue)}})`
-        })
-        .join('\n')}
-
-      ${Object.entries(this.vars)
-        .map(([varName, varValue]) => {
-          return `step.set_var(${JSON.stringify(varName)}, ${JSON.stringify(
-            varValue
-          )}})`
-        })
-        .join('\n')}
-
-      ${
-        this.var_files
-          ? `step.add_var_file(...${JSON.stringify(this.var_files)})`
-          : ''
-      }
-
-      ${
-        type_of(this.team) !== 'undefined'
-          ? `step.team = ${JSON.stringify(this.team)}`
-          : ''
-      }
-    })`
   }
 }

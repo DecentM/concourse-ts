@@ -4,7 +4,6 @@ import {AnyStep} from '.'
 
 import {Step} from './_base'
 import {Resource} from '../resource'
-import {type_of} from '../../utils'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
   constructor(public override name: string, init?: Initer<InParallelStep>) {
@@ -81,29 +80,5 @@ export class InParallelStep extends Step<Type.InParallelStep> {
       step.fail_fast = input.in_parallel.fail_fast
       step.limit = input.in_parallel.limit
     })
-  }
-
-  public write() {
-    return `new InParallelStep(${JSON.stringify(this.name)}, (step) => {
-      ${super.write_base('step')}
-
-      ${
-        this.steps
-          ? this.steps
-              .map((step) => {
-                return `step.add_step(${step.write()})`
-              })
-              .join('\n')
-          : ''
-      }
-
-      ${type_of(this.limit) !== 'undefined' ? `step.limit = ${this.limit}` : ''}
-
-      ${
-        type_of(this.fail_fast) !== 'undefined'
-          ? `step.fail_fast = ${this.fail_fast}`
-          : ''
-      }
-    })`
   }
 }

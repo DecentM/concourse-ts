@@ -64,16 +64,4 @@ export class DoStep extends Step<Type.DoStep> {
       })
     })
   }
-
-  public write() {
-    return `new DoStep(${JSON.stringify(this.name)}, (step) => {
-      ${super.write_base('step')}
-
-      ${this.do
-        .map((step) => {
-          return `step.add_do(${step.write()})`
-        })
-        .join('\n')}
-    })`
-  }
 }

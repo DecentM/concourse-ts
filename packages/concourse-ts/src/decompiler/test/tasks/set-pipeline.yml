@@ -1,0 +1,34 @@
+---
+platform: linux
+
+inputs:
+  - name: pipeline-promotion
+  - name: versions-file
+
+params:
+  CONCOURSE_PASSWORD:
+  CONCOURSE_URL:
+  CONCOURSE_USERNAME:
+  FOLLOWS_SPECIFIC_COMMIT:
+  FOUNDATION:
+
+run:
+  path: bash
+  args:
+    - '-euc'
+    - |
+      if [ ! -z ${FOLLOWS_SPECIFIC_COMMIT} ]; then
+        commit=$(bosh int --path /resource_version_pipeline-promotion/ref versions/versions.yml)
+        pushd pcf-platform-automation
+          git checkout $commit
+        popd
+      fi
+      set -u
+      source pipeline-promotion/tasks/fly-login.sh
+      fly --target ci \
+        set-pipeline \
+        --pipeline pcf-${FOUNDATION} \
+        --config pipeline-promotion/pipeline.yml \
+        --load-vars-from versions-file/versions.yml
+        --var foundation=${FOUNDATION} \
+        --non-interactive

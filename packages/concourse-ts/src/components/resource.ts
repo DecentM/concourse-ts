@@ -3,17 +3,11 @@ import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
 
-import {
-  DurationInput,
-  get_duration,
-  is_duration,
-  parse_duration,
-} from '../utils/duration'
+import {DurationInput, get_duration, is_duration} from '../utils/duration'
 
 import {ResourceType} from './resource-type'
 import {AnyStep, DoStep, GetStep, PutStep} from './step'
 import {Job} from './job'
-import {type_of} from '../utils'
 
 export class Resource<
   SourceType extends Type.Config = Type.Config,
@@ -152,55 +146,5 @@ export class Resource<
       r.version = input.version
       r.webhook_token = input.webhook_token
     })
-  }
-
-  public write() {
-    return `new Resource(${JSON.stringify(
-      this.name
-    )}, ${this.type.write()}, (r) => {
-      ${
-        type_of(this.source) !== 'undefined'
-          ? `r.source = ${JSON.stringify(this.source)}`
-          : ''
-      }
-
-      ${
-        type_of(this.check_every) !== 'undefined'
-          ? `r.set_check_every(${parse_duration(this.check_every)})`
-          : ''
-      }
-
-      ${
-        type_of(this.icon) !== 'undefined'
-          ? `r.icon = ${JSON.stringify(this.icon)}`
-          : ''
-      }
-
-      ${
-        type_of(this.old_name) !== 'undefined'
-          ? `r.old_name = ${JSON.stringify(this.old_name)}`
-          : ''
-      }
-
-      ${type_of(this.public) !== 'undefined' ? `r.public = ${this.public}` : ''}
-
-      ${
-        type_of(this.tags) === 'array' && this.tags.length
-          ? `r.add_tag(...${this.tags})`
-          : ''
-      }
-
-      ${
-        type_of(this.version) !== 'undefined'
-          ? `r.set_version(${JSON.stringify(this.version)})`
-          : ''
-      }
-
-      ${
-        type_of(this.webhook_token) !== 'undefined'
-          ? `r.webhook_token = ${JSON.stringify(this.webhook_token)}`
-          : ''
-      }
-    })`
   }
 }

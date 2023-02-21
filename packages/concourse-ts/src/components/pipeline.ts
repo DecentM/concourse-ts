@@ -136,38 +136,4 @@ export class Pipeline<Group extends string = string> {
       pipeline.var_sources = input.var_sources
     })
   }
-
-  public write() {
-    const find_group_for_job = (job: Job) => {
-      const group = this.groups?.find((group) => group.jobs.includes(job.name))
-
-      return group?.name ?? null
-    }
-
-    return `new Pipeline(${JSON.stringify(this.name)}, (pipeline) => {
-      ${this.jobs
-        .map((job) => {
-          const group = find_group_for_job(job)
-
-          return group
-            ? `pipeline.add_job(${job.write()}, ${JSON.stringify(group)})`
-            : `pipeline.add_job(${job.write()})`
-        })
-        .join('\n')}
-
-      ${
-        this.display
-          ? `pipeline.set_background_image_url(${JSON.stringify(
-              this.display.background_image
-            )})`
-          : ''
-      }
-
-      ${
-        this.var_sources
-          ? `pipeline.add_var_source(...${JSON.stringify(this.var_sources)})`
-          : ''
-      }
-    })`
-  }
 }

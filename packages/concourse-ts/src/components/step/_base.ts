@@ -24,7 +24,6 @@ import {
   is_task_step,
   is_try_step,
 } from '../../utils/step-type/get-step-type'
-import {type_of} from '../../utils'
 
 export abstract class Step<StepType extends Type.Step> {
   constructor(public name: string) {}
@@ -231,47 +230,5 @@ export abstract class Step<StepType extends Type.Step> {
         input.on_success
       )
     }
-  }
-
-  public abstract write(): string
-
-  protected write_base(stepName = 'step') {
-    let result = `
-      ${
-        type_of(this.attempts) !== 'undefined'
-          ? `${stepName}.attempts = ${this.attempts}`
-          : ''
-      }
-
-      ${
-        type_of(this.tags) !== 'undefined'
-          ? `${stepName}.tags = ${JSON.stringify(this.tags)}`
-          : ''
-      }
-
-      ${
-        type_of(this.timeout) !== 'undefined'
-          ? `${stepName}.timeout = ${JSON.stringify(this.timeout)}`
-          : ''
-      }
-    `
-
-    if (this.ensure) {
-      result += `${stepName}.add_ensure(${this.ensure.write()})`
-    }
-
-    if (this.on_abort) {
-      result += `${stepName}.add_on_abort(${this.on_abort.write()})`
-    }
-
-    if (this.on_failure) {
-      result += `${stepName}.add_on_failure(${this.on_failure.write()})`
-    }
-
-    if (this.on_success) {
-      result += `${stepName}.add_on_success(${this.on_success.write()})`
-    }
-
-    return result
   }
 }

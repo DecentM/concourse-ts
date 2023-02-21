@@ -58,17 +58,36 @@ resources:
       repository: engineerbetter/pcf-ops
 
 jobs:
-  - name: set-sandbox
+  - name: set-set-pipelines-pipeline
     plan:
-      - task: set-sandbox
+      - aggregate:
+          - get: pipeline-promotion
+            trigger: true
+          - get: pcf-ops-image
+      - task: set-set-pipelines-pipeline
         image: pcf-ops-image
-        file: tasks/set-pipeline.yml
-        input_mapping: {versions-file: latest-versions}
+        file: pipeline-promotion/tasks/set-set-pipelines-pipeline.yml
         params:
           <<: &concourse_credentials
             CONCOURSE_URL: ((concourse_url))
             CONCOURSE_USERNAME: ((concourse_username))
             CONCOURSE_PASSWORD: ((concourse_password))
+
+  - name: set-sandbox
+    plan:
+      - aggregate:
+          - get: pipeline-promotion
+            # passed:
+            # - set-set-pipelines-pipeline
+            # trigger: true
+          - get: latest-versions
+          - get: pcf-ops-image
+      - task: set-sandbox
+        image: pcf-ops-image
+        file: pipeline-promotion/tasks/set-pipeline.yml
+        input_mapping: {versions-file: latest-versions}
+        params:
+          <<: *concourse_credentials
           FOUNDATION: sandbox
       - put: sandbox-version
         params:
@@ -76,9 +95,14 @@ jobs:
 
   - name: set-preprod
     plan:
+      - aggregate:
+          - get: pipeline-promotion
+          - get: preprod-input-versions
+            trigger: true
+          - get: pcf-ops-image
       - task: set-preprod
         image: pcf-ops-image
-        file: tasks/set-pipeline.yml
+        file: pipeline-promotion/tasks/set-pipeline.yml
         input_mapping: {versions-file: preprod-input-versions}
         params:
           <<: *concourse_credentials
@@ -90,9 +114,14 @@ jobs:
 
   - name: set-prod
     plan:
+      - aggregate:
+          - get: pipeline-promotion
+          - get: prod-input-versions
+            trigger: true
+          - get: pcf-ops-image
       - task: set-prod
         image: pcf-ops-image
-        file: tasks/set-pipeline.yml
+        file: pipeline-promotion/tasks/set-pipeline.yml
         input_mapping: {versions-file: prod-input-versions}
         params:
           <<: *concourse_credentials
