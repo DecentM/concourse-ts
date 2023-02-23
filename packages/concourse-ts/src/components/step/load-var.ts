@@ -7,8 +7,18 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class LoadVarStep extends Step<Type.LoadVarStep> {
+  private static customiser: Initer<LoadVarStep>
+
+  public static customise = (init: Initer<LoadVarStep>) => {
+    LoadVarStep.customiser = init
+  }
+
   constructor(public override name: string, init?: Initer<LoadVarStep>) {
     super(name)
+
+    if (LoadVarStep.customiser) {
+      LoadVarStep.customiser(this)
+    }
 
     if (init) {
       init(this)

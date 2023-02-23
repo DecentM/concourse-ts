@@ -1,5 +1,6 @@
+import {VError} from 'verror'
 import * as Type from '../../declarations/types'
-import {SixHours} from '../../presets/durations/six-hours'
+
 import {
   AnyStep,
   DoStep,
@@ -25,12 +26,29 @@ import {
   is_try_step,
 } from '../../utils/step-type/get-step-type'
 
+import {DurationInput, get_duration} from '../../utils'
+import {Initer} from '../../declarations'
+
 export abstract class Step<StepType extends Type.Step> {
-  constructor(public name: string) {}
+  private static base_customiser: Initer<Step<Type.Step>>
+
+  public static customise_base = (init: Initer<Step<Type.Step>>) => {
+    Step.base_customiser = init
+  }
+
+  constructor(public name: string) {
+    if (Step.base_customiser) {
+      Step.base_customiser(this)
+    }
+  }
 
   public abstract get_resources(): Resource[]
 
-  public timeout: Type.Duration = SixHours
+  private timeout: Type.Duration
+
+  public set_timeout = (timeout: DurationInput) => {
+    this.timeout = get_duration(timeout)
+  }
 
   public attempts: number
 
@@ -155,9 +173,9 @@ export abstract class Step<StepType extends Type.Step> {
     if (is_try_step(input))
       return TryStep.deserialise(name, resourcePool, input)
 
-    // TODO: Warn user that this step will be missing because it's unrecognised
-
-    return null
+    throw new VError(
+      `Cannot deserialise step "${name}" because its type cannot be recognised`
+    )
   }
 
   public static deserialise_prefer_do(
@@ -175,9 +193,7 @@ export abstract class Step<StepType extends Type.Step> {
       })
     }
 
-    // TODO: Warn user that this step will be missing because it's nullish
-
-    return null
+    throw new VError(`Cannot deserialise step "${name}" because it's nullish`)
   }
 
   protected static deserialise_base(

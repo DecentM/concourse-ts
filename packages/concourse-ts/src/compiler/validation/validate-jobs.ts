@@ -6,10 +6,11 @@ import {
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from './declarations'
-import {validateIdentifier} from './validate-identifier'
+} from '../../utils/warning-store'
 
-export const validateJobs = (c: Type.Pipeline) => {
+import {validate_identifier} from './validate-identifier'
+
+export const validate_jobs = (c: Type.Pipeline) => {
   const warnings = new WarningStore()
   const names: Record<string, Location> = {}
 
@@ -24,7 +25,7 @@ export const validateJobs = (c: Type.Pipeline) => {
     const location: Location = {section: 'jobs', index}
     const identifier = to_identifier(location, job.name)
 
-    warnings.copy_from(validateIdentifier(job.name, identifier))
+    warnings.copy_from(validate_identifier(job.name, identifier))
 
     const existing = names[job.name]
 

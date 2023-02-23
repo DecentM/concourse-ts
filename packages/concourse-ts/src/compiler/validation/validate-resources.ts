@@ -6,10 +6,11 @@ import {
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from './declarations'
-import {validateIdentifier} from './validate-identifier'
+} from '../../utils/warning-store'
 
-export const validateResources = (
+import {validate_identifier} from './validate-identifier'
+
+export const validate_resources = (
   c: Type.Pipeline,
   seenTypes: Record<string, Location>
 ): WarningStore => {
@@ -19,7 +20,7 @@ export const validateResources = (
     const location: Location = {section: 'resources', index}
     const identifier = to_identifier(location, resource.name)
 
-    warnings.copy_from(validateIdentifier(resource.name))
+    warnings.copy_from(validate_identifier(resource.name))
 
     const existing = seenTypes[resource.name]
 

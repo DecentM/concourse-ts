@@ -4,6 +4,12 @@ import {ResourceType, Pipeline, Job, GetStep} from '..'
 import {Config, Duration} from '../declarations/types'
 import {has_duplicates_by_key} from '../utils/array-duplicates'
 
+test.beforeEach(() => {
+  ResourceType.customise((rt) => {
+    rt.type = 'registry-image'
+  })
+})
+
 test('does not serialise duplicate resource types', (t) => {
   const p = new Pipeline('my-pipeline')
   const rt = new ResourceType('my-rt')

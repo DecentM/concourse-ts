@@ -6,8 +6,18 @@ import {Step} from './_base'
 import {Resource} from '../resource'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
+  private static customiser: Initer<InParallelStep>
+
+  public static customise = (init: Initer<InParallelStep>) => {
+    InParallelStep.customiser = init
+  }
+
   constructor(public override name: string, init?: Initer<InParallelStep>) {
     super(name)
+
+    if (InParallelStep.customiser) {
+      InParallelStep.customiser(this)
+    }
 
     if (init) {
       init(this)

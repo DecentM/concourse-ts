@@ -1,5 +1,3 @@
-import {VError} from 'verror'
-
 import {Initer} from '../declarations/initialisable'
 
 import * as Type from '../declarations/types'
@@ -15,7 +13,17 @@ export class Task<
   Input extends Type.Identifier = Type.Identifier,
   Output extends Type.Identifier = Type.Identifier
 > {
+  private static customiser: Initer<Task>
+
+  public static customise = (init: Initer<Task>) => {
+    Task.customiser = init
+  }
+
   constructor(public name: string, init?: Initer<Task<Input, Output>>) {
+    if (Task.customiser) {
+      Task.customiser(this)
+    }
+
     if (init) {
       init(this)
     }
@@ -24,17 +32,6 @@ export class Task<
   private image_resource: Type.AnonymousResource
 
   public set_image_resource = (input: Type.AnonymousResource) => {
-    // TODO: Implement this as a validator instead of throwing here.
-    // https://concourse-ci.org/tasks.html#schema.task-config.image_resource
-
-    // This field is only required for tasks targeting the Linux platform.
-    // This field will be ignored for Windows and Darwin workers.
-    if (this.platform !== Platforms.Linux) {
-      throw new VError(
-        `Image resources cannot be created for ${this.platform}, only ${Platforms.Linux}`
-      )
-    }
-
     this.image_resource = input
   }
 

@@ -7,8 +7,18 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
+  private static customiser: Initer<SetPipelineStep>
+
+  public static customise = (init: Initer<SetPipelineStep>) => {
+    SetPipelineStep.customiser = init
+  }
+
   constructor(public override name: string, init?: Initer<SetPipelineStep>) {
     super(name)
+
+    if (SetPipelineStep.customiser) {
+      SetPipelineStep.customiser(this)
+    }
 
     if (init) {
       init(this)

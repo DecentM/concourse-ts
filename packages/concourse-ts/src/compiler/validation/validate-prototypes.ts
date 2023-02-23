@@ -1,9 +1,9 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L253
 
 import * as Type from '../../declarations/types'
-import {ValidationWarningType, WarningStore} from './declarations'
+import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 
-export const validatePrototypes = (c: Type.Pipeline) => {
+export const validate_prototypes = (c: Type.Pipeline) => {
   const warnings = new WarningStore()
 
   // TODO: Implement this once we have typings for prototypes

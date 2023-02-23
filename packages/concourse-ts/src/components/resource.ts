@@ -14,6 +14,12 @@ export class Resource<
   PutParams extends Type.Config = Type.Config,
   GetParams extends Type.Config = Type.Config
 > {
+  private static customiser: Initer<Resource>
+
+  public static customise = (init: Initer<Resource>) => {
+    Resource.customiser = init
+  }
+
   constructor(
     public name: string,
     private type: ResourceType,
@@ -23,6 +29,10 @@ export class Resource<
       throw new VError(
         `Resource name ${name} is not valid. Spaces are not allowed.`
       )
+    }
+
+    if (Resource.customiser) {
+      Resource.customiser(this)
     }
 
     if (init) {

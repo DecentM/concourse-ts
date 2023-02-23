@@ -10,8 +10,18 @@ import {Step} from './_base'
 export class PutStep<
   ParamType extends Type.Config = Type.Config
 > extends Step<Type.PutStep> {
+  private static customiser: Initer<PutStep>
+
+  public static customise = (init: Initer<PutStep>) => {
+    PutStep.customiser = init
+  }
+
   constructor(public override name: string, init?: Initer<PutStep<ParamType>>) {
     super(name)
+
+    if (PutStep.customiser) {
+      PutStep.customiser(this)
+    }
 
     if (init) {
       init(this)

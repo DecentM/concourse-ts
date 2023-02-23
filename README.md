@@ -5,7 +5,7 @@
 <div align="center">
 
   A set of libraries for SRE/DevOps teams to generate Concourse pipelines, task
-  yaml files, and set or enforce[\*](#security) defaults.
+  yaml files, and set defaults[\*](#security).
 
 </div>
 
@@ -55,15 +55,13 @@ when talking about a theoretical organisation using `concourse-ts`.
   - `Job`
   - `Task`
 
-- Implement enforced defaults[\*](#security) by calling class methods after the
-    `super()` call. For example, you can call `this.set_cpu_limit_percent(50)` in
-    your `Task` constructor to make all tasks limit CPU usage on workers.
+- Implement defaults[\*](#security) by calling the `customise` static function
+  on classes. For example, you can call `task.set_cpu_limit_percent(50)` in
+    your `Task` customiser to make all tasks limit CPU usage on workers.
 
 - Extend `Resource` and `ResourceType` as many times as needed to implement
     organisation-specific configuration, like e-mail notifications, webhooks, SCM
     repos, build processes, and test automation.
-  - Use the Slack resource type and resource implementation as a starting point
-        from `examples/corpity-corp/sre/src/resources/slack.ts` and `examples/corpity-corp/sre/src/resource-types/slack.ts`
 
 #### CLI / Compiler
 
@@ -151,34 +149,30 @@ const task = new Task('my_task', (my_task) => {
 task === thing // true
 ```
 
-When you set defaults after the `super` call, those statements run after the
-initialiser function, but that's not a guarantee that those values will never be
-modified. If the end user sets properties or calls functions after the `new`
-statement and uses its return value, they can override defaults set here. Take
-this for example:
+When you set defaults on a class with .customise(), those statements run after
+the initialiser function, but that's not a guarantee that those values will
+never be modified. If the end user sets properties or calls functions after the
+`new` statement and uses its return value, they can override defaults set here.
+Take this for example:
 
 ```typescript
 // @corpity-corp/ci > src/build-task.ts
-class BuildTask extends ConcourseTs.Task {
-  constructor(name: string, init?: ConcourseTs.Initer<BuildTask>) {
-    super(name, init)
-
-    this.set_cpu_limit_percent(25)
-  }
-}
+Task.customise((task) => {
+  task.set_cpu_limit_percent(25)
+})
 ```
 
 ```typescript
 // @corpity-corp/projects/zeus-server > ci/build.task.ts
 import {BuildTask} from '@corpity-corp/ci'
 
-const buildTask = new BuildTask('my_build', (task) => {
+const build_task = new BuildTask('my_build', (task) => {
   // This will be overwritten with 25 by the base class
   task.set_cpu_limit_percent(50)
 })
 
 // This will overwrite the value from the base class
-buildTask.set_cpu_limit_percent(75)
+build_task.set_cpu_limit_percent(75)
 ```
 
 In this above case, the final value for the cpu_limit_percent will be 75. Since the

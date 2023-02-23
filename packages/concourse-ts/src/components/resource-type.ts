@@ -5,7 +5,17 @@ import {DurationInput, get_duration} from '../utils'
 import {Resource} from './resource'
 
 export class ResourceType<SourceType extends Type.Config = Type.Config> {
+  private static customiser: Initer<ResourceType>
+
+  public static customise = (init: Initer<ResourceType>) => {
+    ResourceType.customiser = init
+  }
+
   constructor(public name: string, init?: Initer<ResourceType<SourceType>>) {
+    if (ResourceType.customiser) {
+      ResourceType.customiser(this)
+    }
+
     if (init) {
       init(this)
     }
@@ -15,7 +25,7 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
     return Resource.from_resource_type(name, this)
   }
 
-  public type = 'registry-image'
+  public type: string
 
   public source?: SourceType
 
@@ -51,7 +61,7 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
     })
   }
 
-  public privileged = false
+  public privileged: boolean
 
   private tags?: Type.Tags
 
