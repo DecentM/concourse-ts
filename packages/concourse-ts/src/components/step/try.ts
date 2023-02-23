@@ -8,8 +8,18 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class TryStep extends Step<Type.TryStep> {
+  private static customiser: Initer<TryStep>
+
+  public static customise = (init: Initer<TryStep>) => {
+    TryStep.customiser = init
+  }
+
   constructor(public override name: string, init?: Initer<TryStep>) {
     super(name)
+
+    if (TryStep.customiser) {
+      TryStep.customiser(this)
+    }
 
     if (init) {
       init(this)

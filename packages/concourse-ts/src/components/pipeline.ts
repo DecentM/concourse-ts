@@ -8,7 +8,17 @@ import {Task} from './task'
 import {TaskStep} from './step'
 
 export class Pipeline<Group extends string = string> {
+  private static customiser: Initer<Pipeline>
+
+  public static customise = (init: Initer<Pipeline>) => {
+    Pipeline.customiser = init
+  }
+
   constructor(public name: string, init?: Initer<Pipeline<Group>>) {
+    if (Pipeline.customiser) {
+      Pipeline.customiser(this)
+    }
+
     if (init) {
       init(this)
     }

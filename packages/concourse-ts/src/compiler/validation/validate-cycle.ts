@@ -1,7 +1,7 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L500
 
 import * as Type from '../../declarations/types'
-import {ValidationWarningType, WarningStore} from './declarations'
+import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 
 enum VisitStatus {
   NonVisited,
@@ -13,7 +13,7 @@ const findJobByName = (jobName: string, pipeline: Type.Pipeline): Type.Job => {
   return pipeline.jobs.find((job) => job.name === jobName)
 }
 
-export const detectCycle = (
+export const detect_cycle = (
   job: Type.Job,
   visited: Record<string, VisitStatus>,
   pipeline: Type.Pipeline,
@@ -37,7 +37,7 @@ export const detectCycle = (
             `pipeline contains a cycle that starts at Job ${nextJob.name}`
           )
         } else if (visited[nextJob.name] === VisitStatus.NonVisited) {
-          return detectCycle(nextJob, visited, pipeline, warnings)
+          return detect_cycle(nextJob, visited, pipeline, warnings)
         }
 
         return warnings
@@ -49,7 +49,7 @@ export const detectCycle = (
   return warnings
 }
 
-export const validateCycle = (pipeline: Type.Pipeline): WarningStore => {
+export const validate_cycle = (pipeline: Type.Pipeline): WarningStore => {
   const visitedJobsMap = {}
   const warnings = new WarningStore()
   const jobs = pipeline.jobs
@@ -60,7 +60,7 @@ export const validateCycle = (pipeline: Type.Pipeline): WarningStore => {
   })
 
   jobs.forEach((job) => {
-    detectCycle(job, visitedJobsMap, pipeline, warnings)
+    detect_cycle(job, visitedJobsMap, pipeline, warnings)
   })
 
   return warnings

@@ -1,9 +1,9 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L475
 
 import * as Type from '../../declarations/types'
-import {ValidationWarningType, WarningStore} from './declarations'
+import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 
-export const validateDisplay = (c: Type.Pipeline): WarningStore => {
+export const validate_display = (c: Type.Pipeline): WarningStore => {
   const warnings = new WarningStore()
 
   if (!c.display || !c.display.background_image) {

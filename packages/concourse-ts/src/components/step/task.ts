@@ -12,11 +12,21 @@ export class TaskStep<
   Input extends Type.Identifier = Type.Identifier,
   Output extends Type.Identifier = Type.Identifier
 > extends Step<Type.TaskStep> {
+  private static customiser: Initer<TaskStep>
+
+  public static customise = (init: Initer<TaskStep>) => {
+    TaskStep.customiser = init
+  }
+
   constructor(
     public override name: string,
     init?: Initer<TaskStep<Input, Output>>
   ) {
     super(name)
+
+    if (TaskStep.customiser) {
+      TaskStep.customiser(this)
+    }
 
     if (init) {
       init(this)

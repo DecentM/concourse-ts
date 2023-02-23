@@ -6,10 +6,11 @@ import {
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from './declarations'
-import {validateIdentifier} from './validate-identifier'
+} from '../../utils/warning-store'
 
-export const validateVarSources = (c: Type.Pipeline): WarningStore => {
+import {validate_identifier} from './validate-identifier'
+
+export const validate_var_sources = (c: Type.Pipeline): WarningStore => {
   const warnings = new WarningStore()
   const names: Record<string, Location> = {}
 
@@ -17,7 +18,7 @@ export const validateVarSources = (c: Type.Pipeline): WarningStore => {
     const location: Location = {section: 'var_sources', index}
     const identifier = to_identifier(location, var_source.name)
 
-    warnings.copy_from(validateIdentifier(var_source.name, identifier))
+    warnings.copy_from(validate_identifier(var_source.name, identifier))
 
     // Concourse does an internal check here to see if the defined varSourceType
     // exists in its implementation

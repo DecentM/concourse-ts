@@ -6,8 +6,18 @@ import {Step} from './_base'
 import {Resource} from '../resource'
 
 export class DoStep extends Step<Type.DoStep> {
+  private static customiser: Initer<DoStep>
+
+  public static customise = (init: Initer<DoStep>) => {
+    DoStep.customiser = init
+  }
+
   constructor(public override name: string, init?: Initer<DoStep>) {
     super(name)
+
+    if (DoStep.customiser) {
+      DoStep.customiser(this)
+    }
 
     if (init) {
       init(this)

@@ -1,12 +1,12 @@
 // https://github.com/concourse/concourse/blob/ef6c441daf6eef75933cf14d5492e616f7442693/atc/configwarning.go#L18
 
-import {ValidationWarningType, WarningStore} from './declarations'
+import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 
 const last = (input: string[]) => {
   return input[input.length - 1]
 }
 
-export const validateIdentifier = (
+export const validate_identifier = (
   identifier: string,
   ...context: string[]
 ): WarningStore => {

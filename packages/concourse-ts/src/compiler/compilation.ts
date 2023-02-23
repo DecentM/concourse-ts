@@ -4,7 +4,7 @@ import path from 'node:path'
 
 import {Pipeline} from '../components/pipeline'
 import {validate} from './validation'
-import {ValidationWarningType, WarningStore} from './validation/declarations'
+import {ValidationWarningType, WarningStore} from '../utils/warning-store'
 
 export type CompilationOptions = {
   output_dir?: string

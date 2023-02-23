@@ -4,7 +4,17 @@ import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
 
 export class Command {
+  private static customiser: Initer<Command>
+
+  public static customise = (init: Initer<Command>) => {
+    Command.customiser = init
+  }
+
   constructor(public name: string, init?: Initer<Command>) {
+    if (Command.customiser) {
+      Command.customiser(this)
+    }
+
     if (init) {
       init(this)
     }

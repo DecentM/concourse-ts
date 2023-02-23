@@ -11,8 +11,18 @@ import {Step} from './_base'
 export class GetStep<
   ParamType extends Type.Config = Type.Config
 > extends Step<Type.GetStep> {
+  private static customiser: Initer<GetStep>
+
+  public static customise = (init: Initer<GetStep>) => {
+    GetStep.customiser = init
+  }
+
   constructor(public override name: string, init?: Initer<GetStep<ParamType>>) {
     super(name)
+
+    if (GetStep.customiser) {
+      GetStep.customiser(this)
+    }
 
     if (init) {
       init(this)

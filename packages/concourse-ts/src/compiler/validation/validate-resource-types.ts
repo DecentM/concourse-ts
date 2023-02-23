@@ -6,10 +6,11 @@ import {
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from './declarations'
-import {validateIdentifier} from './validate-identifier'
+} from '../../utils/warning-store'
 
-export const validateResourceTypes = (
+import {validate_identifier} from './validate-identifier'
+
+export const validate_resource_types = (
   c: Type.Pipeline,
   seenTypes: Record<string, Location>
 ): WarningStore => {
@@ -19,7 +20,7 @@ export const validateResourceTypes = (
     const location: Location = {section: 'resource_types', index}
     const identifier = to_identifier(location, resource_type.name)
 
-    warnings.copy_from(validateIdentifier(resource_type.name))
+    warnings.copy_from(validate_identifier(resource_type.name))
 
     const existing = seenTypes[resource_type.name]
 
@@ -43,6 +44,13 @@ export const validateResourceTypes = (
       warnings.add_warning(
         ValidationWarningType.Fatal,
         `${identifier} has no type`
+      )
+    }
+
+    if (resource_type.type !== 'registry-image') {
+      warnings.add_warning(
+        ValidationWarningType.NonFatal,
+        `Resource type "${identifier}" is not based on registry-image, some workers may be missing "${resource_type.type}".`
       )
     }
   })

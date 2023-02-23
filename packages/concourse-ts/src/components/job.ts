@@ -6,7 +6,17 @@ import {AnyStep, DoStep, TaskStep} from './step'
 import {Step} from './step/_base'
 
 export class Job {
+  private static customiser: Initer<Job>
+
+  public static customise = (init: Initer<Job>) => {
+    Job.customiser = init
+  }
+
   constructor(public name: string, init?: Initer<Job>) {
+    if (Job.customiser) {
+      Job.customiser(this)
+    }
+
     if (init) {
       init(this)
     }
