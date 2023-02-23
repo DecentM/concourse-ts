@@ -182,6 +182,8 @@ jobs:
           set -exu
           yarn --frozen-lockfile --non-interactive
 
+      - uses: nrwl/nx-set-shas@v3
+
       - name: Build packages
         run: yarn nx affected --target=build
 
