@@ -60,11 +60,11 @@ test('refuses to store invalid Durations into check_every', (t) => {
 test('initialiser passes reference to "this"', (t) => {
   const rt = new ResourceType('my-rt')
 
-  let result: Resource | null = null
+  let result: unknown = undefined
 
   const r = new Resource('my-r', rt, (r) => {
     result = r
   })
 
-  t.is(result as unknown as Resource, r)
+  t.is(result, r)
 })
