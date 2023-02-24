@@ -11,12 +11,12 @@ import {
 import {validate_identifier} from './validate-identifier'
 
 export const validate_resources = (
-  c: Type.Pipeline,
+  pipeline: Type.Pipeline,
   seenTypes: Record<string, Location>
 ): WarningStore => {
   const warnings = new WarningStore()
 
-  c.resources.forEach((resource, index) => {
+  pipeline.resources.forEach((resource, index) => {
     const location: Location = {section: 'resources', index}
     const identifier = to_identifier(location, resource.name)
 
@@ -37,6 +37,13 @@ export const validate_resources = (
       warnings.add_warning(
         ValidationWarningType.Fatal,
         `${identifier} has no name`
+      )
+    }
+
+    if (resource.name?.includes(' ')) {
+      warnings.add_warning(
+        ValidationWarningType.Fatal,
+        `Resource name "${identifier}" is not valid. Spaces are not allowed.`
       )
     }
 

@@ -11,18 +11,18 @@ import {
 import {validate_identifier} from './validate-identifier'
 
 export const validate_resource_types = (
-  c: Type.Pipeline,
-  seenTypes: Record<string, Location>
+  pipeline: Type.Pipeline,
+  seen_types: Record<string, Location>
 ): WarningStore => {
   const warnings = new WarningStore()
 
-  c.resource_types.forEach((resource_type, index) => {
+  pipeline.resource_types.forEach((resource_type, index) => {
     const location: Location = {section: 'resource_types', index}
     const identifier = to_identifier(location, resource_type.name)
 
     warnings.copy_from(validate_identifier(resource_type.name))
 
-    const existing = seenTypes[resource_type.name]
+    const existing = seen_types[resource_type.name]
 
     if (existing) {
       warnings.add_warning(
@@ -30,7 +30,7 @@ export const validate_resource_types = (
         `${existing.index} and ${location.index} have the same name ('${resource_type.name}')`
       )
     } else if (resource_type.name) {
-      seenTypes[resource_type.name] = location
+      seen_types[resource_type.name] = location
     }
 
     if (!resource_type.name) {
@@ -45,6 +45,8 @@ export const validate_resource_types = (
         ValidationWarningType.Fatal,
         `${identifier} has no type`
       )
+
+      return
     }
 
     if (resource_type.type !== 'registry-image') {

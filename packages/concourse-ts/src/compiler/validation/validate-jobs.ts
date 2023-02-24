@@ -10,18 +10,18 @@ import {
 
 import {validate_identifier} from './validate-identifier'
 
-export const validate_jobs = (c: Type.Pipeline) => {
+export const validate_jobs = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
   const names: Record<string, Location> = {}
 
-  if (c.jobs?.length === 0) {
+  if (pipeline.jobs?.length === 0) {
     return warnings.add_warning(
       ValidationWarningType.Fatal,
       'jobs: pipeline must contain at least one job'
     )
   }
 
-  c.jobs?.forEach((job, index) => {
+  pipeline.jobs?.forEach((job, index) => {
     const location: Location = {section: 'jobs', index}
     const identifier = to_identifier(location, job.name)
 

@@ -67,7 +67,7 @@ export class GetStep<
 
   public trigger = true
 
-  public version: Type.Version = 'latest'
+  public version: Type.Version
 
   public serialise() {
     if (!this.resource) {

@@ -8,6 +8,18 @@ import {DurationInput, get_duration, is_duration} from '../utils/duration'
 import {ResourceType} from './resource-type'
 import {AnyStep, DoStep, GetStep, PutStep} from './step'
 import {Job} from './job'
+import {type_of} from '../utils'
+
+export type AsPutStepInput<PutParams> = {
+  params?: PutParams
+  inputs?: Type.Inputs
+}
+
+export type AsGetStepInput<GetParams> = {
+  params?: GetParams
+  passed?: Job[]
+  trigger?: boolean
+}
 
 export class Resource<
   SourceType extends Type.Config = Type.Config,
@@ -25,12 +37,6 @@ export class Resource<
     private type: ResourceType,
     init?: Initer<Resource<SourceType, PutParams, GetParams>>
   ) {
-    if (name.includes(' ')) {
-      throw new VError(
-        `Resource name ${name} is not valid. Spaces are not allowed.`
-      )
-    }
-
     if (Resource.customiser) {
       Resource.customiser(this)
     }
@@ -82,41 +88,81 @@ export class Resource<
 
   public webhook_token?: string
 
-  public as_put_step = (params: PutParams) => {
+  public as_put_step = (input?: AsPutStepInput<PutParams>) => {
     return new PutStep<PutParams>(`${this.name}_put`, (step) => {
       step.set_put(this)
-      step.set_params(params)
+
+      if (input?.params) {
+        step.set_params(input.params)
+      }
+
+      if (input?.inputs) {
+        step.set_inputs(input.inputs)
+      }
     })
   }
 
-  public as_get_step = (params: GetParams) => {
+  public as_get_step = (
+    input?: AsGetStepInput<GetParams>,
+    init?: Initer<GetStep<GetParams>>
+  ) => {
     return new GetStep<GetParams>(`${this.name}_get`, (step) => {
       step.set_get(this)
-      step.set_params(params)
+
+      if (input?.params) {
+        step.set_params(input.params)
+      }
+
+      if (input?.passed) {
+        step.add_passed(...input.passed)
+      }
+
+      if (type_of(input?.trigger) === 'boolean') {
+        step.trigger = input.trigger
+      }
+
+      if (init) {
+        init(step)
+      }
     })
   }
 
-  public as_abort_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
-    stepOrJob.add_on_abort(this.as_put_step(params))
+  public as_abort_handler = (
+    stepOrJob: AnyStep | Job,
+    input: AsPutStepInput<PutParams>
+  ) => {
+    stepOrJob.add_on_abort(this.as_put_step(input))
   }
 
-  public as_error_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
-    stepOrJob.add_on_error(this.as_put_step(params))
+  public as_error_handler = (
+    stepOrJob: AnyStep | Job,
+    input: AsPutStepInput<PutParams>
+  ) => {
+    stepOrJob.add_on_error(this.as_put_step(input))
   }
 
-  public as_failure_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
-    stepOrJob.add_on_failure(this.as_put_step(params))
+  public as_failure_handler = (
+    stepOrJob: AnyStep | Job,
+    input: AsPutStepInput<PutParams>
+  ) => {
+    stepOrJob.add_on_failure(this.as_put_step(input))
   }
 
-  public as_success_handler = (stepOrJob: AnyStep | Job, params: PutParams) => {
-    stepOrJob.add_on_success(this.as_put_step(params))
+  public as_success_handler = (
+    stepOrJob: AnyStep | Job,
+    input: AsPutStepInput<PutParams>
+  ) => {
+    stepOrJob.add_on_success(this.as_put_step(input))
   }
 
-  public as_start_handler = (stepOrJob: DoStep | Job, params: PutParams) => {
-    if (stepOrJob instanceof Job) {
-      stepOrJob.add_step_first(this.as_put_step(params))
+  public as_start_handler = (
+    step_or_job: DoStep | Job,
+    input: AsPutStepInput<PutParams>
+  ) => {
+    if (step_or_job instanceof Job) {
+      step_or_job.add_step_first(this.as_put_step(input))
     } else {
-      stepOrJob.add_do_first(this.as_put_step(params))
+      step_or_job.add_do_first(this.as_put_step(input))
     }
   }
 

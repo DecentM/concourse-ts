@@ -7,6 +7,7 @@ import * as Platforms from '../presets/platforms'
 import {BytesInput, get_bytes} from '../utils/bytes'
 
 import {Command} from './command'
+import {Resource} from './resource'
 import {TaskStep} from './step'
 
 export class Task<
@@ -31,8 +32,15 @@ export class Task<
 
   private image_resource: Type.AnonymousResource
 
-  public set_image_resource = (input: Type.AnonymousResource) => {
-    this.image_resource = input
+  public set_image_resource = (input: Resource | Type.AnonymousResource) => {
+    if (input instanceof Resource) {
+      this.image_resource = {
+        source: input.source,
+        type: input.get_resource_type()?.name,
+      }
+    } else {
+      this.image_resource = input
+    }
   }
 
   public platform = Platforms.Linux
