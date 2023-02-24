@@ -1,5 +1,3 @@
-import {VError} from 'verror'
-
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
 
@@ -35,10 +33,6 @@ export class Command {
   public user: string
 
   serialise() {
-    if (!this.path) {
-      throw new VError(`Cannot serialise command "${this.name}" without a path`)
-    }
-
     const result: Type.Command = {
       path: this.path,
       args: this.args,

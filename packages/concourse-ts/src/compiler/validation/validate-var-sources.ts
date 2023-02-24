@@ -10,11 +10,11 @@ import {
 
 import {validate_identifier} from './validate-identifier'
 
-export const validate_var_sources = (c: Type.Pipeline): WarningStore => {
+export const validate_var_sources = (pipeline: Type.Pipeline): WarningStore => {
   const warnings = new WarningStore()
   const names: Record<string, Location> = {}
 
-  c.var_sources?.forEach((var_source, index) => {
+  pipeline.var_sources?.forEach((var_source, index) => {
     const location: Location = {section: 'var_sources', index}
     const identifier = to_identifier(location, var_source.name)
 

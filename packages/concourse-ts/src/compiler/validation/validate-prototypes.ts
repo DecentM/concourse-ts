@@ -3,12 +3,12 @@
 import * as Type from '../../declarations/types'
 import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 
-export const validate_prototypes = (c: Type.Pipeline) => {
+export const validate_prototypes = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
 
   // TODO: Implement this once we have typings for prototypes
 
-  if ('prototypes' in c) {
+  if ('prototypes' in pipeline) {
     warnings.add_warning(
       ValidationWarningType.Fatal,
       'concourse-ts does not support prototypes yet'

@@ -1,4 +1,5 @@
 import {VError} from 'verror'
+
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
 import {DurationInput, get_duration} from '../utils'
@@ -72,12 +73,6 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
   }
 
   serialise() {
-    if (!this.type) {
-      throw new VError(
-        `Resource type "${this.name}" cannot be serialised without a type.`
-      )
-    }
-
     const result: Type.ResourceType = {
       name: this.name,
       type: this.type,

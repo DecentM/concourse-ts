@@ -43,12 +43,12 @@ test('does not serialise duplicate resource types', (t) => {
   t.false(has_duplicates_by_key((item) => item.name, result.resource_types))
 })
 
-test('throws if the type is unassigned', (t) => {
+test('does not throw if the type is unassigned', (t) => {
   const rt = new ResourceType('my-rt')
 
   rt.type = ''
 
-  t.throws(() => rt.serialise())
+  t.notThrows(() => rt.serialise())
 })
 
 test('stores tags', (t) => {

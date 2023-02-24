@@ -3,18 +3,18 @@
 import * as Type from '../../declarations/types'
 import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 
-export const validate_display = (c: Type.Pipeline): WarningStore => {
+export const validate_display = (pipeline: Type.Pipeline): WarningStore => {
   const warnings = new WarningStore()
 
-  if (!c.display || !c.display.background_image) {
+  if (!pipeline.display || !pipeline.display.background_image) {
     return warnings
   }
 
   // Node and Go URL parsing differ. The WHATWG URL class only accepts absolute
   // URLs, so we filter those here.
   if (
-    c.display.background_image.startsWith('/') ||
-    c.display.background_image.startsWith('.')
+    pipeline.display.background_image.startsWith('/') ||
+    pipeline.display.background_image.startsWith('.')
   ) {
     return warnings
   }
@@ -22,12 +22,12 @@ export const validate_display = (c: Type.Pipeline): WarningStore => {
   let url: URL
 
   try {
-    url = new URL(c.display.background_image)
+    url = new URL(pipeline.display.background_image)
   } catch (error) {
     if (error instanceof Error) {
       return warnings.add_warning(
         ValidationWarningType.Fatal,
-        `background_image is not a valid URL: ${c.display.background_image}`
+        `background_image is not a valid URL: ${pipeline.display.background_image}`
       )
     }
 

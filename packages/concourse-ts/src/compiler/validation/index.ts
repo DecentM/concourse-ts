@@ -11,6 +11,8 @@ import {validate_resource_types} from './validate-resource-types'
 import {validate_resources} from './validate-resources'
 import {validate_tasks} from './validate-tasks'
 import {validate_var_sources} from './validate-var-sources'
+import {validate_commands} from './validate-commands'
+import {validate_steps} from './validate-steps'
 
 export const validate = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
@@ -31,7 +33,9 @@ export const validate = (pipeline: Type.Pipeline) => {
     validate_jobs(pipeline),
     validate_display(pipeline),
     validate_cycle(pipeline),
-    validate_tasks(pipeline)
+    validate_tasks(pipeline),
+    validate_commands(pipeline),
+    validate_steps(pipeline)
   )
 
   return warnings

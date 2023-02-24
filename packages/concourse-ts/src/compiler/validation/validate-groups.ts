@@ -10,11 +10,11 @@ import {
 
 import {validate_identifier} from './validate-identifier'
 
-export const validate_groups = (c: Type.Pipeline) => {
+export const validate_groups = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
   const groupNames: Record<string, number> = {}
 
-  c.groups?.forEach((group, index) => {
+  pipeline.groups?.forEach((group, index) => {
     const location: Location = {section: 'groups', index}
     const identifier = to_identifier(location, group.name)
 
@@ -47,12 +47,12 @@ export const validate_groups = (c: Type.Pipeline) => {
   // grouped.
   const jobsGrouped: Record<string, boolean> = {}
 
-  c.jobs?.forEach((job) => {
+  pipeline.jobs?.forEach((job) => {
     jobsGrouped[job.name] =
-      c.groups?.some((group) => group.jobs?.includes(job.name)) ?? false
+      pipeline.groups?.some((group) => group.jobs?.includes(job.name)) ?? false
   })
 
-  if (c.groups?.length) {
+  if (pipeline.groups?.length) {
     Object.entries(jobsGrouped).forEach(([job, grouped]) => {
       if (!grouped) {
         warnings.add_warning(
