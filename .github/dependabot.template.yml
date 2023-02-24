@@ -7,11 +7,11 @@ version: 2
 
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/{package.json,yarn.lock}" # Location of package manifests
     schedule:
       interval: "daily"
 
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/packages/*/" # Location of package manifests
+    directory: "/packages/*/{package.json}" # Location of package manifests
     schedule:
       interval: "daily"
