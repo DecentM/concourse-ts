@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "build": "nx run-many --target=build",
-    "test": "nx affected --target=test"
+    "test": "nx affected --target=test",
+    "dependabot:config": "ts-node bin/generate-dependabot.ts"
   },
   "dependencies": {
     "@swc/helpers": "~0.4.11"
