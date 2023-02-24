@@ -121,14 +121,14 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: coverage-report
-          path: .
+          path: coverage-report
 
       - name: Create coverage reports list
         id: reports
         run: |
           set -exu
 
-          list=$(echo ${{ toJson(needs.determine-matrix.outputs.affected) }} | jq -c 'map("coverage-report/" + . + "/lcov.info")')
+          list=$(echo ${{ toJson(needs.determine-matrix.outputs.affected) }} | jq -c 'map("coverage-report/" + . + "/coverage/lcov.info")')
           echo list="$list" >> $GITHUB_OUTPUT
 
       - name: Run codacy-coverage-reporter
