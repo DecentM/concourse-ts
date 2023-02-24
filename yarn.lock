@@ -1250,34 +1250,6 @@
     confusing-browser-globals "^1.0.9"
     semver "7.3.4"
 
-"@nrwl/js@15.6.3":
-  version "15.6.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-15.6.3.tgz#82c831ab2bf620c3cd376515ff861c9041341d5c"
-  integrity sha512-OkjpbNAL6732jGPR7Lz/6K6AScqjxMGuZCHmMqmlK0NpSRcOtYJpGsn4XZzPRsWteqXCvY/l3efceiL6eNPmRg==
-  dependencies:
-    "@babel/core" "^7.15.0"
-    "@babel/plugin-proposal-class-properties" "^7.14.5"
-    "@babel/plugin-proposal-decorators" "^7.14.5"
-    "@babel/plugin-transform-runtime" "^7.15.0"
-    "@babel/preset-env" "^7.15.0"
-    "@babel/preset-typescript" "^7.15.0"
-    "@babel/runtime" "^7.14.8"
-    "@nrwl/devkit" "15.6.3"
-    "@nrwl/linter" "15.6.3"
-    "@nrwl/workspace" "15.6.3"
-    babel-plugin-const-enum "^1.0.1"
-    babel-plugin-macros "^2.8.0"
-    babel-plugin-transform-typescript-metadata "^0.3.1"
-    chalk "^4.1.0"
-    fast-glob "3.2.7"
-    fs-extra "^11.1.0"
-    ignore "^5.0.4"
-    js-tokens "^4.0.0"
-    minimatch "3.0.5"
-    source-map-support "0.5.19"
-    tree-kill "1.2.2"
-    tslib "^2.3.0"
-
 "@nrwl/js@15.7.2":
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-15.7.2.tgz#885af58016eb6201396f9b82879bb4bb4cc9fd6b"
@@ -1385,14 +1357,14 @@
   dependencies:
     nx "15.7.2"
 
-"@nrwl/vite@15.6.3":
-  version "15.6.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-15.6.3.tgz#4ad5e85c055a7e103cdafab6fad6d6f6f3278552"
-  integrity sha512-vO5JUoS4nhOk42nVyhmU/itX+1GmxoXG3NgTmWtjtLgYwi7eo3lddtMdzgKLKH0Ktwo4kfApiHaU36iDadyS9A==
+"@nrwl/vite@15.7.2":
+  version "15.7.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-15.7.2.tgz#37426a325c6866c9e398ff4e03ded840084fca5d"
+  integrity sha512-8vuXwQUosEnohVF1PTs/AilRyQC4ZxpWj2pzXZX0thynqsoSl/nar0JiQA9FUnYU2yAZCX5QWqb3pWVGftI5lQ==
   dependencies:
-    "@nrwl/devkit" "15.6.3"
-    "@nrwl/js" "15.6.3"
-    "@nrwl/workspace" "15.6.3"
+    "@nrwl/devkit" "15.7.2"
+    "@nrwl/js" "15.7.2"
+    "@nrwl/workspace" "15.7.2"
     "@phenomnomnominal/tsquery" "4.1.1"
     "@swc/helpers" "^0.4.11"
     dotenv "~10.0.0"
