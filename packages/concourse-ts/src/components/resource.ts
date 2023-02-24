@@ -32,6 +32,18 @@ export class Resource<
     Resource.customiser = init
   }
 
+  private static get_step_customiser: Initer<GetStep>
+
+  public static customise_get_step = (init: Initer<GetStep>) => {
+    Resource.get_step_customiser = init
+  }
+
+  private static put_step_customiser: Initer<PutStep>
+
+  public static customise_put_step = (init: Initer<PutStep>) => {
+    Resource.put_step_customiser = init
+  }
+
   constructor(
     public name: string,
     private type: ResourceType,
@@ -88,8 +100,15 @@ export class Resource<
 
   public webhook_token?: string
 
-  public as_put_step = (input?: AsPutStepInput<PutParams>) => {
+  public as_put_step = (
+    input?: AsPutStepInput<PutParams>,
+    init?: Initer<PutStep<PutParams>>
+  ) => {
     return new PutStep<PutParams>(`${this.name}_put`, (step) => {
+      if (Resource.put_step_customiser) {
+        Resource.put_step_customiser(step)
+      }
+
       step.set_put(this)
 
       if (input?.params) {
@@ -99,6 +118,10 @@ export class Resource<
       if (input?.inputs) {
         step.set_inputs(input.inputs)
       }
+
+      if (init) {
+        init(step)
+      }
     })
   }
 
@@ -107,6 +130,10 @@ export class Resource<
     init?: Initer<GetStep<GetParams>>
   ) => {
     return new GetStep<GetParams>(`${this.name}_get`, (step) => {
+      if (Resource.get_step_customiser) {
+        Resource.get_step_customiser(step)
+      }
+
       step.set_get(this)
 
       if (input?.params) {

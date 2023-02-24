@@ -20,6 +20,12 @@ export class Task<
     Task.customiser = init
   }
 
+  private static task_step_customiser: Initer<TaskStep>
+
+  public static customise_task_step = (init: Initer<TaskStep>) => {
+    Task.task_step_customiser = init
+  }
+
   constructor(public name: string, init?: Initer<Task<Input, Output>>) {
     if (Task.customiser) {
       Task.customiser(this)
@@ -96,11 +102,15 @@ export class Task<
   public rootfs_uri?: string
 
   public as_task_step = (init?: Initer<TaskStep<Input, Output>>) => {
-    return new TaskStep<Input, Output>(`${this.name}_step`, (taskStep) => {
-      taskStep.set_task(this)
+    return new TaskStep<Input, Output>(`${this.name}_step`, (step) => {
+      if (Task.task_step_customiser) {
+        Task.task_step_customiser(step)
+      }
+
+      step.set_task(this)
 
       if (init) {
-        init(taskStep)
+        init(step)
       }
     })
   }
