@@ -19,7 +19,7 @@
     "@nrwl/linter": "15.7.2",
     "@nrwl/vite": "15.6.3",
     "@nrwl/workspace": "15.6.3",
-    "@swc/cli": "~0.1.55",
+    "@swc/cli": "~0.1.62",
     "@swc/core": "^1.2.173",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.49.0",
