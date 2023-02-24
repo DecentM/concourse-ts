@@ -20,9 +20,9 @@ export class Task<
     Task.customiser = init
   }
 
-  private static task_step_customiser: Initer<TaskStep>
+  private static task_step_customiser: Initer<TaskStep, Task>
 
-  public static customise_task_step = (init: Initer<TaskStep>) => {
+  public static customise_task_step = (init: Initer<TaskStep, Task>) => {
     Task.task_step_customiser = init
   }
 
@@ -104,7 +104,7 @@ export class Task<
   public as_task_step = (init?: Initer<TaskStep<Input, Output>>) => {
     return new TaskStep<Input, Output>(`${this.name}_step`, (step) => {
       if (Task.task_step_customiser) {
-        Task.task_step_customiser(step)
+        Task.task_step_customiser(step, this)
       }
 
       step.set_task(this)

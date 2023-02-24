@@ -1,1 +1,4 @@
-export type Initer<Type> = (instance: Type) => void
+export type Initer<Type, Options = void> = (
+  instance: Type,
+  options: Options
+) => void

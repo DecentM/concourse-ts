@@ -32,15 +32,15 @@ export class Resource<
     Resource.customiser = init
   }
 
-  private static get_step_customiser: Initer<GetStep>
+  private static get_step_customiser: Initer<GetStep, Resource>
 
-  public static customise_get_step = (init: Initer<GetStep>) => {
+  public static customise_get_step = (init: Initer<GetStep, Resource>) => {
     Resource.get_step_customiser = init
   }
 
-  private static put_step_customiser: Initer<PutStep>
+  private static put_step_customiser: Initer<PutStep, Resource>
 
-  public static customise_put_step = (init: Initer<PutStep>) => {
+  public static customise_put_step = (init: Initer<PutStep, Resource>) => {
     Resource.put_step_customiser = init
   }
 
@@ -106,7 +106,7 @@ export class Resource<
   ) => {
     return new PutStep<PutParams>(`${this.name}_put`, (step) => {
       if (Resource.put_step_customiser) {
-        Resource.put_step_customiser(step)
+        Resource.put_step_customiser(step, this)
       }
 
       step.set_put(this)
@@ -131,7 +131,7 @@ export class Resource<
   ) => {
     return new GetStep<GetParams>(`${this.name}_get`, (step) => {
       if (Resource.get_step_customiser) {
-        Resource.get_step_customiser(step)
+        Resource.get_step_customiser(step, this)
       }
 
       step.set_get(this)
