@@ -34,13 +34,17 @@ export class Resource<
 
   private static get_step_customiser: Initer<GetStep, Resource>
 
-  public static customise_get_step = (init: Initer<GetStep, Resource>) => {
+  public static customise_get_step = <CustomResource extends Resource>(
+    init: Initer<GetStep, CustomResource>
+  ) => {
     Resource.get_step_customiser = init
   }
 
   private static put_step_customiser: Initer<PutStep, Resource>
 
-  public static customise_put_step = (init: Initer<PutStep, Resource>) => {
+  public static customise_put_step = <CustomResource extends Resource>(
+    init: Initer<PutStep, CustomResource>
+  ) => {
     Resource.put_step_customiser = init
   }
 

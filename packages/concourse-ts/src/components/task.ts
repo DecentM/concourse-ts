@@ -22,7 +22,9 @@ export class Task<
 
   private static task_step_customiser: Initer<TaskStep, Task>
 
-  public static customise_task_step = (init: Initer<TaskStep, Task>) => {
+  public static customise_task_step = <CustomTask extends Task>(
+    init: Initer<TaskStep, CustomTask>
+  ) => {
     Task.task_step_customiser = init
   }
 
