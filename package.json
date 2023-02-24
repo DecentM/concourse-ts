@@ -9,7 +9,8 @@
   "scripts": {
     "build": "nx run-many --target=build",
     "test": "nx affected --target=test",
-    "dependabot:config": "ts-node bin/generate-dependabot.ts"
+    "dependabot:config": "ts-node bin/generate-dependabot.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@swc/helpers": "~0.4.11"
@@ -36,6 +37,7 @@
     "vite": "^4.1.4",
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^4.0.5",
-    "vitest": "^0.28.5"
+    "vitest": "^0.28.5",
+    "husky": "^8.0.0"
   }
 }
