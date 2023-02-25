@@ -3,3 +3,6 @@
 
 yarn dependabot:config
 git add .github/dependabot.yml
+
+yarn tsconfig-paths:update
+git add tsconfig.base.json
