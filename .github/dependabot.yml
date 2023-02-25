@@ -9,47 +9,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-ansible-playbook/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-apache-directory-index/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-appcenter/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-aptly-cli/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-artifacthub/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-artifactory/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-artifactory-deb/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-artifactory-docker/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-awx/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-becker-github-list-repos/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-bitbucket-build-status-notification/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -57,99 +17,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-bosh-io-release/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-bosh-io-stemcell/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-bugsnag-build/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-capistrano/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-cf/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-cf-cli/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-chartmuseum/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-cogito/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-blackduck/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-github-pr-comment/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-pipeline/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-rclone/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-slack-alert/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-slack-notifier/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-sonarqube-notifier/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-concourse-tfe/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-consul-kv/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-coralogix-event/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-cron/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-datadog-event/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-datetime-version/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-dhall/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-docker-compose/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-docker-image/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -157,23 +25,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-fossil/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-gate/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-gcs/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-git/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-github-app-token/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -181,51 +33,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-githubapps-content/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-hashicorp-release/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-helm-chart/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-helm3/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-hg/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-hipchat-notification/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-http/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-http-jq/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-incident/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-io-artifactory/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-irc-notification/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-irccat/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -233,23 +41,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-key-value/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-keyval/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-kubectl_resource/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-lastpass/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-marathon/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -261,35 +53,11 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-newrelic-deployment/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-openssl-source-code/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-oss-github-pr/
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-paas-grafana-annotation/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-phraseapp/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-pool/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-pulumi/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-pushgateway/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -301,19 +69,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-repo/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-rocketchat-notification/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-rss/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-rubygems/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -325,35 +81,11 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-semver-config/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-sentry-releases/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-slack-alert/
     schedule:
       interval: daily
   - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-sonarqube/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-static/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-steampipe/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-tanzu-observability-event/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-teams-notification/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -366,21 +98,5 @@ updates:
       interval: daily
   - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-tracker/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-vasu-k8s/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-vrealize-automation/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-webhook-notification/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-wechat-notification/
     schedule:
       interval: daily

@@ -10,6 +10,7 @@
     "build": "nx run-many --target=build",
     "test": "nx affected --target=test",
     "dependabot:config": "ts-node bin/generate-dependabot.ts",
+    "tsconfig-paths:update": "ts-node bin/update-tsconfig-paths.ts",
     "prepare": "husky install"
   },
   "dependencies": {

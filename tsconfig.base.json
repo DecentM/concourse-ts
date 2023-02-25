@@ -10,7 +10,10 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
@@ -18,60 +21,20 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@decentm/concourse-ts": ["packages/concourse-ts/src/index.ts"],
-      "@decentm/concourse-ts-resource-paas-grafana-annotation": [
-        "packages/concourse-ts-resource-paas-grafana-annotation/src/index.ts"
+      "@decentm/concourse-ts": [
+        "packages/concourse-ts/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-lastpass": [
-        "packages/concourse-ts-resource-lastpass/src/index.ts"
+      "@decentm/concourse-ts-resource-apache-directory-index": [
+        "packages/concourse-ts-resource-apache-directory-index/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-concourse-slack-alert": [
-        "packages/concourse-ts-resource-concourse-slack-alert/src/index.ts"
+      "@decentm/concourse-ts-resource-bitbucket-pr": [
+        "packages/concourse-ts-resource-bitbucket-pr/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-dhall": [
-        "packages/concourse-ts-resource-dhall/src/index.ts"
+      "@decentm/concourse-ts-resource-cron": [
+        "packages/concourse-ts-resource-cron/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-becker-github-list-repos": [
-        "packages/concourse-ts-resource-becker-github-list-repos/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-fossil": [
-        "packages/concourse-ts-resource-fossil/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-semver-config": [
-        "packages/concourse-ts-resource-semver-config/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-chartmuseum": [
-        "packages/concourse-ts-resource-chartmuseum/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-sonarqube.yaml": [
-        "packages/concourse-ts-resource-sonarqube.yaml/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-marathon": [
-        "packages/concourse-ts-resource-marathon/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-keyval": [
-        "packages/concourse-ts-resource-keyval/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-steampipe": [
-        "packages/concourse-ts-resource-steampipe/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-bosh-io-release": [
-        "packages/concourse-ts-resource-bosh-io-release/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-bosh-io-stemcell": [
-        "packages/concourse-ts-resource-bosh-io-stemcell/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-cf": [
-        "packages/concourse-ts-resource-cf/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-concourse-pipeline": [
-        "packages/concourse-ts-resource-concourse-pipeline/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-datadog-event": [
-        "packages/concourse-ts-resource-datadog-event/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-docker-image": [
-        "packages/concourse-ts-resource-docker-image/src/index.ts"
+      "@decentm/concourse-ts-resource-fly": [
+        "packages/concourse-ts-resource-fly/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-git": [
         "packages/concourse-ts-resource-git/src/index.ts"
@@ -79,11 +42,23 @@
       "@decentm/concourse-ts-resource-github-release": [
         "packages/concourse-ts-resource-github-release/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-hg": [
-        "packages/concourse-ts-resource-hg/src/index.ts"
+      "@decentm/concourse-ts-resource-helm3": [
+        "packages/concourse-ts-resource-helm3/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-k8s": [
+        "packages/concourse-ts-resource-k8s/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-keyval": [
+        "packages/concourse-ts-resource-keyval/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-maven": [
+        "packages/concourse-ts-resource-maven/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-mock": [
         "packages/concourse-ts-resource-mock/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-oss-github-pr": [
+        "packages/concourse-ts-resource-oss-github-pr/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-pool": [
         "packages/concourse-ts-resource-pool/src/index.ts"
@@ -91,214 +66,37 @@
       "@decentm/concourse-ts-resource-registry-image": [
         "packages/concourse-ts-resource-registry-image/src/index.ts"
       ],
+      "@decentm/concourse-ts-resource-registry-tag": [
+        "packages/concourse-ts-resource-registry-tag/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-rss": [
+        "packages/concourse-ts-resource-rss/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-s3": [
         "packages/concourse-ts-resource-s3/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-semver": [
         "packages/concourse-ts-resource-semver/src/index.ts"
       ],
+      "@decentm/concourse-ts-resource-slack-alert": [
+        "packages/concourse-ts-resource-slack-alert/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-sonarqube": [
+        "packages/concourse-ts-resource-sonarqube/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-terraform": [
+        "packages/concourse-ts-resource-terraform/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-time": [
         "packages/concourse-ts-resource-time/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-tracker": [
         "packages/concourse-ts-resource-tracker/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-coralogix-event": [
-        "packages/concourse-ts-resource-coralogix-event/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-bugsnag-build": [
-        "packages/concourse-ts-resource-bugsnag-build/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-datetime-version": [
-        "packages/concourse-ts-resource-datetime-version/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-artifactory-docker": [
-        "packages/concourse-ts-resource-artifactory-docker/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-concourse-blackduck": [
-        "packages/concourse-ts-resource-concourse-blackduck/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-concourse-sonarqube-notifier": [
-        "packages/concourse-ts-resource-concourse-sonarqube-notifier/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-irc-notification": [
-        "packages/concourse-ts-resource-irc-notification/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-webhook-notification": [
-        "packages/concourse-ts-resource-webhook-notification/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-gcs": [
-        "packages/concourse-ts-resource-gcs/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-key-value": [
-        "packages/concourse-ts-resource-key-value/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-openssl-source-code": [
-        "packages/concourse-ts-resource-openssl-source-code/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-irccat": [
-        "packages/concourse-ts-resource-irccat/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-artifacthub": [
-        "packages/concourse-ts-resource-artifacthub/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-wechat-notification": [
-        "packages/concourse-ts-resource-wechat-notification/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-helm-chart": [
-        "packages/concourse-ts-resource-helm-chart/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-hipchat-notification": [
-        "packages/concourse-ts-resource-hipchat-notification/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-http": [
-        "packages/concourse-ts-resource-http/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-k8s": [
-        "packages/concourse-ts-resource-k8s/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-kubectl_resource": [
-        "packages/concourse-ts-resource-kubectl_resource/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-static": [
-        "packages/concourse-ts-resource-static/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-terraform": [
-        "packages/concourse-ts-resource-terraform/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-repo": [
-        "packages/concourse-ts-resource-repo/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-awx": [
-        "packages/concourse-ts-resource-awx/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-apache-directory-index": [
-        "packages/concourse-ts-resource-apache-directory-index/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-consul-kv": [
-        "packages/concourse-ts-resource-consul-kv/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-gate": [
-        "packages/concourse-ts-resource-gate/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-rocketchat-notification": [
-        "packages/concourse-ts-resource-rocketchat-notification/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-concourse-slack-notifier": [
-        "packages/concourse-ts-resource-concourse-slack-notifier/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-bitbucket-pr": [
-        "packages/concourse-ts-resource-bitbucket-pr/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-teams-notification": [
-        "packages/concourse-ts-resource-teams-notification/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-concourse-github-pr-comment": [
-        "packages/concourse-ts-resource-concourse-github-pr-comment/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-cf-cli": [
-        "packages/concourse-ts-resource-cf-cli/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-maven": [
-        "packages/concourse-ts-resource-maven/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-concourse-tfe": [
-        "packages/concourse-ts-resource-concourse-tfe/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-incident.yaml": [
-        "packages/concourse-ts-resource-incident.yaml/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-cron": [
-        "packages/concourse-ts-resource-cron/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-cogito": [
-        "packages/concourse-ts-resource-cogito/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-pushgateway": [
-        "packages/concourse-ts-resource-pushgateway/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-http-jq": [
-        "packages/concourse-ts-resource-http-jq/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-pulumi": [
-        "packages/concourse-ts-resource-pulumi/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-sentry-releases": [
-        "packages/concourse-ts-resource-sentry-releases/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-newrelic-deployment": [
-        "packages/concourse-ts-resource-newrelic-deployment/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-aptly-cli": [
-        "packages/concourse-ts-resource-aptly-cli/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-bitbucket-build-status-notification": [
-        "packages/concourse-ts-resource-bitbucket-build-status-notification/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-capistrano": [
-        "packages/concourse-ts-resource-capistrano/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-concourse-rclone": [
-        "packages/concourse-ts-resource-concourse-rclone/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-io-artifactory": [
-        "packages/concourse-ts-resource-io-artifactory/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-vasu-k8s": [
-        "packages/concourse-ts-resource-vasu-k8s/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-hashicorp-release": [
-        "packages/concourse-ts-resource-hashicorp-release/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-rss": [
-        "packages/concourse-ts-resource-rss/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-oss-github-pr": [
-        "packages/concourse-ts-resource-oss-github-pr/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-github-app-token": [
-        "packages/concourse-ts-resource-github-app-token/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-phraseapp": [
-        "packages/concourse-ts-resource-phraseapp/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-registry-tag": [
-        "packages/concourse-ts-resource-registry-tag/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-appcenter.yaml": [
-        "packages/concourse-ts-resource-appcenter.yaml/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-githubapps-content": [
-        "packages/concourse-ts-resource-githubapps-content/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-ansible-playbook": [
-        "packages/concourse-ts-resource-ansible-playbook/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-artifactory-deb": [
-        "packages/concourse-ts-resource-artifactory-deb/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-artifactory": [
-        "packages/concourse-ts-resource-artifactory/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-docker-compose": [
-        "packages/concourse-ts-resource-docker-compose/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-fly": [
-        "packages/concourse-ts-resource-fly/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-rubygems": [
-        "packages/concourse-ts-resource-rubygems/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-helm3": [
-        "packages/concourse-ts-resource-helm3/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-vrealize-automation": [
-        "packages/concourse-ts-resource-vrealize-automation/src/index.ts"
-      ],
-      "@decentm/concourse-ts-resource-tanzu-observability-event": [
-        "packages/concourse-ts-resource-tanzu-observability-event/src/index.ts"
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
