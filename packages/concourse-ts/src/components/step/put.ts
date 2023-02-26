@@ -8,7 +8,9 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class PutStep<
-  ParamType extends Type.Config = Type.Config
+  Source extends Type.Config = Type.Config,
+  PutParams extends Type.Config = Type.Config,
+  GetParams extends Type.Config = Type.Config
 > extends Step<Type.PutStep> {
   private static customiser: Initer<PutStep>
 
@@ -16,7 +18,10 @@ export class PutStep<
     PutStep.customiser = init
   }
 
-  constructor(public override name: string, init?: Initer<PutStep<ParamType>>) {
+  constructor(
+    public override name: string,
+    init?: Initer<PutStep<Source, PutParams, GetParams>>
+  ) {
     super(name)
 
     if (PutStep.customiser) {
@@ -29,14 +34,14 @@ export class PutStep<
   }
 
   public set_put = <
-    ResourceType extends Resource<Type.Config, ParamType, Type.Config>
+    ResourceType extends Resource<Source, PutParams, GetParams>
   >(
     resource: ResourceType
   ) => {
     this.resource = resource
   }
 
-  private resource?: Resource
+  private resource?: Resource<Source, PutParams, GetParams>
 
   public get_resources = (): Resource[] => {
     const result = this.get_base_resources()
@@ -56,9 +61,9 @@ export class PutStep<
     this.inputs = inputs
   }
 
-  private params: ParamType
+  private params: PutParams
 
-  public set_params = (params: ParamType) => {
+  public set_params = (params: PutParams) => {
     this.params = params
   }
 

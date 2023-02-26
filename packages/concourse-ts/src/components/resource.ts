@@ -22,7 +22,7 @@ export type AsGetStepInput<GetParams> = {
 }
 
 export class Resource<
-  SourceType extends Type.Config = Type.Config,
+  Source extends Type.Config = Type.Config,
   PutParams extends Type.Config = Type.Config,
   GetParams extends Type.Config = Type.Config
 > {
@@ -57,7 +57,7 @@ export class Resource<
   constructor(
     public name: string,
     private type: ResourceType,
-    init?: Initer<Resource<SourceType, PutParams, GetParams>>
+    init?: Initer<Resource<Source, PutParams, GetParams>>
   ) {
     if (Resource.customiser) {
       Resource.customiser(this)
@@ -77,7 +77,7 @@ export class Resource<
 
   public get_resource_type = () => this.type
 
-  public source?: SourceType
+  public source?: Source
 
   private check_every?: Type.Duration
 
@@ -112,56 +112,62 @@ export class Resource<
 
   public as_put_step = (
     input?: AsPutStepInput<PutParams>,
-    init?: Initer<PutStep<PutParams>>
+    init?: Initer<PutStep<Source, PutParams, GetParams>>
   ) => {
-    return new PutStep<PutParams>(`${this.name}_put`, (step) => {
-      if (Resource.put_step_customiser) {
-        Resource.put_step_customiser(step, this)
-      }
+    return new PutStep<Source, PutParams, GetParams>(
+      `${this.name}_put`,
+      (step) => {
+        if (Resource.put_step_customiser) {
+          Resource.put_step_customiser(step, this)
+        }
 
-      step.set_put(this)
+        step.set_put(this)
 
-      if (input?.params) {
-        step.set_params(input.params)
-      }
+        if (input?.params) {
+          step.set_params(input.params)
+        }
 
-      if (input?.inputs) {
-        step.set_inputs(input.inputs)
-      }
+        if (input?.inputs) {
+          step.set_inputs(input.inputs)
+        }
 
-      if (init) {
-        init(step)
+        if (init) {
+          init(step)
+        }
       }
-    })
+    )
   }
 
   public as_get_step = (
     input?: AsGetStepInput<GetParams>,
-    init?: Initer<GetStep<GetParams>>
+    init?: Initer<GetStep<Source, PutParams, GetParams>>
   ) => {
-    return new GetStep<GetParams>(`${this.name}_get`, (step) => {
-      if (Resource.get_step_customiser) {
-        Resource.get_step_customiser(step, this)
-      }
+    return new GetStep<Source, PutParams, GetParams>(
+      `${this.name}_get`,
+      (step) => {
+        if (Resource.get_step_customiser) {
+          Resource.get_step_customiser(step, this)
+        }
 
-      step.set_get(this)
+        step.set_get(this)
 
-      if (input?.params) {
-        step.set_params(input.params)
-      }
+        if (input?.params) {
+          step.set_params(input.params)
+        }
 
-      if (input?.passed) {
-        step.add_passed(...input.passed)
-      }
+        if (input?.passed) {
+          step.add_passed(...input.passed)
+        }
 
-      if (type_of(input?.trigger) === 'boolean') {
-        step.trigger = input.trigger
-      }
+        if (type_of(input?.trigger) === 'boolean') {
+          step.trigger = input.trigger
+        }
 
-      if (init) {
-        init(step)
+        if (init) {
+          init(step)
+        }
       }
-    })
+    )
   }
 
   public as_abort_handler = (

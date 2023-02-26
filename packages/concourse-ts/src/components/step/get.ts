@@ -9,7 +9,9 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class GetStep<
-  ParamType extends Type.Config = Type.Config
+  Source extends Type.Config = Type.Config,
+  PutParams extends Type.Config = Type.Config,
+  GetParams extends Type.Config = Type.Config
 > extends Step<Type.GetStep> {
   private static customiser: Initer<GetStep>
 
@@ -17,7 +19,10 @@ export class GetStep<
     GetStep.customiser = init
   }
 
-  constructor(public override name: string, init?: Initer<GetStep<ParamType>>) {
+  constructor(
+    public override name: string,
+    init?: Initer<GetStep<Source, PutParams, GetParams>>
+  ) {
     super(name)
 
     if (GetStep.customiser) {
@@ -30,7 +35,7 @@ export class GetStep<
   }
 
   public set_get = <
-    ResourceType extends Resource<Type.Config, Type.Config, ParamType>
+    ResourceType extends Resource<Source, PutParams, GetParams>
   >(
     resource: ResourceType
   ) => {
@@ -59,9 +64,9 @@ export class GetStep<
     this.passed.push(...jobs.map((job) => job.name))
   }
 
-  private params: ParamType
+  private params: GetParams
 
-  public set_params = (params: ParamType) => {
+  public set_params = (params: GetParams) => {
     this.params = params
   }
 
