@@ -30,9 +30,6 @@
       "@decentm/concourse-ts-resource-bitbucket-pr": [
         "packages/concourse-ts-resource-bitbucket-pr/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-fly": [
-        "packages/concourse-ts-resource-fly/src/index.ts"
-      ],
       "@decentm/concourse-ts-resource-git": [
         "packages/concourse-ts-resource-git/src/index.ts"
       ],
