@@ -108,36 +108,36 @@ jobs:
           name: coverage-report
           path: packages/*/coverage
 
-  coverage-report-submission:
-    runs-on: ubuntu-latest
+  # coverage-report-submission:
+  #   runs-on: ubuntu-latest
 
-    needs:
-      - tests
-      - determine-matrix
+  #   needs:
+  #     - tests
+  #     - determine-matrix
 
-    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
+  #   if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
 
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: coverage-report
-          path: coverage-report
+  #   steps:
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: coverage-report
+  #         path: coverage-report
 
-      - name: Create coverage reports list
-        id: reports
-        run: |
-          set -exu
+  #     - name: Create coverage reports list
+  #       id: reports
+  #       run: |
+  #         set -exu
 
-          list=$(echo ${{ toJson(needs.determine-matrix.outputs.affected) }} | jq -c 'map("coverage-report/" + . + "/coverage/lcov.info")')
-          echo list="$list" >> $GITHUB_OUTPUT
+  #         list=$(echo ${{ toJson(needs.determine-matrix.outputs.affected) }} | jq -c 'map("coverage-report/" + . + "/coverage/lcov.info")')
+  #         echo list="$list" >> $GITHUB_OUTPUT
 
-      - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@v1
-        env:
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: ${{ join(fromJson(steps.reports.outputs.list), ',') }}
+  #     - name: Run codacy-coverage-reporter
+  #       uses: codacy/codacy-coverage-reporter-action@v1
+  #       env:
+  #         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+  #       with:
+  #         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+  #         coverage-reports: ${{ join(fromJson(steps.reports.outputs.list), ',') }}
 
   build:
     name: build-affected
