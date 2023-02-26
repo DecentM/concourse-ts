@@ -1,18 +1,21 @@
 import {VError} from 'verror'
 
 import {Initer} from '../declarations/initialisable'
-import * as Type from '../declarations/types'
+import * as Declaration from '../declarations/types'
 import {DurationInput, get_duration} from '../utils'
 import {Resource} from './resource'
 
-export class ResourceType<SourceType extends Type.Config = Type.Config> {
+export class ResourceType<
+  Type extends string = string,
+  Source extends Declaration.Config = Declaration.Config
+> {
   private static customiser: Initer<ResourceType>
 
   public static customise = (init: Initer<ResourceType>) => {
     ResourceType.customiser = init
   }
 
-  constructor(public name: string, init?: Initer<ResourceType<SourceType>>) {
+  constructor(public name: string, init?: Initer<ResourceType<Type, Source>>) {
     if (ResourceType.customiser) {
       ResourceType.customiser(this)
     }
@@ -26,11 +29,11 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
     return Resource.from_resource_type(name, this)
   }
 
-  public type: string
+  public type: Type
 
-  public source?: SourceType
+  public source?: Source
 
-  private check_every?: Type.Duration
+  private check_every?: Declaration.Duration
 
   public set_check_every = (input: DurationInput | 'never') => {
     if (input === 'never') {
@@ -42,9 +45,9 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
     this.check_every = get_duration(input)
   }
 
-  private defaults?: Type.Config
+  private defaults?: Declaration.Config
 
-  public set_default = (...defaults: Type.Param[]) => {
+  public set_default = (...defaults: Declaration.Param[]) => {
     if (!this.defaults) this.defaults = {}
 
     defaults.forEach((item) => {
@@ -52,9 +55,9 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
     })
   }
 
-  private params?: Type.Config
+  private params?: Declaration.Config
 
-  public set_param = (...params: Type.Param[]) => {
+  public set_param = (...params: Declaration.Param[]) => {
     if (!this.params) this.params = {}
 
     params.forEach((param) => {
@@ -64,7 +67,7 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
 
   public privileged: boolean
 
-  private tags?: Type.Tags
+  private tags?: Declaration.Tags
 
   public add_tag = (...tags: string[]) => {
     if (!this.tags) this.tags = []
@@ -73,7 +76,7 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
   }
 
   serialise() {
-    const result: Type.ResourceType = {
+    const result: Declaration.ResourceType = {
       name: this.name,
       type: this.type,
       source: this.source,
@@ -87,7 +90,7 @@ export class ResourceType<SourceType extends Type.Config = Type.Config> {
     return result
   }
 
-  public static deserialise(input: Type.ResourceType) {
+  public static deserialise(input: Declaration.ResourceType) {
     return new ResourceType(input.name, (rt) => {
       rt.type = input.type
       rt.source = input.source
