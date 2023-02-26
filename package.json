@@ -25,7 +25,7 @@
     "@swc/cli": "~0.1.62",
     "@swc/core": "^1.3.36",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "@typescript-eslint/parser": "^5.49.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "@vitest/coverage-c8": "~0.28.5",
     "@vitest/ui": "^0.28.5",
     "eslint": "~8.35.0",
