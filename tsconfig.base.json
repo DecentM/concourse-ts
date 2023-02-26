@@ -42,9 +42,6 @@
       "@decentm/concourse-ts-resource-keyval": [
         "packages/concourse-ts-resource-keyval/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-maven": [
-        "packages/concourse-ts-resource-maven/src/index.ts"
-      ],
       "@decentm/concourse-ts-resource-mock": [
         "packages/concourse-ts-resource-mock/src/index.ts"
       ],

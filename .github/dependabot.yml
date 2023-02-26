@@ -33,10 +33,6 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-maven/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-mock/
     schedule:
       interval: daily
