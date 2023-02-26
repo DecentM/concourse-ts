@@ -17,6 +17,10 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-curl/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-git/
     schedule:
       interval: daily
