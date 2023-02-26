@@ -17,10 +17,6 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-resource-fly/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-git/
     schedule:
       interval: daily
