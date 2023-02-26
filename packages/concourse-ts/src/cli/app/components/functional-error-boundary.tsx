@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react'
+import React, {FunctionComponent, Component} from 'react'
 
 type ErrorHandler = (error: Error, info: React.ErrorInfo) => void
 
@@ -8,7 +8,7 @@ export default function Catch<Props extends ErrorState>(
   ErrorComponent: FunctionComponent<Props>,
   errorHandler?: ErrorHandler
 ): React.ComponentType<Props> {
-  return class extends React.Component<Props, ErrorState> {
+  return class extends Component<Props, ErrorState> {
     override state: ErrorState = {
       error: undefined,
     }

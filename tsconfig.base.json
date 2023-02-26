@@ -30,8 +30,14 @@
       "@decentm/concourse-ts-resource-bitbucket-pr": [
         "packages/concourse-ts-resource-bitbucket-pr/src/index.ts"
       ],
+      "@decentm/concourse-ts-resource-cron": [
+        "packages/concourse-ts-resource-cron/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-curl": [
         "packages/concourse-ts-resource-curl/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-fly": [
+        "packages/concourse-ts-resource-fly/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-git": [
         "packages/concourse-ts-resource-git/src/index.ts"
@@ -39,11 +45,17 @@
       "@decentm/concourse-ts-resource-github-release": [
         "packages/concourse-ts-resource-github-release/src/index.ts"
       ],
+      "@decentm/concourse-ts-resource-helm3": [
+        "packages/concourse-ts-resource-helm3/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-k8s": [
         "packages/concourse-ts-resource-k8s/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-keyval": [
         "packages/concourse-ts-resource-keyval/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-maven": [
+        "packages/concourse-ts-resource-maven/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-mock": [
         "packages/concourse-ts-resource-mock/src/index.ts"
