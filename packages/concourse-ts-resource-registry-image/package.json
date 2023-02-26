@@ -1,14 +1,12 @@
 {
   "name": "@decentm/concourse-ts-resource-registry-image",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-registry-image",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
-    "build": "nx build",
-    "t": "yarn test",
-    "test": "c8 --reporter=lcov --reporter=text ava"
+    "build": "nx build"
   },
   "ava": {
     "extensions": {
