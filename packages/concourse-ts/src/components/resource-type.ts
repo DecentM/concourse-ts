@@ -15,6 +15,18 @@ export class ResourceType<
     ResourceType.customiser = init
   }
 
+  private resource_customiser: Initer<Resource>
+
+  public customise_resource = <
+    Source extends Declaration.Config = Declaration.Config,
+    PutParams extends Declaration.Config = Declaration.Config,
+    GetParams extends Declaration.Config = Declaration.Config
+  >(
+    customiser: Initer<Resource<Source, PutParams, GetParams>>
+  ) => {
+    this.resource_customiser = customiser
+  }
+
   constructor(public name: string, init?: Initer<ResourceType<Type, Source>>) {
     if (ResourceType.customiser) {
       ResourceType.customiser(this)
@@ -25,8 +37,18 @@ export class ResourceType<
     }
   }
 
-  public create_resource = (name: string): Resource => {
-    return Resource.from_resource_type(name, this)
+  public create_resource = <
+    Source extends Declaration.Config = Declaration.Config,
+    PutParams extends Declaration.Config = Declaration.Config,
+    GetParams extends Declaration.Config = Declaration.Config
+  >(
+    name: string
+  ): Resource<Source, PutParams, GetParams> => {
+    return new Resource<Source, PutParams, GetParams>(
+      name,
+      this,
+      this.resource_customiser
+    )
   }
 
   public type: Type

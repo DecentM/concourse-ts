@@ -54,6 +54,28 @@ export class Resource<
     Resource.put_step_customiser = init
   }
 
+  private get_step_customiser: Initer<GetStep, Resource>
+
+  public customise_get_step = <
+    CustomResource extends Resource,
+    GetParams extends Type.Config = Type.Config
+  >(
+    init: Initer<GetStep<GetParams>, CustomResource>
+  ) => {
+    Resource.get_step_customiser = init
+  }
+
+  private put_step_customiser: Initer<PutStep, Resource>
+
+  public customise_put_step = <
+    CustomResource extends Resource,
+    PutParams extends Type.Config = Type.Config
+  >(
+    init: Initer<PutStep<PutParams>, CustomResource>
+  ) => {
+    Resource.put_step_customiser = init
+  }
+
   constructor(
     public name: string,
     private type: ResourceType,
@@ -66,13 +88,6 @@ export class Resource<
     if (init) {
       init(this)
     }
-  }
-
-  public static from_resource_type(
-    name: string,
-    input: ResourceType
-  ): Resource {
-    return new Resource(name, input)
   }
 
   public get_resource_type = () => this.type
@@ -121,6 +136,10 @@ export class Resource<
           Resource.put_step_customiser(step, this)
         }
 
+        if (this.put_step_customiser) {
+          this.put_step_customiser(step, this)
+        }
+
         step.set_put(this)
 
         if (input?.params) {
@@ -147,6 +166,10 @@ export class Resource<
       (step) => {
         if (Resource.get_step_customiser) {
           Resource.get_step_customiser(step, this)
+        }
+
+        if (this.get_step_customiser) {
+          this.get_step_customiser(step, this)
         }
 
         step.set_get(this)

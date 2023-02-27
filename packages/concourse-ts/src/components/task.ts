@@ -28,6 +28,14 @@ export class Task<
     Task.task_step_customiser = init
   }
 
+  private task_step_customiser: Initer<TaskStep, Task>
+
+  public customise_task_step = <CustomTask extends Task>(
+    init: Initer<TaskStep, CustomTask>
+  ) => {
+    Task.task_step_customiser = init
+  }
+
   constructor(public name: string, init?: Initer<Task<Input, Output>>) {
     if (Task.customiser) {
       Task.customiser(this)
@@ -107,6 +115,10 @@ export class Task<
     return new TaskStep<Input, Output>(`${this.name}_step`, (step) => {
       if (Task.task_step_customiser) {
         Task.task_step_customiser(step, this)
+      }
+
+      if (this.task_step_customiser) {
+        this.task_step_customiser(step, this)
       }
 
       step.set_task(this)
