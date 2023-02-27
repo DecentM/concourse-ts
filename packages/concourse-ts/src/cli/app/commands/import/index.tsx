@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react'
+import * as React from 'react'
 import {Box, Text} from 'ink'
 import Spinner from 'ink-spinner'
 import useStdoutDimensions from 'ink-use-stdout-dimensions'
@@ -12,7 +12,7 @@ export type ImportProps = {
   input: string
 }
 
-export const ImportCommand: FunctionComponent<ImportProps> = (props) => {
+export const ImportCommand: React.FunctionComponent<ImportProps> = (props) => {
   const {loading, fileList} = useCompile(props)
   const [columns] = useStdoutDimensions()
 

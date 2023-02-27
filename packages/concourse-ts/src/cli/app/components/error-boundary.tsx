@@ -1,10 +1,10 @@
-import React, {PropsWithChildren} from 'react'
+import * as React from 'react'
 import {Box, Text} from 'ink'
 import useStdoutDimensions from 'ink-use-stdout-dimensions'
 
 import Catch from './functional-error-boundary'
 
-type ErrorBoundaryProps = PropsWithChildren<{
+type ErrorBoundaryProps = React.PropsWithChildren<{
   error?: Error
 }>
 

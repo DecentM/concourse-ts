@@ -1,2 +1,1 @@
-export {runApp} from './app'
-export {parseProps} from './args'
+export {run_app} from './app'

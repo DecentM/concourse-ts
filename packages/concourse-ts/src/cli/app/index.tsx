@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react'
+import * as React from 'react'
 import {render} from 'ink'
 
 import {ErrorBoundary} from './components/error-boundary'
@@ -21,7 +21,7 @@ type AppPropsImport = {
 
 export type AppProps = AppPropsCompile | AppPropsImport
 
-const CliApp: FunctionComponent<AppProps> = (props) => {
+const CliApp: React.FunctionComponent<AppProps> = (props) => {
   if (props.command === 'compile') {
     return <CompileCommand {...props.options} />
   }
@@ -33,7 +33,7 @@ const CliApp: FunctionComponent<AppProps> = (props) => {
   return <UnknownCommand />
 }
 
-export const runApp = async (props: AppProps) => {
+export const run_app = async (props: AppProps) => {
   const {cleanup, clear, waitUntilExit} = render(
     <ErrorBoundary>
       <CliApp {...props} />
