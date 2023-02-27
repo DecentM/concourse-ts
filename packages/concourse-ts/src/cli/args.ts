@@ -1,4 +1,4 @@
-import yargs from 'yargs/yargs'
+import yargs from 'yargs'
 import {hideBin} from 'yargs/helpers'
 import {AppCommand, AppProps} from './app'
 
@@ -53,10 +53,10 @@ export const parseProps = async (argv: string[]): Promise<AppProps> => {
   return {
     command: parsed._[0] as AppCommand,
     options: {
-      input: parsed.input,
-      output_directory: parsed.outputDirectory,
-      concourse_ts: parsed.concourseTs,
-      extract_tasks: parsed.extractTasks,
+      input: parsed['input'],
+      output_directory: parsed['outputDirectory'],
+      concourse_ts: parsed['concourseTs'],
+      extract_tasks: parsed['extractTasks'],
     },
   } as AppProps
 }
