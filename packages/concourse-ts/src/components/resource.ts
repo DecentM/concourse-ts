@@ -62,7 +62,7 @@ export class Resource<
   >(
     init: Initer<GetStep<GetParams>, CustomResource>
   ) => {
-    Resource.get_step_customiser = init
+    this.get_step_customiser = init
   }
 
   private put_step_customiser: Initer<PutStep, Resource>
@@ -73,7 +73,7 @@ export class Resource<
   >(
     init: Initer<PutStep<PutParams>, CustomResource>
   ) => {
-    Resource.put_step_customiser = init
+    this.put_step_customiser = init
   }
 
   constructor(
