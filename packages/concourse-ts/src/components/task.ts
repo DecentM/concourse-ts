@@ -33,7 +33,7 @@ export class Task<
   public customise_task_step = <CustomTask extends Task>(
     init: Initer<TaskStep, CustomTask>
   ) => {
-    Task.task_step_customiser = init
+    this.task_step_customiser = init
   }
 
   constructor(public name: string, init?: Initer<Task<Input, Output>>) {
