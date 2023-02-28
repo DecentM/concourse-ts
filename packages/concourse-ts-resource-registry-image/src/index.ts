@@ -250,3 +250,8 @@ export type GetParams = {
 }
 
 export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+
+export type ResourceType = ConcourseTs.ResourceType<
+  'registry-image',
+  Source<'concourse/registry-image-resource'>
+>
