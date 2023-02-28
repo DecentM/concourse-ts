@@ -60,9 +60,6 @@
       "@decentm/concourse-ts-resource-registry-tag": [
         "packages/concourse-ts-resource-registry-tag/src/index.ts"
       ],
-      "@decentm/concourse-ts-resource-rss": [
-        "packages/concourse-ts-resource-rss/src/index.ts"
-      ],
       "@decentm/concourse-ts-resource-s3": [
         "packages/concourse-ts-resource-s3/src/index.ts"
       ],
