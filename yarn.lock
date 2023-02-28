@@ -5515,7 +5515,7 @@ ts-node-dev@^2.0.0:
     ts-node "^10.4.0"
     tsconfig "^7.0.0"
 
-ts-node@^10.4.0, ts-node@^10.9.1:
+ts-node@^10.4.0:
   version "10.9.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.9.1.tgz#e73de9102958af9e1f0b168a6ff320e25adcff4b"
   integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
@@ -5624,12 +5624,22 @@ typedoc-github-wiki-theme@^1.0.1:
   resolved "https://registry.yarnpkg.com/typedoc-github-wiki-theme/-/typedoc-github-wiki-theme-1.0.1.tgz#412b9c9aeaa15f1360e79296c9dd186caf711e2c"
   integrity sha512-FaO7fENGK6IJLpkddbNXxJfNbooF9KBC7xfk7Lj4uqG5SCC7YQFPTLDyNmbpJKO93QEenRYgqBwI5E5d/bKrHw==
 
+typedoc-plugin-external-resolver@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-external-resolver/-/typedoc-plugin-external-resolver-1.0.1.tgz#56ab0045e5e70ba0f8d46751510574c7d3582d67"
+  integrity sha512-AIjVEtc4YcxVg9CVmj/M3Vrq6fEe5xa4qsKkk5HfR/zPSf8tXBTIPO1W/nLmzwYfoDDXg11okLGL953rJF/1Fg==
+
 typedoc-plugin-markdown@^3.14.0:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.14.0.tgz#17b99ee3ab0d21046d253f185f7669e80d0d7891"
   integrity sha512-UyQLkLRkfTFhLdhSf3RRpA3nNInGn+k6sll2vRXjflaMNwQAAiB61SYbisNZTg16t4K1dt1bPQMMGLrxS0GZ0Q==
   dependencies:
     handlebars "^4.7.7"
+
+typedoc-plugin-no-inherit@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-no-inherit/-/typedoc-plugin-no-inherit-1.4.0.tgz#8eafc790588f63f0a24621b646219cd6e8d6e4d6"
+  integrity sha512-cAvqQ8X9xh1xztVoDKtF4nYRSBx9XwttN3OBbNNpA0YaJSRM8XvpVVhugq8FoO1HdWjF3aizS0JzdUOMDt0y9g==
 
 typedoc-plugin-resolve-crossmodule-references@^0.3.3:
   version "0.3.3"

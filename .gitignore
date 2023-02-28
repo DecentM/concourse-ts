@@ -5,6 +5,7 @@ dist
 tmp
 /out-tsc
 /.nx-cache
+/docs
 
 # dependencies
 node_modules
