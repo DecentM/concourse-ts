@@ -5,13 +5,31 @@ import {Resource} from './resource'
 import {AnyStep, DoStep, TaskStep} from './step'
 import {Step} from './step/_base'
 
+/**
+ * https://concourse-ci.org/jobs.html
+ */
 export class Job {
   private static customiser: Initer<Job>
 
+  /**
+   * Sets a customiser function onto all jobs created after this call. If a
+   * customiser already exists, it will be overwritten.
+   *
+   * @param {Initer<Job>} init Your customiser function. It receives a Job
+   * instance whenever a Job is constructed.
+   */
   public static customise = (init: Initer<Job>) => {
     Job.customiser = init
   }
 
+  /**
+   * Constructs a new Job
+   *
+   * https://concourse-ci.org/jobs.html
+   *
+   * @param {string} name The name of the step. This will be visible in the Concourse UI.
+   * @param {Initer<Job>} init Optional customiser function that runs during construction.
+   */
   constructor(public name: string, init?: Initer<Job>) {
     if (Job.customiser) {
       Job.customiser(this)
@@ -24,30 +42,69 @@ export class Job {
 
   private plan?: AnyStep[]
 
+  /**
+   * Adds one or more steps to the Job. They will be executed in the same order
+   * as they are passed.
+   *
+   * @param {...AnyStep[]} steps Steps to add to the Job in order.
+   */
   public add_step = (...steps: AnyStep[]) => {
     if (!this.plan) this.plan = []
 
     this.plan.push(...steps)
   }
 
+  /**
+   * Adds one or more steps before the current ones to the Job. They will be
+   * executed in the same order they're passed, but before other steps that
+   * exist on this Job.
+   *
+   * @param steps @param {...AnyStep[]} steps Steps to add to the beginning of
+   * the Job in order.
+   */
   public add_step_first = (...steps: AnyStep[]) => {
     if (!this.plan) this.plan = []
 
     this.plan.unshift(...steps)
   }
 
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.build_log_retention
+   */
   public build_log_retention?: Type.BuildLogRetentionPolicy
 
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.disable_manual_trigger
+   */
   public disable_manual_trigger?: boolean
 
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.interruptible
+   */
   public interruptible?: boolean
 
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.max_in_flight
+   */
   public max_in_flight?: number
 
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.old_name
+   */
   public old_name?: string
 
   private on_success?: DoStep
 
+  /**
+   * Adds a step that will get executed if all previous steps succeed. The real
+   * step added to this Job will always be a DoStep, with the passed step added
+   * onto it as the last Step.
+   *
+   * https://concourse-ci.org/jobs.html#schema.job.on_success
+   *
+   * @param {AnyStep} step The Step to execute when this job succeeds.
+   * @returns {void}
+   */
   public add_on_success = (step: AnyStep) => {
     if (!this.on_success && step instanceof DoStep) {
       this.on_success = step
@@ -62,6 +119,19 @@ export class Job {
 
   private on_failure?: DoStep
 
+  /**
+   * Adds a step that will get executed if any previous step fails. Failure
+   * indicates a non-normal exit state, such as the worker crashing, or losing
+   * connection.
+   *
+   * The real step added to this Job will always be a DoStep, with the passed
+   * step added onto it as the last Step.
+   *
+   * https://concourse-ci.org/jobs.html#schema.job.on_failure
+   *
+   * @param {AnyStep} step The Step to execute when this job fails.
+   * @returns {void}
+   */
   public add_on_failure = (step: AnyStep) => {
     if (!this.on_failure && step instanceof DoStep) {
       this.on_failure = step
@@ -76,6 +146,19 @@ export class Job {
 
   private on_error?: DoStep
 
+  /**
+   * Adds a step that will get executed if any previous step fails. Error
+   * indicates a normal exit state, such as tests failing, or compilers
+   * crashing.
+   *
+   * The real step added to this Job will always be a DoStep, with the passed
+   * step added onto it as the last Step.
+   *
+   * https://concourse-ci.org/jobs.html#schema.job.on_error
+   *
+   * @param {AnyStep} step The Step to execute when this job errors.
+   * @returns {void}
+   */
   public add_on_error = (step: AnyStep) => {
     if (!this.on_error && step instanceof DoStep) {
       this.on_error = step
@@ -89,6 +172,19 @@ export class Job {
 
   private on_abort?: DoStep
 
+  /**
+   * Adds a step that will get executed if the job is aborted. Abort
+   * indicates that a user has manually cancelled the job (including API
+   * clients).
+   *
+   * The real step added to this Job will always be a DoStep, with the passed
+   * step added onto it as the last Step.
+   *
+   * https://concourse-ci.org/jobs.html#schema.job.on_abort
+   *
+   * @param {AnyStep} step The Step to execute when this job is aborted.
+   * @returns {void}
+   */
   public add_on_abort = (step: AnyStep) => {
     if (!this.on_abort && step instanceof DoStep) {
       this.on_abort = step
@@ -102,6 +198,18 @@ export class Job {
 
   private ensure?: DoStep
 
+  /**
+   * Adds a step that will get executed all of the time, regardless of the
+   * exit status of previous steps. Useful for cleaning up state for example.
+   *
+   * The real step added to this Job will always be a DoStep, with the passed
+   * step added onto it as the last Step.
+   *
+   * https://concourse-ci.org/jobs.html#schema.job.ensure
+   *
+   * @param {AnyStep} step The Step to execute when this job finishes.
+   * @returns {void}
+   */
   public add_ensure = (step: AnyStep) => {
     if (!this.ensure && step instanceof DoStep) {
       this.ensure = step
@@ -113,10 +221,19 @@ export class Job {
     this.ensure.add_do(step)
   }
 
-  public public = false
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.public
+   */
+  public public: boolean
 
-  public serial = false
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.serial
+   */
+  public serial: boolean
 
+  /**
+   * https://concourse-ci.org/jobs.html#schema.job.serial_groups
+   */
   public serial_groups?: string
 
   private get_base_resources(): Resource[] {
@@ -145,6 +262,11 @@ export class Job {
     return result
   }
 
+  /**
+   * @internal Used by the compiler to get all resources
+   *
+   * @returns {Resource[]} All resources used by this job
+   */
   public get_resources = (): Resource[] => {
     const result = this.get_base_resources()
 
@@ -156,6 +278,11 @@ export class Job {
     return result
   }
 
+  /**
+   * @internal Used by the compiler to get all task steps
+   *
+   * @returns {TaskStep[]} All the task steps in this job
+   */
   public get_task_steps = () => {
     const result: TaskStep[] = []
 
@@ -168,7 +295,12 @@ export class Job {
     return result
   }
 
-  serialise() {
+  /**
+   * Serialises this Job into a valid Concourse configuration fixture
+   *
+   * @returns {Type.Job} A JSON representation of this Job
+   */
+  public serialise() {
     const result: Type.Job = {
       name: this.name,
       plan: this.plan.map((s) => s.serialise()),
@@ -193,10 +325,19 @@ export class Job {
     return result
   }
 
-  public static deserialise(input: Type.Job, resourcePool: Resource[]) {
+  /**
+   * @internal Used by the decompiler to construct a new Job from its JSON
+   * representation
+   *
+   * @param {Type.Job} input Valid JSON representation of a Job
+   * @param {Resource[]} resource_pool A list of resources available in the
+   * parent pipeline
+   * @returns
+   */
+  public static deserialise(input: Type.Job, resource_pool: Resource[]) {
     return new Job(input.name, (job) => {
       job.plan = input.plan.map((step, index) =>
-        Step.deserialise_any(`${input.name}_step_${index}`, resourcePool, step)
+        Step.deserialise_any(`${input.name}_step_${index}`, resource_pool, step)
       )
 
       job.build_log_retention = input.build_log_retention
@@ -212,7 +353,7 @@ export class Job {
       if (input.ensure) {
         job.ensure = Step.deserialise_prefer_do(
           `${job.name}_ensure`,
-          resourcePool,
+          resource_pool,
           input.ensure
         )
       }
@@ -224,7 +365,7 @@ export class Job {
       if (input.on_abort) {
         job.on_abort = Step.deserialise_prefer_do(
           `${job.name}_on_abort`,
-          resourcePool,
+          resource_pool,
           input.on_abort
         )
       }
@@ -232,7 +373,7 @@ export class Job {
       if (input.on_error) {
         job.on_error = Step.deserialise_prefer_do(
           `${job.name}_on_error`,
-          resourcePool,
+          resource_pool,
           input.on_error
         )
       }
@@ -240,7 +381,7 @@ export class Job {
       if (input.on_failure) {
         job.on_failure = Step.deserialise_prefer_do(
           `${job.name}_on_failure`,
-          resourcePool,
+          resource_pool,
           input.on_failure
         )
       }
@@ -248,7 +389,7 @@ export class Job {
       if (input.on_success) {
         job.on_success = Step.deserialise_prefer_do(
           `${job.name}_on_success`,
-          resourcePool,
+          resource_pool,
           input.on_success
         )
       }
