@@ -16,6 +16,9 @@ export type YamlValue =
   | YamlValue[]
   | {[key in string]: YamlValue}
 
+/**
+ * Related: {@link Utils.DurationInput}
+ */
 export type Duration = string & {__type: 'Duration'}
 
 export type EnvVar = {
@@ -28,6 +31,11 @@ export type Param = {
   value: YamlValue
 }
 
+/**
+ * JSON representation of {@link ResourceType:class}
+ *
+ * https://concourse-ci.org/resource-types.html
+ */
 export type ResourceType = {
   name: Identifier
   type: Identifier
@@ -39,6 +47,11 @@ export type ResourceType = {
   defaults?: Config
 }
 
+/**
+ * JSON representation of {@link Resource:class}
+ *
+ * https://concourse-ci.org/resources.html
+ */
 export type Resource = {
   name: Identifier
   type: ResourceType['name']
@@ -52,6 +65,13 @@ export type Resource = {
   webhook_token?: string
 }
 
+/**
+ * A name-less version of {@link Resource}
+ *
+ * Used by {@link Task}
+ *
+ * https://concourse-ci.org/tasks.html#schema.task-config.image_resource
+ */
 export type AnonymousResource = {
   type: ResourceType['name']
   source: Config
@@ -59,6 +79,13 @@ export type AnonymousResource = {
   version?: Version
 }
 
+/**
+ * JSON representation of {@link Command:class}
+ *
+ * Used by {@link Task}
+ *
+ * https://concourse-ci.org/tasks.html#schema.task-config.run
+ */
 export type Command = {
   path: FilePath
   args?: string[]
@@ -66,17 +93,37 @@ export type Command = {
   user?: string
 }
 
+/**
+ * https://concourse-ci.org/tasks.html#schema.task-config.caches
+ *
+ * Used by {@link Task}
+ */
 export type TaskCache = {
   path: DirPath
 }
 
+/**
+ * https://concourse-ci.org/tasks.html#schema.task-config.container_limits
+ *
+ * Used by {@link Task}
+ */
 export type ContainerLimits = {
   cpu?: number
   memory?: number
 }
 
+/**
+ * https://concourse-ci.org/tasks.html#schema.task-config.platform
+ *
+ * Used by {@link Task}
+ */
 export type Platform = 'linux' | 'darwin' | 'windows'
 
+/**
+ * JSON representation of {@link Task:class}
+ *
+ * https://concourse-ci.org/tasks.html
+ */
 export type Task<Input extends Identifier, Output extends Identifier> = {
   platform: Platform
   image_resource: AnonymousResource
@@ -89,6 +136,11 @@ export type Task<Input extends Identifier, Output extends Identifier> = {
   container_limits?: ContainerLimits
 }
 
+/**
+ * Common members held by all steps.
+ *
+ * https://concourse-ci.org/steps.html
+ */
 export type StepBase = {
   timeout?: Duration
   attempts?: number
