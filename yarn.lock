@@ -4219,10 +4219,15 @@ minimist-options@4.1.0:
     is-plain-obj "^1.1.0"
     kind-of "^6.0.3"
 
-minimist@^1.2.0, minimist@^1.2.5, minimist@^1.2.6:
+minimist@^1.2.0, minimist@^1.2.6:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.7.tgz#daa1c4d91f507390437c6a8bc01078e7000c4d18"
   integrity sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==
+
+minimist@^1.2.5:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
+  integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
 
 mkdirp@^1.0.4:
   version "1.0.4"
@@ -5624,27 +5629,12 @@ typedoc-github-wiki-theme@^1.0.1:
   resolved "https://registry.yarnpkg.com/typedoc-github-wiki-theme/-/typedoc-github-wiki-theme-1.0.1.tgz#412b9c9aeaa15f1360e79296c9dd186caf711e2c"
   integrity sha512-FaO7fENGK6IJLpkddbNXxJfNbooF9KBC7xfk7Lj4uqG5SCC7YQFPTLDyNmbpJKO93QEenRYgqBwI5E5d/bKrHw==
 
-typedoc-plugin-external-resolver@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-external-resolver/-/typedoc-plugin-external-resolver-1.0.1.tgz#56ab0045e5e70ba0f8d46751510574c7d3582d67"
-  integrity sha512-AIjVEtc4YcxVg9CVmj/M3Vrq6fEe5xa4qsKkk5HfR/zPSf8tXBTIPO1W/nLmzwYfoDDXg11okLGL953rJF/1Fg==
-
 typedoc-plugin-markdown@^3.14.0:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.14.0.tgz#17b99ee3ab0d21046d253f185f7669e80d0d7891"
   integrity sha512-UyQLkLRkfTFhLdhSf3RRpA3nNInGn+k6sll2vRXjflaMNwQAAiB61SYbisNZTg16t4K1dt1bPQMMGLrxS0GZ0Q==
   dependencies:
     handlebars "^4.7.7"
-
-typedoc-plugin-no-inherit@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-no-inherit/-/typedoc-plugin-no-inherit-1.4.0.tgz#8eafc790588f63f0a24621b646219cd6e8d6e4d6"
-  integrity sha512-cAvqQ8X9xh1xztVoDKtF4nYRSBx9XwttN3OBbNNpA0YaJSRM8XvpVVhugq8FoO1HdWjF3aizS0JzdUOMDt0y9g==
-
-typedoc-plugin-resolve-crossmodule-references@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-resolve-crossmodule-references/-/typedoc-plugin-resolve-crossmodule-references-0.3.3.tgz#812a6e7083f46031c69fe0021bb3913b10bd68cb"
-  integrity sha512-ZWWBy2WR8z9a6iXYGlyB3KrpV+JDdZv1mndYU6Eh6mInrfMCrQJi3Y5K9ihMBfuaBGB//le1nEmQLgzU3IO+dw==
 
 typedoc@^0.23.24:
   version "0.23.24"

@@ -14,7 +14,7 @@
   },
   "typedoc": {
     "entryPoint": "./src/index.ts",
-    "readmeFile": "./README.md",
+    "readmeFile": "../../README.md",
     "displayName": "Child Package",
     "tsconfig": "./tsconfig.lib.json"
   },

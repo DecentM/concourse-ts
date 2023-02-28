@@ -45,10 +45,13 @@ jobs:
           set -exu
           yarn docs
 
-      - name: Upload Documentation to Wiki
-        uses: cmbrose/github-docs-to-wiki@v0.20
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.WIKI_PAT }}
         with:
-          githubToken: ${{ secrets.WIKI_PAT }}
-          rootDocsFolder: docs
-          convertRootReadmeToHomePage: true
-          useHeaderForWikiName: true
+          source-directory: 'docs'
+          destination-github-username: 'DecentM'
+          destination-repository-name: 'concourse-ts.wiki'
+          user-email: 41898282+github-actions[bot]@users.noreply.github.com
+          target-branch: master
