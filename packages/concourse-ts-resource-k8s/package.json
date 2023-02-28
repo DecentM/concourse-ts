@@ -12,7 +12,7 @@
     "entryPoint": "./src/index.ts",
     "readmeFile": "./README.md",
     "displayName": "Child Package",
-    "tsconfig": "./tsconfig.lib.json"
+    "tsconfig": "./tsconfig.docs.json"
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x",

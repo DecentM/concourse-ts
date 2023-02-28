@@ -1,11 +1,11 @@
 {
-  "tsconfig": "./tsconfig.base.json",
   "theme": "github-wiki",
   "out": "docs",
   "entryPointStrategy": "packages",
-  "entryPoints": ["packages/*"],
+  "entryPoints": ["packages/concourse-ts"],
   "basePath": "./packages",
   "excludePrivate": true,
   "excludeInternal": true,
-  "excludeProtected": true
+  "excludeProtected": true,
+  "cleanOutputDir": true
 }
