@@ -1437,14 +1437,14 @@
   dependencies:
     nx "15.8.1"
 
-"@nrwl/vite@15.7.2":
-  version "15.7.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-15.7.2.tgz#37426a325c6866c9e398ff4e03ded840084fca5d"
-  integrity sha512-8vuXwQUosEnohVF1PTs/AilRyQC4ZxpWj2pzXZX0thynqsoSl/nar0JiQA9FUnYU2yAZCX5QWqb3pWVGftI5lQ==
+"@nrwl/vite@15.8.1":
+  version "15.8.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-15.8.1.tgz#95436f5683d63db5f57145eeb58f4dcc64e9fcd0"
+  integrity sha512-hYryX3wAB9HER8fW3PPjRyBJtcJvInGt6XUKHVlmQUs2Nc1bWudSFiwHb+e40BuCNP14Xx4+7scHT4Nssmftlg==
   dependencies:
-    "@nrwl/devkit" "15.7.2"
-    "@nrwl/js" "15.7.2"
-    "@nrwl/workspace" "15.7.2"
+    "@nrwl/devkit" "15.8.1"
+    "@nrwl/js" "15.8.1"
+    "@nrwl/workspace" "15.8.1"
     "@phenomnomnominal/tsquery" "4.1.1"
     "@swc/helpers" "^0.4.11"
     dotenv "~10.0.0"
@@ -2528,7 +2528,7 @@ cli-spinners@2.6.1:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.6.1.tgz#adc954ebe281c37a6319bfa401e6dd2488ffb70d"
   integrity sha512-x/5fWmGMnbKQAaNwN+UZlV79qBLM9JFnJuJ03gIi5whrob0xV0ofNVHy9DhwGdsMJQc2OKv0oGmLzvaqvAVv+g==
 
-cli-spinners@^2.3.0:
+cli-spinners@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.7.0.tgz#f815fd30b5f9eaac02db604c7a231ed7cb2f797a"
   integrity sha512-qu3pN8Y3qHNgE2AFweciB1IfMnmZ/fsNTEE+NOFjmGB2F/7rLhnhzppvpCnN4FovtP26k8lHyy9ptEbNwWFLzw==
@@ -3737,12 +3737,12 @@ inherits@2, inherits@^2.0.3, inherits@^2.0.4:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-ink-spinner@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/ink-spinner/-/ink-spinner-4.0.3.tgz#0d0f4a787ae1a4270928e063d9c52527cb264feb"
-  integrity sha512-uJ4nbH00MM9fjTJ5xdw0zzvtXMkeGb0WV6dzSWvFv2/+ks6FIhpkt+Ge/eLdh0Ah6Vjw5pLMyNfoHQpRDRVFbQ==
+ink-spinner@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ink-spinner/-/ink-spinner-5.0.0.tgz#32ec318ef8ebb0ace8f595451f8e93280623429f"
+  integrity sha512-EYEasbEjkqLGyPOUc8hBJZNuC5GvXGMLu0w5gdTNskPc7Izc5vO3tdQEYnzvshucyGCBXc86ig0ujXPMWaQCdA==
   dependencies:
-    cli-spinners "^2.3.0"
+    cli-spinners "^2.7.0"
 
 ink-table@^3.0.0:
   version "3.0.0"
