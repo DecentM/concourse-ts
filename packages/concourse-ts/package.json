@@ -34,7 +34,7 @@
     "@swc/helpers": "~0.4.11",
     "fast-glob": "^3.2.12",
     "ink": "^3.2.0",
-    "ink-spinner": "^4.0.3",
+    "ink-spinner": "^5.0.0",
     "ink-table": "^3.0.0",
     "ink-use-stdout-dimensions": "^1.0.5",
     "mkdirp": "^2.1.3",
