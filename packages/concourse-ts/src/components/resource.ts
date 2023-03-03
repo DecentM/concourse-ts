@@ -194,41 +194,41 @@ export class Resource<
   }
 
   public as_abort_handler = (
-    stepOrJob: AnyStep | Job,
+    step_or_job: AnyStep | Job,
     input: AsPutStepInput<PutParams>
   ) => {
-    stepOrJob.add_on_abort(this.as_put_step(input))
+    step_or_job.add_on_abort(this.as_put_step(input))
   }
 
   public as_error_handler = (
-    stepOrJob: AnyStep | Job,
+    step_or_job: AnyStep | Job,
     input: AsPutStepInput<PutParams>
   ) => {
-    stepOrJob.add_on_error(this.as_put_step(input))
+    step_or_job.add_on_error(this.as_put_step(input))
   }
 
   public as_failure_handler = (
-    stepOrJob: AnyStep | Job,
+    step_or_job: AnyStep | Job,
     input: AsPutStepInput<PutParams>
   ) => {
-    stepOrJob.add_on_failure(this.as_put_step(input))
+    step_or_job.add_on_failure(this.as_put_step(input))
   }
 
   public as_success_handler = (
-    stepOrJob: AnyStep | Job,
+    step_or_job: AnyStep | Job,
     input: AsPutStepInput<PutParams>
   ) => {
-    stepOrJob.add_on_success(this.as_put_step(input))
+    step_or_job.add_on_success(this.as_put_step(input))
   }
 
   public as_start_handler = (
-    step_or_job: DoStep | Job,
+    do_step_or_job: DoStep | Job,
     input: AsPutStepInput<PutParams>
   ) => {
-    if (step_or_job instanceof Job) {
-      step_or_job.add_step_first(this.as_put_step(input))
+    if (do_step_or_job instanceof Job) {
+      do_step_or_job.add_step_first(this.as_put_step(input))
     } else {
-      step_or_job.add_do_first(this.as_put_step(input))
+      do_step_or_job.add_do_first(this.as_put_step(input))
     }
   }
 
