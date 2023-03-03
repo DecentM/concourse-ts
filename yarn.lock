@@ -2530,7 +2530,7 @@ cli-spinners@2.6.1:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.6.1.tgz#adc954ebe281c37a6319bfa401e6dd2488ffb70d"
   integrity sha512-x/5fWmGMnbKQAaNwN+UZlV79qBLM9JFnJuJ03gIi5whrob0xV0ofNVHy9DhwGdsMJQc2OKv0oGmLzvaqvAVv+g==
 
-cli-spinners@^2.7.0:
+cli-spinners@^2.3.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.7.0.tgz#f815fd30b5f9eaac02db604c7a231ed7cb2f797a"
   integrity sha512-qu3pN8Y3qHNgE2AFweciB1IfMnmZ/fsNTEE+NOFjmGB2F/7rLhnhzppvpCnN4FovtP26k8lHyy9ptEbNwWFLzw==
@@ -3739,12 +3739,12 @@ inherits@2, inherits@^2.0.3, inherits@^2.0.4:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-ink-spinner@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ink-spinner/-/ink-spinner-5.0.0.tgz#32ec318ef8ebb0ace8f595451f8e93280623429f"
-  integrity sha512-EYEasbEjkqLGyPOUc8hBJZNuC5GvXGMLu0w5gdTNskPc7Izc5vO3tdQEYnzvshucyGCBXc86ig0ujXPMWaQCdA==
+ink-spinner@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/ink-spinner/-/ink-spinner-4.0.3.tgz#0d0f4a787ae1a4270928e063d9c52527cb264feb"
+  integrity sha512-uJ4nbH00MM9fjTJ5xdw0zzvtXMkeGb0WV6dzSWvFv2/+ks6FIhpkt+Ge/eLdh0Ah6Vjw5pLMyNfoHQpRDRVFbQ==
   dependencies:
-    cli-spinners "^2.7.0"
+    cli-spinners "^2.3.0"
 
 ink-table@^3.0.0:
   version "3.0.0"
@@ -4367,10 +4367,10 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mkdirp@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-2.1.3.tgz#b083ff37be046fd3d6552468c1f0ff44c1545d1f"
-  integrity sha512-sjAkg21peAG9HS+Dkx7hlG9Ztx7HLeKnvB3NQRcu/mltCVmvkF0pisbiTSfDVYTT86XEfZrTUosLdZLStquZUw==
+mkdirp@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-2.1.4.tgz#34faf1f2a1b4cc9a65a84e2979087211da608d11"
+  integrity sha512-Cy9cV4pRSl1o10i1dURTuRt4T04l0DkS1WZrT+Jir886OqOVkSv4FbOA7pgjhS8kEUrmm4kCRvv5var2iOCxpA==
 
 mlly@^1.0.0, mlly@^1.1.0:
   version "1.1.0"
