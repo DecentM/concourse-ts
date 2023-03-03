@@ -1,0 +1,46 @@
+import anyTest, {TestFn} from 'ava'
+import path from 'path'
+import {tmpName} from 'tmp-promise'
+import rimraf from 'rimraf'
+
+import {Import} from '.'
+
+const test = anyTest as TestFn<{tmp_dir: string}>
+
+test.beforeEach('temp directory', async (t) => {
+  const tmp_path = await tmpName()
+
+  t.context = {
+    tmp_dir: tmp_path,
+  }
+})
+
+test.afterEach('remove test directory', async (t) => {
+  await rimraf(t.context.tmp_dir)
+})
+
+test('compiles pipeline', async (t) => {
+  const import_command = new Import({
+    input: path.join(__dirname, 'test-data/good.pipeline.yml'),
+    package_path: '@decentm/concourse-ts',
+    output_directory: t.context.tmp_dir,
+  })
+
+  import_command.on('error', (error) => {
+    t.fail(error.stack)
+  })
+
+  import_command.on('file_error', (file, error) => {
+    t.fail(error.stack)
+  })
+
+  import_command.on('file_success', (file) => {
+    t.log(`Import succeeded, file: ${file}`)
+  })
+
+  import_command.on('success', () => {
+    t.pass()
+  })
+
+  await import_command.run()
+})

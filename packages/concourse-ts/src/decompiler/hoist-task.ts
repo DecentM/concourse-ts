@@ -38,6 +38,10 @@ export const hoist_all_tasks = (
         return
       }
 
+      if (!step.file) {
+        return
+      }
+
       step.config = hoist_task(work_dir, step)
       Reflect.deleteProperty(step, 'file')
     })

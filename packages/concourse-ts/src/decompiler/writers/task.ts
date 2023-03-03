@@ -58,18 +58,22 @@ export const write_task = <Input extends string, Output extends string>(
         : ''
     }
 
-    ${Object.entries(task.params)
-      .filter(
-        ([, value]) =>
-          type_of(value) !== 'null' && type_of(value) !== 'undefined'
-      )
-      .map(([name, value]) => {
-        return `task.set_params({
+    ${
+      task.params
+        ? Object.entries(task.params)
+            .filter(
+              ([, value]) =>
+                type_of(value) !== 'null' && type_of(value) !== 'undefined'
+            )
+            .map(([name, value]) => {
+              return `task.set_params({
           key: ${JSON.stringify(name)},
           value: ${JSON.stringify(String(value))}
         })`
-      })
-      .join('\n')}
+            })
+            .join('\n')
+        : ''
+    }
 
     ${
       type_of(task.rootfs_uri) !== 'undefined'
