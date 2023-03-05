@@ -68,16 +68,4 @@ export class TryStep extends Step<Type.TryStep> {
 
     return result
   }
-
-  public static deserialise(
-    name: string,
-    resourcePool: Resource[],
-    input: Type.TryStep
-  ) {
-    return new TryStep(name, (step) => {
-      this.deserialise_base(step, resourcePool, input)
-
-      step.step = super.deserialise_any(`${name}_try`, resourcePool, input.try)
-    })
-  }
 }

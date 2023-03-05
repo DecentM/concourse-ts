@@ -86,30 +86,4 @@ export class DoStep extends Step<Type.DoStep> {
 
     return result
   }
-
-  /**
-   * @internal Used by the decompiler
-   *
-   * @param {string} name
-   * @param {Resource[]} resource_pool
-   * @param {Type.DoStep} input
-   * @returns {DoStep}
-   */
-  public static deserialise(
-    name: string,
-    resource_pool: Resource[],
-    input: Type.DoStep
-  ) {
-    return new DoStep(name, (step) => {
-      super.deserialise_base(step, resource_pool, input)
-
-      step.do = input.do.map((planStep, index) => {
-        return super.deserialise_any(
-          `${name}_plan_${index}`,
-          resource_pool,
-          planStep
-        )
-      })
-    })
-  }
 }

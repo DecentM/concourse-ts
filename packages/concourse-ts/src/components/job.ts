@@ -4,7 +4,6 @@ import * as Type from '../declarations/types'
 
 import {Resource} from './resource'
 import {AnyStep, DoStep, TaskStep} from './step'
-import {Step} from './step/_base'
 
 /**
  * https://concourse-ci.org/jobs.html
@@ -340,80 +339,5 @@ export class Job {
     }
 
     return result
-  }
-
-  /**
-   * @internal Used by the decompiler to construct a new Job from its JSON
-   * representation
-   *
-   * @param {Type.Job} input Valid JSON representation of a Job
-   * @param {Resource[]} resource_pool A list of resources available in the
-   * parent pipeline
-   * @returns
-   */
-  public static deserialise(input: Type.Job, resource_pool: Resource[]) {
-    return new Job(input.name, (job) => {
-      job.plan = input.plan.map((step, index) =>
-        Step.deserialise_any(`${input.name}_step_${index}`, resource_pool, step)
-      )
-
-      job.build_log_retention = input.build_log_retention
-
-      // Upgrade deprecated config to non-deprecated format
-      if (input.build_logs_to_retain && !job.build_log_retention.builds) {
-        job.build_log_retention = {
-          ...job.build_log_retention,
-          builds: input.build_logs_to_retain,
-        }
-      }
-
-      if (input.ensure) {
-        job.ensure = Step.deserialise_prefer_do(
-          `${job.name}_ensure`,
-          resource_pool,
-          input.ensure
-        )
-      }
-
-      job.interruptible = input.interruptible
-      job.max_in_flight = input.max_in_flight
-      job.old_name = input.old_name
-
-      if (input.on_abort) {
-        job.on_abort = Step.deserialise_prefer_do(
-          `${job.name}_on_abort`,
-          resource_pool,
-          input.on_abort
-        )
-      }
-
-      if (input.on_error) {
-        job.on_error = Step.deserialise_prefer_do(
-          `${job.name}_on_error`,
-          resource_pool,
-          input.on_error
-        )
-      }
-
-      if (input.on_failure) {
-        job.on_failure = Step.deserialise_prefer_do(
-          `${job.name}_on_failure`,
-          resource_pool,
-          input.on_failure
-        )
-      }
-
-      if (input.on_success) {
-        job.on_success = Step.deserialise_prefer_do(
-          `${job.name}_on_success`,
-          resource_pool,
-          input.on_success
-        )
-      }
-
-      job.public = input.public
-      job.serial = input.serial
-      job.serial_groups = input.serial_groups
-    })
   }
 }

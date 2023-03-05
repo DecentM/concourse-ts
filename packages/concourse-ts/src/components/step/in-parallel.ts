@@ -61,37 +61,4 @@ export class InParallelStep extends Step<Type.InParallelStep> {
 
     return result
   }
-
-  public static deserialise(
-    name: string,
-    resourcePool: Resource[],
-    input: Type.InParallelStep
-  ) {
-    return new InParallelStep(name, (step) => {
-      this.deserialise_base(step, resourcePool, input)
-
-      if (Array.isArray(input.in_parallel)) {
-        step.steps = input.in_parallel.map((inParallelStep, index) => {
-          return super.deserialise_any(
-            `${name}_in_parallel_${index}`,
-            resourcePool,
-            inParallelStep
-          )
-        })
-
-        return
-      }
-
-      step.steps = input.in_parallel.steps.map((inParallelStep, index) => {
-        return super.deserialise_any(
-          `${name}_in_parallel_${index}`,
-          resourcePool,
-          inParallelStep
-        )
-      })
-
-      step.fail_fast = input.in_parallel.fail_fast
-      step.limit = input.in_parallel.limit
-    })
-  }
 }

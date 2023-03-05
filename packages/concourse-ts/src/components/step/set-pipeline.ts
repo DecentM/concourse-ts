@@ -92,21 +92,4 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
 
     return result
   }
-
-  public static deserialise(
-    name: string,
-    resourcePool: Resource[],
-    input: Type.SetPipelineStep
-  ) {
-    return new SetPipelineStep(name, (step) => {
-      this.deserialise_base(step, resourcePool, input)
-
-      step.set_pipeline = input.set_pipeline
-      step.file = input.file
-      step.instance_vars = input.instance_vars
-      step.vars = input.vars
-      step.var_files = input.var_files
-      step.team = input.team
-    })
-  }
 }

@@ -152,21 +152,4 @@ export class Task<
 
     return result
   }
-
-  public static deserialise(
-    name: string,
-    input: Type.Task<Identifier, Identifier>
-  ) {
-    return new Task(name, (task) => {
-      task.image_resource = input.image_resource
-      task.platform = input.platform
-      task.run = Command.deserialise(`${name}_run`, input.run)
-      task.caches = input.caches
-      task.container_limits = input.container_limits
-      task.inputs = input.inputs
-      task.outputs = input.outputs
-      task.params = input.params
-      task.rootfs_uri = input.rootfs_uri
-    })
-  }
 }

@@ -3,12 +3,7 @@ import {VError} from 'verror'
 import {Customiser} from '../declarations/customiser'
 import * as Type from '../declarations/types'
 
-import {
-  Duration,
-  DurationInput,
-  get_duration,
-  is_duration,
-} from '../utils/duration'
+import {Duration, DurationInput, get_duration} from '../utils/duration'
 
 import {ResourceType} from './resource-type'
 import {AnyStep, DoStep, GetStep, PutStep} from './step'
@@ -263,22 +258,5 @@ export class Resource<
     }
 
     return result
-  }
-
-  public static deserialise(input: Type.Resource, rt: ResourceType) {
-    return new Resource(input.name, rt, (r) => {
-      r.source = input.source
-
-      if (is_duration(input.check_every)) {
-        r.check_every = input.check_every
-      }
-
-      r.icon = input.icon
-      r.old_name = input.old_name
-      r.public = input.public
-      r.tags = input.tags
-      r.version = input.version
-      r.webhook_token = input.webhook_token
-    })
   }
 }

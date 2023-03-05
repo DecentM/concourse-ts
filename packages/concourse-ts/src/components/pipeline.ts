@@ -127,24 +127,4 @@ export class Pipeline<Group extends Identifier = Identifier> {
 
     return result
   }
-
-  public static deserialise(name: string, input: Type.Pipeline) {
-    const rtPool = input.resource_types?.map((resourceType) =>
-      ResourceType.deserialise(resourceType)
-    )
-
-    const rPool = input.resources?.map((resource) =>
-      Resource.deserialise(
-        resource,
-        rtPool?.find((resourceType) => resourceType.name === resource.type)
-      )
-    )
-
-    return new Pipeline(name, (pipeline) => {
-      pipeline.jobs = input.jobs.map((job) => Job.deserialise(job, rPool))
-      pipeline.display = input.display
-      pipeline.groups = input.groups
-      pipeline.var_sources = input.var_sources
-    })
-  }
 }

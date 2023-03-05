@@ -123,16 +123,4 @@ export class ResourceType<
 
     return result
   }
-
-  public static deserialise(input: Declaration.ResourceType) {
-    return new ResourceType(input.name, (rt) => {
-      rt.type = input.type
-      rt.source = input.source
-      rt.check_every = input.check_every
-      rt.defaults = input.defaults
-      rt.params = input.params
-      rt.privileged = input.privileged
-      rt.tags = input.tags
-    })
-  }
 }

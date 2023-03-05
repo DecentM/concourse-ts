@@ -42,13 +42,4 @@ export class Command {
 
     return result
   }
-
-  static deserialise(name: string, input: Type.Command) {
-    return new Command(name, (command) => {
-      command.args = input.args
-      command.path = input.path
-      command.dir = input.dir
-      command.user = input.user
-    })
-  }
 }

@@ -18,6 +18,7 @@ export type Var = string & {__type: 'Var'}
  * ```typescript
  * const name = '((my_secret))'
  *    // ^? string
+ *
  * if (!is_var(name)) {
  *   return
  * }
