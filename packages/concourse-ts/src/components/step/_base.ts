@@ -32,7 +32,14 @@ import {Customiser} from '../../declarations'
 export abstract class Step<StepType extends Type.Step> {
   private static base_customiser: Customiser<Step<Type.Step>>
 
-  public static customise_base = (init: Customiser<Step<Type.Step>>) => {
+  /**
+   * Customises the base of all Steps constructed after calling this function
+   *
+   * {@link Type.Customiser}
+   *
+   * @param {Customiser<AnyStep>} init
+   */
+  public static customise_base = (init: Customiser<AnyStep>) => {
     Step.base_customiser = init
   }
 
@@ -42,18 +49,34 @@ export abstract class Step<StepType extends Type.Step> {
     }
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public abstract get_resources(): Resource[]
 
   private timeout: Duration
 
+  /**
+   * https://concourse-ci.org/timeout-step.html
+   *
+   * @param {DurationInput} timeout
+   */
   public set_timeout = (timeout: DurationInput) => {
     this.timeout = get_duration(timeout)
   }
 
+  /**
+   * https://concourse-ci.org/attempts-step.html
+   */
   public attempts: number
 
   protected tags: Type.Tags
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {Resource[]}
+   */
   protected get_base_resources(): Resource[] {
     const result: Resource[] = []
 
@@ -80,6 +103,11 @@ export abstract class Step<StepType extends Type.Step> {
     return result
   }
 
+  /**
+   * https://concourse-ci.org/tags-step.html
+   *
+   * @param {...string[]} tags
+   */
   public add_tag = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
@@ -88,6 +116,13 @@ export abstract class Step<StepType extends Type.Step> {
 
   protected on_success?: DoStep
 
+  /**
+   * Adds a step to be run after this one succeeds.
+   *
+   * https://concourse-ci.org/on-success-step.html
+   *
+   * @param {AnyStep} step
+   */
   public add_on_success = (step: AnyStep) => {
     if (!this.on_success)
       this.on_success = new DoStep(`${this.name}_on_success`)
@@ -97,6 +132,13 @@ export abstract class Step<StepType extends Type.Step> {
 
   protected on_failure?: DoStep
 
+  /**
+   * Adds a step to be run after this one fails.
+   *
+   * https://concourse-ci.org/on-failure-hook.html
+   *
+   * @param {AnyStep} step
+   */
   public add_on_failure = (step: AnyStep) => {
     if (!this.on_failure)
       this.on_failure = new DoStep(`${this.name}_on_failure`)
@@ -106,6 +148,13 @@ export abstract class Step<StepType extends Type.Step> {
 
   protected on_error?: DoStep
 
+  /**
+   * Adds a step to be run after this one errors.
+   *
+   * https://concourse-ci.org/on-error-hook.html
+   *
+   * @param {AnyStep} step
+   */
   public add_on_error = (step: AnyStep) => {
     if (!this.on_error) this.on_error = new DoStep(`${this.name}_on_error`)
 
@@ -114,6 +163,13 @@ export abstract class Step<StepType extends Type.Step> {
 
   protected on_abort?: DoStep
 
+  /**
+   * Adds a step to be run after this one is aborted.
+   *
+   * https://concourse-ci.org/on-abort-hook.html
+   *
+   * @param {AnyStep} step
+   */
   public add_on_abort = (step: AnyStep) => {
     if (!this.on_abort) this.on_abort = new DoStep(`${this.name}_on_abort`)
 
@@ -122,12 +178,24 @@ export abstract class Step<StepType extends Type.Step> {
 
   protected ensure?: DoStep
 
+  /**
+   * Adds a step to always be run after this one.
+   *
+   * https://concourse-ci.org/ensure-hook.html
+   *
+   * @param {AnyStep} step
+   */
   public add_ensure = (step: AnyStep) => {
     if (!this.ensure) this.ensure = new DoStep(`${this.name}_ensure`)
 
     this.ensure.add_do(step)
   }
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {Type.StepBase}
+   */
   protected serialise_base = () => {
     const result: Type.StepBase = {
       attempts: this.attempts,
@@ -143,52 +211,76 @@ export abstract class Step<StepType extends Type.Step> {
     return result
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public abstract serialise(): StepType
 
+  /**
+   * @internal Used by the compiler
+   *
+   * Deserialises any kind of step into their proper class instances
+   *
+   * @param name
+   * @param resource_pool
+   * @param input
+   * @returns {AnyStep}
+   */
   public static deserialise_any(
     name: string,
-    resourcePool: Resource[],
+    resource_pool: Resource[],
     input: Type.Step
   ) {
-    if (is_do_step(input)) return DoStep.deserialise(name, resourcePool, input)
+    if (is_do_step(input)) return DoStep.deserialise(name, resource_pool, input)
 
     if (is_get_step(input))
-      return GetStep.deserialise(name, resourcePool, input)
+      return GetStep.deserialise(name, resource_pool, input)
 
     if (is_in_parallel_step(input))
-      return InParallelStep.deserialise(name, resourcePool, input)
+      return InParallelStep.deserialise(name, resource_pool, input)
 
     if (is_load_var_step(input))
-      return LoadVarStep.deserialise(name, resourcePool, input)
+      return LoadVarStep.deserialise(name, resource_pool, input)
 
     if (is_put_step(input))
-      return PutStep.deserialise(name, resourcePool, input)
+      return PutStep.deserialise(name, resource_pool, input)
 
     if (is_set_pipeline_step(input))
-      return SetPipelineStep.deserialise(name, resourcePool, input)
+      return SetPipelineStep.deserialise(name, resource_pool, input)
 
     if (is_task_step(input))
-      return TaskStep.deserialise(name, resourcePool, input)
+      return TaskStep.deserialise(name, resource_pool, input)
 
     if (is_try_step(input))
-      return TryStep.deserialise(name, resourcePool, input)
+      return TryStep.deserialise(name, resource_pool, input)
 
     throw new VError(
       `Cannot deserialise step "${name}" because its type cannot be recognised`
     )
   }
 
+  /**
+   * @internal Used by the compiler
+   *
+   * Deserialises any step into a DoStep. If input is already a DoStep, it does
+   * not nest.
+   *
+   * @param name
+   * @param resource_pool
+   * @param input
+   * @returns {DoStep}
+   */
   public static deserialise_prefer_do(
     name: string,
-    resourcePool: Resource[],
+    resource_pool: Resource[],
     input: Type.Step
   ): DoStep {
     if (is_do_step(input)) {
-      return DoStep.deserialise(name, resourcePool, input)
+      return DoStep.deserialise(name, resource_pool, input)
     } else if (input) {
       return new DoStep(name, (doStep) => {
         doStep.add_do(
-          Step.deserialise_any(`${doStep.name}_do`, resourcePool, input)
+          Step.deserialise_any(`${doStep.name}_do`, resource_pool, input)
         )
       })
     }
@@ -196,9 +288,16 @@ export abstract class Step<StepType extends Type.Step> {
     throw new VError(`Cannot deserialise step "${name}" because it's nullish`)
   }
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @param step
+   * @param resource_pool
+   * @param input
+   */
   protected static deserialise_base(
     step: AnyStep,
-    resourcePool: Resource[],
+    resource_pool: Resource[],
     input: Type.Step
   ) {
     step.attempts = input.attempts
@@ -210,7 +309,7 @@ export abstract class Step<StepType extends Type.Step> {
     if (is_do_step(input.ensure)) {
       step.ensure = DoStep.deserialise(
         `${step.name}_ensure`,
-        resourcePool,
+        resource_pool,
         input.ensure
       )
     }
@@ -218,7 +317,7 @@ export abstract class Step<StepType extends Type.Step> {
     if (is_do_step(input.on_abort)) {
       step.on_abort = DoStep.deserialise(
         `${step.name}_on_abort`,
-        resourcePool,
+        resource_pool,
         input.on_abort
       )
     }
@@ -226,7 +325,7 @@ export abstract class Step<StepType extends Type.Step> {
     if (is_do_step(input.on_error)) {
       step.on_error = DoStep.deserialise(
         `${step.name}_on_error`,
-        resourcePool,
+        resource_pool,
         input.on_error
       )
     }
@@ -234,7 +333,7 @@ export abstract class Step<StepType extends Type.Step> {
     if (is_do_step(input.on_failure)) {
       step.on_error = DoStep.deserialise(
         `${step.name}_on_failure`,
-        resourcePool,
+        resource_pool,
         input.on_failure
       )
     }
@@ -242,7 +341,7 @@ export abstract class Step<StepType extends Type.Step> {
     if (is_do_step(input.on_success)) {
       step.on_error = DoStep.deserialise(
         `${step.name}_on_success`,
-        resourcePool,
+        resource_pool,
         input.on_success
       )
     }

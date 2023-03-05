@@ -58,7 +58,7 @@ export class Pipeline<Group extends string = string> {
     }
   }
 
-  private display?: Type.DisplayConfig
+  private display?: Type.Pipeline['display']
 
   public set_background_image_url = (url: string) => {
     if (!this.display) this.display = {}
@@ -66,7 +66,7 @@ export class Pipeline<Group extends string = string> {
     this.display.background_image = url
   }
 
-  private groups?: Type.GroupConfig<Group>[]
+  private groups?: Type.Pipeline['groups']
 
   private var_sources?: Type.VarSource[]
 

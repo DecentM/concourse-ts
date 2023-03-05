@@ -1,5 +1,3 @@
-import {VError} from 'verror'
-
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
@@ -32,7 +30,7 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
 
   public file?: Type.FilePath
 
-  public format?: Type.VarFormat
+  public format?: Type.LoadVarStep['format']
 
   public reveal: boolean
 
@@ -41,18 +39,6 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
   }
 
   public serialise() {
-    if (!this.load_var) {
-      throw new VError(
-        'Cannot serialise LoadVarStep because "load_var" has not been set'
-      )
-    }
-
-    if (!this.file) {
-      throw new VError(
-        `Cannot serialise LoadVarStep, because "file" has not been set`
-      )
-    }
-
     const result: Type.LoadVarStep = {
       ...this.serialise_base(),
       load_var: this.load_var,

@@ -28,7 +28,7 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     }
   }
 
-  public set_pipeline: Type.SetPipeline
+  public set_pipeline: Type.Identifier
 
   public file?: Type.FilePath
 

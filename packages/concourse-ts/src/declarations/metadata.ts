@@ -1,3 +1,6 @@
+/**
+ * https://concourse-ci.org/implementing-resource-types.html#resource-metadata
+ */
 export const BuildMetadata = {
   BuildId: '$BUILD_ID',
   BuildName: '$BUILD_NAME',
@@ -9,4 +12,7 @@ export const BuildMetadata = {
   AtcExternalUrl: '$ATC_EXTERNAL_URL',
 } as const
 
-export type BuildMetadata = typeof BuildMetadata[keyof typeof BuildMetadata]
+/**
+ * https://concourse-ci.org/implementing-resource-types.html#resource-metadata
+ */
+export type BuildMetadata = (typeof BuildMetadata)[keyof typeof BuildMetadata]

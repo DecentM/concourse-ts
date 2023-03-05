@@ -149,6 +149,9 @@ export type StepBase = {
   ensure?: Step
 }
 
+/**
+ * https://concourse-ci.org/get-step.html
+ */
 export type GetStep = {
   get: Identifier | Resource['name']
   resource?: Resource['name']
@@ -158,8 +161,14 @@ export type GetStep = {
   version?: Version
 } & StepBase
 
+/**
+ * https://concourse-ci.org/put-step.html#schema.put.inputs
+ */
 export type Inputs = 'detect' | 'all' | Identifier[]
 
+/**
+ * https://concourse-ci.org/put-step.html
+ */
 export type PutStep = {
   put: Identifier | Resource['name']
   resource?: Resource['name']
@@ -168,17 +177,29 @@ export type PutStep = {
   get_params?: Config
 } & StepBase
 
+/**
+ * https://concourse-ci.org/tasks.html#schema.task-config.inputs
+ *
+ * TransferType is for specifying input and output names to keep user codebase
+ * type-safe.
+ */
 export type TaskInput<TransferType extends Identifier> = {
   name: TransferType
   path?: DirPath
   optional?: boolean
 }
 
+/**
+ * https://concourse-ci.org/tasks.html#schema.task-config.outputs
+ */
 export type TaskOutput<TransferType extends Identifier> = {
   name: TransferType
   path?: DirPath
 }
 
+/**
+ * https://concourse-ci.org/task-step.html
+ */
 export type TaskStep<
   Input extends Identifier = Identifier,
   Output extends Identifier = Identifier
@@ -194,10 +215,11 @@ export type TaskStep<
   output_mapping?: Record<Output, Identifier>
 } & StepBase
 
-export type SetPipeline = Identifier | 'self'
-
+/**
+ * https://concourse-ci.org/set-pipeline-step.html
+ */
 export type SetPipelineStep = {
-  set_pipeline: SetPipeline
+  set_pipeline: Identifier | 'self'
   file: FilePath
   instance_vars?: Vars
   vars?: Vars
@@ -205,12 +227,13 @@ export type SetPipelineStep = {
   team?: Identifier
 } & StepBase
 
-export type VarFormat = 'json' | 'yaml' | 'yml' | 'trim' | 'raw'
-
+/**
+ * https://concourse-ci.org/load-var-step.html#schema.load-var.format
+ */
 export type LoadVarStep = {
   load_var: Identifier
   file: FilePath
-  format?: VarFormat
+  format?: 'json' | 'yaml' | 'yml' | 'trim' | 'raw'
   reveal?: boolean
 } & StepBase
 
@@ -220,18 +243,30 @@ type InParallelConfig = {
   fail_fast?: boolean
 }
 
+/**
+ * https://concourse-ci.org/in-parallel-step.html
+ */
 export type InParallelStep = {
   in_parallel: Step[] | InParallelConfig
 } & StepBase
 
+/**
+ * https://concourse-ci.org/do-step.html
+ */
 export type DoStep = {
   do: Step[]
 } & StepBase
 
+/**
+ * https://concourse-ci.org/try-step.html
+ */
 export type TryStep = {
   try: Step
 } & StepBase
 
+/**
+ * Matches any step type. Use get_step_type to discriminate between steps.
+ */
 export type Step =
   | GetStep
   | PutStep
@@ -242,12 +277,18 @@ export type Step =
   | DoStep
   | TryStep
 
+/**
+ * https://concourse-ci.org/jobs.html#schema.job.build_log_retention
+ */
 export type BuildLogRetentionPolicy = {
   days?: number
   builds?: number
   minimum_succeeded_builds?: number
 }
 
+/**
+ * https://concourse-ci.org/jobs.html
+ */
 export type Job = {
   name: Identifier
   plan: Step[]
@@ -319,21 +360,27 @@ type VarSourceSecretsManager = VarSourceBase & {
   }
 }
 
+/**
+ * https://concourse-ci.org/vars.html#var-sources
+ */
 export type VarSource =
   | VarSourceDummy
   | VarSourceVault
   | VarSourceSsm
   | VarSourceSecretsManager
 
-export type GroupConfig<GroupName extends Identifier = Identifier> = {
+type GroupConfig<GroupName extends Identifier = Identifier> = {
   name: GroupName
   jobs?: Job['name'][]
 }
 
-export type DisplayConfig = {
+type DisplayConfig = {
   background_image?: string
 }
 
+/**
+ * https://concourse-ci.org/pipelines.html
+ */
 export type Pipeline = {
   jobs: Job[]
   resources?: Resource[]
