@@ -15,12 +15,12 @@ import {AnyStep, DoStep, GetStep, PutStep} from './step'
 import {Job} from './job'
 import {type_of} from '../utils'
 
-export type AsPutStepInput<PutParams> = {
+type AsPutStepInput<PutParams> = {
   params?: PutParams
   inputs?: Type.Inputs
 }
 
-export type AsGetStepInput<GetParams> = {
+type AsGetStepInput<GetParams> = {
   params?: GetParams
   passed?: Job[]
   trigger?: boolean
