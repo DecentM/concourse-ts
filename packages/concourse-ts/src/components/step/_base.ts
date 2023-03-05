@@ -24,7 +24,7 @@ import {
   is_set_pipeline_step,
   is_task_step,
   is_try_step,
-} from '../../utils/step-type/get-step-type'
+} from '../../utils/step-type'
 
 import {Duration, DurationInput, get_duration} from '../../utils'
 import {Initer} from '../../declarations'

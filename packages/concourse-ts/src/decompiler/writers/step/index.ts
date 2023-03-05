@@ -10,7 +10,7 @@ import {
   is_set_pipeline_step,
   is_task_step,
   is_try_step,
-} from '../../../utils/step-type/get-step-type'
+} from '../../../utils/step-type'
 
 import {write_do_step} from './do'
 import {write_get_step} from './get'

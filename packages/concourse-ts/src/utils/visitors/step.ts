@@ -9,7 +9,7 @@ import {
   is_set_pipeline_step,
   is_task_step,
   is_try_step,
-} from '../step-type/get-step-type'
+} from '../step-type'
 
 export type StepVisitor = {
   GetStep?: (component: Type.GetStep) => void

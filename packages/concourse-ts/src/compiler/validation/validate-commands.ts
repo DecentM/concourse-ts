@@ -1,6 +1,6 @@
 import * as Type from '../../declarations/types'
 
-import {is_task_step} from '../../utils/step-type/get-step-type'
+import {is_task_step} from '../../utils/step-type'
 
 import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 

@@ -1,7 +1,7 @@
 // https://github.com/concourse/concourse/blob/6841cd592dfe844599b73e333ea66c650f2f237b/atc/step_validator.go#L109
 
 import {ValidationWarningType, WarningStore} from '../../../utils/warning-store'
-import {is_get_step} from '../../../utils/step-type/get-step-type'
+import {is_get_step} from '../../../utils/step-type'
 
 import * as Type from '../../../declarations/types'
 import {validate_identifier} from '../validate-identifier'
