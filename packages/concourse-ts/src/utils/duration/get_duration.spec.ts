@@ -1,6 +1,6 @@
 import test from 'ava'
-import {Duration} from '../../declarations/types'
-import {DurationInput, get_duration} from '.'
+
+import {Duration, DurationInput, get_duration} from '.'
 
 test('creates durations with one component', (t) => {
   t.is(get_duration({minutes: 1}), '1m' as Duration)

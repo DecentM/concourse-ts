@@ -1,6 +1,7 @@
 import {VError} from 'verror'
 import {Pipeline} from '../../declarations'
-import {parse_duration, type_of} from '../../utils'
+import {parse_duration} from '../../utils/duration'
+import {type_of} from '../../utils'
 
 export const write_resource_type = (
   resource_type_name: string,

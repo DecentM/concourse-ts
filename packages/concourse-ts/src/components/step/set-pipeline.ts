@@ -1,6 +1,7 @@
 import {VError} from 'verror'
 
 import {Customiser} from '../../declarations/customiser'
+import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
@@ -28,7 +29,7 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     }
   }
 
-  public set_pipeline: Type.Identifier
+  public set_pipeline: Identifier | 'self'
 
   public file?: Type.FilePath
 
@@ -60,7 +61,7 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     this.var_files.push(...paths)
   }
 
-  public team?: Type.Identifier
+  public team?: Identifier
 
   public get_resources(): Resource[] {
     return this.get_base_resources()

@@ -14,6 +14,7 @@ import {ResourceType} from './resource-type'
 import {AnyStep, DoStep, GetStep, PutStep} from './step'
 import {Job} from './job'
 import {type_of} from '../utils'
+import {get_identifier, Identifier} from '../utils/identifier'
 
 type AsPutStepInput<PutParams> = {
   params?: PutParams
@@ -81,11 +82,15 @@ export class Resource<
     this.put_step_customiser = init
   }
 
+  public name: Identifier
+
   constructor(
-    public name: string,
+    name: string,
     private type: ResourceType,
     customise?: Customiser<Resource<Source, PutParams, GetParams>>
   ) {
+    this.name = get_identifier(name)
+
     if (Resource.customiser) {
       Resource.customiser(this)
     }
@@ -110,7 +115,7 @@ export class Resource<
    */
   public icon?: string
 
-  public old_name?: string
+  public old_name?: Identifier
 
   public public: boolean
 
@@ -239,7 +244,9 @@ export class Resource<
 
   serialise() {
     if (!this.type) {
-      throw new VError('Cannot serialise resource without a resource type')
+      throw new VError('Cannot serialise resource without a resource type', {
+        resource: this.name,
+      })
     }
 
     const result: Type.Resource = {

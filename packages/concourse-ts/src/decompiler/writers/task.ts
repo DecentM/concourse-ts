@@ -1,9 +1,10 @@
 import {Task} from '../../declarations'
+import {Identifier} from '../../utils/identifier'
 import {parse_bytes, type_of} from '../../utils'
 
 import {write_command} from './command'
 
-export const write_task = <Input extends string, Output extends string>(
+export const write_task = <Input extends Identifier, Output extends Identifier>(
   name: string,
   task: Task<Input, Output>
 ): string => {

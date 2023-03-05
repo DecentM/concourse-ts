@@ -48,7 +48,9 @@ export const validate_identifier = (
 
     return warnings.add_warning(
       ValidationWarningType.Fatal,
-      `${context.join('')}: ${identifier} is not a valid identifier: ${reason}`
+      `${context.join(
+        ''
+      )}: "${identifier}" is not a valid identifier: ${reason}`
     )
   }
 

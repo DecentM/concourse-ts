@@ -1,4 +1,5 @@
 import {Customiser} from '../declarations/customiser'
+import {get_identifier, Identifier} from '../utils/identifier'
 import * as Type from '../declarations/types'
 
 import {Resource} from './resource'
@@ -22,6 +23,8 @@ export class Job {
     Job.customiser = init
   }
 
+  public name: Identifier
+
   /**
    * Constructs a new Job
    *
@@ -30,7 +33,9 @@ export class Job {
    * @param {string} name The name of the step. This will be visible in the Concourse UI.
    * @param {Customiser<Job>} init Optional customiser function that runs during construction.
    */
-  constructor(public name: string, customise?: Customiser<Job>) {
+  constructor(name: string, customise?: Customiser<Job>) {
+    this.name = get_identifier(name)
+
     if (Job.customiser) {
       Job.customiser(this)
     }
@@ -88,10 +93,16 @@ export class Job {
    */
   public max_in_flight?: number
 
+  private old_name?: Identifier
+
   /**
    * https://concourse-ci.org/jobs.html#schema.job.old_name
+   *
+   * @param {string} old_name The name this step used to have
    */
-  public old_name?: string
+  public set_old_name = (old_name: string) => {
+    this.old_name = get_identifier(old_name)
+  }
 
   private on_success?: DoStep
 
@@ -231,10 +242,16 @@ export class Job {
    */
   public serial: boolean
 
+  private serial_groups?: Identifier
+
   /**
    * https://concourse-ci.org/jobs.html#schema.job.serial_groups
+   *
+   * @param {string} serial_groups
    */
-  public serial_groups?: string
+  public set_serial_groups = (serial_groups: string) => {
+    this.serial_groups = get_identifier(serial_groups)
+  }
 
   private get_base_resources(): Resource[] {
     const result: Resource[] = []

@@ -1,12 +1,13 @@
 import test from 'ava'
 
 import {ResourceType, Pipeline, Job, GetStep} from '..'
-import {Config, Duration} from '../declarations/types'
+import {Duration} from '../declarations/duration'
+import {Config} from '../declarations/types'
 import {has_duplicates_by_key} from '../utils/array-duplicates'
 
 test.beforeEach(() => {
   ResourceType.customise((rt) => {
-    rt.type = 'registry-image'
+    rt.set_type('registry-image')
   })
 })
 
@@ -46,7 +47,7 @@ test('does not serialise duplicate resource types', (t) => {
 test('does not throw if the type is unassigned', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.type = ''
+  rt.set_type('')
 
   t.notThrows(() => rt.serialise())
 })

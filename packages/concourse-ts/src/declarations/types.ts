@@ -1,6 +1,6 @@
-import {Duration} from '../utils'
+import {Duration} from '../utils/duration'
+import {Identifier} from '../utils/identifier'
 
-export type Identifier = string
 export type Config = Record<string, YamlValue>
 export type Version = 'latest' | 'every' | Record<string, string>
 export type DirPath = string

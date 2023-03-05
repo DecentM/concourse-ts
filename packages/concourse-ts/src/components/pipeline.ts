@@ -6,8 +6,9 @@ import {ResourceType} from './resource-type'
 import {deduplicate_by_identity} from '../utils/array-duplicates'
 import {Task} from './task'
 import {TaskStep} from './step'
+import {Identifier} from '../utils/identifier'
 
-export class Pipeline<Group extends string = string> {
+export class Pipeline<Group extends Identifier = Identifier> {
   private static customiser: Customiser<Pipeline>
 
   public static customise = (init: Customiser<Pipeline>) => {
@@ -40,7 +41,7 @@ export class Pipeline<Group extends string = string> {
     // Find the group this job belongs to, and if there isn't one, push a new
     // group to the groups list
     const groupIndex = this.groups.findIndex(
-      (groupConfig) => groupConfig.name === group
+      (group_config) => group_config.name === group
     )
 
     if (groupIndex === -1) {

@@ -1,3 +1,4 @@
+import {Identifier} from '../identifier'
 import * as Type from '../../declarations/types'
 
 import {
@@ -28,7 +29,7 @@ export type StepVisitor = {
 
   Ensure?: (component: Type.Step) => void
 
-  Task?: (component: Type.Task<string, string>) => void
+  Task?: (component: Type.Task<Identifier, Identifier>) => void
 }
 
 export const visit_step = (step: Type.Step, visitor: StepVisitor) => {

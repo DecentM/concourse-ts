@@ -1,6 +1,7 @@
 import {VError} from 'verror'
 
 import {Customiser} from '../../declarations/customiser'
+import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 
 import {Job} from '../job'
@@ -56,7 +57,7 @@ export class GetStep<
     return result
   }
 
-  private passed: Type.Identifier[]
+  private passed: Identifier[]
 
   public add_passed = (...jobs: Job[]) => {
     if (!this.passed) this.passed = []

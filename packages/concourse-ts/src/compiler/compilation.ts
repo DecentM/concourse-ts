@@ -5,6 +5,7 @@ import path from 'node:path'
 import {Pipeline} from '../components/pipeline'
 import {validate} from './validation'
 import {ValidationWarningType, WarningStore} from '../utils/warning-store'
+import {Identifier} from '../utils/identifier'
 
 export type CompilationOptions = {
   output_dir?: string
@@ -16,7 +17,7 @@ const defaultCompilationOptions: CompilationOptions = {
   extract_tasks: false,
 }
 
-export class Compilation<Group extends string = string> {
+export class Compilation<Group extends Identifier = Identifier> {
   constructor(
     private _options: CompilationOptions = defaultCompilationOptions
   ) {}

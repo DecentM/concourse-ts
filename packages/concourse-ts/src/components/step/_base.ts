@@ -26,8 +26,8 @@ import {
   is_try_step,
 } from '../../utils/step-type'
 
-import {Duration, DurationInput, get_duration} from '../../utils'
 import {Customiser} from '../../declarations'
+import {Duration, DurationInput, get_duration} from '../../utils/duration'
 
 export abstract class Step<StepType extends Type.Step> {
   private static base_customiser: Customiser<Step<Type.Step>>

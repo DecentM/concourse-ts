@@ -1,6 +1,6 @@
 import test from 'ava'
-import {Duration} from '../declarations/types'
 import {ResourceType, Resource} from '..'
+import {Duration} from '../declarations/duration'
 
 test('throws if the type is unassigned', (t) => {
   const r = new Resource('my-r', null as never)

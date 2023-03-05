@@ -4,13 +4,14 @@ import {VError} from 'verror'
 import * as YAML from 'yaml'
 
 import {Pipeline, Task, TaskStep} from '../declarations'
+import {Identifier} from '../utils/identifier'
 import {is_task} from '../utils/is-task'
 import {is_task_step} from '../utils/step-type'
 
 export const hoist_task = (
   work_dir: string,
   task_step: TaskStep
-): Task<string, string> => {
+): Task<Identifier, Identifier> => {
   if (!task_step.file) {
     return null
   }

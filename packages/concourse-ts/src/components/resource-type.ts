@@ -1,12 +1,13 @@
 import {VError} from 'verror'
 
 import {Customiser} from '../declarations/customiser'
+import {Duration, DurationInput, get_duration} from '../utils/duration'
+import {get_identifier, Identifier} from '../utils/identifier'
 import * as Declaration from '../declarations/types'
-import {Duration, DurationInput, get_duration} from '../utils'
 import {Resource} from './resource'
 
 export class ResourceType<
-  Type extends string = string,
+  Type extends Identifier = Identifier,
   Source extends Declaration.Config = Declaration.Config
 > {
   private static customiser: Customiser<ResourceType>
@@ -27,10 +28,14 @@ export class ResourceType<
     this.resource_customiser = customiser
   }
 
+  public name: Identifier
+
   constructor(
-    public name: string,
+    name: string,
     customise?: Customiser<ResourceType<Type, Source>>
   ) {
+    this.name = get_identifier(name)
+
     if (ResourceType.customiser) {
       ResourceType.customiser(this)
     }
@@ -54,7 +59,11 @@ export class ResourceType<
     )
   }
 
-  public type: Type
+  private type: Type
+
+  public set_type = (input: string) => {
+    this.type = get_identifier(input) as Type
+  }
 
   public source?: Source
 

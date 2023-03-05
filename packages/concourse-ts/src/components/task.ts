@@ -1,4 +1,5 @@
 import {Customiser} from '../declarations/customiser'
+import {get_identifier, Identifier} from '../utils/identifier'
 
 import * as Type from '../declarations/types'
 
@@ -9,8 +10,8 @@ import {Resource} from './resource'
 import {TaskStep} from './step'
 
 export class Task<
-  Input extends Type.Identifier = Type.Identifier,
-  Output extends Type.Identifier = Type.Identifier
+  Input extends Identifier = Identifier,
+  Output extends Identifier = Identifier
 > {
   private static customiser: Customiser<Task>
 
@@ -34,10 +35,11 @@ export class Task<
     this.task_step_customiser = init
   }
 
-  constructor(
-    public name: string,
-    customise?: Customiser<Task<Input, Output>>
-  ) {
+  public name: Identifier
+
+  constructor(name: string, customise?: Customiser<Task<Input, Output>>) {
+    this.name = get_identifier(name)
+
     if (Task.customiser) {
       Task.customiser(this)
     }
@@ -49,14 +51,19 @@ export class Task<
 
   private image_resource: Type.AnonymousResource
 
-  public set_image_resource = (input: Resource | Type.AnonymousResource) => {
+  public set_image_resource = (
+    input: Resource | (Omit<Type.AnonymousResource, 'type'> & {type: string})
+  ) => {
     if (input instanceof Resource) {
       this.image_resource = {
         source: input.source,
         type: input.get_resource_type()?.name,
       }
     } else {
-      this.image_resource = input
+      this.image_resource = {
+        ...input,
+        type: get_identifier(input.type),
+      }
     }
   }
 
@@ -146,7 +153,10 @@ export class Task<
     return result
   }
 
-  public static deserialise(name: string, input: Type.Task<string, string>) {
+  public static deserialise(
+    name: string,
+    input: Type.Task<Identifier, Identifier>
+  ) {
     return new Task(name, (task) => {
       task.image_resource = input.image_resource
       task.platform = input.platform

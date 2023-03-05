@@ -1,4 +1,5 @@
 import {Customiser} from '../../declarations/customiser'
+import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
@@ -26,7 +27,7 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
     }
   }
 
-  public load_var?: Type.Identifier
+  public load_var?: Identifier
 
   public file?: Type.FilePath
 

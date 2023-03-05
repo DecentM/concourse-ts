@@ -1,4 +1,5 @@
 import test from 'ava'
+
 import {is_duration} from '.'
 
 const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']

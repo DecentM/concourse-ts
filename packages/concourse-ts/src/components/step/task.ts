@@ -1,6 +1,7 @@
 import {VError} from 'verror'
 
 import {Customiser} from '../../declarations/customiser'
+import {get_identifier, Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
@@ -9,8 +10,8 @@ import {Task} from '../task'
 import {Step} from './_base'
 
 export class TaskStep<
-  Input extends Type.Identifier = Type.Identifier,
-  Output extends Type.Identifier = Type.Identifier
+  Input extends Identifier = Identifier,
+  Output extends Identifier = Identifier
 > extends Step<Type.TaskStep> {
   private static customiser: Customiser<TaskStep>
 
@@ -49,7 +50,7 @@ export class TaskStep<
     this.file = file
   }
 
-  public image?: Type.Identifier
+  public image?: Identifier
 
   public privileged: boolean
 
@@ -73,23 +74,20 @@ export class TaskStep<
     })
   }
 
-  private input_mapping?: Record<Input, Type.Identifier>
+  private input_mapping?: Record<Input, Identifier>
 
-  public set_input_mapping = (input: Input, mapped_input: Type.Identifier) => {
+  public set_input_mapping = (input: Input, mapped_input: Identifier) => {
     if (!this.input_mapping)
-      this.input_mapping = {} as Record<Input, Type.Identifier>
+      this.input_mapping = {} as Record<Input, Identifier>
 
     this.input_mapping[input] = mapped_input
   }
 
-  private output_mapping?: Record<Output, Type.Identifier>
+  private output_mapping?: Record<Output, Identifier>
 
-  public set_output_mapping = (
-    output: Output,
-    mapped_output: Type.Identifier
-  ) => {
+  public set_output_mapping = (output: Output, mapped_output: Identifier) => {
     if (!this.output_mapping)
-      this.output_mapping = {} as Record<Output, Type.Identifier>
+      this.output_mapping = {} as Record<Output, Identifier>
 
     this.output_mapping[output] = mapped_output
   }
@@ -107,7 +105,7 @@ export class TaskStep<
 
     const result: Type.TaskStep = {
       ...this.serialise_base(),
-      task: this.task?.name ?? this.file,
+      task: this.task?.name ?? get_identifier(`${this.name}_task`),
       config: this.file ? undefined : this.task?.serialise(),
       file: this.file,
       image: this.image,

@@ -1,6 +1,7 @@
 import {VError} from 'verror'
 import {Pipeline} from '../../declarations'
-import {parse_duration, type_of} from '../../utils'
+import {parse_duration} from '../../utils/duration'
+import {type_of} from '../../utils'
 
 import {write_resource_type} from './resource-type'
 

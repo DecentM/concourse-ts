@@ -1,3 +1,4 @@
+import {Identifier} from '../identifier'
 import * as Type from '../../declarations/types'
 
 export type TaskVisitor = {
@@ -5,7 +6,7 @@ export type TaskVisitor = {
 }
 
 export const visit_task = (
-  task: Type.Task<string, string>,
+  task: Type.Task<Identifier, Identifier>,
   visitor: TaskVisitor
 ) => {
   if (task.run && visitor.Command) {
