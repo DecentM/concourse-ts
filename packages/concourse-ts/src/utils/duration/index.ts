@@ -7,7 +7,7 @@ import {type_of} from '../type-of'
 export type Duration = string & {__type: 'Duration'}
 
 // https://pkg.go.dev/time#ParseDuration
-export const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']
+const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']
 
 export const is_duration = (
   input: string,

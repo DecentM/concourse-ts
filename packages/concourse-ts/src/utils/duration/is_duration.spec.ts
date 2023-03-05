@@ -1,5 +1,7 @@
 import test from 'ava'
-import {is_duration, VALID_DURATION_UNITS} from '.'
+import {is_duration} from '.'
+
+const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']
 
 VALID_DURATION_UNITS.forEach((unit, index) => {
   test(`accepts ${unit}`, (t) => {
