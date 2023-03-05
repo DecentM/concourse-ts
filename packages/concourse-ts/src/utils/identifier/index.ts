@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 
-import {validate_identifier} from '../../compiler/validation/validate-identifier'
+import {validate_identifier} from '../../compiler/validation/identifier'
 
 /**
  * https://concourse-ci.org/config-basics.html#schema.identifier
@@ -71,7 +71,7 @@ export const get_identifier = (input: string): Identifier => {
   throw new VError(
     `"${input}" is not a valid identifier: ${warnings
       .get_warnings()
-      .map((warning) => warning.get_message())
+      .map((warning) => warning.messages.join(', '))
       .join(',\n')}`,
     {
       warnings: warnings.get_warnings(),

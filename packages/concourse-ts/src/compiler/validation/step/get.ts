@@ -4,7 +4,7 @@ import {ValidationWarningType, WarningStore} from '../../../utils/warning-store'
 import {is_get_step} from '../../../utils/step-type'
 
 import * as Type from '../../../declarations/types'
-import {validate_identifier} from '../validate-identifier'
+import {validate_identifier} from '../identifier'
 import {find_job_by_name} from '../../../utils/find-job'
 import {visit_step} from '../../../utils/visitors/step'
 

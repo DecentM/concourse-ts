@@ -13,7 +13,7 @@ test('adds fatal errors and reports them', (t) => {
   warnings.add_warning(ValidationWarningType.Fatal, 'aaa')
 
   t.is(warnings.get_warnings().length, 1)
-  t.is(warnings.get_warnings()[0].get_message(), 'aaa')
+  t.is(warnings.get_warnings()[0].messages.join(', '), 'aaa')
   t.true(warnings.has_fatal())
 })
 
@@ -23,7 +23,7 @@ test('adds non-fatal errors and reports them', (t) => {
   warnings.add_warning(ValidationWarningType.NonFatal, 'bbb')
 
   t.is(warnings.get_warnings().length, 1)
-  t.is(warnings.get_warnings()[0].get_message(), 'bbb')
+  t.is(warnings.get_warnings()[0].messages.join(', '), 'bbb')
   t.false(warnings.has_fatal())
 })
 
@@ -34,8 +34,8 @@ test('distinguishes between fatal and non-fatal errors', (t) => {
   warnings.add_warning(ValidationWarningType.NonFatal, 'bbb')
 
   t.is(warnings.get_warnings().length, 2)
-  t.is(warnings.get_warnings()[0].get_message(), 'aaa')
-  t.is(warnings.get_warnings()[1].get_message(), 'bbb')
+  t.is(warnings.get_warnings()[0].messages.join(', '), 'aaa')
+  t.is(warnings.get_warnings()[1].messages.join(', '), 'bbb')
   t.true(warnings.has_fatal())
 })
 
@@ -49,11 +49,11 @@ test('copies all warnings', (t) => {
   warnings2.add_warning(ValidationWarningType.Fatal, 'aaa')
 
   t.is(warnings1.get_warnings().length, 1)
-  t.is(warnings1.get_warnings()[0].get_message(), 'bbb')
+  t.is(warnings1.get_warnings()[0].messages.join(', '), 'bbb')
   t.false(warnings1.has_fatal())
 
   t.is(warnings2.get_warnings().length, 2)
-  t.is(warnings2.get_warnings()[0].get_message(), 'bbb')
-  t.is(warnings2.get_warnings()[1].get_message(), 'aaa')
+  t.is(warnings2.get_warnings()[0].messages.join(', '), 'bbb')
+  t.is(warnings2.get_warnings()[1].messages.join(', '), 'aaa')
   t.true(warnings2.has_fatal())
 })

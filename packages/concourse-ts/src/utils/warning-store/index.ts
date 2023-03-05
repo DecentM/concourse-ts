@@ -17,10 +17,6 @@ export class ValidationWarning {
     this.messages = messages
     this.type = type
   }
-
-  get_message = () => {
-    return this.messages.join(', ')
-  }
 }
 
 export class WarningStore {

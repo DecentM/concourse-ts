@@ -18,9 +18,9 @@ export const validate_commands = (pipeline: Type.Pipeline) => {
       if (!command.path) {
         warnings.add_warning(
           ValidationWarningType.Fatal,
-          `Command running in "${
-            command.dir ?? ''
-          }" contains no path. Add a path to a binary to fix this (for example: "/bin/sh").`
+          `Command ${
+            command.dir ? `running in "${command.dir}" ` : ''
+          }contains no path. Add a path to a binary to fix this (for example: "/bin/sh").`
         )
 
         return
@@ -29,7 +29,7 @@ export const validate_commands = (pipeline: Type.Pipeline) => {
       if (!command.path.startsWith('/')) {
         warnings.add_warning(
           ValidationWarningType.NonFatal,
-          `Command "${command.path}" uses a binary from $PATH! This makes it vulnerable to injection attacks. Specify the absolute path of the binary to fix this warning. (e.g.: "/bin/sh" instead of "sh")`
+          `Command "${command.path}" uses a binary from $PATH! This makes it vulnerable to injection attacks. Specify the absolute path of the binary to fix this warning. (e.g.: "/bin/${command.path}" instead of "${command.path}")`
         )
       }
     })

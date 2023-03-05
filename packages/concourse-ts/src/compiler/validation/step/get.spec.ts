@@ -84,7 +84,7 @@ test('does not allow "passed" when a job doesn\'t use it', (t) => {
   const warnings = validate_get_steps(pipeline.serialise())
 
   t.deepEqual(
-    warnings.get_warnings().map((warning) => warning.get_message()),
+    warnings.get_warnings().map((warning) => warning.messages.join(', ')),
     ['Job "j1" does not interact with resource "r"']
   )
 })

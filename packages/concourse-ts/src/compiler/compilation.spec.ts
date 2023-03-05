@@ -15,7 +15,7 @@ test('does not validate without input', (t) => {
 
   t.is(warnings.get_warnings().length, 1)
   t.is(
-    warnings.get_warnings()[0].get_message(),
+    warnings.get_warnings()[0].messages.join(', '),
     'Pipeline is invalid. Expected an object, but got undefined'
   )
 })

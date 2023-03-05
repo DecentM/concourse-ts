@@ -8,7 +8,7 @@ import {
   WarningStore,
 } from '../../utils/warning-store'
 
-import {validate_identifier} from './validate-identifier'
+import {validate_identifier} from './identifier'
 
 export const validate_var_sources = (pipeline: Type.Pipeline): WarningStore => {
   const warnings = new WarningStore()
