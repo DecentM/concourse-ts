@@ -1,7 +1,6 @@
 import anyTest, {TestFn} from 'ava'
 import path from 'path'
 import {tmpName} from 'tmp-promise'
-import rimraf from 'rimraf'
 
 import {Import} from '.'
 
@@ -13,10 +12,6 @@ test.beforeEach('temp directory', async (t) => {
   t.context = {
     tmp_dir: tmp_path,
   }
-})
-
-test.afterEach('remove test directory', async (t) => {
-  await rimraf(t.context.tmp_dir)
 })
 
 test('compiles pipeline', async (t) => {
@@ -33,7 +28,7 @@ test('compiles pipeline', async (t) => {
   let output_count = 0
 
   import_command.on('output', (file) => {
-    t.log(`Import succeeded, file: ${file}`)
+    t.log(file)
     output_count++
   })
 

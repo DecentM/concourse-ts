@@ -26,21 +26,13 @@ export type CompileParams = {
   input: string
 }
 
-const load_typescript = (filePath: string) => {
-  if (!path.isAbsolute(filePath)) {
-    throw new VError('Internal error', 'Only absolute paths can be imported')
-  }
-
-  return import(filePath)
-}
-
 const file_valid = async (filePath: string) => {
   // Must be a Typescript file
   if (!filePath.endsWith('.ts')) {
     return false
   }
 
-  const file = await load_typescript(filePath)
+  const file = await import(filePath)
 
   // Default export must be a function
   if (!('default' in file) || typeof file.default !== 'function') {
@@ -64,7 +56,7 @@ const get_pipeline_from_file = async (filePath: string): Promise<Pipeline> => {
     )
   }
 
-  const file = await load_typescript(fullPath)
+  const file = await import(fullPath)
 
   return file.default()
 }
@@ -78,7 +70,10 @@ export class Compile extends CliCommand<CompileParams, CompileEventMap> {
     this.emit('globs', globs)
 
     if (!globs || globs.length === 0) {
-      this.emit('error', new VError('Glob input matched no files. Aborting.'))
+      this.emit(
+        'error',
+        new VError(`Glob input "${this.params.input}" matched no files`)
+      )
       this.emit('end')
       return
     }
