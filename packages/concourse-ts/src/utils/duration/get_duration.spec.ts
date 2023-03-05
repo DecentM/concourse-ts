@@ -40,14 +40,12 @@ test('throws when invalid durations are created', (t) => {
 
 test('throws when an empty object is passed', (t) => {
   t.throws(() => get_duration({} as unknown as DurationInput), {
-    message:
-      'Result "" is not a valid Duration. If you used the "as" keyword while using get_duration, remove it. Otherwise, this is probably a concourse-ts internal error, please report!',
+    message: 'Result "" is not a valid Duration.',
   })
 })
 
 test('throws when undefined is passed', (t) => {
   t.throws(() => get_duration(undefined as unknown as DurationInput), {
-    message:
-      'Result "" is not a valid Duration. If you used the "as" keyword while using get_duration, remove it. Otherwise, this is probably a concourse-ts internal error, please report!',
+    message: 'Result "" is not a valid Duration.',
   })
 })

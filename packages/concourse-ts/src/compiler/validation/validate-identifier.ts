@@ -11,21 +11,22 @@ export const validate_identifier = (
   ...context: string[]
 ): WarningStore => {
   const warnings = new WarningStore()
+  const context_string = context.length ? `${context.join('')}: ` : ''
 
   if (!identifier) {
     return warnings.add_warning(
       ValidationWarningType.Fatal,
-      `${context.join('')}: identifier cannot be an empty string`
+      `${context_string}identifier cannot be an empty string`
     )
   }
 
-  const contextLen = context.length
   const lastContext = last(context)
 
   if (
-    contextLen >= 2 &&
+    context.length >= 2 &&
     (lastContext.includes('set_pipeline') ||
-      (lastContext.includes('task') && context[contextLen - 2] === '.across'))
+      (lastContext.includes('task') &&
+        context[context.length - 2] === '.across'))
   ) {
     return warnings
   }
@@ -48,9 +49,7 @@ export const validate_identifier = (
 
     return warnings.add_warning(
       ValidationWarningType.Fatal,
-      `${context.join(
-        ''
-      )}: "${identifier}" is not a valid identifier: ${reason}`
+      `${context_string}"${identifier}" is not a valid identifier: ${reason}`
     )
   }
 

@@ -52,9 +52,14 @@ test('throws if the type is unassigned', (t) => {
       rt.set_type('')
     },
     {
-      message: '"" is not a valid identifier',
+      message:
+        '"" is not a valid identifier: identifier cannot be an empty string',
     }
   )
+
+  t.notThrows(() => {
+    rt.serialise()
+  })
 })
 
 test('stores tags', (t) => {

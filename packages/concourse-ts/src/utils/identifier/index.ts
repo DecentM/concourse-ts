@@ -52,7 +52,13 @@ export const get_identifier = (input: string): Identifier => {
 
   const warnings = validate_identifier(input)
 
-  throw new VError(`"${input}" is not a valid identifier`, {
-    warnings: warnings.get_warnings(),
-  })
+  throw new VError(
+    `"${input}" is not a valid identifier: ${warnings
+      .get_warnings()
+      .map((warning) => warning.get_message())
+      .join(',\n')}`,
+    {
+      warnings: warnings.get_warnings(),
+    }
+  )
 }

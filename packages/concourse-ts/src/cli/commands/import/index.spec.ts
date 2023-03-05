@@ -21,7 +21,7 @@ test.afterEach('remove test directory', async (t) => {
 
 test('compiles pipeline', async (t) => {
   const import_command = new Import({
-    input: path.join(__dirname, 'test-data/good.pipeline.yml'),
+    input: path.join(__dirname, 'test-data/good.yml'),
     package_path: '@decentm/concourse-ts',
     output_directory: t.context.tmp_dir,
   })

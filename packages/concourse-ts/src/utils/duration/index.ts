@@ -88,9 +88,7 @@ export const get_duration = (input: DurationInput | 'never'): Duration => {
   }
 
   if (!is_duration(result)) {
-    throw new VError(
-      `Result "${result}" is not a valid Duration. If you used the "as" keyword while using get_duration, remove it. Otherwise, this is probably a concourse-ts internal error, please report!`
-    )
+    throw new VError(`Result "${result}" is not a valid Duration.`)
   }
 
   return result

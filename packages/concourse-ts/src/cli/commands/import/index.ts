@@ -39,9 +39,9 @@ export class Import extends CliCommand<ImportParams, ImportEventMap> {
       return
     }
 
-    const outputDir = path.resolve(this.params.output_directory)
+    const output_dir = path.resolve(this.params.output_directory)
 
-    if (existsSync(outputDir)) {
+    if (existsSync(output_dir)) {
       this.emit(
         'error',
         new VError(
@@ -57,29 +57,29 @@ export class Import extends CliCommand<ImportParams, ImportEventMap> {
         try {
           const decompilation = new Decompilation()
           const file_contents = await fs.readFile(file)
-          const pathInfo = path.parse(file)
+          const path_info = path.parse(file)
 
           decompilation
             .set_import_path(this.params.package_path)
-            .set_name(pathInfo.name)
+            .set_name(path_info.name)
             .set_input(file_contents.toString('utf-8'))
             .set_prettier_config()
-            .set_work_dir(pathInfo.dir)
+            .set_work_dir(path_info.dir)
 
           const decompile_result = decompilation.decompile()
+          const output_path = path.resolve(
+            output_dir,
+            decompile_result.filename
+          )
 
           decompile_result.warnings.get_warnings().forEach((warning) => {
             this.emit('warning', warning)
           })
 
-          await mkdirp(outputDir)
+          await mkdirp(output_dir)
+          await fs.writeFile(output_path, decompile_result.pipeline)
 
-          await fs.writeFile(
-            path.resolve(outputDir, decompile_result.filename),
-            decompile_result.pipeline
-          )
-
-          this.emit('output', file)
+          this.emit('output', output_path)
         } catch (error) {
           this.emit('error', error)
         }
