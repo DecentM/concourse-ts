@@ -48,7 +48,7 @@ type Source = {
    * An SSH key used to fetch modules, e.g. [private GitHub
    * repos](https://www.terraform.io/docs/modules/sources.html#private-github-repos).
    */
-  private_key?: ConcourseTs.Utils.Secret
+  private_key?: ConcourseTs.Utils.Var
 }
 
 type GetParams = {
@@ -167,7 +167,7 @@ type PutParams = (EnvName | EnvNameFile | GenerateRandomName | EnvNameInSource) 
    * An SSH key used to fetch modules, e.g. [private GitHub
    * repos](https://www.terraform.io/docs/modules/sources.html#private-github-repos).
    */
-  private_key?: ConcourseTs.Utils.Secret
+  private_key?: ConcourseTs.Utils.Var
   /**
    * Default `false`
    *

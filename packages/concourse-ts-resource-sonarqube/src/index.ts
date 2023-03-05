@@ -21,7 +21,7 @@ type SourceTokenAuth = {
    * permission. Can be left out if SonarQube instance does not require any
    * authentication.
    */
-  login: ConcourseTs.Utils.Secret
+  login: ConcourseTs.Utils.Var
   /**
    * The password that goes with the sonar.login username. This should be left
    * blank if an authentication token is being used.
@@ -35,12 +35,12 @@ type SourceUsernamePasswordAuth = {
    * permission. Can be left out if SonarQube instance does not require any
    * authentication.
    */
-  login: ConcourseTs.Utils.Secret | string
+  login: ConcourseTs.Utils.Var | string
   /**
    * The password that goes with the sonar.login username. This should be left
    * blank if an authentication token is being used.
    */
-  password: ConcourseTs.Utils.Secret
+  password: ConcourseTs.Utils.Var
 }
 
 type SourceBase = SourceNoAuth | SourceTokenAuth | SourceUsernamePasswordAuth

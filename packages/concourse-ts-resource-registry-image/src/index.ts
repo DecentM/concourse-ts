@@ -54,24 +54,24 @@ export type Source<Repository extends string = string> = {
    * A username to use when authenticating to the registry. Must be specified
    * for private repos or when using put.
    */
-  username?: ConcourseTs.Utils.Secret | string
+  username?: ConcourseTs.Utils.Var | string
   /**
    * A password to use when authenticating to the registry. Must be specified
    * for private repos or when using put.
    */
-  password?: ConcourseTs.Utils.Secret
+  password?: ConcourseTs.Utils.Var
   /**
    * The access key ID to use for authenticating with ECR.
    */
-  aws_access_key_id?: ConcourseTs.Utils.Secret | string
+  aws_access_key_id?: ConcourseTs.Utils.Var | string
   /**
    * The secret access key to use for authenticating with ECR.
    */
-  aws_secret_access_key?: ConcourseTs.Utils.Secret
+  aws_secret_access_key?: ConcourseTs.Utils.Var
   /**
    * The session token to use for authenticating with STS credentials with ECR.
    */
-  aws_session_token?: ConcourseTs.Utils.Secret
+  aws_session_token?: ConcourseTs.Utils.Var
   /**
    * The region to use for accessing ECR. This is required if you are using ECR.
    * This region will help determine the full repository URL you are accessing
@@ -127,11 +127,11 @@ export type Source<Repository extends string = string> = {
     /**
      * A username to use when authenticating to the mirror.
      */
-    username?: ConcourseTs.Utils.Secret | string
+    username?: ConcourseTs.Utils.Var | string
     /**
      * A password to use when authenticating to the mirror.
      */
-    password?: ConcourseTs.Utils.Secret
+    password?: ConcourseTs.Utils.Var
   }
   content_trust?: {
     /**
@@ -142,34 +142,34 @@ export type Source<Repository extends string = string> = {
      * Target key's ID used to sign the trusted collection, could be retrieved
      * by `notary key list`
      */
-    repository_key_id: ConcourseTs.Utils.Secret
+    repository_key_id: ConcourseTs.Utils.Var
     /**
      * Target key used to sign the trusted collection.
      */
-    repository_key: ConcourseTs.Utils.Secret
+    repository_key: ConcourseTs.Utils.Var
     /**
      * The passphrase of the signing/target key. (equal to
      * `DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE`)
      */
-    repository_passphrase: ConcourseTs.Utils.Secret
+    repository_passphrase: ConcourseTs.Utils.Var
     /**
      * TLS key for the notary server.
      */
-    tls_key?: ConcourseTs.Utils.Secret
+    tls_key?: ConcourseTs.Utils.Var
     /**
      * TLS certificate for the notary server.
      */
-    tls_cert?: ConcourseTs.Utils.Secret
+    tls_cert?: ConcourseTs.Utils.Var
     /**
      * Username for authorize Docker Registry with a Notary
      * server(`content_trust.server`) attached.
      */
-    username?: ConcourseTs.Utils.Secret | string
+    username?: ConcourseTs.Utils.Var | string
     /**
      * Password for authorize Docker Registry with a Notary
      * server(`content_trust.server`) attached.
      */
-    password?: ConcourseTs.Utils.Secret
+    password?: ConcourseTs.Utils.Var
     /**
      * What access for the resources requested
      */

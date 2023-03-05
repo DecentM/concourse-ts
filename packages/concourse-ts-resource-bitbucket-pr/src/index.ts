@@ -6,11 +6,11 @@ type PasswordAuth = {
   /**
    * username of the user which have access to repository.
    */
-  username: string | ConcourseTs.Utils.Secret
+  username: string | ConcourseTs.Utils.Var
   /**
    * password of that user
    */
-  password: ConcourseTs.Utils.Secret
+  password: ConcourseTs.Utils.Var
   oauth_id?: undefined
   oauth_secret?: undefined
 }
@@ -19,17 +19,17 @@ type OauthAuth = {
   /**
    * username of the user which have access to repository.
    */
-  username: string | ConcourseTs.Utils.Secret
+  username: string | ConcourseTs.Utils.Var
   password?: undefined
   /**
    * Oauth id of an OAuth consumer configured as private and with permission to
    * write to PRs.
    */
-  oauth_id?: ConcourseTs.Utils.Secret
+  oauth_id?: ConcourseTs.Utils.Var
   /**
    * Oauth secret of the same consumer.
    */
-  oauth_secret?: ConcourseTs.Utils.Secret
+  oauth_secret?: ConcourseTs.Utils.Var
 }
 
 export type Source = (PasswordAuth | OauthAuth) & {
@@ -97,7 +97,7 @@ export type Source = (PasswordAuth | OauthAuth) & {
   /**
    * Custom CA certs to use to verify Bitbucket API calls.
    */
-  ssl_cacert?: ConcourseTs.Utils.Secret
+  ssl_cacert?: ConcourseTs.Utils.Var
 }
 
 export type PutParams = {

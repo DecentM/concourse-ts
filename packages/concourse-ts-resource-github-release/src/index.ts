@@ -19,7 +19,7 @@ export type Source = {
    * release to a repo during an `out`. The access token you create is only
    * required to have the `repo` or `public_repo` scope.
    */
-  access_token?: ConcourseTs.Utils.Secret
+  access_token?: ConcourseTs.Utils.Var
   /**
    * If you use a non-public GitHub deployment then you can set your API URL
    * here.

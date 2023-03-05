@@ -12,20 +12,20 @@ export type Source = {
   /**
    * The AWS access key to use when accessing the bucket.
    */
-  access_key_id?: string | ConcourseTs.Utils.Secret
+  access_key_id?: string | ConcourseTs.Utils.Var
   /**
    * The AWS secret key to use when accessing the bucket.
    */
-  secret_access_key?: ConcourseTs.Utils.Secret
+  secret_access_key?: ConcourseTs.Utils.Var
   /**
    * The AWS STS session token to use when accessing the bucket.
    */
-  session_token?: ConcourseTs.Utils.Secret
+  session_token?: ConcourseTs.Utils.Var
   /**
    * The AWS role ARN to be assumed by the user identified by `access_key_id`
    * and `secret_access_key`.
    */
-  aws_role_arn?: string | ConcourseTs.Utils.Secret
+  aws_role_arn?: string | ConcourseTs.Utils.Var
   /**
    * The region the bucket is in. Defaults to `us-east-1`.
    */
@@ -69,7 +69,7 @@ export type Source = {
   /**
    * The ID of the AWS KMS master encryption key used for the object.
    */
-  sse_kms_key_id?: string | ConcourseTs.Utils.Secret
+  sse_kms_key_id?: string | ConcourseTs.Utils.Var
   /**
    * Use signature v2 signing, useful for S3 compatible providers that do not
    * support v4.

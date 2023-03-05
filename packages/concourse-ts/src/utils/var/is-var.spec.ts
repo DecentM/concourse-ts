@@ -1,14 +1,14 @@
 import test from 'ava'
-import {is_secret} from '.'
+import {is_var} from '.'
 
 test('no false negatives', (t) => {
-  t.true(is_secret('((test))'))
+  t.true(is_var('((test))'))
 })
 
 test('no false positives', (t) => {
-  t.false(is_secret('asd'))
+  t.false(is_var('asd'))
 })
 
 test('does not consider a empty secret a secret', (t) => {
-  t.false(is_secret('(())'))
+  t.false(is_var('(())'))
 })

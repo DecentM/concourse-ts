@@ -25,15 +25,15 @@ export type Source = {
     -----END RSA PRIVATE KEY-----
     ```
    */
-  private_key?: ConcourseTs.Utils.Secret
+  private_key?: ConcourseTs.Utils.Var
   /**
    * Enables setting User in the ssh config.
    */
-  private_key_user?: ConcourseTs.Utils.Secret
+  private_key_user?: ConcourseTs.Utils.Var
   /**
    * To unlock `private_key` if it is protected by a passphrase.
    */
-  private_key_passphrase?: ConcourseTs.Utils.Secret
+  private_key_passphrase?: ConcourseTs.Utils.Var
   /**
    *  Enables ForwardAgent SSH option when set to true. Useful when using
    *  proxy/jump hosts. Defaults to false.
@@ -44,11 +44,11 @@ export type Source = {
    * HTTP/HTTPS protocol for git is available (which does not support private
    * key auth) and auth is required.
    */
-  username?: ConcourseTs.Utils.Secret | string
+  username?: ConcourseTs.Utils.Var | string
   /**
    * Password for HTTP(S) auth when pulling/pushing.
    */
-  password?: ConcourseTs.Utils.Secret
+  password?: ConcourseTs.Utils.Var
   /**
    * If specified (as a list of glob patterns), only changes to the specified
    * files will yield new versions from check.
@@ -102,8 +102,8 @@ export type Source = {
      * Specified with no protocol extensions.
      */
     host: string
-    username?: ConcourseTs.Utils.Secret | string
-    password?: ConcourseTs.Utils.Secret
+    username?: ConcourseTs.Utils.Var | string
+    password?: ConcourseTs.Utils.Var
   }>
   /**
    * If specified as (list of pairs `name` and `value`) it will configure git global
@@ -125,26 +125,26 @@ export type Source = {
    * Array of GPG public keys that the resource will check against to verify the
    * commit (details below).
    */
-  commit_verification_keys?: ConcourseTs.Utils.Secret[]
+  commit_verification_keys?: ConcourseTs.Utils.Var[]
   /**
    * Array of GPG public key ids that the resource will check against to verify
    * the commit (details below). The corresponding keys will be fetched from the
    * key server specified in gpg_keyserver. The ids can be short id, long id or
    * fingerprint.
    */
-  commit_verification_key_ids?: Array<ConcourseTs.Utils.Secret | string>
+  commit_verification_key_ids?: Array<ConcourseTs.Utils.Var | string>
   /**
    * GPG keyserver to download the public keys from. Defaults to
    * `hkp://keyserver.ubuntu.com/`.
    */
-  gpg_keyserver?: ConcourseTs.Utils.Secret | string
+  gpg_keyserver?: ConcourseTs.Utils.Var | string
   /**
    * Base64 encoded [git-crypt](https://github.com/AGWA/git-crypt) key. Setting
    * this will unlock / decrypt the repository with `git-crypt`. To get the key
    * simply execute `git-crypt export-key -- - | base64` in an encrypted
    * repository.
    */
-  git_crypt_key?: ConcourseTs.Utils.Secret
+  git_crypt_key?: ConcourseTs.Utils.Var
   /**
    * Information about an HTTPS proxy that will be used to tunnel SSH-based git
    * commands over.
@@ -161,11 +161,11 @@ export type Source = {
     /**
      * If the proxy requires authentication, use this username
      */
-    proxy_user?: ConcourseTs.Utils.Secret | string
+    proxy_user?: ConcourseTs.Utils.Var | string
     /**
      * If the proxy requires authenticate, use this password
      */
-    proxy_password?: ConcourseTs.Utils.Secret
+    proxy_password?: ConcourseTs.Utils.Var
   }
   /**
    * Object containing commit message filters

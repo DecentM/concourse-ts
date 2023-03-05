@@ -18,15 +18,15 @@ type SourceS3 = {
   /**
    * The AWS access key to use when accessing the bucket.
    */
-  access_key_id: ConcourseTs.Utils.Secret
+  access_key_id: ConcourseTs.Utils.Var
   /**
    * The AWS secret key to use when accessing the bucket.
    */
-  secret_access_key: ConcourseTs.Utils.Secret
+  secret_access_key: ConcourseTs.Utils.Var
   /**
    * The AWS session token to use when accessing the bucket.
    */
-  session_token?: ConcourseTs.Utils.Secret
+  session_token?: ConcourseTs.Utils.Var
   /**
    * Default `us-east-1`
    *
@@ -79,22 +79,22 @@ type SourceGit = {
   /**
    * The SSH private key to use when pulling from/pushing to to the repository.
    */
-  private_key?: ConcourseTs.Utils.Secret
+  private_key?: ConcourseTs.Utils.Var
   /**
    * Username for HTTP(S) auth when pulling/pushing. This is needed when only
    * HTTP/HTTPS protocol for git is available (which does not support private
    * key auth) and auth is required.
    */
-  username?: string | ConcourseTs.Utils.Secret
+  username?: string | ConcourseTs.Utils.Var
   /**
    * Password for HTTP(S) auth when pulling/pushing.
    */
-  password?: ConcourseTs.Utils.Secret
+  password?: ConcourseTs.Utils.Var
   /**
    * The git identity to use when pushing to the repository support RFC 5322
    * address of the form "Gogh Fir \<gf@example.com\>" or "foo@example.com".
    */
-  git_user?: string | ConcourseTs.Utils.Secret
+  git_user?: string | ConcourseTs.Utils.Var
   /**
    * If a positive integer is given, shallow clone the repository using the
    * --depth option.
@@ -150,29 +150,29 @@ type SourceSwift = {
      * panel to discover your account's username. In Identity V3, either UserID
      * or a combination of Username and DomainID or DomainName are needed.
      */
-    username?: string | ConcourseTs.Utils.Secret
+    username?: string | ConcourseTs.Utils.Var
     /**
      * In Identity V3, either UserID or a combination of Username and DomainID
      * or DomainName are needed.
      */
-    user_id?: string | ConcourseTs.Utils.Secret
+    user_id?: string | ConcourseTs.Utils.Var
     /**
      * Exactly one of Password or APIKey is required for the Identity V2 and V3
      * APIs. Consult with your provider's control panel to discover your
      * account's preferred method of authentication.
      */
-    password?: ConcourseTs.Utils.Secret
+    password?: ConcourseTs.Utils.Var
     /**
      * Exactly one of Password or APIKey is required for the Identity V2 and V3
      * APIs. Consult with your provider's control panel to discover your
      * account's preferred method of authentication.
      */
-    api_key?: ConcourseTs.Utils.Secret
+    api_key?: ConcourseTs.Utils.Var
     /**
      * At most one of DomainID and DomainName must be provided if using Username
      * with Identity V3. Otherwise, either are optional.
      */
-    domain_id?: string | ConcourseTs.Utils.Secret
+    domain_id?: string | ConcourseTs.Utils.Var
     /**
      * At most one of DomainID and DomainName must be provided if using Username
      * with Identity V3. Otherwise, either are optional.
@@ -184,7 +184,7 @@ type SourceSwift = {
      * authentication policies will determine how these fields influence
      * authentication.
      */
-    tenant_id?: string | ConcourseTs.Utils.Secret
+    tenant_id?: string | ConcourseTs.Utils.Var
     /**
      * Optional for the Identity V2 API. Some providers allow you to specify a
      * TenantName instead of the TenantId. Some require both. Your provider's
@@ -211,7 +211,7 @@ type SourceSwift = {
      * Allows users to authenticate (possibly as another user) with an
      * authentication token ID.
      */
-    token_id?: string | ConcourseTs.Utils.Secret
+    token_id?: string | ConcourseTs.Utils.Var
   }
 }
 

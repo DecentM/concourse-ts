@@ -31,17 +31,17 @@ export type Source = {
    *   -----END RSA PRIVATE KEY-----
    * ```
    */
-  private_key?: ConcourseTs.Utils.Secret
+  private_key?: ConcourseTs.Utils.Var
   /**
    * Username for HTTP(S) auth when pulling/pushing. This is needed when only
    * HTTP/HTTPS protocol for git is available (which does not support private
    * key auth) and auth is required.
    */
-  username?: string | ConcourseTs.Utils.Secret
+  username?: string | ConcourseTs.Utils.Var
   /**
    * Password for HTTP(S) auth when pulling/pushing.
    */
-  password?: ConcourseTs.Utils.Secret
+  password?: ConcourseTs.Utils.Var
   /**
    * If specified as (list of pairs `name` and `value`) it will configure git
    * global options, setting each name with each value. This can be useful to
@@ -73,11 +73,11 @@ export type Source = {
     /**
      * If the proxy requires authentication, use this username
      */
-    proxy_user?: string | ConcourseTs.Utils.Secret
+    proxy_user?: string | ConcourseTs.Utils.Var
     /**
      * If the proxy requires authentication, use this password
      */
-    proxy_password?: ConcourseTs.Utils.Secret
+    proxy_password?: ConcourseTs.Utils.Var
   }
 }
 

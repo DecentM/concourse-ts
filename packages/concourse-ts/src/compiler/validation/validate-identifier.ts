@@ -20,12 +20,12 @@ export const validate_identifier = (
     )
   }
 
-  const lastContext = last(context)
+  const last_context = last(context)
 
   if (
     context.length >= 2 &&
-    (lastContext.includes('set_pipeline') ||
-      (lastContext.includes('task') &&
+    (last_context.includes('set_pipeline') ||
+      (last_context.includes('task') &&
         context[context.length - 2] === '.across'))
   ) {
     return warnings

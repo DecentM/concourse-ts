@@ -87,7 +87,7 @@ export type Source = {
    *
    * Example:
    */
-  git_crypt_key?: ConcourseTs.Utils.Secret
+  git_crypt_key?: ConcourseTs.Utils.Var
   /**
    * Name of a branch. The pipeline will only trigger on pull requests against
    * the specified branch.

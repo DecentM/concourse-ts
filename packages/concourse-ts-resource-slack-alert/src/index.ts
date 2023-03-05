@@ -23,12 +23,12 @@ export type Source = {
    * Concourse local user (or basic auth) username. Required for non-public
    * pipelines if using alert type "fixed" or "broke"
    */
-  username?: ConcourseTs.Utils.Secret | string
+  username?: ConcourseTs.Utils.Var | string
   /**
    * Concourse local user (or basic auth) password. Required for non-public
    * pipelines if using alert type "fixed" or "broke"
    */
-  password?: ConcourseTs.Utils.Secret
+  password?: ConcourseTs.Utils.Var
   /**
    * Disables the resource (does not send notifications). Defaults to false.
    */
