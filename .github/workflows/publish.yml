@@ -55,8 +55,8 @@ jobs:
           set -exu
           echo projects=$(yarn --silent nx print-affected | jq -c '.projects') >> $GITHUB_OUTPUT
 
-  tests:
-    name: test-packages
+  lint:
+    name: lint-packages
 
     runs-on: ubuntu-latest
 
@@ -105,6 +105,54 @@ jobs:
 
       - run: yarn nx affected --target=lint
 
+  tests:
+    name: test-packages
+
+    runs-on: ubuntu-latest
+
+    needs:
+      - determine-matrix
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Restore NX compute cache
+        id: cache-nx-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: .nx-cache
+          key: nx-cache
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
+      - uses: nrwl/nx-set-shas@v3
+
       - run: yarn nx affected --target=test
 
       - name: Coveralls
@@ -113,14 +161,8 @@ jobs:
           base-path: packages/concourse-ts
           path-to-lcov: packages/concourse-ts/coverage/lcov.info
 
-      - name: Upload coverage result
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: packages/*/coverage
-
   build:
-    name: build-affected
+    name: build-packages
 
     runs-on: ubuntu-latest
 
@@ -184,6 +226,7 @@ jobs:
     name: publish-${{ matrix.project }}
 
     needs:
+      - lint
       - tests
       - build
       - determine-matrix
