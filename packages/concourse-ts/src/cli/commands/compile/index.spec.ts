@@ -75,7 +75,16 @@ test('refuses to compile if input matches no files', async (t) => {
     output_directory: t.context.tmp_dir,
   })
 
-  await t.throwsAsync(() => compile.run(), {
-    message: 'Glob input "test-data/good.pipeline.ts" matched no files',
+  let error: VError | undefined
+
+  compile.on('error', (event_error) => {
+    error = event_error
   })
+
+  await compile.run()
+
+  t.is(
+    error?.message,
+    'Glob input "test-data/good.pipeline.ts" matched no files'
+  )
 })
