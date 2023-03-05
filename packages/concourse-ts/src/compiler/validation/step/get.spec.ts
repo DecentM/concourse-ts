@@ -13,7 +13,7 @@ import {validate_get_steps} from './get'
 
 test.beforeEach(() => {
   ResourceType.customise((rt) => {
-    rt.type = 'registry-image'
+    rt.set_type('registry-image')
   })
 })
 

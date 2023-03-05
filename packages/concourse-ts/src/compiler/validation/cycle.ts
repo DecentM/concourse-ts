@@ -26,16 +26,16 @@ export const detect_cycle = (
         return
       }
 
-      step.passed.forEach((passedStep) => {
-        const nextJob = find_job_by_name(passedStep, pipeline)
+      step.passed.forEach((passed_step) => {
+        const next_job = find_job_by_name(passed_step, pipeline)
 
-        if (visited[nextJob.name] === VisitStatus.SemiVisited) {
+        if (visited[next_job.name] === VisitStatus.SemiVisited) {
           return warnings.add_warning(
             ValidationWarningType.Fatal,
-            `pipeline contains a cycle that starts at Job ${nextJob.name}`
+            `pipeline contains a cycle that starts at Job "${next_job.name}"`
           )
-        } else if (visited[nextJob.name] === VisitStatus.NonVisited) {
-          return detect_cycle(nextJob, visited, pipeline, warnings)
+        } else if (visited[next_job.name] === VisitStatus.NonVisited) {
+          return detect_cycle(next_job, visited, pipeline, warnings)
         }
 
         return warnings
@@ -53,11 +53,11 @@ export const validate_cycle = (pipeline: Type.Pipeline): WarningStore => {
   const jobs = pipeline.jobs
 
   // Initialise all with 0
-  jobs.forEach((job) => {
+  jobs?.forEach((job) => {
     visitedJobsMap[job.name] = VisitStatus.NonVisited
   })
 
-  jobs.forEach((job) => {
+  jobs?.forEach((job) => {
     detect_cycle(job, visitedJobsMap, pipeline, warnings)
   })
 
