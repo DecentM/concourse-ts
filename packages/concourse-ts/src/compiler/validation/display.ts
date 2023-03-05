@@ -14,7 +14,7 @@ export const validate_display = (pipeline: Type.Pipeline): WarningStore => {
   // URLs, so we filter those here.
   if (
     pipeline.display.background_image.startsWith('/') ||
-    pipeline.display.background_image.startsWith('.')
+    pipeline.display.background_image.startsWith('./')
   ) {
     return warnings
   }
@@ -23,18 +23,10 @@ export const validate_display = (pipeline: Type.Pipeline): WarningStore => {
 
   try {
     url = new URL(pipeline.display.background_image)
-  } catch (error) {
-    if (error instanceof Error) {
-      return warnings.add_warning(
-        ValidationWarningType.Fatal,
-        `background_image is not a valid URL: ${pipeline.display.background_image}`
-      )
-    }
-
+  } catch {
     return warnings.add_warning(
       ValidationWarningType.Fatal,
-      `Unknown internal error occurred while validating display.background_image`,
-      error
+      `background_image is not a valid URL: "${pipeline.display.background_image}"`
     )
   }
 
