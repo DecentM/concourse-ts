@@ -16,12 +16,28 @@ export type Identifier = string & {__type: 'Identifier'}
  *
  * https://concourse-ci.org/config-basics.html#schema.identifier
  *
+ * Example:
+ * ```typescript
+ * const name = 'my-name'
+ *    // ^? string
+ *
+ * new Job(name) // Compilation error
+ *
+ * if (!is_identifier(name)) {
+ *   return
+ * }
+ *
+ * new Job(name) // No error
+ *      // ^? Identifier
+ * ```
+ *
  * {@link get_identifier}
  *
  * {@link Identifier}
  *
  * @param {string} input The potential Identifier to check
  * @returns {bool} Type guard for valid identifiers, using branded types.
+ *
  */
 export const is_identifier = (input: string): input is Identifier => {
   const warnings = validate_identifier(input)
