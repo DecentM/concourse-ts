@@ -2,10 +2,6 @@
 
 import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
 
-const last = (input: string[]) => {
-  return input[input.length - 1]
-}
-
 export const validate_identifier = (
   identifier: string,
   ...context: string[]
@@ -20,8 +16,10 @@ export const validate_identifier = (
     )
   }
 
-  const last_context = last(context)
+  const last_context = context[context.length - 1]
 
+  // Across steps may have variable interpolation, so Concourse accepts any name
+  // TODO: We can check this more strictly than Concourse does
   if (
     context.length >= 2 &&
     (last_context.includes('set_pipeline') ||
@@ -31,20 +29,20 @@ export const validate_identifier = (
     return warnings
   }
 
-  const validIdentifiers =
+  const validate_identifiers =
     /^[\p{Ll}\p{Lt}\p{Lm}\p{Lo}][\p{Ll}\p{Lt}\p{Lm}\p{Lo}\d\-_.]*$/gu
 
-  const startsWithLetter = /^[^\p{Ll}\p{Lt}\p{Lm}\p{Lo}]/gu
-  const invalidCharacter = /([^\p{Ll}\p{Lt}\p{Lm}\p{Lo}\d\-_.])/gu
+  const starts_with_letter = /^[^\p{Ll}\p{Lt}\p{Lm}\p{Lo}]/gu
+  const invalid_character = /([^\p{Ll}\p{Lt}\p{Lm}\p{Lo}\d\-_.])/gu
 
-  if (!validIdentifiers.test(identifier)) {
+  if (!validate_identifiers.test(identifier)) {
     let reason = ''
 
-    if (startsWithLetter.test(identifier)) {
+    if (starts_with_letter.test(identifier)) {
       reason = 'must start with a lowercase letter'
     } else {
-      const invalidMatch = invalidCharacter.exec(identifier)
-      reason = `illegal character '${invalidMatch[0]}'`
+      const invalid_match = invalid_character.exec(identifier)
+      reason = `illegal character '${invalid_match[0]}'`
     }
 
     return warnings.add_warning(
