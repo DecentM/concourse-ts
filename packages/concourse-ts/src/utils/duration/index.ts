@@ -1,8 +1,10 @@
 import {VError} from 'verror'
-import {Duration} from '../../declarations/types'
 import {type_of} from '../type-of'
 
-export {Duration}
+/**
+ * Related: {@link DurationInput}
+ */
+export type Duration = string & {__type: 'Duration'}
 
 // https://pkg.go.dev/time#ParseDuration
 export const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']

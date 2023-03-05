@@ -3,7 +3,12 @@ import {VError} from 'verror'
 import {Initer} from '../declarations/initialisable'
 import * as Type from '../declarations/types'
 
-import {DurationInput, get_duration, is_duration} from '../utils/duration'
+import {
+  Duration,
+  DurationInput,
+  get_duration,
+  is_duration,
+} from '../utils/duration'
 
 import {ResourceType} from './resource-type'
 import {AnyStep, DoStep, GetStep, PutStep} from './step'
@@ -94,7 +99,7 @@ export class Resource<
 
   public source?: Source
 
-  private check_every?: Type.Duration
+  private check_every?: Duration
 
   public set_check_every = (input: DurationInput | 'never') => {
     this.check_every = get_duration(input)

@@ -26,7 +26,7 @@ import {
   is_try_step,
 } from '../../utils/step-type/get-step-type'
 
-import {DurationInput, get_duration} from '../../utils'
+import {Duration, DurationInput, get_duration} from '../../utils'
 import {Initer} from '../../declarations'
 
 export abstract class Step<StepType extends Type.Step> {
@@ -44,7 +44,7 @@ export abstract class Step<StepType extends Type.Step> {
 
   public abstract get_resources(): Resource[]
 
-  private timeout: Type.Duration
+  private timeout: Duration
 
   public set_timeout = (timeout: DurationInput) => {
     this.timeout = get_duration(timeout)

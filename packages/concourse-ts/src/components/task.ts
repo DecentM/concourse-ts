@@ -1,8 +1,6 @@
 import {Initer} from '../declarations/initialisable'
 
 import * as Type from '../declarations/types'
-import * as Commands from '../presets/commands'
-import * as Platforms from '../presets/platforms'
 
 import {BytesInput, get_bytes} from '../utils/bytes'
 
@@ -59,9 +57,9 @@ export class Task<
     }
   }
 
-  public platform = Platforms.Linux
+  public platform: Type.Platform
 
-  public run: Command = new Commands.RunNotImplemented()
+  public run: Command
 
   private caches: Type.TaskCache[]
 

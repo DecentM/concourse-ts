@@ -1,3 +1,5 @@
+import {Duration} from '../utils'
+
 export type Identifier = string
 export type Config = Record<string, YamlValue>
 export type Version = 'latest' | 'every' | Record<string, string>
@@ -15,11 +17,6 @@ export type YamlValue =
   | undefined
   | YamlValue[]
   | {[key in string]: YamlValue}
-
-/**
- * Related: {@link Utils.DurationInput}
- */
-export type Duration = string & {__type: 'Duration'}
 
 export type EnvVar = {
   key: string

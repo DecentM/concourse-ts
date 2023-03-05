@@ -8,7 +8,6 @@ import {
   ResourceType,
   Task,
 } from '../../../components'
-import {Platform} from '../../../presets'
 
 import {validate_get_steps} from './get'
 
@@ -27,7 +26,7 @@ const r = new Resource('r', rt, (r) => {
 })
 
 const dummy_task = new Task('task', (task) => {
-  task.platform = Platform.Linux
+  task.platform = 'linux'
   task.set_image_resource(r)
   task.run = new Command('task-run', (command) => {
     command.path = '/bin/sh'

@@ -2,7 +2,7 @@ import {VError} from 'verror'
 
 import {Initer} from '../declarations/initialisable'
 import * as Declaration from '../declarations/types'
-import {DurationInput, get_duration} from '../utils'
+import {Duration, DurationInput, get_duration} from '../utils'
 import {Resource} from './resource'
 
 export class ResourceType<
@@ -55,7 +55,7 @@ export class ResourceType<
 
   public source?: Source
 
-  private check_every?: Declaration.Duration
+  private check_every?: Duration
 
   public set_check_every = (input: DurationInput | 'never') => {
     if (input === 'never') {

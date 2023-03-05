@@ -1,5 +1,4 @@
 import * as Type from '../../declarations/types'
-import * as Platforms from '../../presets/platforms'
 
 import {is_task_step} from '../../utils/step-type/get-step-type'
 
@@ -16,10 +15,10 @@ export const validate_tasks = (pipeline: Type.Pipeline) => {
 
       const task = step.config
 
-      if (task.image_resource && task.platform !== Platforms.Linux) {
+      if (task.image_resource && task.platform !== 'linux') {
         warnings.add_warning(
           ValidationWarningType.NonFatal,
-          `Image resources are ignored on "${task.platform}", they're only used on "${Platforms.Linux}"`
+          `Image resources are ignored on "${task.platform}", they're only used on "linux"`
         )
       }
     })
