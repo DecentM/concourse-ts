@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 
-import {Initer} from '../../declarations/initialisable'
+import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 import {log} from '../../utils/log'
 import {Resource} from '../resource'
@@ -8,21 +8,21 @@ import {Resource} from '../resource'
 import {Step} from './_base'
 
 export class TryStep extends Step<Type.TryStep> {
-  private static customiser: Initer<TryStep>
+  private static customiser: Customiser<TryStep>
 
-  public static customise = (init: Initer<TryStep>) => {
+  public static customise = (init: Customiser<TryStep>) => {
     TryStep.customiser = init
   }
 
-  constructor(public override name: string, init?: Initer<TryStep>) {
+  constructor(public override name: string, customise?: Customiser<TryStep>) {
     super(name)
 
     if (TryStep.customiser) {
       TryStep.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

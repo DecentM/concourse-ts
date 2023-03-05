@@ -1,4 +1,4 @@
-import {Initer} from '../../declarations/initialisable'
+import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 import {AnyStep} from '.'
 
@@ -6,21 +6,21 @@ import {Step} from './_base'
 import {Resource} from '../resource'
 
 export class DoStep extends Step<Type.DoStep> {
-  private static customiser: Initer<DoStep>
+  private static customiser: Customiser<DoStep>
 
-  public static customise = (init: Initer<DoStep>) => {
+  public static customise = (init: Customiser<DoStep>) => {
     DoStep.customiser = init
   }
 
-  constructor(public override name: string, init?: Initer<DoStep>) {
+  constructor(public override name: string, customise?: Customiser<DoStep>) {
     super(name)
 
     if (DoStep.customiser) {
       DoStep.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

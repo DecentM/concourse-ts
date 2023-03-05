@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 
-import {Initer} from '../../declarations/initialisable'
+import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 
 import {Job} from '../job'
@@ -13,15 +13,15 @@ export class GetStep<
   PutParams extends Type.Config = Type.Config,
   GetParams extends Type.Config = Type.Config
 > extends Step<Type.GetStep> {
-  private static customiser: Initer<GetStep>
+  private static customiser: Customiser<GetStep>
 
-  public static customise = (init: Initer<GetStep>) => {
+  public static customise = (init: Customiser<GetStep>) => {
     GetStep.customiser = init
   }
 
   constructor(
     public override name: string,
-    init?: Initer<GetStep<Source, PutParams, GetParams>>
+    customise?: Customiser<GetStep<Source, PutParams, GetParams>>
   ) {
     super(name)
 
@@ -29,8 +29,8 @@ export class GetStep<
       GetStep.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

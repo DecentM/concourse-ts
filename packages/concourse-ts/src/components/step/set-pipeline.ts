@@ -1,27 +1,30 @@
 import {VError} from 'verror'
 
-import {Initer} from '../../declarations/initialisable'
+import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
 import {Step} from './_base'
 
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
-  private static customiser: Initer<SetPipelineStep>
+  private static customiser: Customiser<SetPipelineStep>
 
-  public static customise = (init: Initer<SetPipelineStep>) => {
+  public static customise = (init: Customiser<SetPipelineStep>) => {
     SetPipelineStep.customiser = init
   }
 
-  constructor(public override name: string, init?: Initer<SetPipelineStep>) {
+  constructor(
+    public override name: string,
+    customise?: Customiser<SetPipelineStep>
+  ) {
     super(name)
 
     if (SetPipelineStep.customiser) {
       SetPipelineStep.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

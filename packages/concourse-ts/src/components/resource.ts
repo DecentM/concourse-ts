@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 
-import {Initer} from '../declarations/initialisable'
+import {Customiser} from '../declarations/customiser'
 import * as Type from '../declarations/types'
 
 import {
@@ -31,52 +31,52 @@ export class Resource<
   PutParams extends Type.Config = Type.Config,
   GetParams extends Type.Config = Type.Config
 > {
-  private static customiser: Initer<Resource>
+  private static customiser: Customiser<Resource>
 
-  public static customise = (init: Initer<Resource>) => {
+  public static customise = (init: Customiser<Resource>) => {
     Resource.customiser = init
   }
 
-  private static get_step_customiser: Initer<GetStep, Resource>
+  private static get_step_customiser: Customiser<GetStep, Resource>
 
   public static customise_get_step = <
     CustomResource extends Resource,
     GetParams extends Type.Config = Type.Config
   >(
-    init: Initer<GetStep<GetParams>, CustomResource>
+    init: Customiser<GetStep<GetParams>, CustomResource>
   ) => {
     Resource.get_step_customiser = init
   }
 
-  private static put_step_customiser: Initer<PutStep, Resource>
+  private static put_step_customiser: Customiser<PutStep, Resource>
 
   public static customise_put_step = <
     CustomResource extends Resource,
     PutParams extends Type.Config = Type.Config
   >(
-    init: Initer<PutStep<PutParams>, CustomResource>
+    init: Customiser<PutStep<PutParams>, CustomResource>
   ) => {
     Resource.put_step_customiser = init
   }
 
-  private get_step_customiser: Initer<GetStep, Resource>
+  private get_step_customiser: Customiser<GetStep, Resource>
 
   public customise_get_step = <
     CustomResource extends Resource,
     GetParams extends Type.Config = Type.Config
   >(
-    init: Initer<GetStep<GetParams>, CustomResource>
+    init: Customiser<GetStep<GetParams>, CustomResource>
   ) => {
     this.get_step_customiser = init
   }
 
-  private put_step_customiser: Initer<PutStep, Resource>
+  private put_step_customiser: Customiser<PutStep, Resource>
 
   public customise_put_step = <
     CustomResource extends Resource,
     PutParams extends Type.Config = Type.Config
   >(
-    init: Initer<PutStep<PutParams>, CustomResource>
+    init: Customiser<PutStep<PutParams>, CustomResource>
   ) => {
     this.put_step_customiser = init
   }
@@ -84,14 +84,14 @@ export class Resource<
   constructor(
     public name: string,
     private type: ResourceType,
-    init?: Initer<Resource<Source, PutParams, GetParams>>
+    customise?: Customiser<Resource<Source, PutParams, GetParams>>
   ) {
     if (Resource.customiser) {
       Resource.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 
@@ -132,7 +132,7 @@ export class Resource<
 
   public as_put_step = (
     input?: AsPutStepInput<PutParams>,
-    init?: Initer<PutStep<Source, PutParams, GetParams>>
+    customise?: Customiser<PutStep<Source, PutParams, GetParams>>
   ) => {
     return new PutStep<Source, PutParams, GetParams>(
       `${this.name}_put`,
@@ -155,8 +155,8 @@ export class Resource<
           step.set_inputs(input.inputs)
         }
 
-        if (init) {
-          init(step)
+        if (customise) {
+          customise(step)
         }
       }
     )
@@ -164,7 +164,7 @@ export class Resource<
 
   public as_get_step = (
     input?: AsGetStepInput<GetParams>,
-    init?: Initer<GetStep<Source, PutParams, GetParams>>
+    customise?: Customiser<GetStep<Source, PutParams, GetParams>>
   ) => {
     return new GetStep<Source, PutParams, GetParams>(
       `${this.name}_get`,
@@ -191,8 +191,8 @@ export class Resource<
           step.trigger = input.trigger
         }
 
-        if (init) {
-          init(step)
+        if (customise) {
+          customise(step)
         }
       }
     )

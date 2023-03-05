@@ -1,4 +1,4 @@
-import {Initer} from '../declarations/initialisable'
+import {Customiser} from '../declarations/customiser'
 import * as Type from '../declarations/types'
 
 import {Resource} from './resource'
@@ -9,16 +9,16 @@ import {Step} from './step/_base'
  * https://concourse-ci.org/jobs.html
  */
 export class Job {
-  private static customiser: Initer<Job>
+  private static customiser: Customiser<Job>
 
   /**
    * Sets a customiser function onto all jobs created after this call. If a
    * customiser already exists, it will be overwritten.
    *
-   * @param {Initer<Job>} init Your customiser function. It receives a Job
+   * @param {Customiser<Job>} init Your customiser function. It receives a Job
    * instance whenever a Job is constructed.
    */
-  public static customise = (init: Initer<Job>) => {
+  public static customise = (init: Customiser<Job>) => {
     Job.customiser = init
   }
 
@@ -28,15 +28,15 @@ export class Job {
    * https://concourse-ci.org/jobs.html
    *
    * @param {string} name The name of the step. This will be visible in the Concourse UI.
-   * @param {Initer<Job>} init Optional customiser function that runs during construction.
+   * @param {Customiser<Job>} init Optional customiser function that runs during construction.
    */
-  constructor(public name: string, init?: Initer<Job>) {
+  constructor(public name: string, customise?: Customiser<Job>) {
     if (Job.customiser) {
       Job.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

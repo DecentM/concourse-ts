@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 
-import {Initer} from '../declarations/initialisable'
+import {Customiser} from '../declarations/customiser'
 import * as Declaration from '../declarations/types'
 import {Duration, DurationInput, get_duration} from '../utils'
 import {Resource} from './resource'
@@ -9,31 +9,34 @@ export class ResourceType<
   Type extends string = string,
   Source extends Declaration.Config = Declaration.Config
 > {
-  private static customiser: Initer<ResourceType>
+  private static customiser: Customiser<ResourceType>
 
-  public static customise = (init: Initer<ResourceType>) => {
+  public static customise = (init: Customiser<ResourceType>) => {
     ResourceType.customiser = init
   }
 
-  private resource_customiser: Initer<Resource>
+  private resource_customiser: Customiser<Resource>
 
   public customise_resource = <
     Source extends Declaration.Config = Declaration.Config,
     PutParams extends Declaration.Config = Declaration.Config,
     GetParams extends Declaration.Config = Declaration.Config
   >(
-    customiser: Initer<Resource<Source, PutParams, GetParams>>
+    customiser: Customiser<Resource<Source, PutParams, GetParams>>
   ) => {
     this.resource_customiser = customiser
   }
 
-  constructor(public name: string, init?: Initer<ResourceType<Type, Source>>) {
+  constructor(
+    public name: string,
+    customise?: Customiser<ResourceType<Type, Source>>
+  ) {
     if (ResourceType.customiser) {
       ResourceType.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

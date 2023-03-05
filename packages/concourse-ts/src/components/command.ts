@@ -1,20 +1,20 @@
-import {Initer} from '../declarations/initialisable'
+import {Customiser} from '../declarations/customiser'
 import * as Type from '../declarations/types'
 
 export class Command {
-  private static customiser: Initer<Command>
+  private static customiser: Customiser<Command>
 
-  public static customise = (init: Initer<Command>) => {
+  public static customise = (init: Customiser<Command>) => {
     Command.customiser = init
   }
 
-  constructor(public name: string, init?: Initer<Command>) {
+  constructor(public name: string, customise?: Customiser<Command>) {
     if (Command.customiser) {
       Command.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

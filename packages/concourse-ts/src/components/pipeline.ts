@@ -1,5 +1,5 @@
 import * as Type from '../declarations/types'
-import {Initer} from '../declarations/initialisable'
+import {Customiser} from '../declarations/customiser'
 import {Resource} from './resource'
 import {Job} from './job'
 import {ResourceType} from './resource-type'
@@ -8,19 +8,19 @@ import {Task} from './task'
 import {TaskStep} from './step'
 
 export class Pipeline<Group extends string = string> {
-  private static customiser: Initer<Pipeline>
+  private static customiser: Customiser<Pipeline>
 
-  public static customise = (init: Initer<Pipeline>) => {
+  public static customise = (init: Customiser<Pipeline>) => {
     Pipeline.customiser = init
   }
 
-  constructor(public name: string, init?: Initer<Pipeline<Group>>) {
+  constructor(public name: string, customise?: Customiser<Pipeline<Group>>) {
     if (Pipeline.customiser) {
       Pipeline.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 

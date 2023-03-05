@@ -1,15 +1,10 @@
 import {Command} from '../../components'
-
-export type JoinCommandsInput = {
-  name: string
-  path?: string
-  dir?: string
-  user?: string
-  joiner?: string
-}
+import {Customiser} from '../../declarations'
 
 export const join_commands = (
-  input: JoinCommandsInput,
+  name: string,
+  joiner: (args: string[]) => string,
+  customise?: Customiser<Command>,
   ...commands: Command[]
 ): Command => {
   const args: string[] = []
@@ -20,16 +15,11 @@ export const join_commands = (
     args.push(`${serialised.path} ${serialised.args.join(' ')}`)
   })
 
-  return new Command(input.name, (command) => {
-    command.dir = input.dir
-    command.user = input.user
+  return new Command(name, (command) => {
+    command.add_arg(joiner(args))
 
-    command.path = input.path ? input.path : '/bin/sh'
-
-    if (!input.path) {
-      command.add_arg('-exuc')
+    if (customise) {
+      customise(command)
     }
-
-    command.add_arg(args.join(input.joiner ?? ' && '))
   })
 }

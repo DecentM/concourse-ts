@@ -1,4 +1,4 @@
-import {Initer} from '../declarations/initialisable'
+import {Customiser} from '../declarations/customiser'
 
 import * as Type from '../declarations/types'
 
@@ -12,35 +12,38 @@ export class Task<
   Input extends Type.Identifier = Type.Identifier,
   Output extends Type.Identifier = Type.Identifier
 > {
-  private static customiser: Initer<Task>
+  private static customiser: Customiser<Task>
 
-  public static customise = (init: Initer<Task>) => {
+  public static customise = (init: Customiser<Task>) => {
     Task.customiser = init
   }
 
-  private static task_step_customiser: Initer<TaskStep, Task>
+  private static task_step_customiser: Customiser<TaskStep, Task>
 
   public static customise_task_step = <CustomTask extends Task>(
-    init: Initer<TaskStep, CustomTask>
+    init: Customiser<TaskStep, CustomTask>
   ) => {
     Task.task_step_customiser = init
   }
 
-  private task_step_customiser: Initer<TaskStep, Task>
+  private task_step_customiser: Customiser<TaskStep, Task>
 
   public customise_task_step = <CustomTask extends Task>(
-    init: Initer<TaskStep, CustomTask>
+    init: Customiser<TaskStep, CustomTask>
   ) => {
     this.task_step_customiser = init
   }
 
-  constructor(public name: string, init?: Initer<Task<Input, Output>>) {
+  constructor(
+    public name: string,
+    customise?: Customiser<Task<Input, Output>>
+  ) {
     if (Task.customiser) {
       Task.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 
@@ -109,7 +112,7 @@ export class Task<
 
   public rootfs_uri?: string
 
-  public as_task_step = (init?: Initer<TaskStep<Input, Output>>) => {
+  public as_task_step = (customise?: Customiser<TaskStep<Input, Output>>) => {
     return new TaskStep<Input, Output>(`${this.name}_step`, (step) => {
       if (Task.task_step_customiser) {
         Task.task_step_customiser(step, this)
@@ -121,8 +124,8 @@ export class Task<
 
       step.set_task(this)
 
-      if (init) {
-        init(step)
+      if (customise) {
+        customise(step)
       }
     })
   }

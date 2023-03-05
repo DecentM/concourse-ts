@@ -1,3 +1,3 @@
-export * from './initialisable'
+export * from './customiser'
 export * from './metadata'
 export * from './types'

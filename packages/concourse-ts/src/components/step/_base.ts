@@ -27,12 +27,12 @@ import {
 } from '../../utils/step-type'
 
 import {Duration, DurationInput, get_duration} from '../../utils'
-import {Initer} from '../../declarations'
+import {Customiser} from '../../declarations'
 
 export abstract class Step<StepType extends Type.Step> {
-  private static base_customiser: Initer<Step<Type.Step>>
+  private static base_customiser: Customiser<Step<Type.Step>>
 
-  public static customise_base = (init: Initer<Step<Type.Step>>) => {
+  public static customise_base = (init: Customiser<Step<Type.Step>>) => {
     Step.base_customiser = init
   }
 

@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 
-import {Initer} from '../../declarations/initialisable'
+import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 
 import {Resource} from '../resource'
@@ -12,15 +12,15 @@ export class PutStep<
   PutParams extends Type.Config = Type.Config,
   GetParams extends Type.Config = Type.Config
 > extends Step<Type.PutStep> {
-  private static customiser: Initer<PutStep>
+  private static customiser: Customiser<PutStep>
 
-  public static customise = (init: Initer<PutStep>) => {
+  public static customise = (init: Customiser<PutStep>) => {
     PutStep.customiser = init
   }
 
   constructor(
     public override name: string,
-    init?: Initer<PutStep<Source, PutParams, GetParams>>
+    customise?: Customiser<PutStep<Source, PutParams, GetParams>>
   ) {
     super(name)
 
@@ -28,8 +28,8 @@ export class PutStep<
       PutStep.customiser(this)
     }
 
-    if (init) {
-      init(this)
+    if (customise) {
+      customise(this)
     }
   }
 
