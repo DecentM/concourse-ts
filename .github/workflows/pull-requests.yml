@@ -57,6 +57,12 @@ jobs:
 
       - run: yarn nx affected --target=test
 
+      - name: Coveralls
+        uses: coverallsapp/github-action@v1
+        with:
+          base-path: packages/concourse-ts
+          path-to-lcov: packages/concourse-ts/coverage/lcov.info
+
       - name: Delete NX compute cache
         run: |
           set -exu

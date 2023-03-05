@@ -48,17 +48,17 @@ export const detect_cycle = (
 }
 
 export const validate_cycle = (pipeline: Type.Pipeline): WarningStore => {
-  const visitedJobsMap = {}
+  const visited_jobs_map = {}
   const warnings = new WarningStore()
   const jobs = pipeline.jobs
 
   // Initialise all with 0
   jobs?.forEach((job) => {
-    visitedJobsMap[job.name] = VisitStatus.NonVisited
+    visited_jobs_map[job.name] = VisitStatus.NonVisited
   })
 
   jobs?.forEach((job) => {
-    detect_cycle(job, visitedJobsMap, pipeline, warnings)
+    detect_cycle(job, visited_jobs_map, pipeline, warnings)
   })
 
   return warnings
