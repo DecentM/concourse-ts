@@ -16,7 +16,7 @@ export const validate_resource_types = (
 ): WarningStore => {
   const warnings = new WarningStore()
 
-  pipeline.resource_types.forEach((resource_type, index) => {
+  pipeline.resource_types?.forEach((resource_type, index) => {
     const location: Location = {section: 'resource_types', index}
     const identifier = to_identifier(location, resource_type.name)
 

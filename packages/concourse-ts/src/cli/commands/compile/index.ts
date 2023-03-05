@@ -2,6 +2,7 @@ import VError from 'verror'
 
 import {CliCommand} from '../abstract'
 
+import {ValidationWarning} from '../../../utils/warning-store'
 import {Pipeline} from '../../../components/pipeline'
 import {Compilation} from '../../../compiler/compilation'
 
@@ -12,13 +13,11 @@ import path from 'path'
 import mkdirp from 'mkdirp'
 
 export type CompileEventMap = {
-  start: () => void
-  globs_resolved: (files: string[]) => void
+  globs: (files: string[]) => void
   error: (error: VError) => void
-  file_start: (file: string) => void
-  file_error: (file: string, pipeline_name: string, error: VError) => void
-  file_success: (file: string, pipeline_name: string) => void
-  success: () => void
+  warning: (warning: ValidationWarning) => void
+  output: (file: string) => void
+  end: () => void
 }
 
 export type CompileParams = {
@@ -72,13 +71,17 @@ const get_pipeline_from_file = async (filePath: string): Promise<Pipeline> => {
 
 export class Compile extends CliCommand<CompileParams, CompileEventMap> {
   public async run(): Promise<void> {
-    this.emit('start')
-
     const globs = await glob(this.params.input, {
       cwd: process.cwd(),
     })
 
-    this.emit('globs_resolved', globs)
+    this.emit('globs', globs)
+
+    if (!globs || globs.length === 0) {
+      this.emit('error', new VError('Glob input matched no files. Aborting.'))
+      this.emit('end')
+      return
+    }
 
     const output_dir = path.resolve(this.params.output_directory)
 
@@ -89,20 +92,13 @@ export class Compile extends CliCommand<CompileParams, CompileEventMap> {
           'Output directory already exists, refusing to override. Clean the output directory before compiling.'
         )
       )
-
-      return
-    }
-
-    if (!globs || globs.length === 0) {
-      this.emit('error', new VError('Glob input matched no files. Aborting.'))
+      this.emit('end')
       return
     }
 
     await Promise.all(
       globs.map(async (file) => {
         try {
-          this.emit('file_start', file)
-
           const pipeline = await get_pipeline_from_file(path.resolve(file))
           const compilation = new Compilation({
             output_dir: this.params.output_directory,
@@ -112,6 +108,10 @@ export class Compile extends CliCommand<CompileParams, CompileEventMap> {
           compilation.set_input(pipeline)
 
           const compile_result = compilation.compile()
+
+          compile_result.warnings.get_warnings().forEach((warning) => {
+            this.emit('warning', warning)
+          })
 
           await Promise.all([
             mkdirp(path.join(output_dir, 'pipeline')),
@@ -129,19 +129,13 @@ export class Compile extends CliCommand<CompileParams, CompileEventMap> {
             ),
           ])
 
-          this.emit('file_success', file, pipeline.name)
+          this.emit('output', compile_result.pipeline.filepath)
         } catch (error) {
-          try {
-            const pipeline = await get_pipeline_from_file(file)
-
-            this.emit('file_error', file, pipeline.name, error)
-          } catch (error2) {
-            this.emit('file_error', file, null, error)
-          }
+          this.emit('error', error)
         }
       })
     )
 
-    this.emit('success')
+    this.emit('end')
   }
 }

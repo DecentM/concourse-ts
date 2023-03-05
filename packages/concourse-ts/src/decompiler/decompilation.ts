@@ -9,6 +9,7 @@ import {is_pipeline} from '../utils/is-pipeline'
 
 import {write_pipeline} from './writers/pipeline'
 import {hoist_all_tasks} from './hoist-task'
+import {validate} from '../compiler/validation'
 
 export class Decompilation {
   private input?: string // yaml
@@ -85,6 +86,8 @@ export class Decompilation {
     // Load task configs from disk if they're defined in a separate yaml file
     hoist_all_tasks(this.work_dir, parsed)
 
+    const warnings = validate(parsed)
+
     const pipelineName = this.name ?? Date.now().toString()
     const pipelineString = write_pipeline(pipelineName, parsed)
 
@@ -106,6 +109,7 @@ export class Decompilation {
     `
 
     return {
+      warnings,
       filename: `${pipelineName}.pipeline.ts`,
       pipeline: this.prettier_config
         ? prettier.format(file_contents, this.prettier_config)

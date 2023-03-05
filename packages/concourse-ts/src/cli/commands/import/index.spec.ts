@@ -30,16 +30,15 @@ test('compiles pipeline', async (t) => {
     t.fail(error.stack)
   })
 
-  import_command.on('file_error', (file, error) => {
-    t.fail(error.stack)
-  })
+  let output_count = 0
 
-  import_command.on('file_success', (file) => {
+  import_command.on('output', (file) => {
     t.log(`Import succeeded, file: ${file}`)
+    output_count++
   })
 
-  import_command.on('success', () => {
-    t.pass()
+  import_command.on('end', () => {
+    t.is(output_count, 1)
   })
 
   await import_command.run()

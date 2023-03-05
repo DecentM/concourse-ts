@@ -1,8 +1,8 @@
 import test from 'ava'
 
 import {ResourceType, Pipeline, Job, GetStep} from '..'
-import {Duration} from '../declarations/duration'
 import {Config} from '../declarations/types'
+import {Duration} from '../utils'
 import {has_duplicates_by_key} from '../utils/array-duplicates'
 
 test.beforeEach(() => {
@@ -44,12 +44,17 @@ test('does not serialise duplicate resource types', (t) => {
   t.false(has_duplicates_by_key((item) => item.name, result.resource_types))
 })
 
-test('does not throw if the type is unassigned', (t) => {
+test('throws if the type is unassigned', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.set_type('')
-
-  t.notThrows(() => rt.serialise())
+  t.throws(
+    () => {
+      rt.set_type('')
+    },
+    {
+      message: '"" is not a valid identifier',
+    }
+  )
 })
 
 test('stores tags', (t) => {

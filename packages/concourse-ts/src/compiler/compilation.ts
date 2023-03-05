@@ -88,14 +88,6 @@ export class Compilation<Group extends Identifier = Identifier> {
     }
 
     const warnings = this.validate()
-
-    if (warnings.has_fatal()) {
-      throw new VError(
-        'This pipeline has fatal errors, compilation aborted.',
-        ...warnings.get_warnings()
-      )
-    }
-
     const tasks = this.input?.get_tasks()
 
     if (this.options.extract_tasks) {
@@ -114,6 +106,7 @@ export class Compilation<Group extends Identifier = Identifier> {
     }
 
     return {
+      warnings,
       pipeline: {
         filepath: result.pipeline.filename,
         content: YAML.stringify(result.pipeline.serialised),

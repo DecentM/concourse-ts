@@ -30,16 +30,15 @@ test('compiles pipeline', async (t) => {
     t.fail(error.stack)
   })
 
-  compile.on('file_error', (file, pipeline, error) => {
-    t.fail(error.stack)
+  let output_count = 0
+
+  compile.on('output', (file) => {
+    t.log(`Compilation succeeded, written to: ${file}`)
+    output_count++
   })
 
-  compile.on('file_success', (file, pipeline) => {
-    t.log(`Compilation succeeded, pipeline: ${pipeline}`)
-  })
-
-  compile.on('success', () => {
-    t.pass()
+  compile.on('end', () => {
+    t.is(output_count, 1)
   })
 
   await compile.run()

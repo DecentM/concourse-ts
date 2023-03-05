@@ -9,15 +9,14 @@ import path from 'path'
 import mkdirp from 'mkdirp'
 
 import {Decompilation} from '../../../decompiler/decompilation'
+import {ValidationWarning} from '../../../utils/warning-store'
 
 export type ImportEventMap = {
-  start: () => void
-  globs_resolved: (files: string[]) => void
+  globs: (files: string[]) => void
   error: (error: VError) => void
-  file_start: (file: string) => void
-  file_error: (file: string, error: VError) => void
-  file_success: (file: string) => void
-  success: () => void
+  warning: (warning: ValidationWarning) => void
+  output: (file: string) => void
+  end: () => void
 }
 
 export type ImportParams = {
@@ -28,13 +27,17 @@ export type ImportParams = {
 
 export class Import extends CliCommand<ImportParams, ImportEventMap> {
   public async run(): Promise<void> {
-    this.emit('start')
-
     const globs = await glob(this.params.input, {
       cwd: process.cwd(),
     })
 
-    this.emit('globs_resolved', globs)
+    this.emit('globs', globs)
+
+    if (!globs || globs.length === 0) {
+      this.emit('error', new VError('Glob input matched no files. Aborting.'))
+      this.emit('end')
+      return
+    }
 
     const outputDir = path.resolve(this.params.output_directory)
 
@@ -45,15 +48,13 @@ export class Import extends CliCommand<ImportParams, ImportEventMap> {
           'Output directory already exists, refusing to override. Clean the output directory before compiling.'
         )
       )
-
+      this.emit('end')
       return
     }
 
     await Promise.all(
       globs.map(async (file) => {
         try {
-          this.emit('file_start', file)
-
           const decompilation = new Decompilation()
           const file_contents = await fs.readFile(file)
           const pathInfo = path.parse(file)
@@ -67,6 +68,10 @@ export class Import extends CliCommand<ImportParams, ImportEventMap> {
 
           const decompile_result = decompilation.decompile()
 
+          decompile_result.warnings.get_warnings().forEach((warning) => {
+            this.emit('warning', warning)
+          })
+
           await mkdirp(outputDir)
 
           await fs.writeFile(
@@ -74,13 +79,13 @@ export class Import extends CliCommand<ImportParams, ImportEventMap> {
             decompile_result.pipeline
           )
 
-          this.emit('file_success', file)
+          this.emit('output', file)
         } catch (error) {
-          this.emit('file_error', file, error)
+          this.emit('error', error)
         }
       })
     )
 
-    this.emit('success')
+    this.emit('end')
   }
 }
