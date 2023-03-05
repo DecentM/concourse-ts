@@ -9,6 +9,17 @@
 
 </div>
 
+<div align="center">
+
+  ![Coveralls](https://img.shields.io/coverallsCoverage/github/DecentM/concourse-ts?style=for-the-badge)
+  ![GitHub Workflow
+  Status](https://img.shields.io/github/actions/workflow/status/DecentM/concourse-ts/publish.yml?style=for-the-badge)
+  ![npm
+  (scoped)](https://img.shields.io/npm/v/@decentm/concourse-ts?style=for-the-badge)
+  ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@decentm/concourse-ts?style=for-the-badge)
+
+</div>
+
 - [`concourse-ts`](#concourse-ts)
   - [About](#about)
   - [Usage](#usage)
