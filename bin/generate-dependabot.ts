@@ -1,7 +1,6 @@
 import fs from 'fs'
 import * as YAML from 'yaml'
-
-const packages = fs.readdirSync('packages')
+import path from 'path'
 
 const create_update = (directory: string) => ({
   'package-ecosystem': 'npm',
@@ -11,12 +10,18 @@ const create_update = (directory: string) => ({
   },
 })
 
+const packages = fs
+  .readdirSync('packages')
+  .map((pkg) =>
+    fs.existsSync(path.join('packages', pkg, 'package.json'))
+      ? create_update(`/packages/${pkg}/`)
+      : null
+  )
+  .filter(Boolean)
+
 const dependabot = {
   version: 2,
-  updates: [
-    create_update('/'),
-    ...packages.map((pkg) => create_update(`/packages/${pkg}/`)),
-  ],
+  updates: [create_update('/'), ...packages],
 }
 
 fs.writeFileSync('.github/dependabot.yml', YAML.stringify(dependabot))

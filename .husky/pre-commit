@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn dependabot:config
+yarn generate-dependabot
 git add .github/dependabot.yml
 
-yarn tsconfig-paths:update
+yarn update-tsconfig-paths
 git add tsconfig.base.json
