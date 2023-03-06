@@ -34,7 +34,10 @@ export class Import extends CliCommand<ImportParams, ImportEventMap> {
     this.emit('globs', globs)
 
     if (!globs || globs.length === 0) {
-      this.emit('error', new VError('Glob input matched no files. Aborting.'))
+      this.emit(
+        'error',
+        new VError(`Glob input "${this.params.input}" matched no files`)
+      )
       this.emit('end')
       return
     }
