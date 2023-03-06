@@ -63,6 +63,15 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
 
   public team?: Identifier
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {TaskStep[]}
+   */
+  public get_task_steps() {
+    return this.get_base_task_steps()
+  }
+
   public get_resources(): Resource[] {
     return this.get_base_resources()
   }

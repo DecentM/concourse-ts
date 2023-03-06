@@ -1,6 +1,6 @@
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
-import {AnyStep} from '.'
+import {AnyStep, TaskStep} from '.'
 
 import {Step} from './_base'
 import {Resource} from '../resource'
@@ -68,6 +68,21 @@ export class DoStep extends Step<Type.DoStep> {
 
     this.do.forEach((step) => {
       result.push(...step.get_resources())
+    })
+
+    return result
+  }
+
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {TaskStep[]}
+   */
+  public get_task_steps(): TaskStep[] {
+    const result = this.get_base_task_steps()
+
+    this.do.forEach((step) => {
+      result.push(...step.get_task_steps())
     })
 
     return result

@@ -296,7 +296,7 @@ export type Job = {
   serial?: boolean
   build_log_retention?: BuildLogRetentionPolicy
   build_logs_to_retain?: number
-  serial_groups?: Identifier
+  serial_groups?: Identifier[]
   max_in_flight?: number
   public?: boolean
   disable_manual_trigger?: boolean

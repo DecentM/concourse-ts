@@ -92,6 +92,19 @@ export class TaskStep<
     this.output_mapping[output] = mapped_output
   }
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {TaskStep[]}
+   */
+  public get_task_steps() {
+    const result = this.get_base_task_steps()
+
+    result.push(this)
+
+    return result
+  }
+
   public get_resources(): Resource[] {
     return this.get_base_resources()
   }
