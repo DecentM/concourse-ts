@@ -12,19 +12,19 @@ export type CompilationOptions = {
   extract_tasks?: boolean
 }
 
-const defaultCompilationOptions: CompilationOptions = {
+const default_compilation_options: CompilationOptions = {
   output_dir: '.',
   extract_tasks: false,
 }
 
 export class Compilation<Group extends Identifier = Identifier> {
   constructor(
-    private _options: CompilationOptions = defaultCompilationOptions
+    private _options: CompilationOptions = default_compilation_options
   ) {}
 
   private get options() {
     return {
-      defaultCompilationOptions,
+      ...default_compilation_options,
       ...this._options,
     }
   }
@@ -70,7 +70,7 @@ export class Compilation<Group extends Identifier = Identifier> {
   public validate = () => {
     // Validate already checks for falsiness, we just want to check for its
     // constructor here if input exists.
-    if (this.input && this.input?.constructor.name !== Pipeline.name) {
+    if (this.input && this.input.constructor.name !== Pipeline.name) {
       const warnings = new WarningStore()
 
       return warnings.add_warning(
@@ -88,7 +88,7 @@ export class Compilation<Group extends Identifier = Identifier> {
     }
 
     const warnings = this.validate()
-    const tasks = this.input?.get_tasks()
+    const tasks = this.input.get_tasks()
 
     if (this.options.extract_tasks) {
       this.transform_task_paths(this.input)
@@ -99,7 +99,7 @@ export class Compilation<Group extends Identifier = Identifier> {
         filename: this.get_pipeline_path(`${this.input.name}.yml`),
         serialised: this.input.serialise(),
       },
-      tasks: tasks?.map((task) => ({
+      tasks: tasks.map((task) => ({
         filename: this.get_task_path(`${task.name}.yml`),
         serialised: task.serialise(),
       })),
