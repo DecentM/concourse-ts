@@ -26,33 +26,34 @@ export type CompileParams = {
   input: string
 }
 
-const file_valid = async (filePath: string) => {
+const file_valid = async (file_path: string) => {
   // Must be a Typescript file
-  if (!filePath.endsWith('.ts')) {
+  if (!file_path.endsWith('.ts') && !file_path.endsWith('.js')) {
     return false
   }
 
-  const file = await import(filePath)
+  const file = await import(file_path)
 
   // Default export must be a function
   if (!('default' in file) || typeof file.default !== 'function') {
     return false
   }
 
-  // Default export must return a Pipeline or Task instance
-  if (!(file.default() instanceof Pipeline)) {
+  // Default export must return a Pipeline or Task instance, or a Promise that
+  // resolves to either
+  if (!((await file.default()) instanceof Pipeline)) {
     return false
   }
 
   return true
 }
 
-const get_pipeline_from_file = async (filePath: string): Promise<Pipeline> => {
-  const fullPath = path.resolve(filePath)
+const get_pipeline_from_file = async (file_path: string): Promise<Pipeline> => {
+  const fullPath = path.resolve(file_path)
 
   if (!(await file_valid(fullPath))) {
     throw new VError(
-      `${filePath} failed validation. Make sure your glob only resolves to Typescript files with a default export that returns a Pipeline instance.`
+      `${file_path} failed validation. Make sure your glob only resolves to Typescript files with a default export that returns a Pipeline instance.`
     )
   }
 
