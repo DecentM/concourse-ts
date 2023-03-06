@@ -47,19 +47,17 @@ test('does not serialise duplicate resource types', (t) => {
 test('throws if the type is unassigned', (t) => {
   const rt = new ResourceType('my-rt')
 
+  rt.set_type('')
+
   t.throws(
     () => {
-      rt.set_type('')
+      rt.serialise()
     },
     {
       message:
         '"" is not a valid identifier: identifier cannot be an empty string',
     }
   )
-
-  t.notThrows(() => {
-    rt.serialise()
-  })
 })
 
 test('stores tags', (t) => {

@@ -136,6 +136,6 @@ export type PutParams = {
 export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
 
 export type ResourceType = ConcourseTs.ResourceType<
-  'registry-image' & ConcourseTs.Utils.Identifier,
+  'registry-image',
   RegistryImage.Source<'concourse/s3-resource'>
 >

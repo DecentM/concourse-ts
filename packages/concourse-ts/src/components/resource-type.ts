@@ -7,7 +7,7 @@ import * as Declaration from '../declarations/types'
 import {Resource} from './resource'
 
 export class ResourceType<
-  Type extends Identifier = Identifier,
+  Type extends string = string,
   Source extends Declaration.Config = Declaration.Config
 > {
   private static customiser: Customiser<ResourceType>
@@ -61,8 +61,8 @@ export class ResourceType<
 
   private type: Type
 
-  public set_type = (input: string) => {
-    this.type = get_identifier(input) as Type
+  public set_type = (input: Type) => {
+    this.type = input
   }
 
   public source?: Source
@@ -112,7 +112,7 @@ export class ResourceType<
   serialise() {
     const result: Declaration.ResourceType = {
       name: this.name,
-      type: this.type,
+      type: get_identifier(this.type),
       source: this.source,
       check_every: this.check_every,
       defaults: this.defaults,

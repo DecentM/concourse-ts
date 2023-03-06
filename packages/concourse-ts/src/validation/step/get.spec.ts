@@ -17,7 +17,10 @@ test.beforeEach(() => {
   })
 })
 
-const rt = new ResourceType('rt')
+const rt = new ResourceType('rt', (rt) => {
+  rt.set_type('registry-image')
+})
+
 const r = new Resource('r', rt, (r) => {
   r.source = {
     repository: 'alpine',
