@@ -20,11 +20,9 @@ export class Command {
 
   public path: Type.FilePath
 
-  private args: string[]
+  private args: string[] = []
 
   public add_arg = (arg: string) => {
-    if (!this.args) this.args = []
-
     this.args.push(arg)
   }
 
