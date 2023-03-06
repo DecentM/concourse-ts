@@ -1,0 +1,15 @@
+jobs:
+  - name: aj
+    plan:
+      - task: at
+        config:
+          platform: linux
+          image_resource: aaa
+            type: registry-image
+            source:
+              repository: alpine
+              tag: latest
+          run:
+            path: echo
+            args:
+              - Hello, world!
