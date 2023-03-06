@@ -1,9 +1,6 @@
 import test from 'ava'
 
-import {
-  ValidationWarning,
-  ValidationWarningType,
-} from '../../utils/warning-store'
+import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
 
 import {validate_identifier} from './identifier'
 

@@ -1,12 +1,13 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L420
 
-import * as Type from '../../declarations/types'
+import * as Type from '../declarations/types'
+
 import {
   Location,
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from '../../utils/warning-store'
+} from '../utils/warning-store'
 
 import {validate_identifier} from './identifier'
 

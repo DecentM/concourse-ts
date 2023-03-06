@@ -1,9 +1,6 @@
 import test from 'ava'
-import {Identifier} from '../../utils'
-import {
-  ValidationWarning,
-  ValidationWarningType,
-} from '../../utils/warning-store'
+import {Identifier} from '../utils'
+import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
 
 import {validate_commands} from './commands'
 

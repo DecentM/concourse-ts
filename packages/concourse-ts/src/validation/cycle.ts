@@ -1,9 +1,9 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L500
 
-import * as Type from '../../declarations/types'
+import * as Type from '../declarations/types'
 
-import {find_job_by_name} from '../../utils/find-job'
-import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
+import {find_job_by_name} from '../utils/find-job'
+import {ValidationWarningType, WarningStore} from '../utils/warning-store'
 
 enum VisitStatus {
   NonVisited,

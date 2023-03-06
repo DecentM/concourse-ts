@@ -1,8 +1,8 @@
-import * as Type from '../../declarations/types'
+import * as Type from '../declarations/types'
 
-import {is_task_step} from '../../utils/step-type'
+import {is_task_step} from '../utils/step-type'
 
-import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
+import {ValidationWarningType, WarningStore} from '../utils/warning-store'
 
 export const validate_tasks = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
