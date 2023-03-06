@@ -9,7 +9,7 @@ import {is_pipeline} from '../utils/is-pipeline'
 
 import {write_pipeline} from './writers/pipeline'
 import {hoist_all_tasks} from './hoist-task'
-import {validate} from '../compiler/validation'
+import {validate} from '../validation'
 
 export class Decompilation {
   private input?: string // yaml

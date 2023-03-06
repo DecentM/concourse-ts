@@ -3,7 +3,7 @@ import * as YAML from 'yaml'
 import path from 'node:path'
 
 import {Pipeline} from '../components/pipeline'
-import {validate} from './validation'
+import {validate} from '../validation'
 import {ValidationWarningType, WarningStore} from '../utils/warning-store'
 import {Identifier} from '../utils/identifier'
 

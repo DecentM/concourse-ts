@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 
-import {validate_identifier} from '../../compiler/validation/identifier'
+import {validate_identifier} from '../../validation/identifier'
 
 /**
  * https://concourse-ci.org/config-basics.html#schema.identifier

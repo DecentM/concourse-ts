@@ -1,7 +1,7 @@
-import * as Type from '../../declarations/types'
-import {type_of} from '../../utils/type-of'
+import * as Type from '../declarations/types'
+import {type_of} from '../utils/type-of'
 
-import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
+import {ValidationWarningType, WarningStore} from '../utils/warning-store'
 import {validate_cycle} from './cycle'
 import {validate_display} from './display'
 import {validate_groups} from './groups'

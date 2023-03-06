@@ -1,11 +1,8 @@
 import test from 'ava'
-import {Pipeline} from '../../declarations'
-import {Identifier} from '../../utils'
+import {Pipeline} from '../declarations'
+import {Identifier} from '../utils'
 
-import {
-  ValidationWarning,
-  ValidationWarningType,
-} from '../../utils/warning-store'
+import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
 
 import {validate_cycle} from './cycle'
 

@@ -7,7 +7,7 @@ import {
   Resource,
   ResourceType,
   Task,
-} from '../../../components'
+} from '../../components'
 
 import {validate_get_steps} from './get'
 
