@@ -1,6 +1,6 @@
 import * as Type from '../../declarations/types'
 
-import {AnyStep, DoStep} from '.'
+import {AnyStep, DoStep, TaskStep} from '.'
 
 import {Resource} from '../resource'
 
@@ -26,6 +26,11 @@ export abstract class Step<StepType extends Type.Step> {
       Step.base_customiser(this)
     }
   }
+
+  /**
+   * @internal Used by the compiler
+   */
+  public abstract get_task_steps(): TaskStep[]
 
   /**
    * @internal Used by the compiler
@@ -76,6 +81,37 @@ export abstract class Step<StepType extends Type.Step> {
 
     if (this.ensure) {
       result.push(...this.ensure.get_resources())
+    }
+
+    return result
+  }
+
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {TaskStep[]}
+   */
+  protected get_base_task_steps(): TaskStep[] {
+    const result: TaskStep[] = []
+
+    if (this.on_success) {
+      result.push(...this.on_success.get_task_steps())
+    }
+
+    if (this.on_failure) {
+      result.push(...this.on_failure.get_task_steps())
+    }
+
+    if (this.on_error) {
+      result.push(...this.on_error.get_task_steps())
+    }
+
+    if (this.on_abort) {
+      result.push(...this.on_abort.get_task_steps())
+    }
+
+    if (this.ensure) {
+      result.push(...this.ensure.get_task_steps())
     }
 
     return result

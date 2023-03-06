@@ -41,6 +41,15 @@ export class PutStep<
     this.resource = resource
   }
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {TaskStep[]}
+   */
+  public get_task_steps() {
+    return this.get_base_task_steps()
+  }
+
   private resource?: Resource<Source, PutParams, GetParams>
 
   public get_resources = (): Resource[] => {

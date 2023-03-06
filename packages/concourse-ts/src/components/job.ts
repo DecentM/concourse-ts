@@ -44,7 +44,7 @@ export class Job {
     }
   }
 
-  private plan?: AnyStep[]
+  private plan?: AnyStep[] = []
 
   /**
    * Adds one or more steps to the Job. They will be executed in the same order
@@ -53,8 +53,6 @@ export class Job {
    * @param {...AnyStep[]} steps Steps to add to the Job in order.
    */
   public add_step = (...steps: AnyStep[]) => {
-    if (!this.plan) this.plan = []
-
     this.plan.push(...steps)
   }
 
@@ -67,8 +65,6 @@ export class Job {
    * the Job in order.
    */
   public add_step_first = (...steps: AnyStep[]) => {
-    if (!this.plan) this.plan = []
-
     this.plan.unshift(...steps)
   }
 
@@ -241,18 +237,23 @@ export class Job {
    */
   public serial: boolean
 
-  private serial_groups?: Identifier
+  private serial_groups?: string[] = []
 
   /**
    * https://concourse-ci.org/jobs.html#schema.job.serial_groups
    *
    * @param {string} serial_groups
    */
-  public set_serial_groups = (serial_groups: string) => {
-    this.serial_groups = get_identifier(serial_groups)
+  public add_serial_group = (serial_group: string) => {
+    this.serial_groups.push(serial_group)
   }
 
-  private get_base_resources(): Resource[] {
+  /**
+   * @internal Used by the compiler to get all resources
+   *
+   * @returns {Resource[]} All resources used by this job
+   */
+  public get_resources = (): Resource[] => {
     const result: Resource[] = []
 
     if (this.on_success) {
@@ -275,17 +276,6 @@ export class Job {
       result.push(...this.ensure.get_resources())
     }
 
-    return result
-  }
-
-  /**
-   * @internal Used by the compiler to get all resources
-   *
-   * @returns {Resource[]} All resources used by this job
-   */
-  public get_resources = (): Resource[] => {
-    const result = this.get_base_resources()
-
     this.plan.forEach((step) => {
       // Get and Put steps hold resources, so we extract those here.
       result.push(...step.get_resources())
@@ -302,7 +292,27 @@ export class Job {
   public get_task_steps = () => {
     const result: TaskStep[] = []
 
-    this.plan?.forEach((step) => {
+    if (this.on_success) {
+      result.push(...this.on_success.get_task_steps())
+    }
+
+    if (this.on_failure) {
+      result.push(...this.on_failure.get_task_steps())
+    }
+
+    if (this.on_error) {
+      result.push(...this.on_error.get_task_steps())
+    }
+
+    if (this.on_abort) {
+      result.push(...this.on_abort.get_task_steps())
+    }
+
+    if (this.ensure) {
+      result.push(...this.ensure.get_task_steps())
+    }
+
+    this.plan.forEach((step) => {
       if (step instanceof TaskStep) {
         result.push(step)
       }
@@ -335,7 +345,9 @@ export class Job {
       on_success: this.on_success?.serialise(),
       public: this.public,
       serial: this.serial,
-      serial_groups: this.serial_groups,
+      serial_groups: this.serial_groups.map((serial_group) =>
+        get_identifier(serial_group)
+      ),
     }
 
     return result
