@@ -4,7 +4,6 @@ import {tmpName} from 'tmp-promise'
 import {mkdirp} from 'mkdirp'
 
 import {Compile} from '.'
-import VError from 'verror'
 
 const test = anyTest as TestFn<{tmp_dir: string}>
 
