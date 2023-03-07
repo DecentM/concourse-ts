@@ -37,7 +37,7 @@ const empty_step = {
   on_error: undefined,
   on_failure: undefined,
   on_success: undefined,
-  tags: undefined,
+  tags: [],
   timeout: undefined,
 }
 

@@ -11,8 +11,9 @@ import {DoStep as DoStepComponent} from './do'
 
 /**
  * Ugly hack to trick the compiler into not writing `require('./do')` into the
- * output. Otherwise, DoStep construction fails because it happens before this
- * base class is defined, resulting in a hard-to-debug error.
+ * top level of the output. Otherwise, DoStep construction fails because it
+ * happens before this base class is defined, resulting in a hard to debug
+ * error.
  *
  * @param {string} name
  * @returns {DoStep}
@@ -70,7 +71,7 @@ export abstract class Step<StepType extends Type.Step> {
    */
   public attempts: number
 
-  protected tags: Type.Tags
+  protected tags: Type.Tags = []
 
   /**
    * @internal Used by the compiler
@@ -140,8 +141,6 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {...string[]} tags
    */
   public add_tag = (...tags: string[]) => {
-    if (!this.tags) this.tags = []
-
     this.tags.push(...tags)
   }
 
