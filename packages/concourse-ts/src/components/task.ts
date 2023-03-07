@@ -57,7 +57,7 @@ export class Task<
     if (input instanceof Resource) {
       this.image_resource = {
         source: input.source,
-        type: input.get_resource_type()?.name,
+        type: input.get_resource_type().name,
       }
     } else {
       this.image_resource = {
@@ -71,11 +71,9 @@ export class Task<
 
   public run: Command
 
-  private caches: Type.TaskCache[]
+  private caches: Type.TaskCache[] = []
 
   public add_cache = (...inputs: Type.TaskCache[]) => {
-    if (!this.caches) this.caches = []
-
     this.caches.push(...inputs)
   }
 
@@ -141,7 +139,7 @@ export class Task<
     const result: Type.Task<Input, Output> = {
       image_resource: this.image_resource,
       platform: this.platform,
-      run: this.run.serialise(),
+      run: this.run?.serialise(),
       caches: this.caches,
       container_limits: this.container_limits,
       inputs: this.inputs,

@@ -6,7 +6,7 @@ import * as Type from '../declarations/types'
 import {Duration, DurationInput, get_duration} from '../utils/duration'
 
 import {ResourceType} from './resource-type'
-import {AnyStep, DoStep, GetStep, PutStep} from './step'
+import {GetStep, PutStep} from './step'
 import {Job} from './job'
 import {type_of} from '../utils'
 import {get_identifier, Identifier} from '../utils/identifier'

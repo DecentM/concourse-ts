@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import {ResourceType, Pipeline, Job, GetStep, Resource} from '..'
+import {ResourceType, Pipeline, Job, GetStep} from '..'
 import {Config} from '../declarations/types'
 import {Duration} from '../utils'
 import {has_duplicates_by_key} from '../utils/array-duplicates'
