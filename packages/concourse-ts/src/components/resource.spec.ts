@@ -1,6 +1,20 @@
 import test from 'ava'
-import {ResourceType, Resource} from '..'
-import {Duration} from '../declarations/duration'
+import {ResourceType, Resource, Job} from '..'
+import {Duration} from '../utils/duration'
+
+test.beforeEach(() => {
+  Resource.customise((resource) => {
+    resource.add_tag('customised')
+  })
+
+  Resource.customise_get_step((gs) => {
+    gs.add_tag('static')
+  })
+
+  Resource.customise_put_step((ps) => {
+    ps.add_tag('static')
+  })
+})
 
 test('throws if the type is unassigned', (t) => {
   const r = new Resource('my-r', null as never)
@@ -28,7 +42,7 @@ test('stores tags', (t) => {
 
   const result = r.serialise()
 
-  t.deepEqual(result.tags, ['my tag 1'])
+  t.deepEqual(result.tags, ['customised', 'my tag 1'])
 })
 
 test('stores valid Durations into check_every', (t) => {
@@ -67,4 +81,139 @@ test('initialiser passes reference to "this"', (t) => {
   })
 
   t.is(result, r)
+})
+
+test('runs get-step customiser', (t) => {
+  const rt = new ResourceType('my-rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  const r = new Resource('my-r', rt, (r) => {
+    r.customise_get_step((gs) => {
+      gs.add_tag('customised')
+    })
+  })
+
+  t.deepEqual(r.as_get_step().serialise(), {
+    attempts: undefined,
+    ensure: undefined,
+    get: 'my-r',
+    on_abort: undefined,
+    on_error: undefined,
+    on_failure: undefined,
+    on_success: undefined,
+    params: undefined,
+    passed: undefined,
+    resource: undefined,
+    tags: ['static', 'customised'],
+    timeout: undefined,
+    trigger: true,
+    version: undefined,
+  })
+})
+
+test('runs put-step customiser', (t) => {
+  const rt = new ResourceType('my-rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  const r = new Resource('my-r', rt, (r) => {
+    r.customise_put_step((gs) => {
+      gs.add_tag('customised')
+    })
+  })
+
+  t.deepEqual(r.as_put_step().serialise(), {
+    attempts: undefined,
+    ensure: undefined,
+    put: 'my-r',
+    on_abort: undefined,
+    on_error: undefined,
+    on_failure: undefined,
+    on_success: undefined,
+    params: undefined,
+    resource: undefined,
+    tags: ['static', 'customised'],
+    timeout: undefined,
+    inputs: undefined,
+    get_params: undefined,
+  })
+})
+
+test('creates put step', (t) => {
+  const rt = new ResourceType('my-rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  const r = new Resource('my-r', rt)
+  const ps = r.as_put_step(
+    {
+      params: {
+        my_param: 'a',
+      },
+      inputs: 'all',
+    },
+    (ps) => {
+      ps.add_tag('tag')
+    }
+  )
+
+  t.deepEqual(ps.serialise(), {
+    attempts: undefined,
+    ensure: undefined,
+    get_params: undefined,
+    inputs: 'all',
+    on_abort: undefined,
+    on_error: undefined,
+    on_failure: undefined,
+    on_success: undefined,
+    params: {
+      my_param: 'a',
+    },
+    put: 'my-r',
+    resource: undefined,
+    tags: ['static', 'tag'],
+    timeout: undefined,
+  })
+})
+
+test('creates get step', (t) => {
+  const rt = new ResourceType('my-rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  const j = new Job('j')
+
+  const r = new Resource('my-r', rt)
+  const ps = r.as_get_step(
+    {
+      params: {
+        my_param: 'a',
+      },
+      passed: [j],
+      trigger: false,
+    },
+    (ps) => {
+      ps.add_tag('tag')
+    }
+  )
+
+  t.deepEqual(ps.serialise(), {
+    attempts: undefined,
+    ensure: undefined,
+    get: 'my-r',
+    on_abort: undefined,
+    on_error: undefined,
+    on_failure: undefined,
+    on_success: undefined,
+    params: {
+      my_param: 'a',
+    },
+    resource: undefined,
+    tags: ['static', 'tag'],
+    timeout: undefined,
+    passed: ['j'],
+    trigger: false,
+    version: undefined,
+  })
 })
