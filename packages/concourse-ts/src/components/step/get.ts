@@ -1,5 +1,3 @@
-import {VError} from 'verror'
-
 import {Customiser} from '../../declarations/customiser'
 import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
@@ -66,11 +64,9 @@ export class GetStep<
     return result
   }
 
-  private passed: Identifier[]
+  private passed: Identifier[] = []
 
   public add_passed = (...jobs: Job[]) => {
-    if (!this.passed) this.passed = []
-
     this.passed.push(...jobs.map((job) => job.name))
   }
 
@@ -80,20 +76,14 @@ export class GetStep<
     this.params = params
   }
 
-  public trigger = true
+  public trigger: boolean
 
   public version: Type.Version
 
   public serialise() {
-    if (!this.resource) {
-      throw new VError(
-        'Cannot serialise GetStep because "get" has not been set'
-      )
-    }
-
     const result: Type.GetStep = {
       ...this.serialise_base(),
-      get: this.resource.name,
+      get: this.resource?.name,
 
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,

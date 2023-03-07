@@ -103,11 +103,11 @@ test('runs get-step customiser', (t) => {
     on_failure: undefined,
     on_success: undefined,
     params: undefined,
-    passed: undefined,
+    passed: [],
     resource: undefined,
     tags: ['static', 'customised'],
     timeout: undefined,
-    trigger: true,
+    trigger: undefined,
     version: undefined,
   })
 })
