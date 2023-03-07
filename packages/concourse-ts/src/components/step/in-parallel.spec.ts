@@ -24,8 +24,8 @@ const default_in_parallel_step = {
 }
 
 test.beforeEach(() => {
-  InParallelStep.customise((ds) => {
-    ds.add_tag('static')
+  InParallelStep.customise((ips) => {
+    ips.add_tag('static')
   })
 })
 
