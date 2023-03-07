@@ -6,9 +6,9 @@ import {ResourceType} from './resource-type'
 import {deduplicate_by_identity} from '../utils/array-duplicates'
 import {Task} from './task'
 import {TaskStep} from './step'
-import {Identifier} from '../utils/identifier'
+import {get_identifier} from '../utils/identifier'
 
-export class Pipeline<Group extends Identifier = Identifier> {
+export class Pipeline<Group extends string = string> {
   private static customiser: Customiser<Pipeline>
 
   public static customise = (init: Customiser<Pipeline>) => {
@@ -25,28 +25,24 @@ export class Pipeline<Group extends Identifier = Identifier> {
     }
   }
 
-  private jobs?: Job[]
+  private jobs?: Job[] = []
 
   public add_job = (job: Job, group?: Group) => {
-    if (!this.jobs) this.jobs = []
-
     this.jobs.push(job)
 
     if (!group) return
 
-    if (!this.groups) {
-      this.groups = []
-    }
+    const group_name = get_identifier(group)
 
     // Find the group this job belongs to, and if there isn't one, push a new
     // group to the groups list
     const groupIndex = this.groups.findIndex(
-      (group_config) => group_config.name === group
+      (group_config) => group_config.name === group_name
     )
 
     if (groupIndex === -1) {
       this.groups.push({
-        name: group,
+        name: group_name,
         jobs: [job.name],
       })
 
@@ -54,7 +50,7 @@ export class Pipeline<Group extends Identifier = Identifier> {
     }
 
     this.groups[groupIndex] = {
-      name: group,
+      name: group_name,
       jobs: [...this.groups[groupIndex].jobs, job.name],
     }
   }
@@ -67,13 +63,11 @@ export class Pipeline<Group extends Identifier = Identifier> {
     this.display.background_image = url
   }
 
-  private groups?: Type.Pipeline['groups']
+  private groups?: Type.Pipeline['groups'] = []
 
-  private var_sources?: Type.VarSource[]
+  private var_sources?: Type.VarSource[] = []
 
   public add_var_source = (...var_sources: Type.VarSource[]) => {
-    if (!this.var_sources) this.var_sources = []
-
     this.var_sources.push(...var_sources)
   }
 
@@ -96,15 +90,15 @@ export class Pipeline<Group extends Identifier = Identifier> {
   }
 
   public get_tasks = (): Task[] => {
-    return this.get_task_steps().map((taskStep) => {
-      return taskStep.get_task()
+    return this.get_task_steps().map((task_step) => {
+      return task_step.get_task()
     })
   }
 
   public get_task_steps = () => {
     const result: TaskStep[] = []
 
-    this.jobs?.forEach((job) => {
+    this.jobs.forEach((job) => {
       result.push(...job.get_task_steps())
     })
 
@@ -113,7 +107,7 @@ export class Pipeline<Group extends Identifier = Identifier> {
 
   serialise() {
     const result: Type.Pipeline = {
-      jobs: this.jobs?.map((j) => j.serialise()),
+      jobs: this.jobs.map((j) => j.serialise()),
       display: this.display,
       groups: this.groups,
       resource_types: deduplicate_by_identity(this.get_resource_types()).map(
