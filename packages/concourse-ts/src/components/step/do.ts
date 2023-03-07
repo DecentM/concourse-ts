@@ -35,7 +35,7 @@ export class DoStep extends Step<Type.DoStep> {
     }
   }
 
-  private do: AnyStep[]
+  private do: AnyStep[] = []
 
   /**
    * Adds a step after existing steps into this DoStep
@@ -43,8 +43,6 @@ export class DoStep extends Step<Type.DoStep> {
    * @param {AnyStep} step
    */
   public add_do = (step: AnyStep) => {
-    if (!this.do) this.do = []
-
     this.do.push(step)
   }
 
@@ -54,8 +52,6 @@ export class DoStep extends Step<Type.DoStep> {
    * @param {AnyStep} step
    */
   public add_do_first = (step: AnyStep) => {
-    if (!this.do) this.do = []
-
     this.do.unshift(step)
   }
 
