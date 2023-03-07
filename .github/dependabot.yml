@@ -21,7 +21,15 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-cron/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-curl/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-fly/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -45,6 +53,10 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-maven/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-mock/
     schedule:
       interval: daily
@@ -58,6 +70,14 @@ updates:
       interval: daily
   - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-registry-image/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-registry-tag/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-rss/
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -82,5 +102,9 @@ updates:
       interval: daily
   - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-time/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-tracker/
     schedule:
       interval: daily

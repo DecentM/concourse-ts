@@ -16,6 +16,10 @@
   [![npm
   (scoped)](https://img.shields.io/npm/v/@decentm/concourse-ts?style=for-the-badge)
   ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@decentm/concourse-ts?style=for-the-badge)](https://bundlephobia.com/package/@decentm/concourse-ts)
+  ![NPM](https://img.shields.io/npm/l/@decentm/concourse-ts?style=for-the-badge)
+  ![Snyk Vulnerabilities for npm scoped
+  package](https://img.shields.io/snyk/vulnerabilities/npm/@decentm/concourse-ts?style=for-the-badge)
+  ![Libraries.io dependency status for latest release, scoped npm package](https://img.shields.io/librariesio/release/npm/@decentm/concourse-ts?style=for-the-badge)
 
 </div>
 

@@ -5489,6 +5489,11 @@ typedoc-github-wiki-theme@^1.1.0:
   resolved "https://registry.yarnpkg.com/typedoc-github-wiki-theme/-/typedoc-github-wiki-theme-1.1.0.tgz#d7db13543e3f02ff05b9fe4723031fa34cb74e68"
   integrity sha512-VyFmz8ZV2j/qEsCjD5EtR6FgZsCoy64Zr6SS9kCTcq7zx69Cx4UJBx8Ga/naxqs08TDggE6myIfODY6awwAGcA==
 
+typedoc-plugin-coverage@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-coverage/-/typedoc-plugin-coverage-2.0.0.tgz#f2b9f3b8caf9d6baaa80b764aa6cffc49030fb7d"
+  integrity sha512-IJsYW0SvV2RUWfUBWuCG2cXTv+FiPDlls9+JlUlct3N41c1hV01ZOLKmZpEVelrvNSU3SnxxA8mkct3BQm2v0g==
+
 typedoc-plugin-markdown@^3.15.2:
   version "3.15.2"
   resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.15.2.tgz#6d1c04e048cdf9fbc17652f8e9d674f51888a062"
