@@ -198,45 +198,6 @@ export class Resource<
     )
   }
 
-  public as_abort_handler = (
-    step_or_job: AnyStep | Job,
-    input: AsPutStepInput<PutParams>
-  ) => {
-    step_or_job.add_on_abort(this.as_put_step(input))
-  }
-
-  public as_error_handler = (
-    step_or_job: AnyStep | Job,
-    input: AsPutStepInput<PutParams>
-  ) => {
-    step_or_job.add_on_error(this.as_put_step(input))
-  }
-
-  public as_failure_handler = (
-    step_or_job: AnyStep | Job,
-    input: AsPutStepInput<PutParams>
-  ) => {
-    step_or_job.add_on_failure(this.as_put_step(input))
-  }
-
-  public as_success_handler = (
-    step_or_job: AnyStep | Job,
-    input: AsPutStepInput<PutParams>
-  ) => {
-    step_or_job.add_on_success(this.as_put_step(input))
-  }
-
-  public as_start_handler = (
-    do_step_or_job: DoStep | Job,
-    input: AsPutStepInput<PutParams>
-  ) => {
-    if (do_step_or_job instanceof Job) {
-      do_step_or_job.add_step_first(this.as_put_step(input))
-    } else {
-      do_step_or_job.add_do_first(this.as_put_step(input))
-    }
-  }
-
   serialise() {
     if (!this.type) {
       throw new VError('Cannot serialise resource without a resource type', {
