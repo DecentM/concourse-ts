@@ -5,7 +5,7 @@ import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
-import {Step} from './_base'
+import {Step} from './base'
 
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
   private static customiser: Customiser<SetPipelineStep>

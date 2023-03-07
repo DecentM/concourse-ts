@@ -5,7 +5,7 @@ import * as Type from '../../declarations/types'
 
 import {Resource} from '../resource'
 
-import {Step} from './_base'
+import {Step} from './base'
 
 export class PutStep<
   Source extends Type.Config = Type.Config,

@@ -1,9 +1,9 @@
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
-import {AnyStep, TaskStep} from '.'
 
-import {Step} from './_base'
+import {Step} from './base'
 import {Resource} from '../resource'
+import {AnyStep} from '../../declarations'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
   private static customiser: Customiser<InParallelStep>

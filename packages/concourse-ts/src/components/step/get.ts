@@ -7,7 +7,7 @@ import * as Type from '../../declarations/types'
 import {Job} from '../job'
 import {Resource} from '../resource'
 
-import {Step} from './_base'
+import {Step} from './base'
 
 export class GetStep<
   Source extends Type.Config = Type.Config,

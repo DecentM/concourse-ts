@@ -3,7 +3,7 @@ import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
-import {Step} from './_base'
+import {Step} from './base'
 
 export class LoadVarStep extends Step<Type.LoadVarStep> {
   private static customiser: Customiser<LoadVarStep>

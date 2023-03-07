@@ -1,9 +1,10 @@
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
-import {AnyStep, TaskStep} from '.'
+import {TaskStep} from './task'
 
-import {Step} from './_base'
+import {Step} from './base'
 import {Resource} from '../resource'
+import {AnyStep} from '../../declarations'
 
 /**
  * https://concourse-ci.org/do-step.html
