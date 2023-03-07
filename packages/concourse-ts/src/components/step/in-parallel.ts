@@ -27,11 +27,9 @@ export class InParallelStep extends Step<Type.InParallelStep> {
     }
   }
 
-  private steps: AnyStep[]
+  private steps: AnyStep[] = []
 
   public add_step = (...steps: AnyStep[]) => {
-    if (!this.steps) this.steps = []
-
     this.steps.push(...steps)
   }
 
