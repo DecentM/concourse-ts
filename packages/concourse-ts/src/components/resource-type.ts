@@ -50,13 +50,20 @@ export class ResourceType<
     PutParams extends Declaration.Config = Declaration.Config,
     GetParams extends Declaration.Config = Declaration.Config
   >(
-    name: string
+    name: string,
+    customise?: Customiser<Resource<Source, PutParams, GetParams>>
   ): Resource<Source, PutParams, GetParams> => {
-    return new Resource<Source, PutParams, GetParams>(
+    const result = new Resource<Source, PutParams, GetParams>(
       name,
       this,
       this.resource_customiser
     )
+
+    if (customise) {
+      customise(result)
+    }
+
+    return result
   }
 
   private type: Type
@@ -109,7 +116,7 @@ export class ResourceType<
     this.tags.push(...tags)
   }
 
-  serialise() {
+  public serialise() {
     const result: Declaration.ResourceType = {
       name: this.name,
       type: get_identifier(this.type),

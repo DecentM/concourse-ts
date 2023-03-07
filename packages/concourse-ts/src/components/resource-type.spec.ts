@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import {ResourceType, Pipeline, Job, GetStep} from '..'
+import {ResourceType, Pipeline, Job, GetStep, Resource} from '..'
 import {Config} from '../declarations/types'
 import {Duration} from '../utils'
 import {has_duplicates_by_key} from '../utils/array-duplicates'
@@ -34,14 +34,8 @@ test('does not serialise duplicate resource types', (t) => {
   t.truthy(result)
   t.truthy(result.resource_types)
 
-  t.is(result.resource_types?.length, 1)
-
-  if (!result.resource_types) {
-    t.fail('no resource types generated')
-    return
-  }
-
-  t.false(has_duplicates_by_key((item) => item.name, result.resource_types))
+  t.is(result.resource_types!.length, 1)
+  t.false(has_duplicates_by_key((item) => item.name, result.resource_types!))
 })
 
 test('throws if the type is unassigned', (t) => {
@@ -67,7 +61,7 @@ test('stores tags', (t) => {
 
   const result = rt.serialise()
 
-  t.true(result.tags?.includes('my tag 1'))
+  t.true(result.tags!.includes('my tag 1'))
 })
 
 test('stores params', (t) => {
@@ -77,7 +71,7 @@ test('stores params', (t) => {
 
   const result = rt.serialise()
 
-  t.is(result.params?.['name'], '33')
+  t.is(result.params!['name'], '33')
 })
 
 test('stores defaults', (t) => {
@@ -87,7 +81,7 @@ test('stores defaults', (t) => {
 
   const result = rt.serialise()
 
-  t.is(result.defaults?.['name'], '33')
+  t.is(result.defaults!['name'], '33')
 })
 
 test('stores valid Durations into check_every', (t) => {
@@ -114,5 +108,47 @@ test('refuses to store invalid Durations into check_every', (t) => {
   t.throws(() => rt.set_check_every({microseconds: -1}), {
     message:
       'Duration value must be positive, but got -1. Change this to a positive number, or remove the duration component.',
+  })
+})
+
+test('runs resource customiser', (t) => {
+  const rt = new ResourceType('my-rt')
+
+  rt.customise_resource((resource) => {
+    resource.add_tag('customised')
+  })
+
+  const resource = rt.create_resource('my-r', (my_r) => {
+    my_r.icon = 'a'
+  })
+
+  t.deepEqual(resource.serialise(), {
+    check_every: undefined,
+    icon: 'a',
+    name: 'my-r',
+    old_name: undefined,
+    public: undefined,
+    source: undefined,
+    tags: ['customised'],
+    type: 'my-rt',
+    version: undefined,
+    webhook_token: undefined,
+  })
+})
+
+test('runs instance customiser', (t) => {
+  const rt = new ResourceType('rt', (rt) => {
+    rt.add_tag('added')
+  })
+
+  t.deepEqual(rt.serialise(), {
+    check_every: undefined,
+    defaults: undefined,
+    name: 'rt',
+    params: undefined,
+    privileged: undefined,
+    source: undefined,
+    tags: ['added'],
+    type: 'registry-image',
   })
 })
