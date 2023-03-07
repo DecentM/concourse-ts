@@ -5,7 +5,7 @@ import * as Type from '../../declarations/types'
 import {log} from '../../utils/log'
 import {Resource} from '../resource'
 
-import {Step} from './_base'
+import {Step} from './base'
 
 export class TryStep extends Step<Type.TryStep> {
   private static customiser: Customiser<TryStep>

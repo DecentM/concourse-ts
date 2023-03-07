@@ -1,11 +1,28 @@
 import * as Type from '../../declarations/types'
 
-import {AnyStep, DoStep, TaskStep} from '.'
-
 import {Resource} from '../resource'
 
 import {Customiser} from '../../declarations'
 import {Duration, DurationInput, get_duration} from '../../utils/duration'
+import {AnyStep} from '../../declarations/any-step'
+
+import {TaskStep} from './task'
+import {DoStep as DoStepComponent} from './do'
+
+/**
+ * Ugly hack to trick the compiler into not writing `require('./do')` into the
+ * output. Otherwise, DoStep construction fails because it happens before this
+ * base class is defined, resulting in a hard-to-debug error.
+ *
+ * @param {string} name
+ * @returns {DoStep}
+ */
+const create_do_step = (name: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const {DoStep}: {DoStep: typeof DoStepComponent} = require('./do')
+
+  return new DoStep(name)
+}
 
 export abstract class Step<StepType extends Type.Step> {
   private static base_customiser: Customiser<Step<Type.Step>>
@@ -128,7 +145,7 @@ export abstract class Step<StepType extends Type.Step> {
     this.tags.push(...tags)
   }
 
-  protected on_success?: DoStep
+  protected on_success?: DoStepComponent
 
   /**
    * Adds a step to be run after this one succeeds.
@@ -139,12 +156,12 @@ export abstract class Step<StepType extends Type.Step> {
    */
   public add_on_success = (step: AnyStep) => {
     if (!this.on_success)
-      this.on_success = new DoStep(`${this.name}_on_success`)
+      this.on_success = create_do_step(`${this.name}_on_success`)
 
     this.on_success.add_do(step)
   }
 
-  protected on_failure?: DoStep
+  protected on_failure?: DoStepComponent
 
   /**
    * Adds a step to be run after this one fails.
@@ -155,12 +172,12 @@ export abstract class Step<StepType extends Type.Step> {
    */
   public add_on_failure = (step: AnyStep) => {
     if (!this.on_failure)
-      this.on_failure = new DoStep(`${this.name}_on_failure`)
+      this.on_failure = create_do_step(`${this.name}_on_failure`)
 
     this.on_failure.add_do(step)
   }
 
-  protected on_error?: DoStep
+  protected on_error?: DoStepComponent
 
   /**
    * Adds a step to be run after this one errors.
@@ -170,12 +187,12 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_error = (step: AnyStep) => {
-    if (!this.on_error) this.on_error = new DoStep(`${this.name}_on_error`)
+    if (!this.on_error) this.on_error = create_do_step(`${this.name}_on_error`)
 
     this.on_error.add_do(step)
   }
 
-  protected on_abort?: DoStep
+  protected on_abort?: DoStepComponent
 
   /**
    * Adds a step to be run after this one is aborted.
@@ -185,12 +202,12 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_abort = (step: AnyStep) => {
-    if (!this.on_abort) this.on_abort = new DoStep(`${this.name}_on_abort`)
+    if (!this.on_abort) this.on_abort = create_do_step(`${this.name}_on_abort`)
 
     this.on_abort.add_do(step)
   }
 
-  protected ensure?: DoStep
+  protected ensure?: DoStepComponent
 
   /**
    * Adds a step to always be run after this one.
@@ -200,7 +217,7 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_ensure = (step: AnyStep) => {
-    if (!this.ensure) this.ensure = new DoStep(`${this.name}_ensure`)
+    if (!this.ensure) this.ensure = create_do_step(`${this.name}_ensure`)
 
     this.ensure.add_do(step)
   }

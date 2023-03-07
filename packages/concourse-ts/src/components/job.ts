@@ -3,7 +3,8 @@ import {get_identifier, Identifier} from '../utils/identifier'
 import * as Type from '../declarations/types'
 
 import {Resource} from './resource'
-import {AnyStep, DoStep, TaskStep} from './step'
+import {DoStep, TaskStep} from './step'
+import {AnyStep} from '../declarations'
 
 /**
  * https://concourse-ci.org/jobs.html

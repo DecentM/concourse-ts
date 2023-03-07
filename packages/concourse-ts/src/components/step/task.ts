@@ -7,7 +7,7 @@ import {Resource} from '../resource'
 
 import {Task} from '../task'
 
-import {Step} from './_base'
+import {Step} from './base'
 
 export class TaskStep<
   Input extends Identifier = Identifier,
