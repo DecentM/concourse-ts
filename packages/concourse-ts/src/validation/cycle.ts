@@ -26,8 +26,15 @@ export const detect_cycle = (
         return
       }
 
-      step.passed.forEach((passed_step) => {
-        const next_job = find_job_by_name(passed_step, pipeline)
+      step.passed.forEach((passed_job) => {
+        const next_job = find_job_by_name(passed_job, pipeline)
+
+        if (!next_job) {
+          return warnings.add_warning(
+            ValidationWarningType.Fatal,
+            `job "${job.name}" contains a step that relies on a job that does not exist ("${passed_job}")`
+          )
+        }
 
         if (visited[next_job.name] === VisitStatus.SemiVisited) {
           return warnings.add_warning(

@@ -36,6 +36,42 @@ test('compiles pipeline', async (t) => {
   await compile.run()
 })
 
+test('emits warnings', async (t) => {
+  const compile = new Compile({
+    input: path.join(__dirname, 'test-data/warnings.pipeline.ts'),
+    extract_tasks: false,
+    output_directory: t.context.tmp_dir,
+  })
+
+  let ended = false
+  let output_count = 0
+  let warning_count = 0
+
+  compile.on('output', (file) => {
+    t.log(file)
+    output_count++
+  })
+
+  compile.on('warning', (warning) => {
+    t.assert(
+      warning.messages[0].startsWith(
+        'Command "which" uses a binary from $PATH!'
+      )
+    )
+    warning_count++
+  })
+
+  compile.on('end', () => {
+    ended = true
+  })
+
+  await compile.run()
+
+  t.is(ended, true)
+  t.is(output_count, 1)
+  t.is(warning_count, 1)
+})
+
 test('refuses inputs that export non-functions', async (t) => {
   const compile = new Compile({
     input: path.join(__dirname, 'test-data/exports-number.pipeline.ts'),

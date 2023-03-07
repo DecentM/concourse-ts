@@ -1,0 +1,29 @@
+resource-types:
+  - name: a
+    type: registry-image
+
+resources:
+  - name: aa
+    type: a
+
+jobs:
+  - name: i-changed-the-name
+    plan:
+      - task: at
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: alpine
+              tag: latest
+          run:
+            path: echo
+            args:
+              - Hello, world!
+
+  - name: aj1
+    plan:
+      - get: a
+        passed:
+          - aj
