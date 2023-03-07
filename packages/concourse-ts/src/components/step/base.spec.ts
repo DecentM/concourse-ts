@@ -36,10 +36,10 @@ const default_get_step = {
   ...default_step,
   get: 'r',
   params: undefined,
-  passed: undefined,
+  passed: [],
   resource: undefined,
   timeout: undefined,
-  trigger: true,
+  trigger: undefined,
   version: undefined,
 }
 
