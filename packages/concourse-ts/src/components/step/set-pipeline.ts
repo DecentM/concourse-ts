@@ -1,5 +1,3 @@
-import {VError} from 'verror'
-
 import {Customiser} from '../../declarations/customiser'
 import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
@@ -77,18 +75,6 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
   }
 
   public serialise() {
-    if (!this.set_pipeline) {
-      throw new VError(
-        'Cannot serialise SetPipelineStep, because "set_pipeline" has not been set'
-      )
-    }
-
-    if (!this.file) {
-      throw new VError(
-        `Cannot serialise SetPipelineStep, because "file" has not been set`
-      )
-    }
-
     const result: Type.SetPipelineStep = {
       ...this.serialise_base(),
       set_pipeline: this.set_pipeline,
