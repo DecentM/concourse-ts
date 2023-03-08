@@ -7,14 +7,26 @@ import {Command} from '../../components'
 import {write_command} from './command'
 
 const chain = (name: string, input: Type.Command) => {
-  const code = write_command(name, input)
-  const result = ts.transpile(code)
-  const command: Command = eval(`
-    const {Command} = require('../../components')
-    ${result}
-  `)
+  const code = `
+    import {Command} from '../../components'
 
-  return command.serialise()
+    ${write_command(name, input)}
+  `
+
+  const result = ts.transpileModule(code, {
+    reportDiagnostics: true,
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      strict: true,
+    },
+  })
+
+  const job: Command = eval(result.outputText)
+
+  return {
+    result: job.serialise(),
+    diagnostics: result.diagnostics,
+  }
 }
 
 const default_command = {
@@ -29,8 +41,9 @@ test('writes empty command', (t) => {
     path: '',
   }
 
-  const result = chain('c', command)
+  const {result, diagnostics} = chain('c', command)
 
+  t.deepEqual(diagnostics, [])
   t.deepEqual(result, default_command)
 })
 
@@ -40,8 +53,9 @@ test('writes args', (t) => {
     args: ['my_arg1', 'my_arg2'],
   }
 
-  const result = chain('c', command)
+  const {result, diagnostics} = chain('c', command)
 
+  t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_command,
     ...command,
@@ -54,8 +68,9 @@ test('writes dir', (t) => {
     dir: '.',
   }
 
-  const result = chain('c', command)
+  const {result, diagnostics} = chain('c', command)
 
+  t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_command,
     ...command,
@@ -68,8 +83,9 @@ test('writes user', (t) => {
     user: 'root',
   }
 
-  const result = chain('c', command)
+  const {result, diagnostics} = chain('c', command)
 
+  t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_command,
     ...command,
