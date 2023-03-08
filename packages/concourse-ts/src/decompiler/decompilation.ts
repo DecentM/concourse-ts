@@ -10,6 +10,7 @@ import {is_pipeline} from '../utils/is-pipeline'
 import {write_pipeline} from './writers/pipeline'
 import {hoist_all_tasks} from './hoist-task'
 import {validate} from '../validation'
+import {type_of} from '../utils'
 
 export class Decompilation {
   private input?: string // yaml
@@ -31,9 +32,9 @@ export class Decompilation {
   }
 
   public set_input(yaml: string) {
-    if (this.input) {
+    if (type_of(this.input) !== 'undefined') {
       throw new VError(
-        'This decompilation already has an input. Create a new compilation.'
+        'This decompilation already has an input. Create a new decompilation.'
       )
     }
 
