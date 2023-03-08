@@ -1,5 +1,3 @@
-import {VError} from 'verror'
-
 import {Customiser} from '../../declarations/customiser'
 import {get_identifier, Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
@@ -110,12 +108,6 @@ export class TaskStep<
   }
 
   public serialise() {
-    if (!this.task && !this.file) {
-      throw new VError(
-        'Cannot serialise TaskStep because it has no task. Either set "task" or "file"'
-      )
-    }
-
     const result: Type.TaskStep = {
       ...this.serialise_base(),
       task: this.task?.name ?? get_identifier(`${this.name}_task`),
