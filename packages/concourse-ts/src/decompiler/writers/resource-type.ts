@@ -1,69 +1,69 @@
 import {VError} from 'verror'
+
 import {Pipeline} from '../../declarations'
 import {parse_duration} from '../../utils/duration'
-import {type_of} from '../../utils'
+import {empty_string_or} from '../../utils/empty_string_or'
 
 export const write_resource_type = (
   resource_type_name: string,
   pipeline: Pipeline
 ) => {
   const resource_type = pipeline.resource_types.find((resource_type) => {
-    resource_type.name === resource_type_name
+    return resource_type.name === resource_type_name
   })
 
   if (!resource_type) {
     throw new VError(
-      `Resource type "${resource_type}" does not exist in the pipeline`
+      `Resource type "${resource_type_name}" does not exist in the pipeline`
     )
   }
 
   return `new ResourceType(${JSON.stringify(resource_type.name)}, (rt) => {
-    ${
-      type_of(resource_type.type) !== 'undefined'
-        ? `rt.type = ${JSON.stringify(resource_type.type)}`
-        : ''
-    }
+    ${empty_string_or(
+      resource_type.type,
+      (type) => `rt.type = ${JSON.stringify(type)}`
+    )}
 
-    ${
-      type_of(resource_type.source) !== 'undefined'
-        ? `rt.source = ${JSON.stringify(resource_type.source)}`
-        : ''
-    }
+    ${empty_string_or(
+      resource_type.source,
+      (source) => `rt.source = ${JSON.stringify(source)}`
+    )}
 
-    ${
-      type_of(resource_type.check_every) !== 'undefined'
-        ? `rt.check_every = ${JSON.stringify(
-            parse_duration(resource_type.check_every)
-          )}`
-        : ''
-    }
+    ${empty_string_or(
+      resource_type.check_every,
+      (check_every) =>
+        `rt.set_check_every(${JSON.stringify(parse_duration(check_every))})`
+    )}
 
-    ${Object.entries(resource_type.defaults)
-      .map(([name, value]) => {
-        return `rt.set_default(${JSON.stringify(name)}, ${JSON.stringify(
-          value
-        )}})`
-      })
-      .join('\n')}
+    ${empty_string_or(resource_type.defaults, (defaults) =>
+      Object.entries(defaults)
+        .map(([name, value]) => {
+          return `rt.set_default({key: ${JSON.stringify(
+            name
+          )}, value: ${JSON.stringify(value)}})`
+        })
+        .join('\n')
+    )}
 
-    ${Object.entries(resource_type.params)
-      .map(([name, value]) => {
-        return `rt.set_param(${JSON.stringify(name)}, ${JSON.stringify(
-          value
-        )}})`
-      })
-      .join('\n')}
+    ${empty_string_or(resource_type.params, (params) =>
+      Object.entries(params)
+        .map(([name, value]) => {
+          return `rt.set_param({key: ${JSON.stringify(
+            name
+          )}, value: ${JSON.stringify(value)}})`
+        })
+        .join('\n')
+    )}
 
-    ${
-      type_of(resource_type.privileged) !== 'undefined'
-        ? `rt.privileged = ${resource_type.privileged}`
-        : ''
-    }
+    ${empty_string_or(
+      resource_type.privileged,
+      (privileged) => `rt.privileged = ${privileged}`
+    )}
 
-    ${
-      type_of(resource_type.tags) === 'array' && resource_type.tags.length
-        ? `rt.add_tag(...${resource_type.tags})`
-        : ''
-    }
+    ${empty_string_or(
+      resource_type.tags,
+      (tags) =>
+        `rt.add_tag(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
+    )}
   })`
 }
