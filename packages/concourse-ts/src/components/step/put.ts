@@ -1,5 +1,3 @@
-import {VError} from 'verror'
-
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 
@@ -87,15 +85,9 @@ export class PutStep<
   }
 
   public serialise() {
-    if (!this.resource) {
-      throw new VError(
-        'Cannot serialise PutStep because "put" has not been set'
-      )
-    }
-
     const result: Type.PutStep = {
       ...this.serialise_base(),
-      put: this.resource.name,
+      put: this.resource?.name,
 
       // This will rename the resource, but it's the same as "put" above.
       resource: undefined,
