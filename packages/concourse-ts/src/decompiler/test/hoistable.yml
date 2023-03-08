@@ -1,0 +1,5 @@
+jobs:
+  - name: j
+    plan:
+      - task: jt
+        file: tasks/echo.yml
