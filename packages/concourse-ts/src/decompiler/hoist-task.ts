@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import {VError} from 'verror'
 import * as YAML from 'yaml'
 
 import {Pipeline, Task, TaskStep} from '../declarations'
@@ -21,9 +20,7 @@ export const hoist_task = (
   const task = YAML.parse(file_contents.toString('utf-8'))
 
   if (!is_task(task)) {
-    throw new VError(
-      `File at "${file_path}" does not contain a valid task definition`
-    )
+    return null
   }
 
   return task
@@ -33,8 +30,8 @@ export const hoist_all_tasks = (
   work_dir: string,
   pipeline: Pipeline
 ): Pipeline => {
-  pipeline.jobs.map((job) =>
-    job.plan.map((step) => {
+  pipeline.jobs.forEach((job) =>
+    job.plan.forEach((step) => {
       if (!is_task_step(step)) {
         return
       }
