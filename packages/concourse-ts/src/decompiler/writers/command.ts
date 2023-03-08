@@ -1,28 +1,25 @@
 import {Command} from '../../declarations'
-import {type_of} from '../../utils'
+import {empty_string_or} from '../../utils/empty_string_or'
 
 export const write_command = (name: string, command: Command): string => {
   return `new Command(${JSON.stringify(name)}, (command) => {
-    ${command.args
-      .map((arg) => `command.add_arg(${JSON.stringify(arg)})`)
-      .join('\n')}
+    ${empty_string_or(command.args, (args) =>
+      args.map((arg) => `command.add_arg(${JSON.stringify(arg)})`).join('\n')
+    )}
 
-    ${
-      type_of(command.path) !== 'undefined'
-        ? `command.path = ${JSON.stringify(command.path)}`
-        : ''
-    }
+    ${empty_string_or(
+      command.path,
+      (path) => `command.path = ${JSON.stringify(path)}`
+    )}
 
-    ${
-      type_of(command.dir) !== 'undefined'
-        ? `command.dir = ${JSON.stringify(command.dir)}`
-        : ''
-    }
+    ${empty_string_or(
+      command.dir,
+      (dir) => `command.dir = ${JSON.stringify(dir)}`
+    )}
 
-    ${
-      type_of(command.user) !== 'undefined'
-        ? `command.user = ${JSON.stringify(command.user)}`
-        : ''
-    }
+    ${empty_string_or(
+      command.user,
+      (user) => `command.user = ${JSON.stringify(user)}`
+    )}
   })`
 }
