@@ -31,8 +31,5 @@
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
-  ],
-  "rules": {
-    "@typescript-eslint/no-non-null-assertion": 0
-  }
+  ]
 }
