@@ -2,6 +2,7 @@ import {type_of} from '../../../utils'
 import {Pipeline, TaskStep} from '../../../declarations'
 import {write_step_base} from './base'
 import {write_task} from '../task'
+import {empty_string_or} from '../../../utils/empty_string_or'
 
 export const write_task_step = (
   name: string,
@@ -11,11 +12,10 @@ export const write_task_step = (
   return `new TaskStep(${JSON.stringify(name)}, (step) => {
     ${write_step_base('step', name, step, pipeline)}
 
-    ${
-      step.config
-        ? `step.set_task(${write_task(`${name}_task`, step.config)})`
-        : ''
-    }
+    ${empty_string_or(
+      step.config,
+      (config) => `step.set_task(${write_task(step.task, config)})`
+    )}
 
     ${
       type_of(step.file) !== 'undefined'
