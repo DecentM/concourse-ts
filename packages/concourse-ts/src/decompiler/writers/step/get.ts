@@ -1,7 +1,7 @@
-import {type_of} from '../../../utils'
 import {GetStep, Pipeline} from '../../../declarations'
 import {write_step_base} from './base'
 import {write_resource} from '../resource'
+import {empty_string_or} from '../../../utils/empty_string_or'
 
 export const write_get_step = (
   name: string,
@@ -11,34 +11,32 @@ export const write_get_step = (
   return `new GetStep(${JSON.stringify(name)}, (step) => {
     ${write_step_base('step', name, step, pipeline)}
 
-    ${
-      type_of(step.resource) !== 'undefined'
-        ? `step.set_get(${write_resource(step.resource, pipeline)})`
-        : ''
-    }
+    ${empty_string_or(
+      step.resource,
+      (resource) => `step.set_get(${write_resource(resource, pipeline)})`
+    )}
 
-    ${step.passed
-      .map((job) => {
-        return `step.add_passed(${JSON.stringify(job)})`
-      })
-      .join('\n')}
+    ${empty_string_or(step.passed, (passed) =>
+      passed
+        .map((job) => {
+          return `step.add_passed({name: ${JSON.stringify(job)}})`
+        })
+        .join('\n')
+    )}
 
-    ${
-      type_of(step.params) !== 'undefined'
-        ? `step.set_params(${JSON.stringify(step.params)})`
-        : ''
-    }
+    ${empty_string_or(
+      step.params,
+      (params) => `step.set_params(${JSON.stringify(params)})`
+    )}
 
-    ${
-      type_of(step.trigger) !== 'undefined'
-        ? `step.trigger = ${JSON.stringify(step.trigger)}`
-        : ''
-    }
+    ${empty_string_or(
+      step.trigger,
+      (trigger) => `step.trigger = ${JSON.stringify(trigger)}`
+    )}
 
-    ${
-      type_of(step.version) !== 'undefined'
-        ? `step.version = ${JSON.stringify(step.version)}`
-        : ''
-    }
+    ${empty_string_or(
+      step.version,
+      (version) => `step.version = ${JSON.stringify(version)}`
+    )}
   })`
 }

@@ -1,5 +1,4 @@
 import {Customiser} from '../../declarations/customiser'
-import {Identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 
 import {Job} from '../job'
@@ -64,10 +63,10 @@ export class GetStep<
     return result
   }
 
-  private passed: Identifier[] = []
+  private passed: Job[] = []
 
   public add_passed = (...jobs: Job[]) => {
-    this.passed.push(...jobs.map((job) => job.name))
+    this.passed.push(...jobs)
   }
 
   private params: GetParams
@@ -87,7 +86,7 @@ export class GetStep<
 
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,
-      passed: this.passed,
+      passed: this.passed.map((passed_job) => passed_job.name),
       params: this.params,
       trigger: this.trigger,
       version: this.version,
