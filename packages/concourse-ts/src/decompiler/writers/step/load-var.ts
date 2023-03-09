@@ -1,6 +1,6 @@
 import {type_of} from '../../../utils'
 import {LoadVarStep, Pipeline} from '../../../declarations'
-import {write_step_base} from './_base'
+import {write_step_base} from './base'
 
 export const write_load_var_step = (
   name: string,

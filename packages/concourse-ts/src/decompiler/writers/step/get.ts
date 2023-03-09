@@ -1,6 +1,6 @@
 import {type_of} from '../../../utils'
 import {GetStep, Pipeline} from '../../../declarations'
-import {write_step_base} from './_base'
+import {write_step_base} from './base'
 import {write_resource} from '../resource'
 
 export const write_get_step = (

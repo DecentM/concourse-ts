@@ -1,6 +1,6 @@
 import {DoStep, Pipeline} from '../../../declarations'
 
-import {write_step_base} from './_base'
+import {write_step_base} from './base'
 import {write_step} from '.'
 
 export const write_do_step = (
