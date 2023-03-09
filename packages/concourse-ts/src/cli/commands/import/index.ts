@@ -63,7 +63,6 @@ export class Import extends CliCommand<ImportParams, ImportEventMap> {
             .set_import_path(this.params.package_path)
             .set_name(path_info.name)
             .set_input(file_contents.toString('utf-8'))
-            .set_prettier_config()
             .set_work_dir(path_info.dir)
 
           const decompile_result = decompilation.decompile()

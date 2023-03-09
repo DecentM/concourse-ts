@@ -1,6 +1,6 @@
 import {VError} from 'verror'
 import * as YAML from 'yaml'
-import prettier from 'prettier'
+import {transpile, ScriptTarget} from 'typescript'
 
 import pkg from '../../package.json'
 
@@ -50,26 +50,6 @@ export class Decompilation {
     return this
   }
 
-  private prettier_config: prettier.Options
-
-  public set_prettier_config = (
-    config: prettier.Options = {
-      semi: false,
-      singleQuote: true,
-      tabWidth: 2,
-      useTabs: false,
-      arrowParens: 'always',
-      endOfLine: 'lf',
-      printWidth: 90,
-      trailingComma: 'es5',
-      parser: 'typescript',
-    }
-  ) => {
-    this.prettier_config = config
-
-    return this
-  }
-
   public decompile = () => {
     if (!this.input) {
       throw new VError('Cannot get result without input. Call set_input first!')
@@ -111,9 +91,9 @@ export class Decompilation {
     return {
       warnings,
       filename: `${pipelineName}.pipeline.ts`,
-      pipeline: this.prettier_config
-        ? prettier.format(file_contents, this.prettier_config)
-        : file_contents,
+      pipeline: transpile(file_contents, {
+        target: ScriptTarget.Latest,
+      }),
     }
   }
 }

@@ -17,7 +17,6 @@ test('decompilation', async (t) => {
   decompilation
     .set_input(pipelineFile.toString('utf8'))
     .set_name('pipeline')
-    .set_prettier_config()
     .set_work_dir('src/decompiler/test')
 
   t.notThrows(() => {
@@ -35,7 +34,6 @@ test('decompilation does not produce undefined assignments', async (t) => {
       new Decompilation()
         .set_input(pipelineFile.toString('utf8'))
         .set_name('pipeline')
-        .set_prettier_config()
         .set_work_dir('src/decompiler/test')
     ),
     'result contains undefined'
