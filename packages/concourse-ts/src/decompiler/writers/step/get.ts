@@ -12,7 +12,7 @@ export const write_get_step = (
     ${write_step_base('step', name, step, pipeline)}
 
     ${empty_string_or(
-      step.resource,
+      step.resource ?? step.get,
       (resource) => `step.set_get(${write_resource(resource, pipeline)})`
     )}
 

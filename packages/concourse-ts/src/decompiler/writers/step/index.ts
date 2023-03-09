@@ -45,9 +45,6 @@ export const write_step = (
   if (is_try_step(step)) return write_try_step(name, step, pipeline)
 
   throw new VError(
-    `Step ${name} cannot be stringified to code as it's not a recognised type`,
-    {
-      step,
-    }
+    `Step "${name}" cannot be stringified to code as it's not a recognised type`
   )
 }
