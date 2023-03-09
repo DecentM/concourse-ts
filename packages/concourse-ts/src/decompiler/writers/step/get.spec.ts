@@ -77,7 +77,7 @@ test('writes empty step', (t) => {
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, default_get_step)
+  t.deepEqual(result, {...default_get_step, get: 'a'})
 })
 
 test('writes passed', (t) => {
@@ -88,7 +88,11 @@ test('writes passed', (t) => {
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, passed: ['step-a', 'step-b']})
+  t.deepEqual(result, {
+    ...default_get_step,
+    get: 'a',
+    passed: ['step-a', 'step-b'],
+  })
 })
 
 test('writes params', (t) => {
@@ -99,7 +103,7 @@ test('writes params', (t) => {
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, params: {my_param: '1'}})
+  t.deepEqual(result, {...default_get_step, get: 'a', params: {my_param: '1'}})
 })
 
 test('writes trigger', (t) => {
@@ -110,7 +114,7 @@ test('writes trigger', (t) => {
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, trigger: false})
+  t.deepEqual(result, {...default_get_step, get: 'a', trigger: false})
 })
 
 test('writes version', (t) => {
@@ -121,5 +125,5 @@ test('writes version', (t) => {
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, version: 'latest'})
+  t.deepEqual(result, {...default_get_step, get: 'a', version: 'latest'})
 })
