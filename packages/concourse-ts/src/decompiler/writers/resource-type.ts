@@ -8,7 +8,7 @@ export const write_resource_type = (
   resource_type_name: string,
   pipeline: Pipeline
 ) => {
-  const resource_type = pipeline.resource_types.find((resource_type) => {
+  const resource_type = pipeline.resource_types?.find((resource_type) => {
     return resource_type.name === resource_type_name
   })
 
