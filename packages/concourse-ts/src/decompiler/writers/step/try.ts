@@ -1,5 +1,5 @@
 import {Pipeline, TryStep} from '../../../declarations'
-import {write_step_base} from './_base'
+import {write_step_base} from './base'
 
 import {write_step} from '.'
 

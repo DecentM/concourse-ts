@@ -1,6 +1,6 @@
 import {type_of} from '../../../utils'
 import {Pipeline, SetPipelineStep} from '../../../declarations'
-import {write_step_base} from './_base'
+import {write_step_base} from './base'
 
 export const write_set_pipeline_step = (
   name: string,

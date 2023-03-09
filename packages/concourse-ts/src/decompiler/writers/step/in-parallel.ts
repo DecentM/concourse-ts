@@ -2,7 +2,7 @@ import {type_of} from '../../../utils'
 import {write_step} from '.'
 import {InParallelStep, Pipeline} from '../../../declarations'
 
-import {write_step_base} from './_base'
+import {write_step_base} from './base'
 
 export const write_in_parallel_step = (
   name: string,

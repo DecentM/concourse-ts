@@ -1,5 +1,6 @@
-import {type_of} from '../../../utils'
 import {Pipeline, Step} from '../../../declarations'
+import {empty_string_or} from '../../../utils/empty_string_or'
+import {parse_duration} from '../../../utils'
 
 import {write_step} from '.'
 
@@ -10,23 +11,26 @@ export const write_step_base = (
   pipeline: Pipeline
 ): string => {
   let result = `
-    ${
-      type_of(step.attempts) !== 'undefined'
-        ? `${variable_name}.attempts = ${step.attempts}`
-        : ''
-    }
+    ${empty_string_or(
+      step.attempts,
+      (attempts) => `${variable_name}.attempts = ${attempts}`
+    )}
 
-    ${
-      type_of(step.tags) !== 'undefined'
-        ? `${variable_name}.tags = ${JSON.stringify(step.tags)}`
-        : ''
-    }
+    ${empty_string_or(
+      step.tags,
+      (tags) =>
+        `${variable_name}.add_tag(${tags
+          .map((tag) => JSON.stringify(tag))
+          .join(', ')})`
+    )}
 
-    ${
-      type_of(step.timeout) !== 'undefined'
-        ? `${variable_name}.timeout = ${JSON.stringify(step.timeout)}`
-        : ''
-    }
+    ${empty_string_or(
+      step.timeout,
+      (timeout) =>
+        `${variable_name}.set_timeout(${JSON.stringify(
+          parse_duration(timeout)
+        )})`
+    )}
   `
 
   if (step.ensure) {
@@ -57,6 +61,14 @@ export const write_step_base = (
     result += `${variable_name}.add_on_success(${write_step(
       `${name}_on_success`,
       step.on_success,
+      pipeline
+    )})`
+  }
+
+  if (step.on_error) {
+    result += `${variable_name}.add_on_error(${write_step(
+      `${name}_on_error`,
+      step.on_error,
       pipeline
     )})`
   }
