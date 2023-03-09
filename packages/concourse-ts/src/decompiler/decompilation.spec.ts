@@ -23,13 +23,12 @@ test('decompiles with prettier', async (t) => {
   })
 })
 
-test('decompiles without prettier', async (t) => {
+test('decompiles without name', async (t) => {
   const decompilation = new Decompilation()
   const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
 
   decompilation
     .set_input(file.toString('utf8'))
-    .set_name('pipeline')
     .set_import_path('@decentm/concourse-ts')
     .set_work_dir('src/decompiler/test')
 

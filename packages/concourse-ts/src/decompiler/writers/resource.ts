@@ -9,12 +9,14 @@ export const write_resource = (
   resource_name: string,
   pipeline: Pipeline
 ): string => {
-  const resource = pipeline.resources.find((resource) => {
-    resource.name === resource_name
+  const resource = pipeline.resources?.find((resource) => {
+    return resource.name === resource_name
   })
 
   if (!resource) {
-    throw new VError(`Resource ${resource_name} does not exist in the pipeline`)
+    throw new VError(
+      `Resource "${resource_name}" does not exist in the pipeline`
+    )
   }
 
   return `new Resource(${JSON.stringify(resource.name)}, ${write_resource_type(
@@ -28,7 +30,8 @@ export const write_resource = (
 
     ${empty_string_or(
       resource.check_every,
-      (check_every) => `r.set_check_every(${parse_duration(check_every)})`
+      (check_every) =>
+        `r.set_check_every(${JSON.stringify(parse_duration(check_every))})`
     )}
 
     ${empty_string_or(
@@ -46,7 +49,11 @@ export const write_resource = (
       (is_public) => `r.public = ${is_public}`
     )}
 
-    ${empty_string_or(resource.tags, (tags) => `r.add_tag(...${tags})`)}
+    ${empty_string_or(
+      resource.tags,
+      (tags) =>
+        `r.add_tag(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
+    )}
 
     ${empty_string_or(
       resource.version,
