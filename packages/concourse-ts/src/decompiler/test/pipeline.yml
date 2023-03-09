@@ -28,7 +28,7 @@ resources:
       bucket: ((meta-bucket))
       versioned_file: prepod/versions.yml
 
-  - name: sandbox-trigger
+  - name: sandbox-version
     type: semver
     source:
       <<: *aws_creds_and_region

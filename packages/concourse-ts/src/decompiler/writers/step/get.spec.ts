@@ -9,7 +9,7 @@ import {write_get_step} from './get'
 
 const chain = (name: string, input: Type.GetStep, pipeline: Type.Pipeline) => {
   const code = `
-    import {GetStep} from '../../../components'
+    import {GetStep, Resource, ResourceType} from '../../../components'
 
     ${write_get_step(name, input, pipeline)}
   `
@@ -52,10 +52,17 @@ const default_get_step = {
 }
 
 const default_pipeline: Type.Pipeline = {
+  resource_types: [
+    {
+      name: 'at' as Identifier,
+      type: 'registry-image' as Identifier,
+      source: {},
+    },
+  ],
   resources: [
     {
       name: 'a' as Identifier,
-      type: 'registry-image' as Identifier,
+      type: 'at' as Identifier,
       source: {},
     },
   ],

@@ -8,7 +8,7 @@ const check = (decompilation: Decompilation): boolean => {
   return !decompilation.decompile().pipeline.includes('undefined')
 }
 
-test('decompiles with prettier', async (t) => {
+test('decompiles normally', async (t) => {
   const decompilation = new Decompilation()
   const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
 
