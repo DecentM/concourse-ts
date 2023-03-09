@@ -38,7 +38,8 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
 
     ${empty_string_or(
       task.container_limits?.memory,
-      (memory) => `task.set_memory_limit(${parse_bytes(memory)})`
+      (memory) =>
+        `task.set_memory_limit(${JSON.stringify(parse_bytes(memory))})`
     )}
 
     ${empty_string_or(
@@ -52,7 +53,7 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
     ${empty_string_or(
       task.outputs,
       (outputs) =>
-        `task.add_outputs(${outputs
+        `task.add_output(${outputs
           .map((output) => JSON.stringify(output))
           .join(', ')})`
     )}
@@ -65,9 +66,9 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
         )
         .map(([name, value]) => {
           return `task.set_params({
-          key: ${JSON.stringify(name)},
-          value: ${JSON.stringify(String(value))}
-        })`
+            key: ${JSON.stringify(name)},
+            value: ${JSON.stringify(String(value))}
+          })`
         })
         .join('\n')
     )}
