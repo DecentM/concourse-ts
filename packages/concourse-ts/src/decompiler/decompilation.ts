@@ -69,29 +69,29 @@ export class Decompilation {
 
     const warnings = validate(parsed)
 
-    const pipelineName = this.name ?? Date.now().toString()
-    const pipelineString = write_pipeline(pipelineName, parsed)
+    const pipeline_name = this.name ?? Date.now().toString()
+    const pipeline_string = write_pipeline(pipeline_name, parsed)
 
-    const allComponents = Object.keys(Components)
-    const usedComponents: string[] = []
+    const all_components = Object.keys(Components)
+    const used_components: string[] = []
 
-    allComponents.forEach((component) => {
-      if (pipelineString.includes(`new ${component}(`)) {
-        usedComponents.push(component)
+    all_components.forEach((component) => {
+      if (pipeline_string.includes(`new ${component}(`)) {
+        used_components.push(component)
       }
     })
 
     const file_contents = `
-      import { ${usedComponents.join(', ')} } from '${this.import_path}'
+      import { ${used_components.join(', ')} } from '${this.import_path}'
 
       export default () => {
-        return ${pipelineString}
+        return ${pipeline_string}
       }
     `
 
     return {
       warnings,
-      filename: `${pipelineName}.pipeline.ts`,
+      filename: `${pipeline_name}.pipeline.ts`,
       pipeline: transpile(file_contents, {
         target: ScriptTarget.Latest,
       }),
