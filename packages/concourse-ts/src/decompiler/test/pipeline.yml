@@ -1,53 +1,33 @@
+resource_types:
+  - name: semver
+    type: registry-image
+    source:
+      repository: alpine
+
 resources:
-  - name: pipeline-promotion
-    type: git
-    source:
-      uri: https://github.com/crsimmons/pipeline-promotion.git
-
-  - name: latest-versions
-    type: s3
-    source:
-      <<: &aws_creds_and_region
-        access_key_id: ((aws_access_key_id))
-        region_name: ((aws_region))
-        secret_access_key: ((aws_secret_access_key))
-      bucket: ((meta-bucket))
-      versioned_file: latest/versions.yml
-
-  - name: preprod-input-versions
-    type: s3
-    source:
-      <<: *aws_creds_and_region
-      bucket: ((meta-bucket))
-      versioned_file: sandbox/versions.yml
-
-  - name: prod-input-versions
-    type: s3
-    source:
-      <<: *aws_creds_and_region
-      bucket: ((meta-bucket))
-      versioned_file: prepod/versions.yml
-
   - name: sandbox-version
     type: semver
     source:
-      <<: *aws_creds_and_region
+      access_key_id: a
+      secret_access_key: a
       bucket: ((meta-bucket))
       key: sandbox-version
       driver: s3
 
-  - name: preprod-trigger
+  - name: preprod-version
     type: semver
     source:
-      <<: *aws_creds_and_region
+      access_key_id: a
+      secret_access_key: a
       driver: s3
       bucket: ((meta-bucket))
       key: preprod-version
 
-  - name: prod-trigger
+  - name: prod-version
     type: semver
     source:
-      <<: *aws_creds_and_region
+      access_key_id: a
+      secret_access_key: a
       driver: s3
       bucket: ((meta-bucket))
       key: prod-version

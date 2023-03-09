@@ -1,4 +1,4 @@
-resource-types:
+resource_types:
   - name: a
     type: registry-image
 
@@ -24,6 +24,6 @@ jobs:
 
   - name: aj1
     plan:
-      - get: a
+      - get: aa
         passed:
           - aj
