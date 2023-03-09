@@ -1,9 +1,9 @@
 import {VError} from 'verror'
 import {Pipeline} from '../../declarations'
 import {parse_duration} from '../../utils/duration'
-import {type_of} from '../../utils'
 
 import {write_resource_type} from './resource-type'
+import {empty_string_or} from '../../utils/empty_string_or'
 
 export const write_resource = (
   resource_name: string,
@@ -21,52 +21,41 @@ export const write_resource = (
     resource.type,
     pipeline
   )}, (r) => {
-    ${
-      type_of(resource.source) !== 'undefined'
-        ? `r.source = ${JSON.stringify(resource.source)}`
-        : ''
-    }
+    ${empty_string_or(
+      resource.source,
+      (source) => `r.source = ${JSON.stringify(source)}`
+    )}
 
-    ${
-      type_of(resource.check_every) !== 'undefined'
-        ? `r.set_check_every(${parse_duration(resource.check_every)})`
-        : ''
-    }
+    ${empty_string_or(
+      resource.check_every,
+      (check_every) => `r.set_check_every(${parse_duration(check_every)})`
+    )}
 
-    ${
-      type_of(resource.icon) !== 'undefined'
-        ? `r.icon = ${JSON.stringify(resource.icon)}`
-        : ''
-    }
+    ${empty_string_or(
+      resource.icon,
+      (icon) => `r.icon = ${JSON.stringify(icon)}`
+    )}
 
-    ${
-      type_of(resource.old_name) !== 'undefined'
-        ? `r.old_name = ${JSON.stringify(resource.old_name)}`
-        : ''
-    }
+    ${empty_string_or(
+      resource.old_name,
+      (old_name) => `r.old_name = ${JSON.stringify(old_name)}`
+    )}
 
-    ${
-      type_of(resource.public) !== 'undefined'
-        ? `r.public = ${resource.public}`
-        : ''
-    }
+    ${empty_string_or(
+      resource.public,
+      (is_public) => `r.public = ${is_public}`
+    )}
 
-    ${
-      type_of(resource.tags) === 'array' && resource.tags.length
-        ? `r.add_tag(...${resource.tags})`
-        : ''
-    }
+    ${empty_string_or(resource.tags, (tags) => `r.add_tag(...${tags})`)}
 
-    ${
-      type_of(resource.version) !== 'undefined'
-        ? `r.set_version(${JSON.stringify(resource.version)})`
-        : ''
-    }
+    ${empty_string_or(
+      resource.version,
+      (version) => `r.set_version(${JSON.stringify(version)})`
+    )}
 
-    ${
-      type_of(resource.webhook_token) !== 'undefined'
-        ? `r.webhook_token = ${JSON.stringify(resource.webhook_token)}`
-        : ''
-    }
+    ${empty_string_or(
+      resource.webhook_token,
+      (webhook_token) => `r.webhook_token = ${JSON.stringify(webhook_token)}`
+    )}
   })`
 }
