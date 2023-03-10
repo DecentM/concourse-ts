@@ -50,6 +50,16 @@ test("throws when resource type doesn't exist in the pipeline", (t) => {
   })
 })
 
+test('throws when there are no resource_types in the pipeline', (t) => {
+  const pipeline: Type.Pipeline = {
+    jobs: [],
+  }
+
+  t.throws(() => chain('a', pipeline), {
+    message: 'Resource type "a" does not exist in the pipeline',
+  })
+})
+
 test('writes empty resource type', (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [
