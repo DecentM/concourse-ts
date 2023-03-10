@@ -80,6 +80,17 @@ test('writes empty step', (t) => {
   t.deepEqual(result, {...default_get_step, get: 'a'})
 })
 
+test('writes empty step from resource property', (t) => {
+  const {result, diagnostics} = chain(
+    'a',
+    {get: 'b' as Identifier, resource: 'a' as Identifier},
+    default_pipeline
+  )
+
+  t.deepEqual(diagnostics, [])
+  t.deepEqual(result, {...default_get_step, get: 'a'})
+})
+
 test('writes passed', (t) => {
   const {result, diagnostics} = chain(
     'a',
