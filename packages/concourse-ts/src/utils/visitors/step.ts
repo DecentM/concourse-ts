@@ -44,16 +44,15 @@ export const visit_step = (step: Type.Step, visitor: StepVisitor) => {
 
   if (is_put_step(step) && visitor.PutStep) visitor.PutStep(step)
 
+  if (is_task_step(step)) {
+    if (visitor.TaskStep) visitor.TaskStep(step)
+    if (step.config && visitor.Task) visitor.Task(step.config)
+  }
+
   if (is_set_pipeline_step(step) && visitor.SetPipelineStep)
     visitor.SetPipelineStep(step)
 
-  if (is_task_step(step) && visitor.TaskStep) visitor.TaskStep(step)
-
   if (is_try_step(step) && visitor.TryStep) visitor.TryStep(step)
-
-  if (is_task_step(step)) {
-    if (step.config && visitor.Task) visitor.Task(step.config)
-  }
 
   if (step.on_abort) {
     if (visitor.OnAbort) visitor.OnAbort(step.on_abort)
