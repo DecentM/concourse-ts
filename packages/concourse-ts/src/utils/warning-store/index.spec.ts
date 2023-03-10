@@ -1,5 +1,5 @@
 import test from 'ava'
-import {ValidationWarningType, WarningStore} from '.'
+import {to_identifier, ValidationWarningType, WarningStore} from '.'
 
 test('returns empty array with no warnings', (t) => {
   const warnings = new WarningStore()
@@ -39,6 +39,16 @@ test('distinguishes between fatal and non-fatal errors', (t) => {
   t.true(warnings.has_fatal())
 })
 
+test('returns only requested types', (t) => {
+  const warnings = new WarningStore()
+
+  warnings.add_warning(ValidationWarningType.Fatal, 'aaa')
+  warnings.add_warning(ValidationWarningType.NonFatal, 'bbb')
+
+  t.is(warnings.get_warnings(ValidationWarningType.Fatal).length, 1)
+  t.is(warnings.get_warnings(ValidationWarningType.NonFatal).length, 1)
+})
+
 test('copies all warnings', (t) => {
   const warnings1 = new WarningStore()
   const warnings2 = new WarningStore()
@@ -56,4 +66,8 @@ test('copies all warnings', (t) => {
   t.is(warnings2.get_warnings()[0].messages.join(', '), 'bbb')
   t.is(warnings2.get_warnings()[1].messages.join(', '), 'aaa')
   t.true(warnings2.has_fatal())
+})
+
+test('converts location and name to identifier', (t) => {
+  t.is(to_identifier({index: 0, section: 'a'}, 'b'), 'a.b')
 })
