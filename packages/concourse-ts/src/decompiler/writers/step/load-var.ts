@@ -1,6 +1,6 @@
-import {type_of} from '../../../utils'
 import {LoadVarStep, Pipeline} from '../../../declarations'
 import {write_step_base} from './base'
+import {empty_string_or} from '../../../utils/empty_string_or'
 
 export const write_load_var_step = (
   name: string,
@@ -10,28 +10,21 @@ export const write_load_var_step = (
   return `new LoadVarStep(${JSON.stringify(name)}, (step) => {
     ${write_step_base('step', name, step, pipeline)}
 
-    ${
-      type_of(step.load_var) !== 'undefined'
-        ? `step.load_var = ${JSON.stringify(step.load_var)}`
-        : ''
-    }
+    ${empty_string_or(
+      step.load_var,
+      (load_var) => `step.load_var = ${JSON.stringify(load_var)}`
+    )}
 
-    ${
-      type_of(step.file) !== 'undefined'
-        ? `step.file = ${JSON.stringify(step.file)}`
-        : ''
-    }
+    ${empty_string_or(
+      step.file,
+      (file) => `step.file = ${JSON.stringify(file)}`
+    )}
 
-    ${
-      type_of(step.format) !== 'undefined'
-        ? `step.format = ${JSON.stringify(step.format)}`
-        : ''
-    }
+    ${empty_string_or(
+      step.format,
+      (format) => `step.format = ${JSON.stringify(format)}`
+    )}
 
-    ${
-      type_of(step.reveal) !== 'undefined'
-        ? `step.reveal = ${step.reveal ?? 'undefined'}`
-        : ''
-    }
+    ${empty_string_or(step.reveal, (reveal) => `step.reveal = ${reveal}`)}
   })`
 }
