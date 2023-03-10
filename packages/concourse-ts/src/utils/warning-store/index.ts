@@ -1,3 +1,5 @@
+import {type_of} from '../type-of'
+
 export enum ValidationWarningType {
   Fatal,
   NonFatal,
@@ -43,7 +45,7 @@ export class WarningStore {
   }
 
   public get_warnings = (type?: ValidationWarningType) => {
-    if (!type) {
+    if (type_of(type) !== 'number') {
       return this.warnings
     }
 
