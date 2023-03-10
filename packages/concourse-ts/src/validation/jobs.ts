@@ -14,35 +14,28 @@ export const validate_jobs = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
   const names: Record<string, Location> = {}
 
-  if (pipeline.jobs?.length === 0) {
+  if (!pipeline.jobs || pipeline.jobs.length === 0) {
     return warnings.add_warning(
       ValidationWarningType.Fatal,
-      'jobs: pipeline must contain at least one job'
+      'pipeline must contain at least one job'
     )
   }
 
-  pipeline.jobs?.forEach((job, index) => {
+  pipeline.jobs.forEach((job, index) => {
     const location: Location = {section: 'jobs', index}
     const identifier = to_identifier(location, job.name)
 
-    warnings.copy_from(validate_identifier(job.name, identifier))
+    warnings.copy_from(validate_identifier(job.name, `jobs[${index}]`))
 
     const existing = names[job.name]
 
     if (existing) {
       warnings.add_warning(
         ValidationWarningType.Fatal,
-        `${existing.index} and ${location.index} have the same name ('${job.name}')`
+        `job ${existing.index} and ${location.index} have the same name: "${job.name}"`
       )
     } else if (job.name) {
       names[job.name] = location
-    }
-
-    if (!job.name) {
-      warnings.add_warning(
-        ValidationWarningType.Fatal,
-        `${identifier} has no name`
-      )
     }
 
     // We abstract this away in concourse-ts, only build_log_retention is used,
@@ -88,7 +81,7 @@ export const validate_jobs = (pipeline: Type.Pipeline) => {
       ) {
         warnings.add_warning(
           ValidationWarningType.Fatal,
-          `${identifier}  has build_log_retention.min_success_builds: ${job.build_log_retention.minimum_succeeded_builds} greater than build_log_retention.min_success_builds: ${job.build_log_retention.builds}`
+          `${identifier} has build_log_retention.min_success_builds: ${job.build_log_retention.minimum_succeeded_builds} greater than build_log_retention.min_success_builds: ${job.build_log_retention.builds}`
         )
       }
     }
