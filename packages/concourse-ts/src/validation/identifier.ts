@@ -42,7 +42,7 @@ export const validate_identifier = (
       reason = 'must start with a lowercase letter'
     } else {
       const invalid_match = invalid_character.exec(identifier)
-      reason = `illegal character '${invalid_match[0]}'`
+      reason = `illegal character "${invalid_match[0]}"`
     }
 
     return warnings.add_warning(
