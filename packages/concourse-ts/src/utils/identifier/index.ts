@@ -69,12 +69,9 @@ export const get_identifier = (input: string): Identifier => {
   const warnings = validate_identifier(input)
 
   throw new VError(
-    `"${input}" is not a valid identifier: ${warnings
+    warnings
       .get_warnings()
       .map((warning) => warning.messages.join(', '))
-      .join(',\n')}`,
-    {
-      warnings: warnings.get_warnings(),
-    }
+      .join(',\n')
   )
 }

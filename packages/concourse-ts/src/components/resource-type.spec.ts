@@ -48,8 +48,7 @@ test('throws if the type is unassigned', (t) => {
       rt.serialise()
     },
     {
-      message:
-        '"" is not a valid identifier: identifier cannot be an empty string',
+      message: 'identifier cannot be an empty string',
     }
   )
 })
