@@ -38,7 +38,7 @@ type RequireAtLeastOne<T> = {
 export type DurationInput = RequireAtLeastOne<{
   nanoseconds?: number
   microseconds?: number
-  miliseconds?: number
+  milliseconds?: number
   seconds?: number
   minutes?: number
   hours?: number
@@ -75,8 +75,8 @@ export const get_duration = (input: DurationInput | 'never'): Duration => {
     result += `${input.seconds}s`
   }
 
-  if (typeof input.miliseconds !== 'undefined') {
-    result += `${input.miliseconds}ms`
+  if (typeof input.milliseconds !== 'undefined') {
+    result += `${input.milliseconds}ms`
   }
 
   if (typeof input.microseconds !== 'undefined') {
@@ -103,10 +103,14 @@ export const parse_duration = (
   input: string,
   extra_valid_units: string[] = []
 ) => {
-  if (!input) {
+  if (type_of(input) !== 'string') {
     throw new VError(
-      `value of type ${type_of(input)} cannot be parsed as a duration`
+      `value of type "${type_of(input)}" cannot be parsed as duration`
     )
+  }
+
+  if (!input) {
+    throw new VError(`an empty string cannot be parsed as duration`)
   }
 
   const tokens = []
@@ -132,7 +136,7 @@ export const parse_duration = (
 
     if (token) {
       tokens.push(token)
-      continue
+      cursor--
     }
 
     cursor++
@@ -172,7 +176,7 @@ export const parse_duration = (
 
   nodes.forEach((node) => {
     if (![...extra_valid_units, ...VALID_DURATION_UNITS].includes(node.unit)) {
-      throw new VError(`${node.unit} is not a valid duration unit`)
+      throw new VError(`"${node.unit}" is not a valid duration unit`)
     }
 
     switch (node.unit) {
@@ -186,7 +190,7 @@ export const parse_duration = (
         break
 
       case 'ms':
-        result.miliseconds = node.value
+        result.milliseconds = node.value
         break
 
       case 's':
@@ -202,10 +206,6 @@ export const parse_duration = (
         break
     }
   })
-
-  if (Object.keys(result).length === 0) {
-    throw new VError(`${input} cannot be parsed into a valid duration input`)
-  }
 
   return result
 }
