@@ -24,7 +24,7 @@ test('creates durations with all components in the right order', (t) => {
       seconds: 15,
       microseconds: 1,
       hours: 6,
-      miliseconds: 23,
+      milliseconds: 23,
       nanoseconds: 10,
     }),
     '6h1m15s23ms1us10ns' as Duration
