@@ -1,10 +1,11 @@
 import test from 'ava'
 import {deduplicate_by_key} from '.'
 
-const noop = () => ''
-
 test('returns empty array for non-arrays', (t) => {
-  t.deepEqual(deduplicate_by_key(noop, null as unknown as string[]), [])
+  t.deepEqual(
+    deduplicate_by_key(() => '', null as unknown as string[]),
+    []
+  )
 })
 
 test('filters duplicates', (t) => {
