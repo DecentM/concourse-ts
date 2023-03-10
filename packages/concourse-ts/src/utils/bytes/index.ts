@@ -65,8 +65,6 @@ export const parse_bytes = (input: number): BytesInput => {
       result.b += 1
       continue
     }
-
-    break
   }
 
   // Remove zeroes
