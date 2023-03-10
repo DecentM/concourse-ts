@@ -1,4 +1,3 @@
-import {type_of} from '../../../utils'
 import {Pipeline, PutStep} from '../../../declarations'
 import {write_step_base} from './base'
 import {write_resource} from '../resource'
@@ -17,22 +16,24 @@ export const write_put_step = (
       (resource) => `step.set_put(${write_resource(resource, pipeline)})`
     )}
 
-    ${
-      type_of(step.inputs) !== 'undefined'
-        ? `step.set_inputs(${JSON.stringify(step.inputs)})`
-        : ''
-    }
+    ${empty_string_or(
+      step.inputs,
+      (inputs) => `step.set_inputs(${JSON.stringify(inputs)})`
+    )}
 
-    ${
-      type_of(step.params) !== 'undefined'
-        ? `step.set_params(${JSON.stringify(step.params)})`
-        : ''
-    }
+    ${empty_string_or(
+      step.params,
+      (params) => `step.set_params(${JSON.stringify(params)})`
+    )}
 
-    ${
-      type_of(step.get_params) !== 'undefined'
-        ? `step.set_get_param(...${JSON.stringify(step.get_params)})`
-        : ''
-    }
+    ${empty_string_or(step.get_params, (get_params) =>
+      Object.entries(get_params)
+        .map(([name, value]) => {
+          return `step.set_get_param({key: ${JSON.stringify(
+            name
+          )}, value: ${JSON.stringify(value)}})`
+        })
+        .join('\n')
+    )}
   })`
 }
