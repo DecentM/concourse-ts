@@ -20,37 +20,23 @@ export const validate_resources = (
     const location: Location = {section: 'resources', index}
     const identifier = to_identifier(location, resource.name)
 
-    warnings.copy_from(validate_identifier(resource.name))
+    warnings.copy_from(validate_identifier(resource.name, identifier))
 
     const existing = seenTypes[resource.name]
 
     if (existing) {
       warnings.add_warning(
         ValidationWarningType.Fatal,
-        `${existing.index} and ${location.index} have the same name ('${resource.name}')`
+        `Resource ${existing.index} and ${location.index} have the same name: "${resource.name}"`
       )
     } else if (resource.name) {
       seenTypes[resource.name] = location
     }
 
-    if (!resource.name) {
-      warnings.add_warning(
-        ValidationWarningType.Fatal,
-        `${identifier} has no name`
-      )
-    }
-
-    if (resource.name?.includes(' ')) {
-      warnings.add_warning(
-        ValidationWarningType.Fatal,
-        `Resource name "${identifier}" is not valid. Spaces are not allowed.`
-      )
-    }
-
     if (!resource.type) {
       warnings.add_warning(
         ValidationWarningType.Fatal,
-        `${identifier} has no type`
+        `Resource "${identifier}" has no type`
       )
     }
   })
