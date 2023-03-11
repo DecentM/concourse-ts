@@ -43,7 +43,7 @@ export class Pipeline<Group extends string = string> {
     if (groupIndex === -1) {
       this.groups.push({
         name: group_name,
-        jobs: [job.name],
+        jobs: [get_identifier(job.name)],
       })
 
       return
@@ -51,7 +51,7 @@ export class Pipeline<Group extends string = string> {
 
     this.groups[groupIndex] = {
       name: group_name,
-      jobs: [...this.groups[groupIndex].jobs, job.name],
+      jobs: [...this.groups[groupIndex].jobs, get_identifier(job.name)],
     }
   }
 
