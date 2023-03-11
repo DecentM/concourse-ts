@@ -20,30 +20,23 @@ export const validate_resource_types = (
     const location: Location = {section: 'resource_types', index}
     const identifier = to_identifier(location, resource_type.name)
 
-    warnings.copy_from(validate_identifier(resource_type.name))
+    warnings.copy_from(validate_identifier(resource_type.name, identifier))
 
     const existing = seen_types[resource_type.name]
 
     if (existing) {
       warnings.add_warning(
         ValidationWarningType.Fatal,
-        `${existing.index} and ${location.index} have the same name ('${resource_type.name}')`
+        `Resource type ${existing.index} and ${location.index} have the same name: "${resource_type.name}"`
       )
     } else if (resource_type.name) {
       seen_types[resource_type.name] = location
     }
 
-    if (!resource_type.name) {
-      warnings.add_warning(
-        ValidationWarningType.Fatal,
-        `${identifier} has no name`
-      )
-    }
-
     if (!resource_type.type) {
       warnings.add_warning(
         ValidationWarningType.Fatal,
-        `${identifier} has no type`
+        `Resource type "${identifier}" has no type`
       )
 
       return
@@ -52,7 +45,7 @@ export const validate_resource_types = (
     if (resource_type.type !== 'registry-image') {
       warnings.add_warning(
         ValidationWarningType.NonFatal,
-        `Resource type "${identifier}" is not based on registry-image, some workers may be missing "${resource_type.type}".`
+        `Resource type "${identifier}" is not based on registry-image, some workers may be missing "${resource_type.type}"`
       )
     }
   })
