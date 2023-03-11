@@ -1,93 +1,159 @@
 import test from 'ava'
 
+import {Identifier} from '../../utils'
 import {
-  Command,
-  Job,
-  Pipeline,
-  Resource,
-  ResourceType,
-  Task,
-} from '../../components'
+  ValidationWarning,
+  ValidationWarningType,
+} from '../../utils/warning-store'
 
 import {validate_get_steps} from './get'
 
-test.beforeEach(() => {
-  ResourceType.customise((rt) => {
-    rt.set_type('registry-image')
-  })
-})
-
-const rt = new ResourceType('rt', (rt) => {
-  rt.set_type('registry-image')
-})
-
-const r = new Resource('r', rt, (r) => {
-  r.source = {
-    repository: 'alpine',
-    tag: 'latest',
-  }
-})
-
-const dummy_task = new Task('task', (task) => {
-  task.platform = 'linux'
-  task.set_image_resource(r)
-  task.run = new Command('task-run', (command) => {
-    command.path = '/bin/sh'
-    command.add_arg('-exuc')
-    command.add_arg('echo "Hello, world!"')
-  })
-})
-
 test('validates happy path', (t) => {
-  const pipeline = new Pipeline('p', (pipeline) => {
-    const job1 = new Job('j1', (job) => {
-      job.add_step(r.as_get_step())
-    })
-
-    pipeline.add_job(job1)
-
-    const job2 = new Job('j2', (job) => {
-      const gs = r.as_get_step({
-        passed: [job1],
-      })
-
-      job.add_step(gs)
-    })
-
-    pipeline.add_job(job2)
+  const warnings = validate_get_steps({
+    jobs: [
+      {
+        name: 'j0' as Identifier,
+        plan: [
+          {
+            get: 'r' as Identifier,
+          },
+        ],
+      },
+      {
+        name: 'j1' as Identifier,
+        plan: [
+          {
+            put: 'r' as Identifier,
+          },
+        ],
+      },
+      {
+        name: 'j2' as Identifier,
+        plan: [
+          {
+            get: 'r' as Identifier,
+            passed: ['j0', 'j1'] as Identifier[],
+          },
+        ],
+      },
+    ],
+    resources: [
+      {
+        name: 'r' as Identifier,
+        type: 'registry-image' as Identifier,
+        source: {
+          repository: 'alpine',
+          tag: 'latest',
+        },
+      },
+    ],
   })
 
-  const warnings = validate_get_steps(pipeline.serialise())
-
+  t.false(warnings.has_fatal())
   t.deepEqual(warnings.get_warnings(), [])
 })
 
-test('does not allow "passed" when a job doesn\'t use it', (t) => {
-  const rt = new ResourceType('rt')
-  const r = new Resource('r', rt)
-
-  const pipeline = new Pipeline('p', (pipeline) => {
-    const job1 = new Job('j1', (job) => {
-      job.add_step(dummy_task.as_task_step())
-    })
-
-    pipeline.add_job(job1)
-
-    const job2 = new Job('j2', (job) => {
-      const gs = r.as_get_step({
-        passed: [job1],
-      })
-
-      job.add_step(gs)
-    })
-
-    pipeline.add_job(job2)
+test('does not allow "passed" when a job doesn\'t interact with it', (t) => {
+  const warnings = validate_get_steps({
+    jobs: [
+      {
+        name: 'j1' as Identifier,
+        plan: [
+          {
+            task: 'task' as Identifier,
+            config: {
+              image_resource: {
+                source: {
+                  repository: 'alpine',
+                  tag: 'latest',
+                },
+                type: 'rt' as Identifier,
+              },
+              platform: 'linux',
+              run: {
+                path: '/bin/sh',
+                args: ['-exuc', 'echo "Hello, world!"'],
+              },
+            },
+          },
+        ],
+      },
+      {
+        name: 'j2' as Identifier,
+        plan: [
+          {
+            get: 'r' as Identifier,
+            passed: ['j1'] as Identifier[],
+          },
+        ],
+      },
+    ],
+    resources: [
+      {
+        name: 'r' as Identifier,
+        type: 'registry-image' as Identifier,
+        source: {},
+      },
+    ],
   })
 
-  const warnings = validate_get_steps(pipeline.serialise())
+  t.true(warnings.has_fatal())
+  t.deepEqual(warnings.get_warnings(), [
+    new ValidationWarning({
+      type: ValidationWarningType.Fatal,
+      messages: ['Job "j1" does not interact with resource "r"'],
+    }),
+  ])
+})
 
-  t.deepEqual(
-    warnings.get_warnings().map((warning) => warning.messages.join(', ')),
-    ['Job "j1" does not interact with resource "r"']
-  )
+test("doesn't allow duplicate names", (t) => {
+  const warnings = validate_get_steps({
+    jobs: [
+      {
+        name: 'aj' as Identifier,
+        plan: [
+          {
+            get: 'ag' as Identifier,
+          },
+          {
+            get: 'ag' as Identifier,
+          },
+        ],
+      },
+    ],
+  })
+
+  t.true(warnings.has_fatal())
+  t.deepEqual(warnings.get_warnings(), [
+    new ValidationWarning({
+      type: ValidationWarningType.Fatal,
+      messages: [
+        'Get step "ag" already exists. To fix this, rename one of the get steps to something else.',
+      ],
+    }),
+  ])
+})
+
+test("doesn't allow an unknown job in passed", (t) => {
+  const warnings = validate_get_steps({
+    jobs: [
+      {
+        name: 'aj' as Identifier,
+        plan: [
+          {
+            get: 'ag' as Identifier,
+            passed: ['aj1'] as Identifier[],
+          },
+        ],
+      },
+    ],
+  })
+
+  t.true(warnings.has_fatal())
+  t.deepEqual(warnings.get_warnings(), [
+    new ValidationWarning({
+      type: ValidationWarningType.Fatal,
+      messages: ['Get step "ag" relies on an unknown job: "aj1"'],
+    }),
+  ])
 })
