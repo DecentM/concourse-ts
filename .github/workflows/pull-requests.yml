@@ -6,8 +6,60 @@ on:
       - main
 
 jobs:
+  determine-matrix:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    outputs:
+      affected: ${{ steps.affected.outputs.projects }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
+      - uses: nrwl/nx-set-shas@v3
+
+      - name: Determine affected packages
+        id: affected
+        run: |
+          set -exu
+          echo projects=$(yarn --silent nx print-affected | jq -c '.projects') >> $GITHUB_OUTPUT
+
   lint:
     name: lint-packages
+
+    needs:
+      - determine-matrix
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
 
     runs-on: ubuntu-latest
 
@@ -50,6 +102,11 @@ jobs:
 
   tests:
     name: test-packages
+
+    needs:
+      - determine-matrix
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
 
     runs-on: ubuntu-latest
 
@@ -99,6 +156,11 @@ jobs:
 
   build:
     name: build-packages
+
+    needs:
+      - determine-matrix
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
 
     runs-on: ubuntu-latest
 
