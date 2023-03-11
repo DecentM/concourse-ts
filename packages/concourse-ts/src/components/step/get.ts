@@ -1,5 +1,6 @@
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
+import {get_identifier} from '../../utils'
 
 import {Job} from '../job'
 import {Resource} from '../resource'
@@ -89,7 +90,7 @@ export class GetStep<
       passed:
         this.passed.length === 0
           ? undefined
-          : this.passed.map((passed_job) => passed_job.name),
+          : this.passed.map((passed_job) => get_identifier(passed_job.name)),
       params: this.params,
       trigger: this.trigger,
       version: this.version,
