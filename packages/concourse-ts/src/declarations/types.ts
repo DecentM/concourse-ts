@@ -153,9 +153,9 @@ export type StepBase = {
  * https://concourse-ci.org/get-step.html
  */
 export type GetStep = {
-  get: Identifier | Resource['name']
-  resource?: Resource['name']
-  passed?: Job['name'][]
+  get: Identifier
+  resource?: Identifier
+  passed?: Identifier[]
   params?: Config
   trigger?: boolean
   version?: Version
@@ -170,8 +170,8 @@ export type Inputs = 'detect' | 'all' | Identifier[]
  * https://concourse-ci.org/put-step.html
  */
 export type PutStep = {
-  put: Identifier | Resource['name']
-  resource?: Resource['name']
+  put: Identifier
+  resource?: Identifier
   inputs?: Inputs
   params?: Config
   get_params?: Config

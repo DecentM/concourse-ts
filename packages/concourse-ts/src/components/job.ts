@@ -23,8 +23,6 @@ export class Job {
     Job.customiser = init
   }
 
-  public name: Identifier
-
   /**
    * Constructs a new Job
    *
@@ -33,9 +31,7 @@ export class Job {
    * @param {string} name The name of the step. This will be visible in the Concourse UI.
    * @param {Customiser<Job>} init Optional customiser function that runs during construction.
    */
-  constructor(name: string, customise?: Customiser<Job>) {
-    this.name = get_identifier(name)
-
+  constructor(public name: string, customise?: Customiser<Job>) {
     if (Job.customiser) {
       Job.customiser(this)
     }
@@ -329,7 +325,7 @@ export class Job {
    */
   public serialise() {
     const result: Type.Job = {
-      name: this.name,
+      name: get_identifier(this.name),
       plan: this.plan.map((s) => s.serialise()),
       build_log_retention: this.build_log_retention,
 
