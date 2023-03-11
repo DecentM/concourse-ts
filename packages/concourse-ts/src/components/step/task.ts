@@ -110,7 +110,9 @@ export class TaskStep<
   public serialise() {
     const result: Type.TaskStep = {
       ...this.serialise_base(),
-      task: this.task?.name ?? get_identifier(`${this.name}_task`),
+      task: this.task?.name
+        ? get_identifier(this.task.name)
+        : get_identifier(`${this.name}_task`),
       config: this.file ? undefined : this.task?.serialise(),
       file: this.file,
       image: this.image,

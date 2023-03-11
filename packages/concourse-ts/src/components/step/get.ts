@@ -1,5 +1,6 @@
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
+import {get_identifier} from '../../utils'
 
 import {Job} from '../job'
 import {Resource} from '../resource'
@@ -86,7 +87,7 @@ export class GetStep<
 
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,
-      passed: this.passed.map((passed_job) => passed_job.name),
+      passed: this.passed.map((passed_job) => get_identifier(passed_job.name)),
       params: this.params,
       trigger: this.trigger,
       version: this.version,
