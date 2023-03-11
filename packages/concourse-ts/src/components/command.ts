@@ -11,10 +11,10 @@ export class Command {
    * Customises every Command created after calling this function. If called
    * multiple times, only the last call will have an effect.
    *
-   * @param {Type.Customiser<Command>} init
+   * @param {Type.Customiser<Command>} customise
    */
-  public static customise = (init: Customiser<Command>) => {
-    Command.customiser = init
+  public static customise = (customise: Customiser<Command>) => {
+    Command.customiser = customise
   }
 
   /**

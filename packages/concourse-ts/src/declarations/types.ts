@@ -69,12 +69,13 @@ export type Resource = {
  *
  * https://concourse-ci.org/tasks.html#schema.task-config.image_resource
  */
-export type AnonymousResource = {
-  type: ResourceType['name']
-  source: Config
-  params?: Config
-  version?: Version
-}
+export type AnonymousResource<AnonymousIdentifier extends string = Identifier> =
+  {
+    type: AnonymousIdentifier
+    source: Config
+    params?: Config
+    version?: Version
+  }
 
 /**
  * JSON representation of {@link Command:class}
