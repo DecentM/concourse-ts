@@ -67,5 +67,5 @@ export type Location = {
 }
 
 export const to_identifier = (l: Location, name: string): string => {
-  return `${l.section}.${name}`
+  return `${l.section}${name ? `.${name}` : `[${l.index}]`}`
 }
