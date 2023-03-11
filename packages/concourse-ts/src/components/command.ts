@@ -1,13 +1,29 @@
 import {Customiser} from '../declarations/customiser'
 import * as Type from '../declarations/types'
 
+/**
+ * https://concourse-ci.org/tasks.html#schema.command
+ */
 export class Command {
   private static customiser: Customiser<Command>
 
+  /**
+   * Customises every Command created after calling this function. If called
+   * multiple times, only the last call will have an effect.
+   *
+   * @param {Type.Customiser<Command>} init
+   */
   public static customise = (init: Customiser<Command>) => {
     Command.customiser = init
   }
 
+  /**
+   * https://concourse-ci.org/tasks.html#schema.command
+   *
+   * @param {string} name The name of the command. This will only be used for
+   * error messages, and will not be included in the serialised output.
+   * @param {Type.Customiser} customise
+   */
   constructor(public name: string, customise?: Customiser<Command>) {
     if (Command.customiser) {
       Command.customiser(this)
@@ -18,19 +34,40 @@ export class Command {
     }
   }
 
+  /**
+   * https://concourse-ci.org/tasks.html#schema.command.path
+   */
   public path: Type.FilePath
 
   private args: string[] = []
 
+  /**
+   * Adds an argument to this Command
+   *
+   * https://concourse-ci.org/tasks.html#schema.command.args
+   *
+   * @param {string} arg
+   */
   public add_arg = (arg: string) => {
     this.args.push(arg)
   }
 
+  /**
+   * https://concourse-ci.org/tasks.html#schema.command.dir
+   */
   public dir: Type.DirPath
 
+  /**
+   * https://concourse-ci.org/tasks.html#schema.command.user
+   */
   public user: string
 
-  serialise() {
+  /**
+   * Converts this Command to its JSON representation
+   *
+   * @returns {Type.Command}
+   */
+  public serialise() {
     const result: Type.Command = {
       path: this.path,
       args: this.args,
