@@ -24,7 +24,9 @@ export const validate_var_sources = (pipeline: Type.Pipeline): WarningStore => {
     // Concourse does an internal check here to see if the defined varSourceType
     // exists in its implementation
 
-    switch (var_source.type) {
+    const var_source_type = var_source.type
+
+    switch (var_source_type) {
       case 'vault':
       case 'dummy':
       case 'ssm':
@@ -37,7 +39,7 @@ export const validate_var_sources = (pipeline: Type.Pipeline): WarningStore => {
       default:
         warnings.add_warning(
           ValidationWarningType.Fatal,
-          `this credential manager type is not supported in pipeline yet`
+          `credential manager type "${var_source_type}" is not supported in pipeline yet`
         )
     }
 
@@ -46,7 +48,7 @@ export const validate_var_sources = (pipeline: Type.Pipeline): WarningStore => {
     if (existing) {
       warnings.add_warning(
         ValidationWarningType.Fatal,
-        `${existing.index} and ${location.index} have the same name ('${var_source.name}')`
+        `var_source ${existing.index} and ${location.index} have the same name: "${var_source.name}"`
       )
     } else if (var_source.name) {
       names[var_source.name] = location
