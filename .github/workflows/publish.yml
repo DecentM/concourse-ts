@@ -141,6 +141,63 @@ jobs:
 
       - run: yarn nx affected --target=test
 
+  docs:
+    name: build-docs
+
+    runs-on: ubuntu-latest
+
+    needs:
+      - determine-matrix
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
+      - name: Generate docs
+        run: |
+          set -exu
+          yarn docs
+
+      - name: Push to wiki repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.WIKI_PAT }}
+        with:
+          source-directory: 'docs'
+          destination-github-username: 'DecentM'
+          destination-repository-name: 'concourse-ts.wiki'
+          user-email: 41898282+github-actions[bot]@users.noreply.github.com
+          target-branch: master
+
   build:
     name: build-packages
 
@@ -202,7 +259,7 @@ jobs:
       - lint
       - tests
       - build
-      - determine-matrix
+      - docs
 
     runs-on: ubuntu-latest
 

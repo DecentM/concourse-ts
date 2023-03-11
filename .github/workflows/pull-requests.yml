@@ -195,6 +195,52 @@ jobs:
       - name: Build packages
         run: yarn nx affected --target=build
 
+  docs:
+    name: build-docs
+
+    runs-on: ubuntu-latest
+
+    needs:
+      - determine-matrix
+
+    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: lock-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            lock-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          set -exu
+          yarn --frozen-lockfile --non-interactive
+
+      - name: Generate docs
+        run: |
+          set -exu
+          yarn docs
+
   auto-merge:
     runs-on: ubuntu-latest
 
@@ -202,6 +248,7 @@ jobs:
       - lint
       - tests
       - build
+      - docs
 
     if: ${{ github.actor == 'dependabot[bot]' }}
 
