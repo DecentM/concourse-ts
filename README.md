@@ -11,12 +11,12 @@
 
 <div align="center">
 
-  ![Coveralls](https://img.shields.io/coverallsCoverage/github/DecentM/concourse-ts?style=for-the-badge)
-  ![GitHub Workflow
-  Status](https://img.shields.io/github/actions/workflow/status/DecentM/concourse-ts/publish.yml?style=for-the-badge)
-  ![npm
+  [![Coveralls](https://img.shields.io/coverallsCoverage/github/DecentM/concourse-ts?style=for-the-badge)](https://coveralls.io/github/DecentM/concourse-ts)
+  [![GitHub Workflow
+  Status](https://img.shields.io/github/actions/workflow/status/DecentM/concourse-ts/publish.yml?style=for-the-badge)](https://github.com/DecentM/concourse-ts/actions)
+  [![npm
   (scoped)](https://img.shields.io/npm/v/@decentm/concourse-ts?style=for-the-badge)
-  ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@decentm/concourse-ts?style=for-the-badge)
+  ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@decentm/concourse-ts?style=for-the-badge)](https://bundlephobia.com/package/@decentm/concourse-ts)
 
 </div>
 
