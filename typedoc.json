@@ -1,4 +1,5 @@
 {
+  "$schema": "https://typedoc.org/schema.json",
   "theme": "github-wiki",
   "out": "docs",
   "entryPointStrategy": "packages",
@@ -7,5 +8,10 @@
   "excludePrivate": true,
   "excludeInternal": true,
   "excludeProtected": true,
-  "cleanOutputDir": true
+  "excludeExternals": true,
+  "cleanOutputDir": true,
+  "validation": {
+    "notDocumented": true
+  },
+  "treatWarningsAsErrors": true
 }
