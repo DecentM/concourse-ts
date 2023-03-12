@@ -1,7 +1,7 @@
 {
-  "name": "@decentm/concourse-ts-resource-bitbucket-pr",
+  "name": "@decentm/concourse-ts-resource-helm3",
   "version": "0.2.1",
-  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-bitbucket-pr",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-helm3",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
   "type": "commonjs",
@@ -16,7 +16,6 @@
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x",
-    "@decentm/concourse-ts-resource-registry-image": "0.x",
-    "@decentm/concourse-ts-resource-git": "0.x"
+    "@decentm/concourse-ts-resource-registry-image": "0.x"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-resource-time",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-time",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",

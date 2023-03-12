@@ -40,6 +40,9 @@
       "@decentm/concourse-ts-resource-github-release": [
         "packages/concourse-ts-resource-github-release/src/index.ts"
       ],
+      "@decentm/concourse-ts-resource-helm3": [
+        "packages/concourse-ts-resource-helm3/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-k8s": [
         "packages/concourse-ts-resource-k8s/src/index.ts"
       ],
