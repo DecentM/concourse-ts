@@ -36,10 +36,14 @@ export class Resource<
   private static get_step_customiser: Customiser<GetStep, Resource>
 
   public static customise_get_step = <
-    CustomResource extends Resource,
+    Source extends Type.Config = Type.Config,
+    PutParams extends Type.Config = Type.Config,
     GetParams extends Type.Config = Type.Config
   >(
-    init: Customiser<GetStep<GetParams>, CustomResource>
+    init: Customiser<
+      GetStep<Source, PutParams, GetParams>,
+      Resource<Source, PutParams, GetParams>
+    >
   ) => {
     Resource.get_step_customiser = init
   }
@@ -47,32 +51,36 @@ export class Resource<
   private static put_step_customiser: Customiser<PutStep, Resource>
 
   public static customise_put_step = <
-    CustomResource extends Resource,
-    PutParams extends Type.Config = Type.Config
+    Source extends Type.Config = Type.Config,
+    PutParams extends Type.Config = Type.Config,
+    GetParams extends Type.Config = Type.Config
   >(
-    init: Customiser<PutStep<PutParams>, CustomResource>
+    init: Customiser<
+      PutStep<Source, PutParams, GetParams>,
+      Resource<Source, PutParams, GetParams>
+    >
   ) => {
     Resource.put_step_customiser = init
   }
 
   private get_step_customiser: Customiser<GetStep, Resource>
 
-  public customise_get_step = <
-    CustomResource extends Resource,
-    GetParams extends Type.Config = Type.Config
-  >(
-    init: Customiser<GetStep<GetParams>, CustomResource>
+  public customise_get_step = (
+    init: Customiser<
+      GetStep<Source, PutParams, GetParams>,
+      Resource<Source, PutParams, GetParams>
+    >
   ) => {
     this.get_step_customiser = init
   }
 
   private put_step_customiser: Customiser<PutStep, Resource>
 
-  public customise_put_step = <
-    CustomResource extends Resource,
-    PutParams extends Type.Config = Type.Config
-  >(
-    init: Customiser<PutStep<PutParams>, CustomResource>
+  public customise_put_step = (
+    init: Customiser<
+      PutStep<Source, PutParams, GetParams>,
+      Resource<Source, PutParams, GetParams>
+    >
   ) => {
     this.put_step_customiser = init
   }
