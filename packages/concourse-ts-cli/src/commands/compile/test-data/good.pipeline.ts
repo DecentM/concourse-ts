@@ -1,4 +1,4 @@
-import {Command, Job, Pipeline, Task} from '../../../../components'
+import { Command, Job, Pipeline, Task } from '@decentm/concourse-ts'
 
 export default () => {
   return new Pipeline('a', (pipeline) => {

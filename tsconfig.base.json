@@ -25,6 +25,12 @@
       "@decentm/concourse-ts": [
         "packages/concourse-ts/src/index.ts"
       ],
+      "@decentm/concourse-ts-cli": [
+        "packages/concourse-ts-cli/src/index.ts"
+      ],
+      "@decentm/concourse-ts-recipe-auto-pipeline": [
+        "packages/concourse-ts-recipe-auto-pipeline/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-apache-directory-index": [
         "packages/concourse-ts-resource-apache-directory-index/src/index.ts"
       ],

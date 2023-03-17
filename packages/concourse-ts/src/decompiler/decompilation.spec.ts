@@ -2,10 +2,10 @@ import test from 'ava'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-import {Decompilation} from './decompilation'
+import {Decompilation} from '.'
 
-const check = (decompilation: Decompilation): boolean => {
-  return !decompilation.decompile().pipeline.includes('undefined')
+const check = (decompilation: Decompilation, yaml: string): boolean => {
+  return !decompilation.decompile(yaml).pipeline.includes('undefined')
 }
 
 test('decompiles normally', async (t) => {
@@ -13,13 +13,12 @@ test('decompiles normally', async (t) => {
   const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
 
   decompilation
-    .set_input(file.toString('utf8'))
     .set_name('pipeline')
     .set_import_path('@decentm/concourse-ts')
     .set_work_dir('src/decompiler/test')
 
   t.notThrows(() => {
-    decompilation.decompile()
+    decompilation.decompile(file.toString('utf8'))
   })
 })
 
@@ -28,12 +27,11 @@ test('decompiles without name', async (t) => {
   const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
 
   decompilation
-    .set_input(file.toString('utf8'))
     .set_import_path('@decentm/concourse-ts')
     .set_work_dir('src/decompiler/test')
 
   t.notThrows(() => {
-    decompilation.decompile()
+    decompilation.decompile(file.toString('utf8'))
   })
 })
 
@@ -44,28 +42,11 @@ test('does not produce undefined assignments', async (t) => {
     check(
       new Decompilation()
         .set_name('pipeline')
-        .set_input(file.toString('utf8'))
-        .set_work_dir('src/decompiler/test')
+        .set_work_dir('src/decompiler/test'),
+      file.toString('utf8')
     ),
     'result contains undefined'
   )
-})
-
-test('does not decompile without input', (t) => {
-  const decompilation = new Decompilation()
-
-  t.throws(() => decompilation.decompile(), {
-    message: 'Cannot get result without input. Call set_input first!',
-  })
-})
-
-test('does not allow setting the input twice', (t) => {
-  const decompilation = new Decompilation().set_input('')
-
-  t.throws(() => decompilation.set_input(''), {
-    message:
-      'This decompilation already has an input. Create a new decompilation.',
-  })
 })
 
 test('throws when input is not a pipeline', async (t) => {
@@ -75,14 +56,13 @@ test('throws when input is not a pipeline', async (t) => {
   )
 
   decompilation
-    .set_input(file.toString('utf8'))
     .set_name('pipeline')
     .set_import_path('@decentm/concourse-ts')
     .set_work_dir('src/decompiler/test')
 
   t.throws(
     () => {
-      decompilation.decompile()
+      decompilation.decompile(file.toString('utf8'))
     },
     {
       message: 'Input is not a pipeline!',

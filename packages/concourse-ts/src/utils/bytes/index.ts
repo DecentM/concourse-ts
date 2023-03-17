@@ -32,7 +32,7 @@ export const get_bytes = (input: BytesInput): number => {
 }
 
 export const parse_bytes = (input: number): BytesInput => {
-  const result: BytesInput = {
+  const result = {
     gb: 0,
     mb: 0,
     kb: 0,
