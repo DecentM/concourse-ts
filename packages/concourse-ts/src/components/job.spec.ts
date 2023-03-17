@@ -27,7 +27,7 @@ const default_job = {
   on_success: undefined,
   public: undefined,
   serial: undefined,
-  serial_groups: [],
+  serial_groups: undefined,
 }
 
 const empty_step = {
@@ -37,7 +37,7 @@ const empty_step = {
   on_error: undefined,
   on_failure: undefined,
   on_success: undefined,
-  tags: [],
+  tags: undefined,
   timeout: undefined,
 }
 

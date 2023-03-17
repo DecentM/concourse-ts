@@ -86,7 +86,10 @@ export class GetStep<
 
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,
-      passed: this.passed.map((passed_job) => passed_job.name),
+      passed:
+        this.passed.length === 0
+          ? undefined
+          : this.passed.map((passed_job) => passed_job.name),
       params: this.params,
       trigger: this.trigger,
       version: this.version,

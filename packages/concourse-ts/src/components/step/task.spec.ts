@@ -82,7 +82,7 @@ test('stores tasks', (t) => {
     ...default_task_step,
     task: 'at',
     config: {
-      caches: [],
+      caches: undefined,
       container_limits: undefined,
       image_resource: undefined,
       inputs: undefined,

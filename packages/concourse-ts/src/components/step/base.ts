@@ -234,7 +234,7 @@ export abstract class Step<StepType extends Type.Step> {
       on_error: this.on_error?.serialise(),
       on_failure: this.on_failure?.serialise(),
       on_success: this.on_success?.serialise(),
-      tags: this.tags,
+      tags: this.tags.length === 0 ? undefined : this.tags,
       timeout: this.timeout,
     }
 

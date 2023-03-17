@@ -35,7 +35,7 @@ const default_job = {
   on_success: undefined,
   public: undefined,
   serial: undefined,
-  serial_groups: [],
+  serial_groups: undefined,
 }
 
 Pipeline.customise((pipeline) => {

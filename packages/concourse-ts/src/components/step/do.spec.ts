@@ -67,7 +67,7 @@ test('stores steps', (t) => {
         format: undefined,
         load_var: 'b',
         reveal: undefined,
-        tags: [],
+        tags: undefined,
       },
       {
         ...default_step,
@@ -75,7 +75,7 @@ test('stores steps', (t) => {
         format: undefined,
         load_var: 'a',
         reveal: undefined,
-        tags: [],
+        tags: undefined,
       },
     ],
   })

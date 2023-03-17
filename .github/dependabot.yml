@@ -13,10 +13,6 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
-    directory: /packages/concourse-ts-recipe-auto-pipeline/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-apache-directory-index/
     schedule:
       interval: daily

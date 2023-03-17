@@ -31,7 +31,7 @@ const chain = (name: string, input: Type.Task<Identifier, Identifier>) => {
 }
 
 const default_task = {
-  caches: [],
+  caches: undefined,
   container_limits: undefined,
   image_resource: {
     source: {},

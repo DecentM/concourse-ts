@@ -37,7 +37,7 @@ const default_step = {
   on_error: undefined,
   on_failure: undefined,
   on_success: undefined,
-  tags: [],
+  tags: undefined,
   timeout: undefined,
 }
 
@@ -47,7 +47,7 @@ const default_load_var_step = {
   format: undefined,
   load_var: undefined,
   reveal: undefined,
-  tags: [],
+  tags: undefined,
 }
 
 const default_try_step = {

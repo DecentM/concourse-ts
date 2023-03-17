@@ -18,7 +18,7 @@ const default_get_step = {
   ...default_step,
   get: undefined,
   params: undefined,
-  passed: [],
+  passed: undefined,
   trigger: undefined,
   version: undefined,
   resource: undefined,
