@@ -118,6 +118,8 @@ const handle_output = async (
         ])
       })
     )
+
+    return
   }
 
   results.forEach((result) => {
