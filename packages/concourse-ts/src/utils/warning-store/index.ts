@@ -44,6 +44,12 @@ export class WarningStore {
     )
   }
 
+  public has_non_fatal = () => {
+    return this.warnings.some(
+      (warning) => warning.type === ValidationWarningType.NonFatal
+    )
+  }
+
   public get_warnings = (type?: ValidationWarningType) => {
     if (type_of(type) !== 'number') {
       return this.warnings

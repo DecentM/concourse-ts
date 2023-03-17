@@ -1,11 +1,9 @@
-import {VError} from 'verror'
 import * as YAML from 'yaml'
 import path from 'node:path'
 
 import {Pipeline} from '../components/pipeline'
 import {validate} from '../validation'
 import {ValidationWarningType, WarningStore} from '../utils/warning-store'
-import {Identifier} from '../utils/identifier'
 
 export type CompilationOptions = {
   output_dir?: string
@@ -17,7 +15,18 @@ const default_compilation_options: CompilationOptions = {
   extract_tasks: false,
 }
 
-export class Compilation<Group extends Identifier = Identifier> {
+type CompilationResultFile = {
+  filepath: string
+  content: string
+}
+
+export type CompilationResult = {
+  warnings: WarningStore
+  pipeline: CompilationResultFile
+  tasks: CompilationResultFile[]
+}
+
+export class Compilation {
   constructor(
     private _options: CompilationOptions = default_compilation_options
   ) {}
@@ -27,20 +36,6 @@ export class Compilation<Group extends Identifier = Identifier> {
       ...default_compilation_options,
       ...this._options,
     }
-  }
-
-  private input?: Pipeline<Group>
-
-  public set_input(input: Pipeline<Group>) {
-    if (this.input) {
-      throw new VError(
-        'This compilation already has an input. Create a new compilation.'
-      )
-    }
-
-    this.input = input
-
-    return this
   }
 
   private get_task_path = (filename: string) => {
@@ -67,10 +62,10 @@ export class Compilation<Group extends Identifier = Identifier> {
     })
   }
 
-  public validate = () => {
+  public validate = (input: Pipeline) => {
     // Validate already checks for falsiness, we just want to check for its
     // constructor here if input exists.
-    if (this.input && this.input.constructor.name !== Pipeline.name) {
+    if (input && input.constructor.name !== Pipeline.name) {
       const warnings = new WarningStore()
 
       return warnings.add_warning(
@@ -79,25 +74,21 @@ export class Compilation<Group extends Identifier = Identifier> {
       )
     }
 
-    return validate(this.input?.serialise())
+    return validate(input.serialise())
   }
 
-  public compile = () => {
-    if (!this.input) {
-      throw new VError('Cannot get result without input. Call set_input first!')
-    }
-
-    const warnings = this.validate()
-    const tasks = this.input.get_tasks()
+  public compile = (input: Pipeline): CompilationResult => {
+    const warnings = this.validate(input)
+    const tasks = input.get_tasks()
 
     if (this.options.extract_tasks) {
-      this.transform_task_paths(this.input)
+      this.transform_task_paths(input)
     }
 
     const result = {
       pipeline: {
-        filename: this.get_pipeline_path(`${this.input.name}.yml`),
-        serialised: this.input.serialise(),
+        filename: this.get_pipeline_path(`${input.name}.yml`),
+        serialised: input.serialise(),
       },
       tasks: tasks.map((task) => ({
         filename: this.get_task_path(`${task.name}.yml`),

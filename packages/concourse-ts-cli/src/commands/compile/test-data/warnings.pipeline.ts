@@ -1,6 +1,6 @@
-import {Command, Job, Pipeline, Task} from '../../../../components'
+import { Command, Job, Pipeline, Task } from '@decentm/concourse-ts'
 
-export default async () => {
+export default () => {
   return new Pipeline('a', (pipeline) => {
     pipeline.add_job(
       new Job('aj', (job) => {
@@ -15,8 +15,8 @@ export default async () => {
               },
             })
             task.run = new Command('asd', (command) => {
-              command.path = 'echo'
-              command.add_arg('Hello, world!')
+              command.path = 'which'
+              command.add_arg('echo')
             })
           }).as_task_step()
         )
