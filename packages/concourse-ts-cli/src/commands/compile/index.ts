@@ -21,9 +21,8 @@ const file_contents_valid = async (input: object) => {
     return false
   }
 
-  // Default export must return a Pipeline or Task instance, or a Promise that
-  // resolves to either
-  if (!((await input.default()) instanceof ConcourseTs.Pipeline)) {
+  // Default export must return a serialisable
+  if (!(await input.default()).serialise) {
     return false
   }
 
@@ -134,8 +133,8 @@ export const run_compile_command = async (params: CompileParams) => {
   const results = await Promise.all(
     pipelines.map((pipeline) => {
       const compilation = new ConcourseTs.Compiler.Compilation({
-        output_dir: params.output,
-        extract_tasks: params.extract_tasks,
+        output_dir: params.output ?? '.',
+        extract_tasks: params.extract_tasks ?? false,
       })
 
       const result = compilation.compile(pipeline)
