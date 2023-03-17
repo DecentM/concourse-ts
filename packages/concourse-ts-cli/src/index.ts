@@ -1,6 +1,11 @@
+import 'ts-node/register/transpile-only'
+
 import { Command } from 'commander'
 
 import pkg from '../package.json'
+
+export { run_compile_command } from '../src/commands/compile'
+export { run_decompile_command } from '../src/commands/decompile'
 
 import { run_compile_command } from '../src/commands/compile'
 import { run_decompile_command } from '../src/commands/decompile'
