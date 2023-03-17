@@ -1,7 +1,6 @@
 import * as Type from '../declarations/types'
-import {type_of} from '../utils/type-of'
 
-import {ValidationWarningType, WarningStore} from '../utils/warning-store'
+import {WarningStore} from '../utils/warning-store'
 import {validate_cycle} from './cycle'
 import {validate_display} from './display'
 import {validate_groups} from './groups'
@@ -16,13 +15,6 @@ import {validate_steps} from './steps'
 
 export const validate = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
-
-  if (!pipeline) {
-    return warnings.add_warning(
-      ValidationWarningType.Fatal,
-      `Pipeline is invalid. Expected an object, but got ${type_of(pipeline)}`
-    )
-  }
 
   warnings.copy_from(
     validate_groups(pipeline),

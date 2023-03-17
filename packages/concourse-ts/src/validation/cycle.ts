@@ -32,7 +32,7 @@ export const detect_cycle = (
         if (!next_job) {
           return warnings.add_warning(
             ValidationWarningType.Fatal,
-            `job "${job.name}" contains a step that relies on a job that does not exist ("${passed_job}")`
+            `job "${job.name}" contains a step that relies on a non-existent job: "${passed_job}"`
           )
         }
 

@@ -7,7 +7,7 @@ import {ResourceType} from './resource-type'
 import {Task} from './task'
 
 const default_task = {
-  caches: [],
+  caches: undefined,
   container_limits: undefined,
   image_resource: undefined,
   inputs: undefined,

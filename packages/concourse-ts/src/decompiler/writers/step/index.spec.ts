@@ -48,7 +48,7 @@ const default_step = {
   on_error: undefined,
   on_failure: undefined,
   on_success: undefined,
-  tags: [],
+  tags: undefined,
   timeout: undefined,
 }
 
@@ -119,7 +119,7 @@ test('writes get steps', (t) => {
   t.deepEqual(result, {
     ...default_step,
     params: undefined,
-    passed: [],
+    passed: undefined,
     resource: undefined,
     trigger: undefined,
     version: undefined,

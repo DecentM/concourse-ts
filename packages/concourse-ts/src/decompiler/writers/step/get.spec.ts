@@ -37,7 +37,7 @@ const default_step = {
   on_error: undefined,
   on_failure: undefined,
   on_success: undefined,
-  tags: [],
+  tags: undefined,
   timeout: undefined,
 }
 
@@ -45,7 +45,7 @@ const default_get_step = {
   ...default_step,
   get: undefined,
   params: undefined,
-  passed: [],
+  passed: undefined,
   trigger: undefined,
   version: undefined,
   resource: undefined,

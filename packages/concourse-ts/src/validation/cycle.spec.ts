@@ -66,6 +66,36 @@ test('detects cycles', (t) => {
   ])
 })
 
+test('detects "passed" with non-existent jobs', (t) => {
+  const warnings = validate_cycle({
+    jobs: [
+      {
+        name: 'my-job' as Identifier,
+        plan: [],
+      },
+      {
+        name: 'my-job-1' as Identifier,
+        plan: [
+          {
+            get: 'asd' as Identifier,
+            passed: ['some-job' as Identifier],
+          },
+        ],
+      },
+    ],
+  })
+
+  t.is(warnings.has_fatal(), true)
+  t.deepEqual(warnings.get_warnings(), [
+    new ValidationWarning({
+      type: ValidationWarningType.Fatal,
+      messages: [
+        'job "my-job-1" contains a step that relies on a non-existent job: "some-job"',
+      ],
+    }),
+  ])
+})
+
 test('ignores pipelines with no jobs', (t) => {
   const warnings = validate_cycle({} as Pipeline)
 

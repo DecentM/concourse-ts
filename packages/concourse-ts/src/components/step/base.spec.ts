@@ -36,7 +36,7 @@ const default_get_step = {
   ...default_step,
   get: 'r',
   params: undefined,
-  passed: [],
+  passed: undefined,
   resource: undefined,
   timeout: undefined,
   trigger: undefined,
@@ -46,7 +46,7 @@ const default_get_step = {
 const default_task_step = {
   ...default_step,
   config: {
-    caches: [],
+    caches: undefined,
     container_limits: undefined,
     image_resource: undefined,
     inputs: undefined,

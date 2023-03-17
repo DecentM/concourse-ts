@@ -140,7 +140,7 @@ export class Task<
       image_resource: this.image_resource,
       platform: this.platform,
       run: this.run?.serialise(),
-      caches: this.caches,
+      caches: this.caches.length === 0 ? undefined : this.caches,
       container_limits: this.container_limits,
       inputs: this.inputs,
       outputs: this.outputs,

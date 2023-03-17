@@ -20,7 +20,7 @@ const default_load_var_step = {
   format: undefined,
   load_var: undefined,
   reveal: undefined,
-  tags: [],
+  tags: undefined,
 }
 
 const default_try_step = {

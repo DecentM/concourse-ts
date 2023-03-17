@@ -15,6 +15,7 @@ test('adds fatal errors and reports them', (t) => {
   t.is(warnings.get_warnings().length, 1)
   t.is(warnings.get_warnings()[0].messages.join(', '), 'aaa')
   t.true(warnings.has_fatal())
+  t.false(warnings.has_non_fatal())
 })
 
 test('adds non-fatal errors and reports them', (t) => {
@@ -25,6 +26,7 @@ test('adds non-fatal errors and reports them', (t) => {
   t.is(warnings.get_warnings().length, 1)
   t.is(warnings.get_warnings()[0].messages.join(', '), 'bbb')
   t.false(warnings.has_fatal())
+  t.true(warnings.has_non_fatal())
 })
 
 test('distinguishes between fatal and non-fatal errors', (t) => {
