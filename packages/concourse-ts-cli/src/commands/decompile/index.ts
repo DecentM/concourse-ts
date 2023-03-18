@@ -1,6 +1,7 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 
+import rimraf from 'rimraf'
 import glob from 'fast-glob'
 import fsp from 'fs/promises'
 import fs from 'fs'
@@ -83,9 +84,20 @@ const handle_output = async (
       }
 
       if (params.output) {
-        const output_path = path.resolve(params.output, result.filename)
-        await mkdirp(params.output)
-        await fsp.writeFile(output_path, result.pipeline)
+        const output_path = path.resolve(params.output)
+
+        if (fs.existsSync(output_path)) {
+          if (params.force) {
+            await rimraf(output_path)
+          } else {
+            throw new VError(
+              `Output path "${output_path}" already exists. Pass "-f" to overwrite and clean the output path.`
+            )
+          }
+        }
+
+        await mkdirp(output_path)
+        await fsp.writeFile(path.join(output_path, result.filename), result.pipeline)
         return
       }
 

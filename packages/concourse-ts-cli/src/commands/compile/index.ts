@@ -2,6 +2,7 @@ import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 import { transpile, ScriptTarget } from 'typescript'
 
+import rimraf from 'rimraf'
 import glob from 'fast-glob'
 import fs from 'fs'
 import fsp from 'fs/promises'
@@ -92,15 +93,19 @@ const handle_output = async (
   if (params.output) {
     const output_path = path.resolve(params.output)
 
-    if (fs.existsSync(output_path) && !params.force) {
-      throw new VError(
-        `Output file "${params.output}" already exists. Pass "-f" to overwrite.`
-      )
+    if (fs.existsSync(output_path)) {
+      if (params.force) {
+        await rimraf(output_path)
+      } else {
+        throw new VError(
+          `Output path "${output_path}" already exists. Pass "-f" to overwrite and clean the output path.`
+        )
+      }
     }
 
     await Promise.all([
-      mkdirp(path.join(params.output, 'pipeline')),
-      mkdirp(path.join(params.output, 'task')),
+      mkdirp(path.join(output_path, 'pipeline')),
+      mkdirp(path.join(output_path, 'task')),
     ])
 
     await Promise.all(
