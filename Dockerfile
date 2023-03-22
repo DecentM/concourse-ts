@@ -50,5 +50,6 @@ ARG package
 COPY --from=proddeps /app/packages/${package}/node_modules ./packages/${package}/node_modules
 
 ENV PATH="${PATH}:/app/packages/concourse-ts-cli/bin"
+ENV NODE_PATH="${NODE_PATH}:/app/node_modules"
 
 ENTRYPOINT [ "sh", "-exu" ]
