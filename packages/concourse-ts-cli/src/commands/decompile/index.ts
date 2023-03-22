@@ -23,6 +23,10 @@ export type DecompileParams = {
   force?: boolean
 }
 
+const is_empty = (path: string) => {
+  return fs.readdirSync(path).length === 0
+}
+
 const resolve_inputs = async (
   params: DecompileParams
 ): Promise<Array<{ filepath: string; content: string }>> => {
@@ -86,7 +90,7 @@ const handle_output = async (
       if (params.output) {
         const output_path = path.resolve(params.output)
 
-        if (fs.existsSync(output_path)) {
+        if (fs.existsSync(output_path) && !is_empty(output_path)) {
           if (params.force) {
             await rimraf(output_path)
           } else {

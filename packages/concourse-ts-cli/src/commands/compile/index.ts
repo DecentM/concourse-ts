@@ -16,6 +16,10 @@ export type CompileParams = {
   input?: string
 }
 
+const is_empty = (path: string) => {
+  return fs.readdirSync(path).length === 0
+}
+
 const file_contents_valid = async (input: object) => {
   // Default export must be a function
   if (!('default' in input) || typeof input.default !== 'function') {
@@ -93,7 +97,7 @@ const handle_output = async (
   if (params.output) {
     const output_path = path.resolve(params.output)
 
-    if (fs.existsSync(output_path)) {
+    if (fs.existsSync(output_path) && !is_empty(output_path)) {
       if (params.force) {
         await rimraf(output_path)
       } else {
