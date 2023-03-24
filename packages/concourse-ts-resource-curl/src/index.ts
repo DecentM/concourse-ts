@@ -19,7 +19,7 @@ export type Source = {
    *   - "My-User-Agent"
    * ```
    */
-  arguments?: string[]
+  arguments?: ConcourseTs.Type.YamlValue[]
   /**
    * Same as `arguments`, but this will only be passed during the `check`
    * behaviour.
@@ -58,7 +58,7 @@ export type PutParams = {
    * merged with the arguments from the source configuration, `check_arguments`
    * is ignored.
    */
-  arguments?: string[]
+  arguments?: ConcourseTs.Type.YamlValue[]
 }
 
 export type GetParams = {
@@ -74,7 +74,7 @@ export type GetParams = {
    * merged with the arguments from the source configuration, `check_arguments`
    * is ignored.
    */
-  arguments?: string[]
+  arguments?: ConcourseTs.Type.YamlValue[]
 }
 
 export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
