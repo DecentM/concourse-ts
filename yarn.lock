@@ -1457,14 +1457,14 @@
   dependencies:
     nx "15.8.8"
 
-"@nrwl/vite@15.8.7":
-  version "15.8.7"
-  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-15.8.7.tgz#48bcdecc456c32cb04ee8beb4813ce8a31911a21"
-  integrity sha512-qEy+jfFE6W64HFqtTUt+hLdM+6NLlbILX0b9+6NTWU5j1Y6SDbsqj7xqVE6CMXA+PsPV3HBBEtBSjip/WUgmYw==
+"@nrwl/vite@15.8.8":
+  version "15.8.8"
+  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-15.8.8.tgz#466cdfa4857b58ea9cd66d7f73a72907a4103106"
+  integrity sha512-WFKdv5jyx2Zu1cHmuOewhM0URR1gwGrc1zOGM3eGCSN28EFvIWh9V1ygA3swoPiZCHdjhxGlaZGxEyhT4SYXdQ==
   dependencies:
-    "@nrwl/devkit" "15.8.7"
-    "@nrwl/js" "15.8.7"
-    "@nrwl/workspace" "15.8.7"
+    "@nrwl/devkit" "15.8.8"
+    "@nrwl/js" "15.8.8"
+    "@nrwl/workspace" "15.8.8"
     "@phenomnomnominal/tsquery" "4.1.1"
     "@swc/helpers" "^0.4.11"
     dotenv "~10.0.0"
