@@ -47,6 +47,13 @@ export type Source = {
 
 export type PutParams = {
   /**
+   * The address this resource will interact with. Any URL accepted by `curl` is
+   * allowed, and if not specified the URL from the source configuration will be
+   * used.
+   */
+  url?: string
+
+  /**
    * An additional array of strings that serve as arguments. This array will be
    * merged with the arguments from the source configuration, `check_arguments`
    * is ignored.
@@ -55,6 +62,13 @@ export type PutParams = {
 }
 
 export type GetParams = {
+  /**
+   * The address this resource will interact with. Any URL accepted by `curl` is
+   * allowed, and if not specified the URL from the source configuration will be
+   * used.
+   */
+  url?: string
+
   /**
    * An additional array of strings that serve as arguments. This array will be
    * merged with the arguments from the source configuration, `check_arguments`
