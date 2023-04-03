@@ -1320,34 +1320,6 @@
     tree-kill "1.2.2"
     tslib "^2.3.0"
 
-"@nrwl/js@15.9.1":
-  version "15.9.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-15.9.1.tgz#d1c996cc3a6d4fc7e042a787f3d65739e2ae6596"
-  integrity sha512-Z16OdRv3u3jB6gJ2HCz9xjvQHV4qQKTqcXZEgcc3z4KIT3bphJJEdN+eNPo8eATLjKu8IBpKBUFtCRBSHIR+OA==
-  dependencies:
-    "@babel/core" "^7.15.0"
-    "@babel/plugin-proposal-class-properties" "^7.14.5"
-    "@babel/plugin-proposal-decorators" "^7.14.5"
-    "@babel/plugin-transform-runtime" "^7.15.0"
-    "@babel/preset-env" "^7.15.0"
-    "@babel/preset-typescript" "^7.15.0"
-    "@babel/runtime" "^7.14.8"
-    "@nrwl/devkit" "15.9.1"
-    "@nrwl/workspace" "15.9.1"
-    "@phenomnomnominal/tsquery" "4.1.1"
-    babel-plugin-const-enum "^1.0.1"
-    babel-plugin-macros "^2.8.0"
-    babel-plugin-transform-typescript-metadata "^0.3.1"
-    chalk "^4.1.0"
-    fast-glob "3.2.7"
-    fs-extra "^11.1.0"
-    ignore "^5.0.4"
-    js-tokens "^4.0.0"
-    minimatch "3.0.5"
-    source-map-support "0.5.19"
-    tree-kill "1.2.2"
-    tslib "^2.3.0"
-
 "@nrwl/js@15.9.2":
   version "15.9.2"
   resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-15.9.2.tgz#1fcb32e46e2e7905cb9aeee04dfeaf92c52bf5c3"
@@ -1387,13 +1359,13 @@
     tmp "~0.2.1"
     tslib "^2.3.0"
 
-"@nrwl/linter@15.9.1":
-  version "15.9.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-15.9.1.tgz#128ef21da739c496b1820976f1c0f07196383185"
-  integrity sha512-cFU5n1Qfb9ByV97p0s27Rml8x58gVyQBnyMFOXlqgEUObivfhCm1aJSRG8x+f1Cvik9xXPvTTC6/3o8J9WXTsg==
+"@nrwl/linter@15.9.2":
+  version "15.9.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-15.9.2.tgz#1f67b93feced2f1dd85b10c97cb0467782a80e6b"
+  integrity sha512-/kUSwf8s1Q4k+jQI4Ibhh0rXRokrhppG1Y1Yrg3aMB7H0mAEIb4lNOzTN01lJ4kC1WxL5QWRqj45xG6MPE2Zgg==
   dependencies:
-    "@nrwl/devkit" "15.9.1"
-    "@nrwl/js" "15.9.1"
+    "@nrwl/devkit" "15.9.2"
+    "@nrwl/js" "15.9.2"
     "@phenomnomnominal/tsquery" "4.1.1"
     tmp "~0.2.1"
     tslib "^2.3.0"
