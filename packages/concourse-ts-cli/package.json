@@ -29,7 +29,7 @@
     "tsconfig": "./tsconfig.lib.json"
   },
   "devDependencies": {
-    "@swc/helpers": "~0.4.11",
+    "@swc/helpers": "~0.5.0",
     "@types/node": "^18.15.11",
     "@types/rimraf": "^4.0.5",
     "@types/verror": "^1.10.6"
