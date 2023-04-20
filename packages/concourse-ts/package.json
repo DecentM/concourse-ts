@@ -33,7 +33,7 @@
     "yaml": "^2.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.15.12",
     "@types/prettier": "^2.7.2",
     "@types/verror": "^1.10.6",
     "ava": "^5.2.0",
