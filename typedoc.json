@@ -3,5 +3,5 @@
   "plugin": ["typedoc-plugin-markdown", "typedoc-github-wiki-theme"],
   "out": "docs",
   "entryPointStrategy": "packages",
-  "entryPoints": ["packages/*"]
+  "entryPoints": ["packages/concourse-ts"]
 }
