@@ -1,12 +1,12 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 
-import rimraf from 'rimraf'
+import { rimraf } from 'rimraf'
 import glob from 'fast-glob'
 import fsp from 'fs/promises'
 import fs from 'fs'
 import path from 'path'
-import mkdirp from 'mkdirp'
+import { mkdirp } from 'mkdirp'
 
 export type ImportEventMap = {
   globs: (files: string[]) => void
