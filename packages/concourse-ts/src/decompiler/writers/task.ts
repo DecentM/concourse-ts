@@ -33,7 +33,7 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
 
     ${empty_string_or(
       task.container_limits?.cpu,
-      (cpu) => `task.set_cpu_limit_percent(${cpu})`
+      (cpu) => `task.set_cpu_limit_shares(${cpu})`
     )}
 
     ${empty_string_or(

@@ -113,6 +113,7 @@ test('stores component image resource', (t) => {
     image_resource: {
       type: 'rt',
       source: undefined,
+      version: undefined,
     },
   })
 })
@@ -130,7 +131,7 @@ test('stores caches', (t) => {
 
 test('stores container limits', (t) => {
   const task = new Task('a', (a) => {
-    a.set_cpu_limit_percent(50)
+    a.set_cpu_limit_shares(50)
     a.set_memory_limit({mb: 512})
   })
 
