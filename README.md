@@ -11,7 +11,6 @@
 
 <div align="center">
 
-  [![Coveralls](https://img.shields.io/coverallsCoverage/github/DecentM/concourse-ts?style=for-the-badge)](https://coveralls.io/github/DecentM/concourse-ts)
   [![GitHub Workflow
   Status](https://img.shields.io/github/actions/workflow/status/DecentM/concourse-ts/publish.yml?style=for-the-badge)](https://github.com/DecentM/concourse-ts/actions)
   [![npm
