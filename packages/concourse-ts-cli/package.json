@@ -22,12 +22,6 @@
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x"
   },
-  "typedoc": {
-    "entryPoint": "./src/index.ts",
-    "readmeFile": "./README.md",
-    "displayName": "Child Package",
-    "tsconfig": "./tsconfig.lib.json"
-  },
   "devDependencies": {
     "@swc/helpers": "~0.5.0",
     "@types/node": "^18.16.0",
