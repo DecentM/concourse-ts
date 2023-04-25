@@ -319,7 +319,8 @@ export class Job {
   }
 
   /**
-   * Serialises this Job into a valid Concourse configuration fixture
+   * Serialises this Job into a valid Concourse configuration fixture. The
+   * returned value needs to be converted into YAML to be used in Concourse.
    *
    * @returns {Type.Job} A JSON representation of this Job
    */

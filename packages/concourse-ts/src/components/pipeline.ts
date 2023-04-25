@@ -27,6 +27,44 @@ export class Pipeline<Group extends string = string> {
 
   private jobs?: Job[] = []
 
+  /**
+   * Adds a Job to this pipeline after already added jobs.
+   * Providing a group is required if existing jobs are grouped. Do not provide
+   * a group if already added jobs on this pipeline are not grouped.
+   *
+   * ----
+   *
+   * Simple example:
+   * ```typescript
+   * const pipeline = new Pipeline()
+   * const my_job = new Job(...)
+   *
+   * pipeline.add_job(my_job)
+   * ```
+   *
+   * ----
+   *
+   * Grouped example:
+   * ```typescript
+   * type Group = 'build' | 'release'
+   *
+   * // Create the pipeline. Note that even if the group type is specified,
+   * // jobs will only be grouped if they're added with a group.
+   * const pipeline = new Pipeline<Group>()
+   * const my_job = new Job(...)
+   *
+   * // Adds the job to the pipeline with the `build` group
+   * pipeline.add_job(my_job, 'build')
+   * ```
+   *
+   * ----
+   *
+   * https://concourse-ci.org/pipelines.html#schema.pipeline.jobs
+   *
+   * @param {Job} job The job to add
+   * @param {Group} group If specified, the job will be added to this group
+   * @returns {void}
+   */
   public add_job = (job: Job, group?: Group) => {
     this.jobs.push(job)
 
@@ -57,6 +95,15 @@ export class Pipeline<Group extends string = string> {
 
   private display?: Type.Pipeline['display']
 
+  /**
+   * Sets the given URL as the background image of the pipeline in Concourse's
+   * UI. Has no effect on builds.
+   *
+   * https://concourse-ci.org/pipelines.html#schema.display_config.background_image
+   *
+   * @param {string} url URL to the image file, must be an absolute, direct link
+   * to a browser-compatible image file (redirects allowed).
+   */
   public set_background_image_url = (url: string) => {
     if (!this.display) this.display = {}
 
@@ -67,6 +114,14 @@ export class Pipeline<Group extends string = string> {
 
   private var_sources?: Type.VarSource[] = []
 
+  /**
+   * Adds one or more [Var
+   * Sources](https://concourse-ci.org/vars.html#var-sources) to this pipeline.
+   *
+   * https://concourse-ci.org/pipelines.html#schema.pipeline.var_sources
+   *
+   * @param var_sources
+   */
   public add_var_source = (...var_sources: Type.VarSource[]) => {
     this.var_sources.push(...var_sources)
   }
@@ -89,12 +144,20 @@ export class Pipeline<Group extends string = string> {
     return this.get_resources().map((r) => r.get_resource_type())
   }
 
+  /**
+   * @internal Used by the compiler
+   * @returns {Task[]}
+   */
   public get_tasks = (): Task[] => {
     return this.get_task_steps().map((task_step) => {
       return task_step.get_task()
     })
   }
 
+  /**
+   * @internal Used by the compiler
+   * @returns {TaskStep[]}
+   */
   public get_task_steps = () => {
     const result: TaskStep[] = []
 
@@ -105,7 +168,13 @@ export class Pipeline<Group extends string = string> {
     return result
   }
 
-  serialise() {
+  /**
+   * Serialises this Pipeline into a valid Concourse configuration fixture. The
+   * returned value needs to be converted into YAML to be used in Concourse.
+   *
+   * @returns {Type.Pipeline} A JSON representation of this Job
+   */
+  public serialise() {
     const result: Type.Pipeline = {
       jobs: this.jobs.map((j) => j.serialise()),
       display: this.display,
