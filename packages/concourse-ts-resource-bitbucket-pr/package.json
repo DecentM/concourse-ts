@@ -8,12 +8,6 @@
   "scripts": {
     "build": "nx build"
   },
-  "typedoc": {
-    "entryPoint": "./src/index.ts",
-    "readmeFile": "./README.md",
-    "displayName": "Child Package",
-    "tsconfig": "./tsconfig.lib.json"
-  },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x",
     "@decentm/concourse-ts-resource-registry-image": "0.x",

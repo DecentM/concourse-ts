@@ -1,0 +1,12 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "cleanOutputDir": true,
+  "validation": {
+    "notDocumented": true
+  },
+  "treatWarningsAsErrors": true
+}

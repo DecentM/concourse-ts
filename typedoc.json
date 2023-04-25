@@ -1,17 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "theme": "github-wiki",
+  "plugin": ["typedoc-plugin-markdown", "typedoc-github-wiki-theme"],
   "out": "docs",
   "entryPointStrategy": "packages",
-  "entryPoints": ["packages/concourse-ts"],
-  "basePath": "./packages",
-  "excludePrivate": true,
-  "excludeInternal": true,
-  "excludeProtected": true,
-  "excludeExternals": true,
-  "cleanOutputDir": true,
-  "validation": {
-    "notDocumented": true
-  },
-  "treatWarningsAsErrors": true
+  "entryPoints": ["packages/*"]
 }

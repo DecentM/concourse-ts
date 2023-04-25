@@ -28,9 +28,6 @@
       "@decentm/concourse-ts-cli": [
         "packages/concourse-ts-cli/src/index.ts"
       ],
-      "@decentm/concourse-ts-recipe-auto-pipeline": [
-        "packages/concourse-ts-recipe-auto-pipeline/src/index.ts"
-      ],
       "@decentm/concourse-ts-resource-apache-directory-index": [
         "packages/concourse-ts-resource-apache-directory-index/src/index.ts"
       ],
@@ -45,6 +42,9 @@
       ],
       "@decentm/concourse-ts-resource-github-release": [
         "packages/concourse-ts-resource-github-release/src/index.ts"
+      ],
+      "@decentm/concourse-ts-resource-helm3": [
+        "packages/concourse-ts-resource-helm3/src/index.ts"
       ],
       "@decentm/concourse-ts-resource-k8s": [
         "packages/concourse-ts-resource-k8s/src/index.ts"
