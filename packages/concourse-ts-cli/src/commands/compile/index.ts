@@ -2,12 +2,12 @@ import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 import { transpile, ScriptTarget } from 'typescript'
 
-import rimraf from 'rimraf'
+import { rimraf } from 'rimraf'
 import glob from 'fast-glob'
 import fs from 'fs'
 import fsp from 'fs/promises'
 import path from 'path'
-import mkdirp from 'mkdirp'
+import { mkdirp } from 'mkdirp'
 
 export type CompileParams = {
   output?: string
