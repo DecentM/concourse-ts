@@ -23,6 +23,11 @@
 
 </div>
 
+[View the full API documentation, including examples, on the Wiki!](https://github.com/DecentM/concourse-ts/wiki)
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
 - [`@decentm/concourse-ts`](#decentmconcourse-ts)
   - [About concourse-ts](#about-concourse-ts)
   - [Programmatic usage](#programmatic-usage)
