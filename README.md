@@ -23,16 +23,21 @@
 
 </div>
 
-- [`concourse-ts`](#concourse-ts)
-  - [About](#about)
-  - [Usage](#usage)
+- [`@decentm/concourse-ts`](#decentmconcourse-ts)
+  - [About concourse-ts](#about-concourse-ts)
+  - [Programmatic usage](#programmatic-usage)
     - [Library](#library)
-    - [CLI / Compiler](#cli--compiler)
   - [Security](#security)
+- [`@decentm/concourse-ts-cli`](#decentmconcourse-ts-cli)
+  - [About the CLI](#about-the-cli)
+  - [Command line usage](#command-line-usage)
+  - [Features](#features)
+    - [Compilation](#compilation)
+    - [Decompilation](#decompilation)
 
-## `concourse-ts`
+## `@decentm/concourse-ts`
 
-### About
+### About concourse-ts
 
 Concourse by default accepts yaml as its configuration, which makes it nearly
 impossible to reuse code for it. Its main advantage is its statelessness and
@@ -45,10 +50,11 @@ this: `@corpity-corp/project` > `@corpity-corp/ci` > `@decentm/concourse-ts`.
 
 > If you're a developer using a package that depends on `concourse-ts`, you shouldn't
 > install `concourse-ts`. Consult your SRE/DevOps team's documentation about
-> using their package. This page is for people looking to create an internal
-> package that generates organisation-specific configuration files.
+> using their package. This page is for people looking to write Pipelines from
+> scratch, or those who are creating an organisation-specific package that
+> customises `concourse-ts`.
 
-### Usage
+### Programmatic usage
 
 For the sake of example, the name `corpity-corp` is used throughout this repo
 when talking about a theoretical organisation using `concourse-ts`.
@@ -64,89 +70,27 @@ when talking about a theoretical organisation using `concourse-ts`.
 
 #### Library
 
+The most friendly way to use `concourse-ts` is to create an NPM package that
+depends on `concourse-ts` and publishing it to your private registry. This will
+allow you to harness the power of `concourse-ts` while adding
+organisation-specific defaults.
+
 - In the entrypoint of your package, extend and export the following classes:
   - `Pipeline`
   - `Job`
   - `Task`
 
 - Implement defaults[\*](#security) by calling the `customise` static function
-  on classes. For example, you can call `task.set_cpu_limit_percent(50)` in
+  on classes. For example, you can call `task.set_cpu_limit_shares(1)` in
     your `Task` customiser to make all tasks limit CPU usage on workers.
 
 - Extend `Resource` and `ResourceType` as many times as needed to implement
     organisation-specific configuration, like e-mail notifications, webhooks, SCM
     repos, build processes, and test automation.
 
-#### CLI / Compiler
-
-Create a `cli.ts` file with the following contents:
-
-```typescript
-import {Cli} from '@decentm/concourse-ts'
-
-const main = async () => {
-  const props = await Cli.parseProps(process.argv)
-  await Cli.runApp(props)
-}
-
-main().catch(console.error)
-```
-
-By default, the CLI will accept `--help`, `--version`, `-i|--input`, and
-`-o|--output-directory` arguments. However, if you need to, you can create your
-own interface, or use the CLI programmatically by removing the `parseProps` line
-and implementing a custom way of getting the props required for the CLI to
-function.
-
-> You'll have to add the path of this file relative to the root of your `dist`
-> directory to your package.json's `bin` section. That will make it available in
-> the end user's `node_modules/.bin` directory.
-
-The CLI accepts a glob input (such as `ci/**/*.ts`), and validates each file
-that matches. If there are no issues, it will serialise the pipeline found in
-each file and output them under the `outputDirectory` path in a `pipeline` and
-`task` directory. Given this input:
-
-```typescript
-repo
-  |- .git/
-    |- // ...
-  |- ci/
-    |- foo.ts // contains a () => pipeline
-    |- bar.ts // contains a () => task
-```
-
-The output will be:
-
-```typescript
-repo
-  |- .git/
-    |- // ...
-  |- .ci/
-    |- pipeline/
-      |- foo.yml
-    |- task/
-      |- bar.yml
-  |- ci/
-    |- foo.ts
-    |- bar.ts
-```
-
-It's recommended to instruct end users to commit the generated configuration
-files into their repo instead of building them before each build. This ensures
-that developers can ensure the safety and stability of a pipeline by being able
-to inspect the effective configuration. For ease of use and ensuring that the
-generated configuration is always up-to-date, use a git pre-commit hook to
-regenerate the yaml configuration during a commit. For an example, see the
-`prepare` and `ci` scripts in
-`examples/corpity-corp/dev/package.json`, as well as
-`examples/corpity-corp/dev/.husky`.
-
-> See the manual for `husky` to learn more about git hooks in this context: <https://typicode.github.io/husky/#/?id=automatic-recommended>
-
 ### Security
 
-Important to note, that enforced defaults only apply to the initialiser
+Important to note, that defaults only apply to the customiser
 function. Each class can be interacted in two ways by the end user (in this
 case, the developer using the `@corpity-corp/ci` package). First, when a
 `concourse-ts` class is instantiated, it accepts an optional initialiser
@@ -182,11 +126,13 @@ import {BuildTask} from '@corpity-corp/ci'
 
 const build_task = new BuildTask('my_build', (task) => {
   // This will be overwritten with 25 by the base class
-  task.set_cpu_limit_percent(50)
+  task.set_cpu_limit_shares(1)
 })
 
 // This will overwrite the value from the base class
-build_task.set_cpu_limit_percent(75)
+build_task.set_cpu_limit_shares(2)
+
+// CPU limit is 2 here
 ```
 
 In this above case, the final value for the cpu_limit_percent will be 75. Since the
@@ -196,3 +142,106 @@ inserting secrets into your `@corpity-corp/ci` library, as they'll be written to
 disk and visible in the generated YAML config. Use [credential
 management](https://concourse-ci.org/creds.html) to handle secrets. That way you
 can also ensure that secrets do not show up in build logs.
+
+## `@decentm/concourse-ts-cli`
+
+### About the CLI
+
+The `concourse-ts` command line package reads a typescript pipeline, compiles
+it to valid Concourse YAML syntax, and writes it to disk. Run `concourse-ts
+--help` to view documentation for the command syntax.
+
+> The input file must contain valid Typescript code, that has a default export
+> that returns either a `Pipeline` instance or a promise that resolves to a
+> `Pipeline` instance.
+
+### Command line usage
+
+There are two ways to compile a `concourse-ts` Pipeline file. Your needs and
+team's requirements will determine which one to use, both are supported.
+
+- First is to install `@decentm/concourse-ts-cli` as a `devDependency` in your
+  project, and [set up a husky hook](https://github.com/typicode/husky) to
+  compile your pipeline during `git commit`. This means that the actual YAML
+  pipeline file will be visible in your repository.
+  - Advantages:
+    - Easy to view your pipeline evolve, and guarantee that you have the last
+      say in what your CI will execute.
+    - Ability to run generated tasks locally with Concourse's `fly` CLI
+      (requires the `--extract-tasks` or `-e` option).
+    - Native support for self-setting pipelines (e.g. `set-pipeline: "self"`).
+      Since the actual YAML files are in your repository, your set-pipeline step
+      will be very fast.
+  - Disadvantages:
+    - You have to install `@decentm/concourse-ts-cli` in your repository as a
+      `devDependency`, and keep it up to date and in sync with your version of
+      `concourse-ts` in each project.
+    - Both the pipeline source and the compiled yaml output will be present in
+      your repository, making it slightly more cluttered.
+    - If another developer commits with `git commit -n`, they will be able to
+      run a pipeline that doesn't match the output of your `concourse-ts`
+      pipeline file.
+- Second is to use the `decentm/concourse-ts-cli` Docker image to compile the
+  pipeline just before the `set-pipeline` step.
+  - Advantages:
+    - No need to install the CLI NPM package locally or keep it up to date.
+    - Compiled YAML output is **NOT** committed to the repository, keeping the
+      codebase cleaner.
+    - The pipeline executed in your CI is guaranteed to be the same as the
+      output of your `concourse-ts` Pipeline file.
+    - Language agnosticity; you don't need to install NodeJS or Typescript into
+      your project to compile pipelines.
+  - Disadvantages:
+    - Your pipeline's history is only visible in the Typescript file. If someone
+      is familiar with Concourse configuration, but not `concourse-ts`, they
+      will have a harder time tracking down bugs, for example in `git blame`.
+    - Since compiled YAML files are not readily available, you can't use `fly`
+      to run indivisual tasks (unless you pull the `decentm/concourse-ts-cli`
+      docker image locally and use Docker to run it)
+    - No native `set-pipeline` speed. Before your `set-pipeline` step, you must
+      include a step that uses the Docker image to compile your Pipeline file.
+
+### Features
+
+#### Compilation
+
+Use the `compile` command to compile a `concourse-ts` Typescript file into a
+valid Concourse YAML file.
+
+Examples:
+
+```sh
+cat ci/pipeline.ts | concourse-ts compile > .ci/pipeline.yml
+# No output
+
+concourse-ts compile -i ci/pipeline.ts -o .ci/pipeline.yml -f
+# No output
+
+concourse-ts compile < ci/pipeline.ts
+# Outputs the resulting YAML, because no "-o" was provided, and output
+# is not redirected
+```
+
+#### Decompilation
+
+Use the `decompile` command to convert an existing Concourse YAML pipeline file
+to valid `concourse-ts` typescript code.
+
+> This command generates code in a non-human-friendly way, where components may
+> be functionally duplicated if multiple similar configurations exist in the
+> source YAML. After decompilation, it's strongly recommended to **review** the
+> generated code and **refactor** it.
+
+Examples:
+
+```sh
+cat .ci/pipeline.yml | concourse-ts decompile > ci/pipeline.ts
+# No output
+
+concourse-ts decompile -i .ci/pipeline.yml -o ci/pipeline.ts
+# No output
+
+concourse-ts decompile < .ci/pipeline.yml
+# Outputs the resulting Typescript code, because no "-o" was provided,
+# and output is not redirected
+```
