@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "command line interface for compiling concourse-ts pipelines",
   "author": "DecentM <decentm@decentm.com>",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-cli",
@@ -16,11 +16,11 @@
     "mkdirp": "^3.0.1",
     "rimraf": "^5.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
     "verror": "^1.10.1"
   },
   "peerDependencies": {
-    "@decentm/concourse-ts": "0.x"
+    "@decentm/concourse-ts": "0.x",
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@swc/helpers": "~0.5.0",

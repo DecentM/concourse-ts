@@ -65,8 +65,8 @@ when talking about a theoretical organisation using `concourse-ts`.
 
 - Install the package as a production dependency. This will make sure your users
     will be able to install everything easily and have the same version
-  - `yarn add @decentm/concourse-ts`
-  - `npm i --save @decentm/concourse-ts`
+  - `yarn add typescript @decentm/concourse-ts`
+  - `npm i --save typescript @decentm/concourse-ts`
 
 #### Library
 
@@ -116,26 +116,26 @@ Take this for example:
 ```typescript
 // @corpity-corp/ci > src/build-task.ts
 Task.customise((task) => {
-  task.set_cpu_limit_percent(25)
+  task.set_cpu_limit_shares(1)
 })
 ```
 
 ```typescript
 // @corpity-corp/projects/zeus-server > ci/build.task.ts
-import {BuildTask} from '@corpity-corp/ci'
+import {Task} from '@corpity-corp/ci'
 
 const build_task = new BuildTask('my_build', (task) => {
-  // This will be overwritten with 25 by the base class
-  task.set_cpu_limit_shares(1)
+  // This will be overwritten with 1 by the base customiser
+  task.set_cpu_limit_shares(3)
 })
 
-// This will overwrite the value from the base class
+// This will overwrite the value from the customiser
 build_task.set_cpu_limit_shares(2)
 
 // CPU limit is 2 here
 ```
 
-In this above case, the final value for the cpu_limit_percent will be 75. Since the
+In this above case, the final value for the `cpu_limit_shares` will be 2. Since the
 configuration for projects is stored in each project's repo, this library or any
 project-level check is not appropriate for security checks. Also avoid directly
 inserting secrets into your `@corpity-corp/ci` library, as they'll be written to
@@ -144,6 +144,9 @@ management](https://concourse-ci.org/creds.html) to handle secrets. That way you
 can also ensure that secrets do not show up in build logs.
 
 ## `@decentm/concourse-ts-cli`
+
+`npm i --save-dev @decentm/concourse-ts-cli`
+`yarn add -D @decentm/concourse-ts-cli`
 
 ### About the CLI
 
@@ -225,7 +228,9 @@ concourse-ts compile < ci/pipeline.ts
 #### Decompilation
 
 Use the `decompile` command to convert an existing Concourse YAML pipeline file
-to valid `concourse-ts` typescript code.
+to valid `concourse-ts` typescript code. Use this to turn existing Concourse
+configuration into `concourse-ts` code, without having to reimplement pipelines
+if you already have a YAML file.
 
 > This command generates code in a non-human-friendly way, where components may
 > be functionally duplicated if multiple similar configurations exist in the
