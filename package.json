@@ -38,7 +38,7 @@
     "sort-package-json": "^2.4.1",
     "typedoc": "^0.24.6",
     "typedoc-github-wiki-theme": "^1.1.0",
-    "typedoc-plugin-coverage": "^2.0.0",
+    "typedoc-plugin-coverage": "^2.1.0",
     "typedoc-plugin-markdown": "^3.15.2",
     "typescript": "~5.0.4",
     "vite": "^4.3.0",
