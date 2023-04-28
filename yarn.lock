@@ -1256,16 +1256,12 @@
   dependencies:
     "@nx/devkit" "16.0.0"
 
-"@nrwl/eslint-plugin-nx@15.9.2":
-  version "15.9.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-15.9.2.tgz#22de41ba80461032dfb6726712d8c90b03a550ed"
-  integrity sha512-WeR+/mjzteBz9401mZroyML7sgnxF32FjMBcmVjuG5a5Eji36ChXn8Vtzm3IhfAY3k2sFbANxYLSNQYf5JJyqw==
+"@nrwl/eslint-plugin-nx@16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-16.0.0.tgz#efc9ab2c98e8772aa8fa7d78a4a7d0d57d253cf9"
+  integrity sha512-HJLMP6/g00huvsr7ik4NStvXB/MWDkWo45nKtvuZIvmycYt4VUATzQt2CrUaKKqRM5eAW7Ho8aW63DOIsufOcg==
   dependencies:
-    "@nrwl/devkit" "15.9.2"
-    "@typescript-eslint/utils" "^5.36.1"
-    chalk "^4.1.0"
-    confusing-browser-globals "^1.0.9"
-    semver "7.3.4"
+    "@nx/eslint-plugin" "16.0.0"
 
 "@nrwl/js@15.9.2":
   version "15.9.2"
@@ -1423,6 +1419,19 @@
     semver "7.3.4"
     tmp "~0.2.1"
     tslib "^2.3.0"
+
+"@nx/eslint-plugin@16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@nx/eslint-plugin/-/eslint-plugin-16.0.0.tgz#7c5149cc5060cfe73a00d02a76237ceef99a7bfc"
+  integrity sha512-vBleTWAneUOAmmwZdJb2TisKi7A3fBuiWcdW7vpxgLF2dh8oMBB54AMjXKdibwMOIKTVLtECDNR84b2kkYElyA==
+  dependencies:
+    "@nrwl/eslint-plugin-nx" "16.0.0"
+    "@nx/devkit" "16.0.0"
+    "@nx/js" "16.0.0"
+    "@typescript-eslint/utils" "^5.58.0"
+    chalk "^4.1.0"
+    confusing-browser-globals "^1.0.9"
+    semver "7.3.4"
 
 "@nx/js@16.0.0":
   version "16.0.0"
@@ -1877,7 +1886,7 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/utils@5.59.1", "@typescript-eslint/utils@^5.36.1":
+"@typescript-eslint/utils@5.59.1", "@typescript-eslint/utils@^5.58.0":
   version "5.59.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-5.59.1.tgz#d89fc758ad23d2157cfae53f0b429bdf15db9473"
   integrity sha512-MkTe7FE+K1/GxZkP5gRj3rCztg45bEhsd8HYjczBuYm+qFHP5vtZmjx3B0yUCDotceQ4sHgTyz60Ycl225njmA==
