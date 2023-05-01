@@ -1368,32 +1368,6 @@
   dependencies:
     "@nx/vite" "16.0.0"
 
-"@nrwl/workspace@15.9.2":
-  version "15.9.2"
-  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-15.9.2.tgz#258ccbc2e42d4d1cade4652d72c4f7b2a7821f5e"
-  integrity sha512-4e3p1EtJKvvZfH5ghLT3PtPfdr21WfN1LjctMaFAaqwb7jMos0jQIZlLotDPvc9BD8zzyljniE6BijDSZOWncg==
-  dependencies:
-    "@nrwl/devkit" "15.9.2"
-    "@parcel/watcher" "2.0.4"
-    chalk "^4.1.0"
-    chokidar "^3.5.1"
-    cli-cursor "3.1.0"
-    cli-spinners "2.6.1"
-    dotenv "~10.0.0"
-    figures "3.2.0"
-    flat "^5.0.2"
-    glob "7.1.4"
-    ignore "^5.0.4"
-    minimatch "3.0.5"
-    npm-run-path "^4.0.1"
-    nx "15.9.2"
-    open "^8.4.0"
-    rxjs "^6.5.4"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
-    yargs "^17.6.2"
-    yargs-parser "21.1.1"
-
 "@nrwl/workspace@16.0.0":
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-16.0.0.tgz#375063f905157af6e9af39c12ea4b018e7a99533"
