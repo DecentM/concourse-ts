@@ -2,37 +2,21 @@ import test from 'ava'
 import {Resource, ResourceType} from '..'
 
 import {PutStep} from './put'
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_put_step = {
-  ...default_step,
-  get_params: undefined,
-  inputs: undefined,
-  params: undefined,
-  put: undefined,
-  resource: undefined,
-}
-
-test.beforeEach(() => {
-  PutStep.customise((ps) => {
-    ps.add_tag('static')
-  })
-})
+import {default_put_step} from './test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  PutStep.customise((ps) => {
+    ps.attempts = 2
+  })
+
   const ps = new PutStep('a')
 
-  t.deepEqual(ps.serialise(), default_put_step)
+  t.deepEqual(ps.serialise(), {
+    ...default_put_step,
+    attempts: 2,
+  })
+
+  PutStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -42,7 +26,7 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(ps.serialise(), {
     ...default_put_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
   })
 })
 

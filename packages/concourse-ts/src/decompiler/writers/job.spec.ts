@@ -7,6 +7,12 @@ import {Identifier} from '../../utils'
 
 import {write_job} from './job'
 
+import {
+  default_job,
+  default_load_var_step,
+  default_step,
+} from '../../components/step/test-data/default-steps'
+
 const chain = (input: Type.Job, pipeline: Type.Pipeline) => {
   const code = `
     import {Job, LoadVarStep} from '../../components'
@@ -28,43 +34,6 @@ const chain = (input: Type.Job, pipeline: Type.Pipeline) => {
     result: job.serialise(),
     diagnostics: result.diagnostics,
   }
-}
-
-const default_job = {
-  max_in_flight: undefined,
-  plan: [],
-  build_log_retention: undefined,
-  build_logs_to_retain: undefined,
-  disable_manual_trigger: undefined,
-  ensure: undefined,
-  interruptible: undefined,
-  old_name: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  public: undefined,
-  serial: undefined,
-  serial_groups: undefined,
-}
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
-
-const default_load_var_step = {
-  ...default_step,
-  file: undefined,
-  format: undefined,
-  load_var: undefined,
-  reveal: undefined,
 }
 
 test('writes empty job', (t) => {

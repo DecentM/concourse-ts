@@ -1,7 +1,15 @@
 import anyTest, {TestFn} from 'ava'
 import {Resource, Task} from '..'
-import {deduplicate_by_identity} from '../../utils'
+
 import {ResourceType} from '../resource-type'
+
+import {
+  default_get_step,
+  default_step,
+  default_task_step_with_config,
+} from './test-data/default-steps'
+
+import {Identifier, deduplicate_by_identity} from '../../utils'
 
 import {Step} from './base'
 
@@ -21,61 +29,23 @@ class TStep extends Step<never> {
   }
 }
 
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_get_step = {
-  ...default_step,
-  get: 'r',
-  params: undefined,
-  passed: undefined,
-  resource: undefined,
-  timeout: undefined,
-  trigger: undefined,
-  version: undefined,
-}
-
-const default_task_step = {
-  ...default_step,
-  config: {
-    caches: undefined,
-    container_limits: undefined,
-    image_resource: undefined,
-    inputs: undefined,
-    outputs: undefined,
-    params: undefined,
-    platform: 'linux',
-    rootfs_uri: undefined,
-    run: undefined,
-  },
-  file: undefined,
-  image: undefined,
-  input_mapping: undefined,
-  output_mapping: undefined,
-  params: undefined,
-  privileged: undefined,
-  task: 't',
-  vars: undefined,
-}
-
 test.beforeEach((t) => {
-  Step.customise_base((step) => {
-    step.add_tag('static')
-  })
-
   t.context.step = new TStep('a')
 })
 
 test('runs static customiser', (t) => {
-  t.deepEqual(t.context.step.serialise(), default_step)
+  Step.customise_base((step) => {
+    step.attempts = 2
+  })
+
+  const step = new TStep('a')
+
+  t.deepEqual(step.serialise(), {
+    ...default_step,
+    attempts: 2,
+  })
+
+  Step.customise_base(() => null)
 })
 
 test('stores timeout', (t) => {
@@ -86,6 +56,38 @@ test('stores timeout', (t) => {
   t.deepEqual(t.context.step.serialise(), {
     ...default_step,
     timeout: '1h',
+  })
+})
+
+test('stores tags', (t) => {
+  const step = new TStep('no-tags')
+
+  step.add_tag('tagged')
+
+  t.deepEqual(step.serialise(), {
+    ...default_step,
+    tags: ['tagged'],
+  })
+})
+
+test('stores across', (t) => {
+  t.context.step.add_across({
+    values: ['my-a', 'my-b'],
+    var: 'asd' as Identifier,
+    fail_fast: true,
+    max_in_flight: 1,
+  })
+
+  t.deepEqual(t.context.step.serialise(), {
+    ...default_step,
+    across: [
+      {
+        values: ['my-a', 'my-b'],
+        var: 'asd',
+        fail_fast: true,
+        max_in_flight: 1,
+      },
+    ],
   })
 })
 
@@ -144,10 +146,25 @@ test('collects base task steps', (t) => {
   t.deepEqual(deduplicate_by_identity(result), [ts])
   t.deepEqual(t.context.step.serialise(), {
     ...default_step,
-    on_abort: {...default_step, do: [default_task_step]},
-    on_success: {...default_step, do: [default_task_step]},
-    on_error: {...default_step, do: [default_task_step]},
-    on_failure: {...default_step, do: [default_task_step]},
-    ensure: {...default_step, do: [default_task_step]},
+    on_abort: {
+      ...default_step,
+      do: [{...default_task_step_with_config, task: 't'}],
+    },
+    on_success: {
+      ...default_step,
+      do: [{...default_task_step_with_config, task: 't'}],
+    },
+    on_error: {
+      ...default_step,
+      do: [{...default_task_step_with_config, task: 't'}],
+    },
+    on_failure: {
+      ...default_step,
+      do: [{...default_task_step_with_config, task: 't'}],
+    },
+    ensure: {
+      ...default_step,
+      do: [{...default_task_step_with_config, task: 't'}],
+    },
   })
 })

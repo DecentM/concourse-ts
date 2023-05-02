@@ -3,41 +3,25 @@ import {Identifier} from '../../utils'
 import {Task} from '../task'
 
 import {TaskStep} from './task'
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_task_step = {
-  ...default_step,
-  config: undefined,
-  task: 'a_task',
-  vars: undefined,
-  file: undefined,
-  image: undefined,
-  input_mapping: undefined,
-  output_mapping: undefined,
-  params: undefined,
-  privileged: undefined,
-}
-
-test.beforeEach(() => {
-  TaskStep.customise((ts) => {
-    ts.add_tag('static')
-  })
-})
+import {
+  default_task_step,
+  default_task_step_config,
+} from './test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  TaskStep.customise((ts) => {
+    ts.attempts = 2
+  })
+
   const ts = new TaskStep('a')
 
-  t.deepEqual(ts.serialise(), default_task_step)
+  t.deepEqual(ts.serialise(), {
+    ...default_task_step,
+    attempts: 2,
+    task: 'a_task',
+  })
+
+  TaskStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -47,7 +31,8 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
+    task: 'a_task',
   })
 })
 
@@ -80,18 +65,11 @@ test('stores tasks', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
-    task: 'at',
     config: {
-      caches: undefined,
-      container_limits: undefined,
-      image_resource: undefined,
-      inputs: undefined,
-      outputs: undefined,
-      params: undefined,
+      ...default_task_step_config,
       platform: undefined,
-      rootfs_uri: undefined,
-      run: undefined,
     },
+    task: 'at',
   })
 })
 
@@ -102,6 +80,7 @@ test('stores files', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
+    task: 'a_task',
     file: 'f',
   })
 })
@@ -121,6 +100,7 @@ test('stores vars', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
+    task: 'a_task',
     vars: {
       'my-var': '1',
       'my-var1': '2',
@@ -143,6 +123,7 @@ test('stores params', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
+    task: 'a_task',
     params: {
       'my-param': '1',
       'my-param1': '2',
@@ -165,6 +146,7 @@ test('stores input_mapping', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
+    task: 'a_task',
     input_mapping: {
       my_input: 'my_mapped_input',
       my_input1: 'my_mapped_input1',
@@ -187,6 +169,7 @@ test('stores ouptut_mapping', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
+    task: 'a_task',
     output_mapping: {
       my_output: 'my_mapped_output',
       my_output1: 'my_mapped_output1',

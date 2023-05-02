@@ -5,32 +5,26 @@ import {Identifier} from '../../utils'
 import {DoStep} from './do'
 import {LoadVarStep} from './load-var'
 
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
+import {default_step} from './test-data/default-steps'
 
 const default_do_step = {
   ...default_step,
   do: [],
 }
 
-test.beforeEach(() => {
-  DoStep.customise((ds) => {
-    ds.add_tag('static')
-  })
-})
-
 test('runs static customiser', (t) => {
+  DoStep.customise((ds) => {
+    ds.attempts = 2
+  })
+
   const ds = new DoStep('a')
 
-  t.deepEqual(ds.serialise(), default_do_step)
+  t.deepEqual(ds.serialise(), {
+    ...default_do_step,
+    attempts: 2,
+  })
+
+  DoStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -40,7 +34,7 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(ds.serialise(), {
     ...default_do_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
   })
 })
 

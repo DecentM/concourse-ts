@@ -27,9 +27,7 @@ test('returns null when task step has no file set', (t) => {
   const ts = new TaskStep('a')
   const serialised = ts.serialise()
 
-  const task = hoist_task(path.join(__dirname, 'test'), serialised)
-
-  t.deepEqual(task, null)
+  t.is(hoist_task(path.join(__dirname, 'test'), serialised), undefined)
 })
 
 test('throws when task file is invalid', (t) => {
@@ -39,5 +37,5 @@ test('throws when task file is invalid', (t) => {
 
   const serialised = ts.serialise()
 
-  t.deepEqual(hoist_task(path.join(__dirname, 'test'), serialised), null)
+  t.is(hoist_task(path.join(__dirname, 'test'), serialised), undefined)
 })

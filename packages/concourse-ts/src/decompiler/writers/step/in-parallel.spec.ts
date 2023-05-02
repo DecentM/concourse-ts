@@ -5,6 +5,7 @@ import {Type} from '../../..'
 import {InParallelStep} from '../../../components'
 
 import {write_in_parallel_step} from './in-parallel'
+import {default_in_parallel_step} from '../../../components/step/test-data/default-steps'
 
 const chain = (
   name: string,
@@ -31,26 +32,6 @@ const chain = (
     result: result.serialise(),
     diagnostics: transpiled.diagnostics,
   }
-}
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
-
-const default_in_parallel_step = {
-  ...default_step,
-  in_parallel: {
-    fail_fast: undefined,
-    limit: undefined,
-    steps: [],
-  },
 }
 
 const default_pipeline: Type.Pipeline = {

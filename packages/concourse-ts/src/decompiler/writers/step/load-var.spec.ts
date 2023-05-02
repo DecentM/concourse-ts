@@ -6,6 +6,7 @@ import {LoadVarStep} from '../../../components'
 import {Identifier} from '../../../utils'
 
 import {write_load_var_step} from './load-var'
+import {default_load_var_step} from '../../../components/step/test-data/default-steps'
 
 const chain = (
   name: string,
@@ -32,25 +33,6 @@ const chain = (
     result: result.serialise(),
     diagnostics: transpiled.diagnostics,
   }
-}
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
-
-const default_load_var_step = {
-  ...default_step,
-  file: undefined,
-  format: undefined,
-  load_var: undefined,
-  reveal: undefined,
 }
 
 const default_pipeline: Type.Pipeline = {

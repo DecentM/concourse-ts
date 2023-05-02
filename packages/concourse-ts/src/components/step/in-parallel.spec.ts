@@ -2,37 +2,21 @@ import test from 'ava'
 import {Resource, ResourceType, Task} from '..'
 
 import {InParallelStep} from './in-parallel'
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_in_parallel_step = {
-  ...default_step,
-  in_parallel: {
-    fail_fast: undefined,
-    limit: undefined,
-    steps: [],
-  },
-}
-
-test.beforeEach(() => {
-  InParallelStep.customise((ips) => {
-    ips.add_tag('static')
-  })
-})
+import {default_in_parallel_step} from './test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  InParallelStep.customise((ips) => {
+    ips.attempts = 2
+  })
+
   const ips = new InParallelStep('a')
 
-  t.deepEqual(ips.serialise(), default_in_parallel_step)
+  t.deepEqual(ips.serialise(), {
+    ...default_in_parallel_step,
+    attempts: 2,
+  })
+
+  InParallelStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -42,7 +26,7 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(ips.serialise(), {
     ...default_in_parallel_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
   })
 })
 

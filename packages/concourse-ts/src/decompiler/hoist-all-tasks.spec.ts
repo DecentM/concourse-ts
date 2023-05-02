@@ -1,9 +1,13 @@
 import test from 'ava'
 import path from 'path'
 
-import {Job, LoadVarStep, Pipeline, TaskStep} from '../components'
+import {Job, Pipeline, TaskStep} from '../components'
 
 import {hoist_all_tasks} from './hoist-task'
+import {
+  default_job,
+  default_task_step,
+} from '../components/step/test-data/default-steps'
 
 test('hoists all tasks', (t) => {
   const pipeline = new Pipeline('p', (p) => {
@@ -22,7 +26,6 @@ test('hoists all tasks', (t) => {
         pj.add_step(ts)
         pj.add_step(ntts)
         pj.add_step(ets)
-        pj.add_step(new LoadVarStep('lvs'))
       })
     )
   })
@@ -36,21 +39,11 @@ test('hoists all tasks', (t) => {
     groups: [],
     jobs: [
       {
-        build_log_retention: undefined,
-        build_logs_to_retain: undefined,
-        disable_manual_trigger: undefined,
-        ensure: undefined,
-        interruptible: undefined,
-        max_in_flight: undefined,
+        ...default_job,
         name: 'pj',
-        old_name: undefined,
-        on_abort: undefined,
-        on_error: undefined,
-        on_failure: undefined,
-        on_success: undefined,
         plan: [
           {
-            attempts: undefined,
+            ...default_task_step,
             config: {
               platform: 'linux',
               run: {
@@ -58,76 +51,17 @@ test('hoists all tasks', (t) => {
                 path: 'echo',
               },
             },
-            ensure: undefined,
-            image: undefined,
-            input_mapping: undefined,
-            on_abort: undefined,
-            on_error: undefined,
-            on_failure: undefined,
-            on_success: undefined,
-            output_mapping: undefined,
-            params: undefined,
-            privileged: undefined,
-            tags: undefined,
             task: 'a_task',
-            timeout: undefined,
-            vars: undefined,
           },
           {
-            attempts: undefined,
-            config: null,
-            ensure: undefined,
-            image: undefined,
-            input_mapping: undefined,
-            on_abort: undefined,
-            on_error: undefined,
-            on_failure: undefined,
-            on_success: undefined,
-            output_mapping: undefined,
-            params: undefined,
-            privileged: undefined,
-            tags: undefined,
+            ...default_task_step,
             task: 'b_task',
-            timeout: undefined,
-            vars: undefined,
           },
           {
-            attempts: undefined,
-            config: undefined,
-            ensure: undefined,
-            file: undefined,
-            image: undefined,
-            input_mapping: undefined,
-            on_abort: undefined,
-            on_error: undefined,
-            on_failure: undefined,
-            on_success: undefined,
-            output_mapping: undefined,
-            params: undefined,
-            privileged: undefined,
-            tags: undefined,
+            ...default_task_step,
             task: 'c_task',
-            timeout: undefined,
-            vars: undefined,
-          },
-          {
-            attempts: undefined,
-            ensure: undefined,
-            file: undefined,
-            format: undefined,
-            load_var: undefined,
-            on_abort: undefined,
-            on_error: undefined,
-            on_failure: undefined,
-            on_success: undefined,
-            reveal: undefined,
-            tags: undefined,
-            timeout: undefined,
           },
         ],
-        public: undefined,
-        serial: undefined,
-        serial_groups: undefined,
       },
     ],
     resource_types: [],
