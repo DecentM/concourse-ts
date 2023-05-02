@@ -8,9 +8,10 @@ import * as Components from '../components'
 import {is_pipeline} from '../utils/is-pipeline'
 
 import {write_pipeline} from './writers/pipeline'
-import {hoist_all_tasks} from './hoist-task'
 import {validate} from '../validation'
 import {WarningStore} from '../utils'
+
+import {hoist_all_tasks} from '../utils/hoist-tasks'
 
 export type DecompilationResult = {
   warnings: WarningStore
