@@ -1,11 +1,11 @@
 import * as Type from '../../declarations/types'
 
-export type PipelineVisitor = Partial<{
+export type PipelineVisitor = {
   Resource?: (component: Type.Resource) => void
   ResourceType?: (component: Type.ResourceType) => void
 
   Job?: (component: Type.Job) => void
-}>
+}
 
 export const visit_pipeline = (
   pipeline: Type.Pipeline,
