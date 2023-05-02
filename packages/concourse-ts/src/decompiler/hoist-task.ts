@@ -10,9 +10,9 @@ import {is_task_step} from '../utils/step-type'
 export const hoist_task = (
   work_dir: string,
   task_step: TaskStep
-): Task<Identifier, Identifier> => {
+): Task<Identifier, Identifier> | undefined => {
   if (!task_step.file) {
-    return null
+    return undefined
   }
 
   const file_path = path.resolve(work_dir, task_step.file)
@@ -20,7 +20,7 @@ export const hoist_task = (
   const task = YAML.parse(file_contents.toString('utf-8'))
 
   if (!is_task(task)) {
-    return null
+    return undefined
   }
 
   return task
@@ -41,7 +41,7 @@ export const hoist_all_tasks = (
       }
 
       step.config = hoist_task(work_dir, step)
-      Reflect.deleteProperty(step, 'file')
+      step.file = undefined
     })
   )
 

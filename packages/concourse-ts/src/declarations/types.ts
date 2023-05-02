@@ -135,6 +135,16 @@ export type Task<Input extends Identifier, Output extends Identifier> = {
 }
 
 /**
+ * https://concourse-ci.org/across-step.html#schema.across
+ */
+export type Across = {
+  var: Identifier
+  values: string[]
+  max_in_flight?: 'all' | number
+  fail_fast?: boolean
+}
+
+/**
  * Common members held by all steps.
  *
  * https://concourse-ci.org/steps.html
@@ -148,6 +158,7 @@ export type StepBase = {
   on_error?: Step
   on_abort?: Step
   ensure?: Step
+  across?: Across[]
 }
 
 /**

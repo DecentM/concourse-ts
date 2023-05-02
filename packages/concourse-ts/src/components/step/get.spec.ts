@@ -2,38 +2,22 @@ import test from 'ava'
 import {Job, Resource, ResourceType} from '..'
 
 import {GetStep} from './get'
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_get_step = {
-  ...default_step,
-  get: undefined,
-  params: undefined,
-  passed: undefined,
-  trigger: undefined,
-  version: undefined,
-  resource: undefined,
-}
-
-test.beforeEach(() => {
-  GetStep.customise((ds) => {
-    ds.add_tag('static')
-  })
-})
+import {default_get_step} from './test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  GetStep.customise((ds) => {
+    ds.attempts = 2
+  })
+
   const gs = new GetStep('a')
 
-  t.deepEqual(gs.serialise(), default_get_step)
+  t.deepEqual(gs.serialise(), {
+    ...default_get_step,
+    attempts: 2,
+    get: undefined,
+  })
+
+  GetStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -43,7 +27,8 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(gs.serialise(), {
     ...default_get_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
+    get: undefined,
   })
 })
 
@@ -87,6 +72,7 @@ test('stores passed', (t) => {
 
   t.deepEqual(gs.serialise(), {
     ...default_get_step,
+    get: undefined,
     passed: ['j'],
   })
 })
@@ -100,6 +86,7 @@ test('stores params', (t) => {
 
   t.deepEqual(gs.serialise(), {
     ...default_get_step,
+    get: undefined,
     params: {
       my_param: '1',
     },

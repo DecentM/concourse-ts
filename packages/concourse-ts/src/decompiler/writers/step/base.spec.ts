@@ -87,6 +87,31 @@ test('writes timeout', (t) => {
   t.assert(code.includes('step.set_timeout({ "hours": 1, "minutes": 2 })'))
 })
 
+test('writes across', (t) => {
+  const {diagnostics, code} = chain(
+    'a',
+    {
+      ...default_step,
+      across: [
+        {
+          values: ['value-a', 'value-b'],
+          var: 'my-var' as Identifier,
+          fail_fast: true,
+          max_in_flight: 2,
+        },
+      ],
+    },
+    default_pipeline
+  )
+
+  t.deepEqual(diagnostics, [])
+  t.assert(
+    code.includes(
+      'step.add_across({ "values": ["value-a", "value-b"], "var": "my-var", "fail_fast": true, "max_in_flight": 2 })'
+    )
+  )
+})
+
 test('writes ensure', (t) => {
   const {diagnostics, code} = chain(
     'a',

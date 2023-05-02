@@ -6,48 +6,22 @@ import {Resource} from './resource'
 import {ResourceType} from './resource-type'
 import {DoStep, LoadVarStep} from './step'
 import {Task} from './task'
-
-Job.customise((job) => {
-  job.max_in_flight = 2
-})
-
-const default_job = {
-  max_in_flight: 2,
-
-  plan: [],
-  build_log_retention: undefined,
-  build_logs_to_retain: undefined,
-  disable_manual_trigger: undefined,
-  ensure: undefined,
-  interruptible: undefined,
-  old_name: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  public: undefined,
-  serial: undefined,
-  serial_groups: undefined,
-}
-
-const empty_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
+import {default_job, default_step} from './step/test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  Job.customise((job) => {
+    job.max_in_flight = 2
+  })
+
   const job = new Job('a')
 
   t.deepEqual(job.serialise(), {
     ...default_job,
+    max_in_flight: 2,
     name: 'a',
   })
+
+  Job.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -84,14 +58,14 @@ test('stores steps', (t) => {
     name: 'a',
     plan: [
       {
-        ...empty_step,
+        ...default_step,
         load_var: 'my-var-first',
         file: 'my-file-first',
         format: undefined,
         reveal: undefined,
       },
       {
-        ...empty_step,
+        ...default_step,
         load_var: 'my-var',
         file: 'my-file',
         format: undefined,
@@ -130,10 +104,10 @@ test('stores on_success', (t) => {
     ...default_job,
     name: 'a',
     on_success: {
-      ...empty_step,
+      ...default_step,
       do: [
         {
-          ...empty_step,
+          ...default_step,
           load_var: 'my-var',
           file: 'my-file',
           format: undefined,
@@ -161,10 +135,10 @@ test('stores on_error', (t) => {
     ...default_job,
     name: 'a',
     on_error: {
-      ...empty_step,
+      ...default_step,
       do: [
         {
-          ...empty_step,
+          ...default_step,
           load_var: 'my-var',
           file: 'my-file',
           format: undefined,
@@ -192,10 +166,10 @@ test('stores on_failure', (t) => {
     ...default_job,
     name: 'a',
     on_failure: {
-      ...empty_step,
+      ...default_step,
       do: [
         {
-          ...empty_step,
+          ...default_step,
           load_var: 'my-var',
           file: 'my-file',
           format: undefined,
@@ -223,10 +197,10 @@ test('stores on_abort', (t) => {
     ...default_job,
     name: 'a',
     on_abort: {
-      ...empty_step,
+      ...default_step,
       do: [
         {
-          ...empty_step,
+          ...default_step,
           load_var: 'my-var',
           file: 'my-file',
           format: undefined,
@@ -254,10 +228,10 @@ test('stores ensure', (t) => {
     ...default_job,
     name: 'a',
     ensure: {
-      ...empty_step,
+      ...default_step,
       do: [
         {
-          ...empty_step,
+          ...default_step,
           load_var: 'my-var',
           file: 'my-file',
           format: undefined,

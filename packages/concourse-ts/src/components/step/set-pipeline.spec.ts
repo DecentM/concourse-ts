@@ -1,38 +1,21 @@
 import test from 'ava'
 
 import {SetPipelineStep} from './set-pipeline'
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_set_pipeline_step = {
-  ...default_step,
-  team: undefined,
-  var_files: undefined,
-  vars: undefined,
-  set_pipeline: undefined,
-  file: undefined,
-  instance_vars: undefined,
-}
-
-test.beforeEach(() => {
-  SetPipelineStep.customise((sps) => {
-    sps.add_tag('static')
-  })
-})
+import {default_set_pipeline_step} from './test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  SetPipelineStep.customise((sps) => {
+    sps.attempts = 2
+  })
+
   const sps = new SetPipelineStep('a')
 
-  t.deepEqual(sps.serialise(), default_set_pipeline_step)
+  t.deepEqual(sps.serialise(), {
+    ...default_set_pipeline_step,
+    attempts: 2,
+  })
+
+  SetPipelineStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -42,7 +25,7 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(sps.serialise(), {
     ...default_set_pipeline_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
   })
 })
 

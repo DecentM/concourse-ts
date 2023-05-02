@@ -3,41 +3,24 @@ import {LoadVarStep, Resource, ResourceType, Task} from '..'
 
 import {TryStep} from './try'
 
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_load_var_step = {
-  ...default_step,
-  file: undefined,
-  format: undefined,
-  load_var: undefined,
-  reveal: undefined,
-  tags: undefined,
-}
-
-const default_try_step = {
-  ...default_step,
-  try: undefined,
-}
-
-test.beforeEach(() => {
-  TryStep.customise((ts) => {
-    ts.add_tag('static')
-  })
-})
+import {
+  default_load_var_step,
+  default_try_step,
+} from './test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  TryStep.customise((ts) => {
+    ts.attempts = 2
+  })
+
   const ts = new TryStep('a')
 
-  t.deepEqual(ts.serialise(), default_try_step)
+  t.deepEqual(ts.serialise(), {
+    ...default_try_step,
+    attempts: 2,
+  })
+
+  TryStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -47,7 +30,7 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(ts.serialise(), {
     ...default_try_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
   })
 })
 

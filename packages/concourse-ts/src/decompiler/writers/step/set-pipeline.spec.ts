@@ -6,6 +6,7 @@ import {SetPipelineStep} from '../../../components'
 import {Identifier} from '../../../utils'
 
 import {write_set_pipeline_step} from './set-pipeline'
+import {default_set_pipeline_step} from '../../../components/step/test-data/default-steps'
 
 const chain = (
   name: string,
@@ -32,27 +33,6 @@ const chain = (
     result: result.serialise(),
     diagnostics: transpiled.diagnostics,
   }
-}
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
-
-const default_set_pipeline_step = {
-  ...default_step,
-  team: undefined,
-  var_files: undefined,
-  vars: undefined,
-  set_pipeline: undefined,
-  file: undefined,
-  instance_vars: undefined,
 }
 
 const default_pipeline: Type.Pipeline = {

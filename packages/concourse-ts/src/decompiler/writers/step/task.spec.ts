@@ -6,6 +6,7 @@ import {TaskStep} from '../../../components'
 import {Identifier} from '../../../utils'
 
 import {write_task_step} from './task'
+import {default_task_step} from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.TaskStep, pipeline: Type.Pipeline) => {
   const code = `
@@ -30,30 +31,6 @@ const chain = (name: string, input: Type.TaskStep, pipeline: Type.Pipeline) => {
   }
 }
 
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
-
-const default_task_step = {
-  ...default_step,
-  config: undefined,
-  task: 'a_task',
-  vars: undefined,
-  file: undefined,
-  image: undefined,
-  input_mapping: undefined,
-  output_mapping: undefined,
-  params: undefined,
-  privileged: undefined,
-}
-
 const default_pipeline: Type.Pipeline = {
   jobs: [],
 }
@@ -68,6 +45,7 @@ test('writes empty step', (t) => {
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task_step,
+    task: 'a_task',
   })
 })
 
@@ -82,6 +60,7 @@ test('writes file', (t) => {
   t.deepEqual(result, {
     ...default_task_step,
     file: 'my-file.yml',
+    task: 'a_task',
   })
 })
 
@@ -96,6 +75,7 @@ test('writes image', (t) => {
   t.deepEqual(result, {
     ...default_task_step,
     image: 'my-image',
+    task: 'a_task',
   })
 })
 
@@ -110,6 +90,7 @@ test('writes privileged', (t) => {
   t.deepEqual(result, {
     ...default_task_step,
     privileged: true,
+    task: 'a_task',
   })
 })
 
@@ -124,6 +105,7 @@ test('writes vars', (t) => {
   t.deepEqual(result, {
     ...default_task_step,
     vars: {my_var: '1'},
+    task: 'a_task',
   })
 })
 
@@ -138,6 +120,7 @@ test('writes params', (t) => {
   t.deepEqual(result, {
     ...default_task_step,
     params: {my_param: '1'},
+    task: 'a_task',
   })
 })
 
@@ -155,6 +138,7 @@ test('writes input_mapping', (t) => {
   t.deepEqual(result, {
     ...default_task_step,
     input_mapping: {input: 'mapped'},
+    task: 'a_task',
   })
 })
 
@@ -171,6 +155,8 @@ test('writes output_mapping', (t) => {
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task_step,
+    config: undefined,
     output_mapping: {output: 'mapped'},
+    task: 'a_task',
   })
 })

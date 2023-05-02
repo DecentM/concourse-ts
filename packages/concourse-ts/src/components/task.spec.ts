@@ -5,35 +5,23 @@ import {Resource} from './resource'
 import {ResourceType} from './resource-type'
 
 import {Task} from './task'
+import {default_task, default_task_step} from './step/test-data/default-steps'
 
-const default_task = {
-  caches: undefined,
-  container_limits: undefined,
-  image_resource: undefined,
-  inputs: undefined,
-  outputs: undefined,
-  params: {
-    'my-param': '1',
-  },
-  platform: undefined,
-  rootfs_uri: undefined,
-  run: undefined,
-}
-
-test.beforeEach(() => {
+test('runs static customiser', (t) => {
   Task.customise((task) => {
     task.set_params({key: 'my-param', value: '1'})
   })
 
-  Task.customise_task_step((ts) => {
-    ts.add_tag('static')
-  })
-})
-
-test('runs static customiser', (t) => {
   const task = new Task('a')
 
-  t.deepEqual(task.serialise(), default_task)
+  t.deepEqual(task.serialise(), {
+    ...default_task,
+    params: {
+      'my-param': '1',
+    },
+  })
+
+  Task.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -45,6 +33,10 @@ test('runs instance customiser', (t) => {
 })
 
 test('runs task-step customiser', (t) => {
+  Task.customise_task_step((ts) => {
+    ts.add_tag('static')
+  })
+
   const task = new Task('my-t', (my_t) => {
     my_t.customise_task_step((gs) => {
       gs.add_tag('customised')
@@ -58,25 +50,14 @@ test('runs task-step customiser', (t) => {
       })
       .serialise(),
     {
-      attempts: undefined,
+      ...default_task_step,
       config: default_task,
-      ensure: undefined,
-      file: undefined,
-      image: undefined,
-      input_mapping: undefined,
-      on_abort: undefined,
-      on_error: undefined,
-      on_failure: undefined,
-      on_success: undefined,
-      output_mapping: undefined,
-      params: undefined,
-      privileged: undefined,
       tags: ['static', 'customised', 'instance'],
       task: 'my-t',
-      timeout: undefined,
-      vars: undefined,
     }
   )
+
+  Task.customise_task_step(() => null)
 })
 
 test('stores anonymous image resource', (t) => {

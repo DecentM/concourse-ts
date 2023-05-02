@@ -15,6 +15,8 @@ import {DoStep as DoStepComponent} from './do'
  * happens before this base class is defined, resulting in a hard to debug
  * error.
  *
+ * @internal
+ *
  * @param {string} name
  * @returns {DoStep}
  */
@@ -56,6 +58,17 @@ export abstract class Step<StepType extends Type.Step> {
   public abstract get_resources(): Resource[]
 
   private timeout: Duration
+
+  private across: Type.Across[] = []
+
+  /**
+   * https://concourse-ci.org/across-step.html
+   *
+   * @param {Across} across The modifier to add
+   */
+  public add_across = (...across: Type.Across[]) => {
+    this.across.push(...across)
+  }
 
   /**
    * https://concourse-ci.org/timeout-step.html
@@ -236,6 +249,7 @@ export abstract class Step<StepType extends Type.Step> {
       on_success: this.on_success?.serialise(),
       tags: this.tags.length === 0 ? undefined : this.tags,
       timeout: this.timeout,
+      across: this.across.length === 0 ? undefined : this.across,
     }
 
     return result

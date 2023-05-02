@@ -6,6 +6,7 @@ import {Type} from '../../..'
 import {write_step} from '.'
 import {AnyStep} from '../../../declarations'
 import {Identifier} from '../../../utils'
+import {default_step} from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.Step, pipeline: Type.Pipeline) => {
   const code = `
@@ -39,17 +40,6 @@ const chain = (name: string, input: Type.Step, pipeline: Type.Pipeline) => {
     result: result.serialise(),
     diagnostics: transpiled.diagnostics,
   }
-}
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
 }
 
 const default_pipeline: Type.Pipeline = {

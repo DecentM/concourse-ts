@@ -1,36 +1,21 @@
 import test from 'ava'
 
 import {LoadVarStep} from './load-var'
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: ['static'],
-  timeout: undefined,
-}
-
-const default_load_var_step = {
-  ...default_step,
-  file: undefined,
-  format: undefined,
-  load_var: undefined,
-  reveal: undefined,
-}
-
-test.beforeEach(() => {
-  LoadVarStep.customise((lvs) => {
-    lvs.add_tag('static')
-  })
-})
+import {default_load_var_step} from './test-data/default-steps'
 
 test('runs static customiser', (t) => {
+  LoadVarStep.customise((lvs) => {
+    lvs.attempts = 2
+  })
+
   const lvs = new LoadVarStep('a')
 
-  t.deepEqual(lvs.serialise(), default_load_var_step)
+  t.deepEqual(lvs.serialise(), {
+    ...default_load_var_step,
+    attempts: 2,
+  })
+
+  LoadVarStep.customise(() => null)
 })
 
 test('runs instance customiser', (t) => {
@@ -40,7 +25,7 @@ test('runs instance customiser', (t) => {
 
   t.deepEqual(lvs.serialise(), {
     ...default_load_var_step,
-    tags: ['static', 'instance'],
+    tags: ['instance'],
   })
 })
 

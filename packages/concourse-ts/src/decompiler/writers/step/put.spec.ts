@@ -6,6 +6,7 @@ import {PutStep} from '../../../components'
 import {Identifier} from '../../../utils'
 
 import {write_put_step} from './put'
+import {default_put_step} from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.PutStep, pipeline: Type.Pipeline) => {
   const code = `
@@ -28,26 +29,6 @@ const chain = (name: string, input: Type.PutStep, pipeline: Type.Pipeline) => {
     result: result.serialise(),
     diagnostics: transpiled.diagnostics,
   }
-}
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
-
-const default_put_step = {
-  ...default_step,
-  get_params: undefined,
-  inputs: undefined,
-  params: undefined,
-  put: undefined,
-  resource: undefined,
 }
 
 const default_pipeline: Type.Pipeline = {

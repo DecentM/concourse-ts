@@ -1,6 +1,7 @@
 import test from 'ava'
 import {ResourceType, Resource, Job} from '..'
 import {Duration} from '../utils/duration'
+import {default_step} from './step/test-data/default-steps'
 
 test.beforeEach(() => {
   Resource.customise((resource) => {
@@ -95,18 +96,12 @@ test('runs get-step customiser', (t) => {
   })
 
   t.deepEqual(r.as_get_step().serialise(), {
-    attempts: undefined,
-    ensure: undefined,
+    ...default_step,
     get: 'my-r',
-    on_abort: undefined,
-    on_error: undefined,
-    on_failure: undefined,
-    on_success: undefined,
     params: undefined,
     passed: undefined,
     resource: undefined,
     tags: ['static', 'customised'],
-    timeout: undefined,
     trigger: undefined,
     version: undefined,
   })
@@ -124,17 +119,11 @@ test('runs put-step customiser', (t) => {
   })
 
   t.deepEqual(r.as_put_step().serialise(), {
-    attempts: undefined,
-    ensure: undefined,
+    ...default_step,
     put: 'my-r',
-    on_abort: undefined,
-    on_error: undefined,
-    on_failure: undefined,
-    on_success: undefined,
     params: undefined,
     resource: undefined,
     tags: ['static', 'customised'],
-    timeout: undefined,
     inputs: undefined,
     get_params: undefined,
   })
@@ -159,21 +148,15 @@ test('creates put step', (t) => {
   )
 
   t.deepEqual(ps.serialise(), {
-    attempts: undefined,
-    ensure: undefined,
-    get_params: undefined,
+    ...default_step,
     inputs: 'all',
-    on_abort: undefined,
-    on_error: undefined,
-    on_failure: undefined,
-    on_success: undefined,
     params: {
       my_param: 'a',
     },
     put: 'my-r',
     resource: undefined,
     tags: ['static', 'tag'],
-    timeout: undefined,
+    get_params: undefined,
   })
 })
 
@@ -199,21 +182,15 @@ test('creates get step', (t) => {
   )
 
   t.deepEqual(ps.serialise(), {
-    attempts: undefined,
-    ensure: undefined,
+    ...default_step,
     get: 'my-r',
-    on_abort: undefined,
-    on_error: undefined,
-    on_failure: undefined,
-    on_success: undefined,
     params: {
       my_param: 'a',
     },
-    resource: undefined,
     tags: ['static', 'tag'],
-    timeout: undefined,
     passed: ['j'],
     trigger: false,
     version: undefined,
+    resource: undefined,
   })
 })

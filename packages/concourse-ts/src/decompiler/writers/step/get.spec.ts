@@ -6,6 +6,7 @@ import {GetStep} from '../../../components'
 import {Identifier} from '../../../utils'
 
 import {write_get_step} from './get'
+import {default_get_step} from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.GetStep, pipeline: Type.Pipeline) => {
   const code = `
@@ -28,27 +29,6 @@ const chain = (name: string, input: Type.GetStep, pipeline: Type.Pipeline) => {
     result: result.serialise(),
     diagnostics: transpiled.diagnostics,
   }
-}
-
-const default_step = {
-  attempts: undefined,
-  ensure: undefined,
-  on_abort: undefined,
-  on_error: undefined,
-  on_failure: undefined,
-  on_success: undefined,
-  tags: undefined,
-  timeout: undefined,
-}
-
-const default_get_step = {
-  ...default_step,
-  get: undefined,
-  params: undefined,
-  passed: undefined,
-  trigger: undefined,
-  version: undefined,
-  resource: undefined,
 }
 
 const default_pipeline: Type.Pipeline = {

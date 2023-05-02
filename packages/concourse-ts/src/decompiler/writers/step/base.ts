@@ -33,6 +33,12 @@ export const write_step_base = (
     )}
   `
 
+  if (step.across && step.across.length) {
+    result += step.across
+      .map((across) => `${variable_name}.add_across(${JSON.stringify(across)})`)
+      .join('\n')
+  }
+
   if (step.ensure) {
     result += `${variable_name}.add_ensure(${write_step(
       `${name}_ensure`,
