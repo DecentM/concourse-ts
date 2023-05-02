@@ -2,10 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import * as YAML from 'yaml'
 
-import {Pipeline, Task, TaskStep} from '../declarations'
-import {Identifier} from '../utils/identifier'
-import {is_task} from '../utils/is-task'
-import {is_task_step} from '../utils/step-type'
+import {Pipeline, Task, TaskStep} from '../../declarations'
+import {Identifier} from '../identifier'
+import {is_task} from '../is-task'
+import {is_task_step} from '../step-type'
 
 export const hoist_task = (
   work_dir: string,

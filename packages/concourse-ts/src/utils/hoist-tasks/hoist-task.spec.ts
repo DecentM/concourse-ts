@@ -1,9 +1,9 @@
 import test from 'ava'
 import path from 'path'
 
-import {TaskStep} from '../components'
+import {TaskStep} from '../../components'
 
-import {hoist_task} from './hoist-task'
+import {hoist_task} from '.'
 
 test('hoists tasks', (t) => {
   const ts = new TaskStep('a', (ts) => {
@@ -12,7 +12,7 @@ test('hoists tasks', (t) => {
 
   const serialised = ts.serialise()
 
-  const task = hoist_task(path.join(__dirname, 'test'), serialised)
+  const task = hoist_task(path.join(__dirname, 'test-data'), serialised)
 
   t.deepEqual(task, {
     platform: 'linux',
@@ -27,7 +27,7 @@ test('returns null when task step has no file set', (t) => {
   const ts = new TaskStep('a')
   const serialised = ts.serialise()
 
-  t.is(hoist_task(path.join(__dirname, 'test'), serialised), undefined)
+  t.is(hoist_task(path.join(__dirname, 'test-data'), serialised), undefined)
 })
 
 test('throws when task file is invalid', (t) => {
@@ -37,5 +37,5 @@ test('throws when task file is invalid', (t) => {
 
   const serialised = ts.serialise()
 
-  t.is(hoist_task(path.join(__dirname, 'test'), serialised), undefined)
+  t.is(hoist_task(path.join(__dirname, 'test-data'), serialised), undefined)
 })

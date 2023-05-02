@@ -1,13 +1,13 @@
 import test from 'ava'
 import path from 'path'
 
-import {Job, Pipeline, TaskStep} from '../components'
+import {Job, Pipeline, TaskStep} from '../../components'
 
-import {hoist_all_tasks} from './hoist-task'
+import {hoist_all_tasks} from '.'
 import {
   default_job,
   default_task_step,
-} from '../components/step/test-data/default-steps'
+} from '../../components/step/test-data/default-steps'
 
 test('hoists all tasks', (t) => {
   const pipeline = new Pipeline('p', (p) => {
@@ -32,7 +32,10 @@ test('hoists all tasks', (t) => {
 
   const serialised = pipeline.serialise()
 
-  const new_pipeline = hoist_all_tasks(path.join(__dirname, 'test'), serialised)
+  const new_pipeline = hoist_all_tasks(
+    path.join(__dirname, 'test-data'),
+    serialised
+  )
 
   t.deepEqual(new_pipeline, {
     display: undefined,
