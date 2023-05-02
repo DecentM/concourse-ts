@@ -4,10 +4,6 @@ import path from 'node:path'
 
 import {Decompilation} from '.'
 
-const check = (decompilation: Decompilation, yaml: string): boolean => {
-  return !decompilation.decompile(yaml).pipeline.includes('undefined')
-}
-
 test('decompiles normally', async (t) => {
   const decompilation = new Decompilation()
   const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
@@ -37,16 +33,12 @@ test('decompiles without name', async (t) => {
 
 test('does not produce undefined assignments', async (t) => {
   const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
+  const result = new Decompilation()
+    .set_name('pipeline')
+    .set_work_dir('src/decompiler/test')
+    .decompile(file.toString('utf8'))
 
-  t.assert(
-    check(
-      new Decompilation()
-        .set_name('pipeline')
-        .set_work_dir('src/decompiler/test'),
-      file.toString('utf8')
-    ),
-    'result contains undefined'
-  )
+  t.assert(!result.pipeline.includes('undefined'), 'result contains undefined')
 })
 
 test('throws when input is not a pipeline', async (t) => {

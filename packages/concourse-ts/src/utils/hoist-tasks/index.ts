@@ -7,6 +7,17 @@ import {Identifier} from '../identifier'
 import {is_task} from '../is-task'
 import {is_task_step} from '../step-type'
 
+/**
+ * Returns the serialised task for a given task step, if the passed task step
+ * has a "file" property. Returns undefined if the task step doesn't have a
+ * "file" property.
+ *
+ * @internal Used by `hoist_all_tasks`
+ *
+ * @param {string} work_dir This directory is used as root for relative paths
+ * @param {TaskStep} task_step The task step to read
+ * @returns {Task | undefined} The task, or undefined if the file is not a task
+ */
 export const hoist_task = (
   work_dir: string,
   task_step: TaskStep
@@ -26,6 +37,16 @@ export const hoist_task = (
   return task
 }
 
+/**
+ * Modifies a Pipeline in-place by reading task files and embedding the task
+ * configuration into the Pipeline instance.
+ *
+ * @internal
+ *
+ * @param {string} work_dir This directory is used as root for relative paths
+ * @param {Pipeline} pipeline The pipeline to modify
+ * @returns {Pipeline} The same pipeline instance
+ */
 export const hoist_all_tasks = (
   work_dir: string,
   pipeline: Pipeline
