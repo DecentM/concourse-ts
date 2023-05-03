@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nx build",
     "t": "yarn test",
-    "test": "c8 --reporter=lcov --reporter=text ava"
+    "test": "c8 --100 --reporter=lcov --reporter=text ava"
   },
   "ava": {
     "extensions": {

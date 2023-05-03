@@ -49,7 +49,7 @@ const across_combinations = (acrosses: Across[]): CombinationItem[][] => {
 }
 
 export const resolve_across_pipeline = (pipeline: Pipeline): void => {
-  pipeline.jobs.forEach((job, job_index) => {
+  pipeline.jobs.forEach((job) => {
     job.plan.forEach((step, step_index) => {
       if (!step.across || !step.across.length) {
         return
@@ -74,9 +74,7 @@ export const resolve_across_pipeline = (pipeline: Pipeline): void => {
           across: undefined,
         }
 
-        const var_source_name = `${
-          job.name || `job_${job_index}`
-        }_across_${combination_index}`
+        const var_source_name = `${job.name}_across_${combination_index}`
 
         // Replace all instances of variable usage in this step and its children
         visit_variable_attributes(new_step, {
