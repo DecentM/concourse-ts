@@ -1287,12 +1287,12 @@
   dependencies:
     nx "16.0.3"
 
-"@nrwl/vite@16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-16.0.1.tgz#716c67c860cf97af1bd007c0f5fef2718e8c6dd0"
-  integrity sha512-w379z7dW8FJLmLhMyklgy9Vq71NukvVlgE6iOvZUflNJmRB8irqzFfXQe1rhfGQBAeQosJzzncHorhSQGjPQTQ==
+"@nrwl/vite@16.0.3":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-16.0.3.tgz#3af9c5f3bc7a5537341c21aa1b5bf4ce27f45c0e"
+  integrity sha512-+CLfbN4gZ2RUx6nCsnQUwDr3igLLryGkwK8cCy5eK6rlcLwJHM7GGMQI8d5aZ44V00CvnYB3mCx/6XpRQCJ+Fg==
   dependencies:
-    "@nx/vite" "16.0.1"
+    "@nx/vite" "16.0.3"
 
 "@nrwl/workspace@16.0.1":
   version "16.0.1"
@@ -1505,14 +1505,14 @@
   resolved "https://registry.yarnpkg.com/@nx/nx-win32-x64-msvc/-/nx-win32-x64-msvc-16.0.3.tgz#dfe6a39bc58495234baba99b9a10b6d5d17db382"
   integrity sha512-/Ezru8nlrckLAQ4s7wEAW192DULgWj9YBqREQPV0ddzwjeVC0clsHSXguH8WzMwEU44+IFnqNMJrWK3mZCvZYA==
 
-"@nx/vite@16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@nx/vite/-/vite-16.0.1.tgz#08112dba617c2c73de3033a136639b65b4d4a232"
-  integrity sha512-lkrhGhalvcD8pH724kExBiX/4dBiMQeDzwwKo9DrAc75oXrJqitCJ7NY9ySgTPJOslI9nSblvSEeYfvon0XcfQ==
+"@nx/vite@16.0.3":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@nx/vite/-/vite-16.0.3.tgz#369d6f9edfe6e412e76aac6a12399e3803b9a61d"
+  integrity sha512-vViP2Wd2IUJHqpXAhnun+nRWrHmHeVlHX4d6mgVYrAg2TOx4U/XWlWWP6jxEDX6mQIsyKDVUNV2wvzTb4NNxmw==
   dependencies:
-    "@nrwl/vite" "16.0.1"
-    "@nx/devkit" "16.0.1"
-    "@nx/js" "16.0.1"
+    "@nrwl/vite" "16.0.3"
+    "@nx/devkit" "16.0.3"
+    "@nx/js" "16.0.3"
     "@phenomnomnominal/tsquery" "~5.0.1"
     "@swc/helpers" "~0.5.0"
     dotenv "~10.0.0"
