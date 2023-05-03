@@ -1266,12 +1266,12 @@
   dependencies:
     "@nx/js" "16.0.3"
 
-"@nrwl/linter@16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-16.0.1.tgz#e540325eb7346f8e8112c4712e72644bd37fc2b0"
-  integrity sha512-1z3czeyBJlm3JMPLD8l8W6wAPli6/xr8AnzowFH8UhuB6sXmozztM49RlFP4BbU1AqwYW9kxxgFKQB0Pu84Pew==
+"@nrwl/linter@16.0.3":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-16.0.3.tgz#c2141fa6ea3c003e4a7f8de54fe82b91a7b026b2"
+  integrity sha512-IxpWNMwYOBrtrsaN/Fszxks0THHVRI6M+Uh/dGvhhqB32riNB+aGonwxYE4X+kTvJQRWasYep4ttiC8ZF/nNBQ==
   dependencies:
-    "@nx/linter" "16.0.1"
+    "@nx/linter" "16.0.3"
 
 "@nrwl/tao@16.0.1":
   version "16.0.1"
@@ -1403,14 +1403,14 @@
     tree-kill "1.2.2"
     tslib "^2.3.0"
 
-"@nx/linter@16.0.1":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@nx/linter/-/linter-16.0.1.tgz#ad8bee5628b50d740b696acd3c1907e7a5c30aef"
-  integrity sha512-Yr49aAgYCL8LfTtiQITaBCg8TE3OQWIhoRAclIRTjZl/MTyvtbLwCL4IfJMH+x0Isd1SMBQtAfmXRJdKnFa9GA==
+"@nx/linter@16.0.3":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@nx/linter/-/linter-16.0.3.tgz#78ee33372ece4db68c02f112319e735d0a3d7e9b"
+  integrity sha512-AP3Y2jQYJtpgWBddUFosEXJN5QvOui3DC0Cr/b5c2Q9E1N90V3UKof71m0fX5h5lpee7zkLlhjlTnqt9K803rg==
   dependencies:
-    "@nrwl/linter" "16.0.1"
-    "@nx/devkit" "16.0.1"
-    "@nx/js" "16.0.1"
+    "@nrwl/linter" "16.0.3"
+    "@nx/devkit" "16.0.3"
+    "@nx/js" "16.0.3"
     "@phenomnomnominal/tsquery" "~5.0.1"
     tmp "~0.2.1"
     tslib "^2.3.0"

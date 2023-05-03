@@ -20,7 +20,7 @@
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "16.0.1",
     "@nrwl/js": "16.0.3",
-    "@nrwl/linter": "16.0.1",
+    "@nrwl/linter": "16.0.3",
     "@nrwl/vite": "16.0.1",
     "@nrwl/workspace": "16.0.1",
     "@swc/cli": "~0.1.62",
