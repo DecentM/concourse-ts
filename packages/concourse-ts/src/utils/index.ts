@@ -8,3 +8,5 @@ export * from './identifier'
 export * from './duration'
 export * from './warning-store'
 export * from './hoist-tasks'
+
+export * as Transform from './transform'
