@@ -69,13 +69,7 @@ export const visit_variable_attributes = (
 
       if (ts.params) {
         Object.keys(ts.params).forEach((key) => {
-          const value = ts.params[key]
-
-          if (typeof value !== 'string') {
-            return
-          }
-
-          visitor.Attribute(value, key, ts.params)
+          visitor.Attribute(ts.params[key], key, ts.params)
         })
       }
 
@@ -98,15 +92,19 @@ export const visit_variable_attributes = (
         }
 
         if (ts.config.image_resource?.version) {
-          Object.keys(ts.config.image_resource.version).forEach((key) => {
-            const value = ts.config.image_resource.version[key]
+          if (typeof ts.config.image_resource.version === 'string') {
+            visitor.Attribute(
+              ts.config.image_resource.version,
+              'version',
+              ts.config.image_resource
+            )
+          } else {
+            Object.keys(ts.config.image_resource.version).forEach((key) => {
+              const value = ts.config.image_resource.version[key]
 
-            if (typeof value !== 'string') {
-              return
-            }
-
-            visitor.Attribute(value, key, ts.config.image_resource.version)
-          })
+              visitor.Attribute(value, key, ts.config.image_resource.version)
+            })
+          }
         }
 
         if (ts.config.image_resource?.source) {
@@ -151,13 +149,7 @@ export const visit_variable_attributes = (
 
         if (ts.config.params) {
           Object.keys(ts.config.params).forEach((key) => {
-            const value = ts.config.params[key]
-
-            if (typeof value !== 'string') {
-              return
-            }
-
-            visitor.Attribute(value, key, ts.config.params)
+            visitor.Attribute(ts.config.params[key], key, ts.config.params)
           })
         }
 
