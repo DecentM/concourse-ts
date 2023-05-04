@@ -10,8 +10,7 @@ import {is_pipeline} from '../utils/is-pipeline'
 import {write_pipeline} from './writers/pipeline'
 import {validate} from '../validation'
 import {WarningStore} from '../utils'
-
-import {hoist_all_tasks} from '../utils/hoist-tasks'
+import {apply_task_hoisting} from '../utils/transform'
 
 export type DecompilationResult = {
   warnings: WarningStore
@@ -54,7 +53,7 @@ export class Decompilation {
     }
 
     // Load task configs from disk if they're defined in a separate yaml file
-    hoist_all_tasks(this.work_dir, parsed)
+    apply_task_hoisting(this.work_dir, parsed)
 
     const warnings = validate(parsed)
 

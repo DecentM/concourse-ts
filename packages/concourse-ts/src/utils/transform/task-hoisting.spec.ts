@@ -3,7 +3,7 @@ import path from 'path'
 
 import {Job, Pipeline, TaskStep} from '../../components'
 
-import {hoist_all_tasks} from '.'
+import {apply_task_hoisting} from '.'
 import {
   default_job,
   default_task_step,
@@ -32,12 +32,9 @@ test('hoists all tasks', (t) => {
 
   const serialised = pipeline.serialise()
 
-  const new_pipeline = hoist_all_tasks(
-    path.join(__dirname, 'test-data'),
-    serialised
-  )
+  apply_task_hoisting(path.join(__dirname, 'test-data'), serialised)
 
-  t.deepEqual(new_pipeline, {
+  t.deepEqual(serialised, {
     display: undefined,
     groups: [],
     jobs: [
