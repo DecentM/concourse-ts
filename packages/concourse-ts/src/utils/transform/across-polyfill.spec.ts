@@ -1,9 +1,9 @@
 import test from 'ava'
 
 import {InParallelStep, Pipeline, Step, TaskStep} from '../../declarations'
-import {Identifier} from '../identifier'
+import {Identifier} from '../../utils/identifier'
 
-import {resolve_across_pipeline} from '.'
+import {apply_across_polyfill} from './across-polyfill'
 
 const create_pipeline = (): Pipeline => ({
   jobs: [
@@ -44,7 +44,7 @@ const create_pipeline = (): Pipeline => ({
 test('creates the correct number of tasks', (t) => {
   const pipeline = create_pipeline()
 
-  resolve_across_pipeline(pipeline)
+  apply_across_polyfill(pipeline)
 
   const step1 = pipeline.jobs[0].plan[0] as InParallelStep
 
@@ -61,7 +61,7 @@ test('leaves non-across steps alone', (t) => {
   pipeline.jobs[0].plan[0].across = undefined
   orig_pipeline.jobs[0].plan[0].across = undefined
 
-  resolve_across_pipeline(pipeline)
+  apply_across_polyfill(pipeline)
 
   t.deepEqual(pipeline, orig_pipeline)
 })
@@ -71,7 +71,7 @@ test('only changes variables that are defined in the matrix', (t) => {
 
   pipeline.jobs[0].plan[0].across![0].var = 'something-else' as Identifier
 
-  resolve_across_pipeline(pipeline)
+  apply_across_polyfill(pipeline)
 
   const step = pipeline.jobs[0].plan[0] as InParallelStep
   const child_step = step.in_parallel[0] as TaskStep

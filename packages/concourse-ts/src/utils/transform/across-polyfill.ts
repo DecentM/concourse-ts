@@ -1,7 +1,7 @@
 import clone_deep from 'lodash.clonedeep'
 
 import {Across, Pipeline, Step} from '../../declarations'
-import {visit_variable_attributes} from '../visitors/variable-attributes'
+import {visit_variable_attributes} from '../../utils/visitors/variable-attributes'
 
 const get_combinations_rec = <T>(
   sources: T[][],
@@ -48,7 +48,17 @@ const across_combinations = (acrosses: Across[]): CombinationItem[][] => {
   return get_combinations(combination_input)
 }
 
-export const resolve_across_pipeline = (pipeline: Pipeline): void => {
+/**
+ * Modifies a serialised Pipeline *in-place*, so that all `across` modifiers are
+ * removed from steps, and a new step is created for each combination of the
+ * matrix under a new in_parallel step.
+ *
+ * This means that you can create build matrices even if your Concourse instance
+ * doesn't have the `across` step enabled.
+ *
+ * @param {Pipeline} pipeline The pipeline to modify
+ */
+export const apply_across_polyfill = (pipeline: Pipeline): void => {
   pipeline.jobs.forEach((job) => {
     job.plan.forEach((step, step_index) => {
       if (!step.across || !step.across.length) {
