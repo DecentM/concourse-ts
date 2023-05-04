@@ -32,7 +32,7 @@ test('hoists all tasks', (t) => {
 
   const serialised = pipeline.serialise()
 
-  apply_task_hoisting(path.join(__dirname, 'test-data'), serialised)
+  apply_task_hoisting(serialised, path.join(__dirname, 'test-data'))
 
   t.deepEqual(serialised, {
     display: undefined,

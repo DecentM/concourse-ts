@@ -32,7 +32,7 @@ const create_pipeline = (): Pipeline => ({
             },
             run: {
               path: 'echo',
-              args: ['alpine-((.:alpine))'],
+              args: ['alpine ((.:alpine)) with node ((.:node))'],
             },
           },
         },
@@ -77,4 +77,18 @@ test('only changes variables that are defined in the matrix', (t) => {
   const child_step = step.in_parallel[0] as TaskStep
 
   t.is(child_step.task, 'running-with-node-((.:node))' as Identifier)
+})
+
+test('replaces multiple variables in a single value', (t) => {
+  const pipeline = create_pipeline()
+
+  apply_across_polyfill(pipeline)
+
+  const step = pipeline.jobs[0].plan[0] as InParallelStep
+  const child_step = step.in_parallel[0] as TaskStep
+
+  t.is(
+    child_step.config!.run.args![0],
+    'alpine ((my-job_step_0_across_0:alpine)) with node ((my-job_step_0_across_0:node))' as Identifier
+  )
 })

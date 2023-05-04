@@ -231,6 +231,107 @@ test(
 )
 
 test(
+  'recursively traverses into do steps',
+  call_count,
+  {
+    do: [
+      {
+        task: 'my-task' as Identifier,
+      },
+    ],
+  },
+  1
+)
+
+test(
+  'recursively traverses into in_parallel steps - array',
+  call_count,
+  {
+    in_parallel: [
+      {
+        task: 'my-task' as Identifier,
+      },
+    ],
+  },
+  1
+)
+
+test(
+  'recursively traverses into in_parallel steps - object',
+  call_count,
+  {
+    in_parallel: {
+      steps: [
+        {
+          task: 'my-task' as Identifier,
+        },
+      ],
+    },
+  },
+  1
+)
+
+test(
+  'recursively traverses into ensure steps',
+  call_count,
+  {
+    do: [],
+    ensure: {
+      task: 'my-task' as Identifier,
+    },
+  },
+  1
+)
+
+test(
+  'recursively traverses into on_success steps',
+  call_count,
+  {
+    do: [],
+    on_success: {
+      task: 'my-task' as Identifier,
+    },
+  },
+  1
+)
+
+test(
+  'recursively traverses into on_abort steps',
+  call_count,
+  {
+    do: [],
+    on_abort: {
+      task: 'my-task' as Identifier,
+    },
+  },
+  1
+)
+
+test(
+  'recursively traverses into on_failure steps',
+  call_count,
+  {
+    do: [],
+    on_failure: {
+      task: 'my-task' as Identifier,
+    },
+  },
+  1
+)
+
+test(
+  'recursively traverses into on_error steps',
+  call_count,
+  {
+    do: [],
+    on_error: {
+      task: 'my-task' as Identifier,
+    },
+  },
+  1
+)
+
+test(
   'visits Pipeline.resource.source',
   call_count,
   {
