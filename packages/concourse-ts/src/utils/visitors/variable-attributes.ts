@@ -64,6 +64,26 @@ export const visit_variable_attributes = (
   }
 
   visit_step(component, {
+    DoStep(ds) {
+      ds.do.forEach((step) => {
+        visit_variable_attributes(step, visitor)
+      })
+    },
+
+    InParallelStep(ips) {
+      if (Array.isArray(ips.in_parallel)) {
+        ips.in_parallel.forEach((step) => {
+          visit_variable_attributes(step, visitor)
+        })
+
+        return
+      }
+
+      ips.in_parallel.steps.forEach((step) => {
+        visit_variable_attributes(step, visitor)
+      })
+    },
+
     TaskStep(ts) {
       visitor.Attribute(ts.task, 'task', ts)
 

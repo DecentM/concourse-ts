@@ -1,6 +1,6 @@
 import clone_deep from 'lodash.clonedeep'
 
-import {Across, Pipeline, Step} from '../../declarations'
+import {Across, Pipeline, Step, Transformer} from '../../declarations'
 import {visit_variable_attributes} from '../../utils/visitors/variable-attributes'
 
 const get_combinations_rec = <T>(
@@ -48,6 +48,15 @@ const across_combinations = (acrosses: Across[]): CombinationItem[][] => {
   return get_combinations(combination_input)
 }
 
+// Indices on regex match are a new proposal, so we need to extend the type
+// https://stackoverflow.com/questions/72119570/why-doesnt-vs-code-typescript-recognize-the-indices-property-on-the-result-of-r
+// https://tc39.es/proposal-regexp-match-indices/
+type RegExpMatchArrayWithIndices = RegExpMatchArray & {
+  indices: Array<[number, number]> & {
+    groups: Record<string, [number, number]>
+  }
+}
+
 /**
  * Modifies a serialised Pipeline *in-place*, so that all `across` modifiers are
  * removed from steps, and a new step is created for each combination of the
@@ -58,7 +67,9 @@ const across_combinations = (acrosses: Across[]): CombinationItem[][] => {
  *
  * @param {Pipeline} pipeline The pipeline to modify
  */
-export const apply_across_polyfill = (pipeline: Pipeline): void => {
+export const apply_across_polyfill: Transformer = (
+  pipeline: Pipeline
+): void => {
   pipeline.jobs.forEach((job) => {
     job.plan.forEach((step, step_index) => {
       if (!step.across || !step.across.length) {
@@ -84,28 +95,45 @@ export const apply_across_polyfill = (pipeline: Pipeline): void => {
           across: undefined,
         }
 
-        const var_source_name = `${job.name}_across_${combination_index}`
+        const var_source_name = `${job.name}_step_${step_index}_across_${combination_index}`
 
         // Replace all instances of variable usage in this step and its children
         visit_variable_attributes(new_step, {
           Attribute(attribute, field_index, root) {
-            const regex = /(.*)\(\(\.:([a-zA-Z-.0-9]{0,})\)\)(.*)/g
-            let match: RegExpExecArray | null = null
+            const regex =
+              /\(\((?<varsource>[a-zA-Z-.0-9]+):(?<varname>[a-zA-Z-.0-9]+)\)\)/dgimu
+
+            let match: RegExpMatchArrayWithIndices | null = null
+            let wip = attribute
 
             // The regex object tracks how many times it's been executed, and
             // matches the next occurrence every time. We use this to replace
             // every variable use in the string iteratively.
-            while ((match = regex.exec(attribute)) !== null) {
+            while (
+              (match = regex.exec(wip) as RegExpMatchArrayWithIndices) !== null
+            ) {
+              const [, matched_var_source_name, matched_fragment] = match
+
               if (
-                !combination_item.some((member) => member.name === match[2])
+                // Filter out variable names not in the matrix
+                !combination_item.some(
+                  (member) => member.name === matched_fragment
+                ) ||
+                // Filter out variables used from non-local var_sources
+                matched_var_source_name !== '.'
               ) {
-                return
+                continue
               }
 
-              root[
-                field_index
-              ] = `${match[1]}((${var_source_name}:${match[2]}))${match[3]}`
+              wip =
+                wip.substring(0, match.indices.groups['varsource'][0]) +
+                var_source_name +
+                ':' +
+                matched_fragment +
+                wip.substring(match.indices.groups['varname'][1])
             }
+
+            root[field_index] = wip
           },
         })
 

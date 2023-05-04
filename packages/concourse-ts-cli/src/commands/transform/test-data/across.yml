@@ -1,0 +1,44 @@
+jobs:
+- name: job
+  plan:
+  - across:
+    - var: name
+      values: ["Kaladin", "Jasnah"]
+    do:  # takes a list of steps
+    - task: saying-hello
+      config:
+        platform: linux
+        image_resource:
+          type: mock
+          source:
+            mirror_self: true
+        run:
+          path: echo
+          args: ["Hello ((.:name))!"]
+    - task: saying-bye
+      config:
+        platform: linux
+        image_resource:
+          type: mock
+          source:
+            mirror_self: true
+        run:
+          path: echo
+          args: ["Bye ((.:name))!"]
+  - across:
+    - var: node
+      values: ["18", "16", "14"]
+    - var: alpine
+      values: ["13.7", "13.4"]
+    do:  # takes a list of steps
+    - task: run-thing
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source:
+            repository: node
+            tag: "((.:node))-alpine((.:alpine))"
+        run:
+          path: echo
+          args: ["Hello!"]
