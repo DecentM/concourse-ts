@@ -1,151 +1,67 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
-import { transpile, ScriptTarget } from 'typescript'
+import { transpile } from 'typescript'
 
-import { rimraf } from 'rimraf'
-import glob from 'fast-glob'
-import fs from 'fs'
-import fsp from 'fs/promises'
-import path from 'path'
-import { mkdirp } from 'mkdirp'
+import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs'
+import { HandleOutputParams, handle_output } from '../../lib/handle-output'
 
-export type CompileParams = {
-  output?: string
-  extract_tasks?: boolean
-  force?: boolean
-  input?: string
-}
-
-const is_empty = (path: string) => {
-  return fs.readdirSync(path).length === 0
-}
-
-const file_contents_valid = async (input: object) => {
-  // Default export must be a function
-  if (!('default' in input) || typeof input.default !== 'function') {
-    return false
+export type CompileParams = HandleInputParams &
+  HandleOutputParams & {
+    project: string
   }
 
-  // Default export must return a serialisable
-  if (!(await input.default()).serialise) {
-    return false
-  }
+type PipelineFileExportFunction =
+  | (() => ConcourseTs.Pipeline)
+  | (() => Promise<ConcourseTs.Pipeline>)
 
-  return true
-}
-
-const file_valid = async (file_path: string) => {
-  // Must be a Typescript file
-  if (!file_path.endsWith('.ts') && !file_path.endsWith('.js')) {
-    return false
-  }
-
-  const file = await import(file_path)
-
-  return file_contents_valid(file)
-}
+type PipelineFileExport =
+  | PipelineFileExportFunction
+  | { default: PipelineFileExportFunction }
 
 const get_pipeline_from_file = async (
-  file_path: string
+  input: PipelineFileExport
 ): Promise<ConcourseTs.Pipeline> => {
-  const fullPath = path.resolve(file_path)
-
-  if (!(await file_valid(fullPath))) {
-    throw new VError(
-      `${file_path} failed validation. Make sure your glob only resolves to Typescript files with a default export that returns a Pipeline instance.`
-    )
+  // Default export must be a function
+  if (
+    typeof input !== 'function' &&
+    (!('default' in input) || typeof input.default !== 'function')
+  ) {
+    return null
   }
 
-  const file = await import(fullPath)
+  const default_export =
+    typeof input === 'function' ? await input() : await input.default()
 
-  return file.default()
-}
-
-const resolve_pipelines = async (
-  params: CompileParams
-): Promise<ConcourseTs.Pipeline[]> => {
-  if (params.input) {
-    const globs = await glob(params.input, {
-      cwd: process.cwd(),
-    })
-
-    if (!globs || globs.length === 0) {
-      return []
-    }
-
-    return Promise.all(globs.map((file) => get_pipeline_from_file(file)))
+  // Default export must return a serialisable
+  if (!(default_export instanceof ConcourseTs.Pipeline)) {
+    return null
   }
 
-  const file_string = fs.readFileSync(process.stdin.fd, 'utf-8')
-  const file = eval(
-    transpile(file_string, {
-      target: ScriptTarget.ES2016,
-    })
-  )
-
-  if (!file_contents_valid(file)) {
-    return []
-  }
-
-  return [file]
-}
-
-const handle_output = async (
-  results: ConcourseTs.Compiler.CompilationResult[],
-  params: CompileParams
-) => {
-  if (params.output) {
-    const output_path = path.resolve(params.output)
-
-    if (fs.existsSync(output_path) && !is_empty(output_path)) {
-      if (params.force) {
-        await rimraf(output_path)
-      } else {
-        throw new VError(
-          `Output path "${output_path}" already exists. Pass "-f" to overwrite and clean the output path.`
-        )
-      }
-    }
-
-    await Promise.all([
-      mkdirp(path.join(output_path, 'pipeline')),
-      mkdirp(path.join(output_path, 'task')),
-    ])
-
-    await Promise.all(
-      results.map((result) => {
-        return Promise.all([
-          fsp.writeFile(result.pipeline.filepath, result.pipeline.content, {
-            encoding: 'utf-8',
-          }),
-
-          ...result.tasks.map((taskResult) =>
-            fsp.writeFile(taskResult.filepath, taskResult.content, {
-              encoding: 'utf-8',
-            })
-          ),
-        ])
-      })
-    )
-
-    return
-  }
-
-  results.forEach((result) => {
-    fs.writeFileSync(process.stdout.fd, result.pipeline.content, {
-      encoding: 'utf-8',
-    })
-  })
+  return default_export
 }
 
 export const run_compile_command = async (params: CompileParams) => {
-  const pipelines = await resolve_pipelines(params)
+  const inputs = await handle_inputs(params)
+
+  const pipelines = (
+    await Promise.all(
+      inputs.map((input) => {
+        const file = eval(
+          transpile(input.content, {
+            project: params.project,
+          })
+        )
+
+        return get_pipeline_from_file(file)
+      })
+    )
+  ).filter(Boolean)
 
   const results = await Promise.all(
     pipelines.map((pipeline) => {
       const compilation = new ConcourseTs.Compiler.Compilation({
-        output_dir: params.output ?? '.',
-        extract_tasks: params.extract_tasks ?? false,
+        // Start relative paths with '.' if the output is a file descriptor
+        output_dir: typeof params.output === 'string' ? params.output : '.',
       })
 
       const result = compilation.compile(pipeline)
@@ -174,5 +90,11 @@ export const run_compile_command = async (params: CompileParams) => {
     })
   )
 
-  await handle_output(results, params)
+  await handle_output(
+    results.map((result) => ({
+      content: result.pipeline.content,
+      filename: result.pipeline.filepath,
+    })),
+    params
+  )
 }

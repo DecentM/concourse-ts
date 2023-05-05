@@ -7,12 +7,10 @@ import {ValidationWarningType, WarningStore} from '../utils/warning-store'
 
 export type CompilationOptions = {
   output_dir?: string
-  extract_tasks?: boolean
 }
 
 const default_compilation_options: CompilationOptions = {
   output_dir: '.',
-  extract_tasks: false,
 }
 
 type CompilationResultFile = {
@@ -46,22 +44,6 @@ export class Compilation {
     return path.join(this.options.output_dir, 'pipeline', filename)
   }
 
-  /**
-   * Removes embedded tasks from a pipeline and replaces them with
-   * their file path, relative to the working directory.
-   *
-   * @param {Pipeline} input A serialised pipeline to update task paths in
-   */
-  private transform_task_paths = (input: Pipeline) => {
-    const task_steps = input.get_task_steps()
-
-    task_steps.forEach((task_step) => {
-      const task = task_step.get_task()
-
-      task_step.set_file(this.get_task_path(`${task.name}.yml`))
-    })
-  }
-
   public validate = (input: Pipeline) => {
     // Validate already checks for falsiness, we just want to check for its
     // constructor here if input exists.
@@ -80,10 +62,6 @@ export class Compilation {
   public compile = (input: Pipeline): CompilationResult => {
     const warnings = this.validate(input)
     const tasks = input.get_tasks()
-
-    if (this.options.extract_tasks) {
-      this.transform_task_paths(input)
-    }
 
     const result = {
       pipeline: {
