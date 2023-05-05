@@ -1,10 +1,11 @@
 import { Option } from 'commander'
+import deep_merge from 'ts-deepmerge'
 
 import { CliCommand } from '../../command'
-import { run_decompile_command } from '.'
+import { DecompileParams, run_decompile_command } from '.'
 
 export class DecompileCommand extends CliCommand {
-  constructor() {
+  constructor(defaults?: Partial<DecompileParams>) {
     super('decompile')
 
     this.description('Decompiles a yaml file into concourse-ts code')
@@ -12,8 +13,12 @@ export class DecompileCommand extends CliCommand {
         new Option(
           '-p, --package <path>',
           'the name of the NPM package to import components from'
-        ).default('@decentm/concourse-ts')
+        )
       )
-      .action(run_decompile_command)
+      .action((params: DecompileParams) =>
+        run_decompile_command(
+          deep_merge.withOptions({ mergeArrays: false }, defaults, params)
+        )
+      )
   }
 }

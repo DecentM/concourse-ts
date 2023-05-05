@@ -41,10 +41,13 @@ export const write_pipeline = (name: string, pipeline: Pipeline): string => {
         )})`
     )}
 
-    ${empty_string_or(
-      pipeline.var_sources,
-      (var_sources) =>
-        `pipeline.add_var_source(...${JSON.stringify(var_sources)})`
+    ${empty_string_or(pipeline.var_sources, (var_sources) =>
+      var_sources
+        .map(
+          (var_source) =>
+            `pipeline.add_var_source(${JSON.stringify(var_source)})`
+        )
+        .join('\n')
     )}
   })`
 }
