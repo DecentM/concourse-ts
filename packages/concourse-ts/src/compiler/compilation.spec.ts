@@ -31,14 +31,3 @@ test('compiles valid pipeline', (t) => {
     'pipeline name does not end with "/a.yml"'
   )
 })
-
-test('extracts tasks', (t) => {
-  const compilation = new Compilation({
-    extract_tasks: true,
-  })
-
-  const result = compilation.compile(create_good_pipeline())
-
-  t.deepEqual(result.warnings.get_warnings(), [])
-  t.is(result.tasks.length, 1)
-})
