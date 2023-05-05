@@ -14,7 +14,7 @@ export class CompileCommand extends CliCommand {
       )
       .action((params: CompileParams) =>
         run_compile_command(
-          deep_merge.withOptions({ mergeArrays: false }, defaults, params)
+          deep_merge.withOptions({ mergeArrays: false }, defaults ?? {}, params)
         )
       )
   }

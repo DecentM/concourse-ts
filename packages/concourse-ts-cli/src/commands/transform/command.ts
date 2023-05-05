@@ -20,7 +20,7 @@ export class TransformCommand extends CliCommand {
       )
       .action((params: TransformParams) =>
         run_transform_command(
-          deep_merge.withOptions({ mergeArrays: false }, defaults, params)
+          deep_merge.withOptions({ mergeArrays: false }, defaults ?? {}, params)
         )
       )
   }

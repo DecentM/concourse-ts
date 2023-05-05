@@ -17,7 +17,7 @@ export class DecompileCommand extends CliCommand {
       )
       .action((params: DecompileParams) =>
         run_decompile_command(
-          deep_merge.withOptions({ mergeArrays: false }, defaults, params)
+          deep_merge.withOptions({ mergeArrays: false }, defaults ?? {}, params)
         )
       )
   }
