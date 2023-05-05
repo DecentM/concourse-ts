@@ -1,6 +1,5 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
-import { transpile } from 'typescript'
 
 import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs'
 import { HandleOutputParams, handle_output } from '../../lib/handle-output'
@@ -45,12 +44,8 @@ export const run_compile_command = async (params: CompileParams) => {
 
   const pipelines = (
     await Promise.all(
-      inputs.map((input) => {
-        const file = eval(
-          transpile(input.content, {
-            project: params.project,
-          })
-        )
+      inputs.map(async (input) => {
+        const file = await import(input.filepath)
 
         return get_pipeline_from_file(file)
       })
@@ -59,10 +54,7 @@ export const run_compile_command = async (params: CompileParams) => {
 
   const results = await Promise.all(
     pipelines.map((pipeline) => {
-      const compilation = new ConcourseTs.Compiler.Compilation({
-        // Start relative paths with '.' if the output is a file descriptor
-        output_dir: typeof params.output === 'string' ? params.output : '.',
-      })
+      const compilation = new ConcourseTs.Compiler.Compilation()
 
       const result = compilation.compile(pipeline)
 
@@ -93,7 +85,7 @@ export const run_compile_command = async (params: CompileParams) => {
   await handle_output(
     results.map((result) => ({
       content: result.pipeline.content,
-      filename: result.pipeline.filepath,
+      filename: result.pipeline.filename,
     })),
     params
   )

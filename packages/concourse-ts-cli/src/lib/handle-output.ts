@@ -2,7 +2,8 @@ import fsp from 'node:fs/promises'
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { rimraf } from 'rimraf'
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import * as rimraf from 'rimraf'
 import { mkdirp } from 'mkdirp'
 
 export type HandleOutputParams = {
@@ -17,14 +18,17 @@ export const handle_output = async (
   await Promise.all(
     results.map(async (result) => {
       if (typeof params.output === 'string') {
-        const output_path = path.resolve(params.output)
+        const output_dir = path.resolve(params.output)
 
         if (params.clean) {
-          await rimraf(output_path)
+          rimraf.sync(output_dir)
         }
 
-        await mkdirp(output_path)
-        await fsp.writeFile(path.join(output_path, result.filename), result.content)
+        const output_file = path.join(output_dir, result.filename)
+        const output_file_info = path.parse(output_file)
+
+        await mkdirp(output_file_info.dir)
+        await fsp.writeFile(output_file, result.content)
         return
       }
 

@@ -21,6 +21,7 @@ export const handle_inputs = async (params: HandleInputParams): Promise<Input[]>
   if (typeof params.input === 'string') {
     const globs = await glob(params.input, {
       cwd: process.cwd(),
+      absolute: true,
     })
 
     if (!globs || globs.length === 0) {

@@ -4,5 +4,5 @@ require('../src')
   .run_cli()
   .catch(function (error) {
     process.exitCode = 1
-    console.error('\n' + error.name + ':', error.stack, '\n')
+    console.error('\n' + error.stack, '\n')
   })

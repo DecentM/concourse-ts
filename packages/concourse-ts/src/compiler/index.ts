@@ -5,16 +5,8 @@ import {Pipeline} from '../components/pipeline'
 import {validate} from '../validation'
 import {ValidationWarningType, WarningStore} from '../utils/warning-store'
 
-export type CompilationOptions = {
-  output_dir?: string
-}
-
-const default_compilation_options: CompilationOptions = {
-  output_dir: '.',
-}
-
 type CompilationResultFile = {
-  filepath: string
+  filename: string
   content: string
 }
 
@@ -25,23 +17,12 @@ export type CompilationResult = {
 }
 
 export class Compilation {
-  constructor(
-    private _options: CompilationOptions = default_compilation_options
-  ) {}
-
-  private get options() {
-    return {
-      ...default_compilation_options,
-      ...this._options,
-    }
-  }
-
   private get_task_path = (filename: string) => {
-    return path.join(this.options.output_dir, 'task', filename)
+    return path.join('task', filename)
   }
 
   private get_pipeline_path = (filename: string) => {
-    return path.join(this.options.output_dir, 'pipeline', filename)
+    return path.join('pipeline', filename)
   }
 
   public validate = (input: Pipeline) => {
@@ -77,11 +58,11 @@ export class Compilation {
     return {
       warnings,
       pipeline: {
-        filepath: result.pipeline.filename,
+        filename: result.pipeline.filename,
         content: YAML.stringify(result.pipeline.serialised),
       },
       tasks: result.tasks.map((task) => ({
-        filepath: task.filename,
+        filename: task.filename,
         content: YAML.stringify(task.serialised),
       })),
     }

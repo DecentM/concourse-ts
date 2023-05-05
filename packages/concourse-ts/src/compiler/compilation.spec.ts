@@ -27,7 +27,7 @@ test('compiles valid pipeline', (t) => {
 
   t.deepEqual(result.warnings.get_warnings(), [])
   t.assert(
-    result.pipeline.filepath.endsWith('/a.yml'),
+    result.pipeline.filename.endsWith('/a.yml'),
     'pipeline name does not end with "/a.yml"'
   )
 })
