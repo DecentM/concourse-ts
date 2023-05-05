@@ -18,9 +18,9 @@ export const get_program = async () => {
   const rc_config = await get_config()
 
   program
-    .addCommand(new CompileCommand(rc_config.compile))
-    .addCommand(new DecompileCommand(rc_config.decompile))
-    .addCommand(new TransformCommand(rc_config.transform))
+    .addCommand(new CompileCommand(rc_config?.compile))
+    .addCommand(new DecompileCommand(rc_config?.decompile))
+    .addCommand(new TransformCommand(rc_config?.transform))
 
   const more_info = [
     'Documentation - https://github.com/DecentM/concourse-ts/wiki',

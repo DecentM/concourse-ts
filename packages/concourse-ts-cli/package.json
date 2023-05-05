@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-cli",
-  "version": "0.11.4",
+  "version": "0.11.5",
   "description": "command line interface for compiling concourse-ts pipelines",
   "author": "DecentM <decentm@decentm.com>",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-cli",
