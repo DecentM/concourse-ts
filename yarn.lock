@@ -1259,12 +1259,19 @@
   dependencies:
     "@nx/js" "16.0.3"
 
-"@nrwl/linter@16.0.3":
-  version "16.0.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-16.0.3.tgz#c2141fa6ea3c003e4a7f8de54fe82b91a7b026b2"
-  integrity sha512-IxpWNMwYOBrtrsaN/Fszxks0THHVRI6M+Uh/dGvhhqB32riNB+aGonwxYE4X+kTvJQRWasYep4ttiC8ZF/nNBQ==
+"@nrwl/js@16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-16.1.0.tgz#6d72eb74bf3d5eba400af2c8fe08e9bfb37e4fce"
+  integrity sha512-YwRj53JzpytAvlZ0wcyJaRDqy3z3ww1ACnG+JXnNqKQXcF/wJtTopMxB5Hr/HRw03ABoAU5ojWvxN0AHKHhk2A==
   dependencies:
-    "@nx/linter" "16.0.3"
+    "@nx/js" "16.1.0"
+
+"@nrwl/linter@16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-16.1.0.tgz#2616fa7881e7051e8e118a968d4bc5642598d7f0"
+  integrity sha512-9wriNH+qY1aUDXVtIQAxqVrIhf4g8REhDLb/kzUGKvYGVSs3Fp7k7FoG9lBJ6SzjHicoAhxshV3JALfddcY/Yw==
+  dependencies:
+    "@nx/linter" "16.1.0"
 
 "@nrwl/tao@16.0.3":
   version "16.0.3"
@@ -1367,14 +1374,43 @@
     tree-kill "1.2.2"
     tslib "^2.3.0"
 
-"@nx/linter@16.0.3":
-  version "16.0.3"
-  resolved "https://registry.yarnpkg.com/@nx/linter/-/linter-16.0.3.tgz#78ee33372ece4db68c02f112319e735d0a3d7e9b"
-  integrity sha512-AP3Y2jQYJtpgWBddUFosEXJN5QvOui3DC0Cr/b5c2Q9E1N90V3UKof71m0fX5h5lpee7zkLlhjlTnqt9K803rg==
+"@nx/js@16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@nx/js/-/js-16.1.0.tgz#47057eeebe602b8daaeb1e955566acdccccde036"
+  integrity sha512-QpaOMzv++i1Qmnrv5ZxPQc8T4I99+HVJRnt8YYbRFg0h1kzcRq3sQmaKsP30V1zJps8nbsnUkQ8O8prfxAnkhQ==
   dependencies:
-    "@nrwl/linter" "16.0.3"
-    "@nx/devkit" "16.0.3"
-    "@nx/js" "16.0.3"
+    "@babel/core" "^7.15.0"
+    "@babel/plugin-proposal-class-properties" "^7.14.5"
+    "@babel/plugin-proposal-decorators" "^7.14.5"
+    "@babel/plugin-transform-runtime" "^7.15.0"
+    "@babel/preset-env" "^7.15.0"
+    "@babel/preset-typescript" "^7.15.0"
+    "@babel/runtime" "^7.14.8"
+    "@nrwl/js" "16.1.0"
+    "@nx/devkit" "16.1.0"
+    "@nx/workspace" "16.1.0"
+    "@phenomnomnominal/tsquery" "~5.0.1"
+    babel-plugin-const-enum "^1.0.1"
+    babel-plugin-macros "^2.8.0"
+    babel-plugin-transform-typescript-metadata "^0.3.1"
+    chalk "^4.1.0"
+    fast-glob "3.2.7"
+    fs-extra "^11.1.0"
+    ignore "^5.0.4"
+    js-tokens "^4.0.0"
+    minimatch "3.0.5"
+    source-map-support "0.5.19"
+    tree-kill "1.2.2"
+    tslib "^2.3.0"
+
+"@nx/linter@16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@nx/linter/-/linter-16.1.0.tgz#a7ce08914997aa776822e874b58387cb057c4cb4"
+  integrity sha512-8/d0e+MIujLezo4XBGyp2zKZ+fmumijmTs7hkYIW8CSd1rNZRSaVNVGqMiMFQDivxFKscuhLhBW/0edsiNt5fA==
+  dependencies:
+    "@nrwl/linter" "16.1.0"
+    "@nx/devkit" "16.1.0"
+    "@nx/js" "16.1.0"
     "@phenomnomnominal/tsquery" "~5.0.1"
     tmp "~0.2.1"
     tslib "^2.3.0"
