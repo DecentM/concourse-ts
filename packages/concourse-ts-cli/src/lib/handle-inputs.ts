@@ -1,5 +1,4 @@
 import fsp from 'node:fs/promises'
-import fs from 'node:fs'
 
 import glob from 'fast-glob'
 
@@ -7,9 +6,18 @@ export type HandleInputParams = {
   input: string | number
 }
 
-export const handle_inputs = async (
-  params: HandleInputParams
-): Promise<Array<{ filepath: string; content: string }>> => {
+export type Input = {
+  filepath: string | null
+  content: string
+}
+
+const read_stream = async (stream: NodeJS.ReadStream) => {
+  const chunks = []
+  for await (const chunk of stream) chunks.push(chunk)
+  return Buffer.concat(chunks).toString('utf-8')
+}
+
+export const handle_inputs = async (params: HandleInputParams): Promise<Input[]> => {
   if (typeof params.input === 'string') {
     const globs = await glob(params.input, {
       cwd: process.cwd(),
@@ -31,8 +39,7 @@ export const handle_inputs = async (
     )
   }
 
-  // If the input is not a string, treat it as if it was a file descriptor
-  const content = fs.readFileSync(params.input, 'utf-8')
+  const content = await read_stream(process.stdin)
 
   return [
     {

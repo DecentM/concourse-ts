@@ -16,7 +16,7 @@ export type ImportEventMap = {
 
 export type DecompileParams = HandleInputParams &
   HandleOutputParams & {
-    package_path?: string
+    package?: string
   }
 
 export const run_decompile_command = async (params: DecompileParams) => {
@@ -25,13 +25,17 @@ export const run_decompile_command = async (params: DecompileParams) => {
   const results = await Promise.all(
     inputs.map(async (input) => {
       const decompilation = new ConcourseTs.Decompiler.Decompilation()
-      const path_info = path.parse(input.filepath)
 
-      if (params.package_path) {
-        decompilation.set_import_path(params.package_path)
+      if (params.package) {
+        decompilation.set_import_path(params.package)
       }
 
-      decompilation.set_name(path_info.name).set_work_dir(path_info.dir)
+      if (input.filepath) {
+        const path_info = path.parse(input.filepath)
+        decompilation.set_name(path_info.name).set_work_dir(path_info.dir)
+      } else {
+        decompilation.set_name('change-me').set_work_dir('.')
+      }
 
       return decompilation.decompile(input.content)
     })

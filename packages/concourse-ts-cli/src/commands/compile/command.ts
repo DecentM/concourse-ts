@@ -1,25 +1,21 @@
 import { Option } from 'commander'
+import deep_merge from 'ts-deepmerge'
 
 import { CliCommand } from '../../command'
-import { run_compile_command } from '.'
+import { CompileParams, run_compile_command } from '.'
 
 export class CompileCommand extends CliCommand {
-  constructor() {
+  constructor(defaults?: Partial<CompileParams>) {
     super('compile')
 
     this.description('Compiles a concourse-ts pipeline into yaml')
       .addOption(
-        new Option(
-          '-p, --project',
-          'relative path to a "tsconfig.json" file'
-        ).default('tsconfig.json')
+        new Option('-p, --project', 'relative path to a "tsconfig.json" file')
       )
-      .addOption(
-        new Option(
-          '-e, --extract-tasks',
-          'if set, tasks in the will reference files instead of embedding'
+      .action((params: CompileParams) =>
+        run_compile_command(
+          deep_merge.withOptions({ mergeArrays: false }, defaults, params)
         )
       )
-      .action(run_compile_command)
   }
 }
