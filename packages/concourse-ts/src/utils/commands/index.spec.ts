@@ -16,8 +16,8 @@ test('joins commands', (t) => {
 
   const joined = join_commands(
     'joined',
-    (args) => {
-      return args.join(' && ')
+    (args, command) => {
+      command.add_arg(args.join(' && '))
     },
     a,
     b
@@ -40,8 +40,8 @@ test('joins commands with multiple arguments', (t) => {
 
   const joined = join_commands(
     'joined',
-    (args) => {
-      return args.join(' && ')
+    (args, command) => {
+      command.add_arg(args.join(' && '))
     },
     a
   )
@@ -51,5 +51,51 @@ test('joins commands with multiple arguments', (t) => {
     args: ['echo "Hello, world!" "mynames Jeff!"'],
     dir: undefined,
     user: undefined,
+  })
+})
+
+test('copies dir', (t) => {
+  const a = new Command('a', (a) => {
+    a.path = 'echo'
+    a.dir = '/app'
+    a.add_arg('Hello, world!')
+  })
+
+  const joined = join_commands(
+    'joined',
+    (args, command) => {
+      command.add_arg(args.join(' && '))
+    },
+    a
+  )
+
+  t.deepEqual(joined.serialise(), {
+    path: undefined,
+    args: ['echo "Hello, world!"'],
+    dir: '/app',
+    user: undefined,
+  })
+})
+
+test('copies user', (t) => {
+  const a = new Command('a', (a) => {
+    a.path = 'echo'
+    a.user = '1000'
+    a.add_arg('Hello, world!')
+  })
+
+  const joined = join_commands(
+    'joined',
+    (args, command) => {
+      command.add_arg(args.join(' && '))
+    },
+    a
+  )
+
+  t.deepEqual(joined.serialise(), {
+    path: undefined,
+    args: ['echo "Hello, world!"'],
+    dir: undefined,
+    user: '1000',
   })
 })

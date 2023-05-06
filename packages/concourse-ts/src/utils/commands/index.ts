@@ -1,14 +1,26 @@
 import {Command} from '../../components'
+import {Customiser} from '../../declarations'
 
 export const join_commands = (
   name: string,
-  joiner: (args: string[]) => string,
+  customise: Customiser<string[], Command>,
   ...commands: Command[]
 ): Command => {
   const args: string[] = []
 
+  let dir = ''
+  let user = ''
+
   commands.forEach((command) => {
     const serialised = command.serialise()
+
+    if (!dir && serialised.dir) {
+      dir = serialised.dir
+    }
+
+    if (!user && serialised.user) {
+      user = serialised.user
+    }
 
     args.push(
       `${serialised.path} ${serialised.args
@@ -18,6 +30,9 @@ export const join_commands = (
   })
 
   return new Command(name, (command) => {
-    command.add_arg(joiner(args))
+    if (dir) command.dir = dir
+    if (user) command.user = user
+
+    customise(args, command)
   })
 }
