@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-cli",
-  "version": "0.11.8",
+  "version": "0.11.9",
   "description": "command line interface for compiling concourse-ts pipelines",
   "author": "DecentM <decentm@decentm.com>",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-cli",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
-    "cli": "ts-node -r tsconfig-paths/register --transpile-only bin/concourse-ts"
+    "cli": "ts-node --transpile-only -r tsconfig-paths/register bin/concourse-ts"
   },
   "bin": {
     "concourse-ts": "./bin/concourse-ts"
@@ -21,6 +21,7 @@
     "fast-glob": "^3.2.12",
     "mkdirp": "^3.0.1",
     "rimraf": "^5.0.0",
+    "tmp-promise": "^3.0.3",
     "ts-deepmerge": "^6.0.3",
     "ts-node": "^10.9.1",
     "verror": "^1.10.1"
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@swc/helpers": "~0.5.1",
     "@types/rimraf": "^4.0.5",
+    "@types/tmp": "^0.2.3",
     "@types/verror": "^1.10.6"
   }
 }

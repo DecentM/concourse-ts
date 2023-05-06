@@ -40,7 +40,7 @@ const get_pipeline_from_file = async (
 }
 
 export const run_compile_command = async (params: CompileParams) => {
-  const inputs = await handle_inputs(params)
+  const inputs = await handle_inputs(params, '.ts')
 
   const pipelines = (
     await Promise.all(

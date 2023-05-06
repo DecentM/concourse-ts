@@ -20,7 +20,7 @@ export type DecompileParams = HandleInputParams &
   }
 
 export const run_decompile_command = async (params: DecompileParams) => {
-  const inputs = await handle_inputs(params)
+  const inputs = await handle_inputs(params, '.yml')
 
   const results = await Promise.all(
     inputs.map(async (input) => {
@@ -30,12 +30,8 @@ export const run_decompile_command = async (params: DecompileParams) => {
         decompilation.set_import_path(params.package)
       }
 
-      if (input.filepath) {
-        const path_info = path.parse(input.filepath)
-        decompilation.set_name(path_info.name).set_work_dir(path_info.dir)
-      } else {
-        decompilation.set_name('change-me').set_work_dir('.')
-      }
+      const path_info = path.parse(input.filepath)
+      decompilation.set_name(path_info.name).set_work_dir(process.cwd())
 
       return decompilation.decompile(input.content)
     })

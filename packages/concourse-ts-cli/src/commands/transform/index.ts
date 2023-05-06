@@ -12,7 +12,7 @@ export type TransformParams = HandleInputParams &
   }
 
 export const run_transform_command = async (params: TransformParams) => {
-  const inputs = await handle_inputs(params)
+  const inputs = await handle_inputs(params, '.yml')
 
   const results = await Promise.all(
     inputs.map(async (input) => {
@@ -23,9 +23,7 @@ export const run_transform_command = async (params: TransformParams) => {
       )
 
       const pipeline = YAML.parse(input.content)
-      const path_info = input.filepath
-        ? path.parse(input.filepath)
-        : { name: 'change-me', dir: '.' }
+      const path_info = path.parse(input.filepath)
 
       used_transformers.forEach((used_transformer) => {
         const transformer: ConcourseTs.Type.Transformer =

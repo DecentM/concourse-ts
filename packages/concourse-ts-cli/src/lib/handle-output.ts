@@ -1,5 +1,4 @@
 import fsp from 'node:fs/promises'
-import fs from 'node:fs'
 import path from 'node:path'
 
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
@@ -10,6 +9,18 @@ export type HandleOutputParams = {
   output: string | number
   clean: boolean
 }
+
+const write_stream = (stream: NodeJS.WriteStream, content: string) =>
+  new Promise<void>((resolve, reject) => {
+    stream.write(Buffer.from(content, 'utf-8'), (error) => {
+      if (error) {
+        reject(error)
+        return
+      }
+
+      resolve()
+    })
+  })
 
 export const handle_output = async (
   results: Array<{ filename: string; content: string }>,
@@ -32,7 +43,7 @@ export const handle_output = async (
         return
       }
 
-      fs.writeFileSync(params.output, result.content, 'utf-8')
+      await write_stream(process.stdout, result.content)
     })
   )
 }
