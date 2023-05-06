@@ -8,7 +8,7 @@ import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs'
 
 export type TransformParams = HandleInputParams &
   HandleOutputParams & {
-    transformers?: string[]
+    transformers?: (keyof typeof ConcourseTs.Utils.Transform)[]
   }
 
 export const run_transform_command = async (params: TransformParams) => {
@@ -16,11 +16,11 @@ export const run_transform_command = async (params: TransformParams) => {
 
   const results = await Promise.all(
     inputs.map(async (input) => {
-      const used_transformers = Object.keys(ConcourseTs.Utils.Transform).filter(
-        (transformer) => {
-          return params.transformers.includes(transformer)
-        }
-      )
+      const used_transformers = (
+        Object.keys(ConcourseTs.Utils.Transform) as TransformParams['transformers']
+      ).filter((transformer) => {
+        return params.transformers.includes(transformer)
+      })
 
       const pipeline = YAML.parse(input.content)
       const path_info = path.parse(input.filepath)
