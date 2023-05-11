@@ -1123,6 +1123,13 @@
   dependencies:
     "@nx/devkit" "16.1.3"
 
+"@nrwl/devkit@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-16.1.4.tgz#3c39dc0dbca2e8c526c6c5ae35f834a748308900"
+  integrity sha512-ojFu+fmOja+Kt7TZ7T+GmLkPw9z/sIAbmMx1V6ePIsS2XdB68Tc4UyXiQpx18hCwIpOxFf2BatoeLIgledWsXw==
+  dependencies:
+    "@nx/devkit" "16.1.4"
+
 "@nrwl/eslint-plugin-nx@16.1.3":
   version "16.1.3"
   resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-16.1.3.tgz#ca27782168d2b0ea8e479fdc7702814b906c4708"
@@ -1136,6 +1143,13 @@
   integrity sha512-isuzMVPRhL/WCK6zVUk7LbHF5IxwDkp3k0wtH4yq+wVN65MhvNwJWMEkL9ErlSnyggVlZhuzk9tbn0YxJkJEng==
   dependencies:
     "@nx/js" "16.1.3"
+
+"@nrwl/js@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-16.1.4.tgz#56ce4b21961ee85763bcc9e2918023ab2b1cc35d"
+  integrity sha512-U5R61b4CBo65xt2pOGYz0POZ4Xqq5vifdKzzrD/vYycak28tTHlhAkZLexXhzLJiUJh94Dack0Osb+FuZmbYWQ==
+  dependencies:
+    "@nx/js" "16.1.4"
 
 "@nrwl/linter@16.1.3":
   version "16.1.3"
@@ -1165,12 +1179,31 @@
   dependencies:
     "@nx/workspace" "16.1.3"
 
+"@nrwl/workspace@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-16.1.4.tgz#f434278da2ceec9d603740fccfba50475944989a"
+  integrity sha512-B2qyR2tYykZ5rNeA9klNiEQ7y9rNMGQdnxyp+f6w7nMu8Qtpa1tMtqCyTORhShupRgcwON3oEVn5TznC9T2ZDA==
+  dependencies:
+    "@nx/workspace" "16.1.4"
+
 "@nx/devkit@16.1.3":
   version "16.1.3"
   resolved "https://registry.yarnpkg.com/@nx/devkit/-/devkit-16.1.3.tgz#920264d4cbcd974a511aeb569afcf06e458f73e7"
   integrity sha512-FKKxvf27GXwhA10aBpI5u2IKhu/zXtI/74alPlwbYyLqxJl7NTGeCnOWzhnapE10bSs89TI7b2n2HI+hwz6Neg==
   dependencies:
     "@nrwl/devkit" "16.1.3"
+    ejs "^3.1.7"
+    ignore "^5.0.4"
+    semver "7.3.4"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+
+"@nx/devkit@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nx/devkit/-/devkit-16.1.4.tgz#0d425daf79e0daf772a5a456a053db750af14c19"
+  integrity sha512-tyAnpQShhKhR6FwmT7hJTaT/8B8YxFWhgBW0mLi9PhXYS9xRdgZ+ag8/T3EtJudIGMIdn4JhA1YL2zSuziHABQ==
+  dependencies:
+    "@nrwl/devkit" "16.1.4"
     ejs "^3.1.7"
     ignore "^5.0.4"
     semver "7.3.4"
@@ -1206,6 +1239,35 @@
     "@nrwl/js" "16.1.3"
     "@nx/devkit" "16.1.3"
     "@nx/workspace" "16.1.3"
+    "@phenomnomnominal/tsquery" "~5.0.1"
+    babel-plugin-const-enum "^1.0.1"
+    babel-plugin-macros "^2.8.0"
+    babel-plugin-transform-typescript-metadata "^0.3.1"
+    chalk "^4.1.0"
+    fast-glob "3.2.7"
+    fs-extra "^11.1.0"
+    ignore "^5.0.4"
+    js-tokens "^4.0.0"
+    minimatch "3.0.5"
+    source-map-support "0.5.19"
+    tree-kill "1.2.2"
+    tslib "^2.3.0"
+
+"@nx/js@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nx/js/-/js-16.1.4.tgz#3d85f549fceeaf9148edbc82abeec46d34731c80"
+  integrity sha512-LYPKvV7AjYvj25p7SVKny22DKVpGVfZ1y+EkmmqWEMvFSEmf7miOCjZEyZGv30CcxFRVDoZ7JZ16TB3S+Zy/gQ==
+  dependencies:
+    "@babel/core" "^7.15.0"
+    "@babel/plugin-proposal-class-properties" "^7.14.5"
+    "@babel/plugin-proposal-decorators" "^7.14.5"
+    "@babel/plugin-transform-runtime" "^7.15.0"
+    "@babel/preset-env" "^7.15.0"
+    "@babel/preset-typescript" "^7.15.0"
+    "@babel/runtime" "^7.14.8"
+    "@nrwl/js" "16.1.4"
+    "@nx/devkit" "16.1.4"
+    "@nx/workspace" "16.1.4"
     "@phenomnomnominal/tsquery" "~5.0.1"
     babel-plugin-const-enum "^1.0.1"
     babel-plugin-macros "^2.8.0"
@@ -1341,6 +1403,32 @@
     minimatch "3.0.5"
     npm-run-path "^4.0.1"
     nx "16.1.3"
+    open "^8.4.0"
+    rxjs "^7.8.0"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+    yargs "^17.6.2"
+    yargs-parser "21.1.1"
+
+"@nx/workspace@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nx/workspace/-/workspace-16.1.4.tgz#771c90ae8f158620d6c8b0b6e73c9b8d834592bd"
+  integrity sha512-FjzCmbitepS1pH8fqK2I2W3pbJ20+om8rFAQhMUkdJEtio+AXgHdyRfrkjlmNWXME1E0qZc7R0GzD6tILFb0Ew==
+  dependencies:
+    "@nrwl/workspace" "16.1.4"
+    "@nx/devkit" "16.1.4"
+    "@parcel/watcher" "2.0.4"
+    chalk "^4.1.0"
+    chokidar "^3.5.1"
+    cli-cursor "3.1.0"
+    cli-spinners "2.6.1"
+    dotenv "~10.0.0"
+    figures "3.2.0"
+    flat "^5.0.2"
+    ignore "^5.0.4"
+    minimatch "3.0.5"
+    npm-run-path "^4.0.1"
+    nx "16.1.4"
     open "^8.4.0"
     rxjs "^7.8.0"
     tmp "~0.2.1"
