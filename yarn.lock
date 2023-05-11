@@ -1130,19 +1130,12 @@
   dependencies:
     "@nx/devkit" "16.1.4"
 
-"@nrwl/eslint-plugin-nx@16.1.3":
-  version "16.1.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-16.1.3.tgz#ca27782168d2b0ea8e479fdc7702814b906c4708"
-  integrity sha512-UwiYaNlFEacZvEogHM1Z9RbOBrzKsuZ/WqxzkCQgVyPQG05MIBN6U0HGvkjt54HE7ygJSWv7pjeb5Tpu92AKIg==
+"@nrwl/eslint-plugin-nx@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-16.1.4.tgz#1c86a97e3d7023674f745bd46be523003938795b"
+  integrity sha512-tZEwpIwPgab2vdC7dZoiKDH/UgNXRSv9jQUsBt2I5iKqcixA6MMIn/ru1TBU7o2bTTDs+rwfahAg8yG7vYHI/g==
   dependencies:
-    "@nx/eslint-plugin" "16.1.3"
-
-"@nrwl/js@16.1.3":
-  version "16.1.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-16.1.3.tgz#2c808434ec7a859121cb445d680767d8a0c66f25"
-  integrity sha512-isuzMVPRhL/WCK6zVUk7LbHF5IxwDkp3k0wtH4yq+wVN65MhvNwJWMEkL9ErlSnyggVlZhuzk9tbn0YxJkJEng==
-  dependencies:
-    "@nx/js" "16.1.3"
+    "@nx/eslint-plugin" "16.1.4"
 
 "@nrwl/js@16.1.4":
   version "16.1.4"
@@ -1210,48 +1203,19 @@
     tmp "~0.2.1"
     tslib "^2.3.0"
 
-"@nx/eslint-plugin@16.1.3":
-  version "16.1.3"
-  resolved "https://registry.yarnpkg.com/@nx/eslint-plugin/-/eslint-plugin-16.1.3.tgz#8f72bdc8ae306758de443ab631174eb3991dd36f"
-  integrity sha512-PM5WYGWGZpnk4LAC7es0H+/HX31sX7JWq888r7xTDRwLUn6hTQQWanfx59iq+mILpvq1mX7AQRrlqteLNQtolA==
+"@nx/eslint-plugin@16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@nx/eslint-plugin/-/eslint-plugin-16.1.4.tgz#c341ee83d8a6049e338f9be5572b2c3688525c01"
+  integrity sha512-bZs9dakxxgCn3nsMJbVSmdsUZuuYozxj5OqkVm6FiIejFklSd+Dn0TxDWXMpPUKqI8Izu26YSQmwIBD+IY7/Nw==
   dependencies:
-    "@nrwl/eslint-plugin-nx" "16.1.3"
-    "@nx/devkit" "16.1.3"
-    "@nx/js" "16.1.3"
+    "@nrwl/eslint-plugin-nx" "16.1.4"
+    "@nx/devkit" "16.1.4"
+    "@nx/js" "16.1.4"
     "@typescript-eslint/type-utils" "^5.58.0"
     "@typescript-eslint/utils" "^5.58.0"
     chalk "^4.1.0"
     confusing-browser-globals "^1.0.9"
     semver "7.3.4"
-
-"@nx/js@16.1.3":
-  version "16.1.3"
-  resolved "https://registry.yarnpkg.com/@nx/js/-/js-16.1.3.tgz#f4badd63834d9909c43ef5915533a52685f99759"
-  integrity sha512-cDLHO72fGKxVKSk6lCux3QwXG5zkSJIcGRu5Vqqi8T22jM/dm5uU86J/39ZrP25OPKqbCdodN5AGwehcxQZhew==
-  dependencies:
-    "@babel/core" "^7.15.0"
-    "@babel/plugin-proposal-class-properties" "^7.14.5"
-    "@babel/plugin-proposal-decorators" "^7.14.5"
-    "@babel/plugin-transform-runtime" "^7.15.0"
-    "@babel/preset-env" "^7.15.0"
-    "@babel/preset-typescript" "^7.15.0"
-    "@babel/runtime" "^7.14.8"
-    "@nrwl/js" "16.1.3"
-    "@nx/devkit" "16.1.3"
-    "@nx/workspace" "16.1.3"
-    "@phenomnomnominal/tsquery" "~5.0.1"
-    babel-plugin-const-enum "^1.0.1"
-    babel-plugin-macros "^2.8.0"
-    babel-plugin-transform-typescript-metadata "^0.3.1"
-    chalk "^4.1.0"
-    fast-glob "3.2.7"
-    fs-extra "^11.1.0"
-    ignore "^5.0.4"
-    js-tokens "^4.0.0"
-    minimatch "3.0.5"
-    source-map-support "0.5.19"
-    tree-kill "1.2.2"
-    tslib "^2.3.0"
 
 "@nx/js@16.1.4":
   version "16.1.4"
