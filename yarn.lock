@@ -1128,13 +1128,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nrwl/devkit@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-16.1.4.tgz#3c39dc0dbca2e8c526c6c5ae35f834a748308900"
-  integrity sha512-ojFu+fmOja+Kt7TZ7T+GmLkPw9z/sIAbmMx1V6ePIsS2XdB68Tc4UyXiQpx18hCwIpOxFf2BatoeLIgledWsXw==
-  dependencies:
-    "@nx/devkit" "16.1.4"
-
 "@nrwl/devkit@16.2.1":
   version "16.2.1"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-16.2.1.tgz#2da4dbe5826b0721cae547635554b6e411a069f6"
@@ -1149,13 +1142,6 @@
   dependencies:
     "@nx/eslint-plugin" "16.2.1"
 
-"@nrwl/js@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-16.1.4.tgz#56ce4b21961ee85763bcc9e2918023ab2b1cc35d"
-  integrity sha512-U5R61b4CBo65xt2pOGYz0POZ4Xqq5vifdKzzrD/vYycak28tTHlhAkZLexXhzLJiUJh94Dack0Osb+FuZmbYWQ==
-  dependencies:
-    "@nx/js" "16.1.4"
-
 "@nrwl/js@16.2.1":
   version "16.2.1"
   resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-16.2.1.tgz#6eacfa1f0658ca1e288da86b6c38be4846f2779a"
@@ -1163,12 +1149,12 @@
   dependencies:
     "@nx/js" "16.2.1"
 
-"@nrwl/linter@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-16.1.4.tgz#1181a1014749174ca57ad66c7c9cebf8bc6ae191"
-  integrity sha512-r0nKnC4EsGFVZO9caYDJ6y8wJLhZMj3TRi+Arf/1ALKEPYTAv8rrqgqf8t+4IiBzxY8DDausIwHfa3e4T3JH4g==
+"@nrwl/linter@16.2.1":
+  version "16.2.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-16.2.1.tgz#d0b89cbfdda020de989bc4097823651ec40e9a3a"
+  integrity sha512-lICc3UUURJ3NuXJNSWLf/Rbff/GKpxiCkW/k8XlHfQRmWVMUS0Xvzk0NIxQTQO4WRCtX5wmYmfYTehCyS5xqKg==
   dependencies:
-    "@nx/linter" "16.1.4"
+    "@nx/linter" "16.2.1"
 
 "@nrwl/tao@16.1.4":
   version "16.1.4"
@@ -1184,31 +1170,12 @@
   dependencies:
     nx "16.2.1"
 
-"@nrwl/workspace@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-16.1.4.tgz#f434278da2ceec9d603740fccfba50475944989a"
-  integrity sha512-B2qyR2tYykZ5rNeA9klNiEQ7y9rNMGQdnxyp+f6w7nMu8Qtpa1tMtqCyTORhShupRgcwON3oEVn5TznC9T2ZDA==
-  dependencies:
-    "@nx/workspace" "16.1.4"
-
 "@nrwl/workspace@16.2.1":
   version "16.2.1"
   resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-16.2.1.tgz#22e83a4b545e563fd157c407b387113a6bc639bc"
   integrity sha512-k9CUsGNBC5gTnTMcPDHFkxIPzzhhm47DhmNV3xueuwSAyZbvnekCtmkFRdwe4jtOFjB6+MpTsol9p37vKfXVLA==
   dependencies:
     "@nx/workspace" "16.2.1"
-
-"@nx/devkit@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nx/devkit/-/devkit-16.1.4.tgz#0d425daf79e0daf772a5a456a053db750af14c19"
-  integrity sha512-tyAnpQShhKhR6FwmT7hJTaT/8B8YxFWhgBW0mLi9PhXYS9xRdgZ+ag8/T3EtJudIGMIdn4JhA1YL2zSuziHABQ==
-  dependencies:
-    "@nrwl/devkit" "16.1.4"
-    ejs "^3.1.7"
-    ignore "^5.0.4"
-    semver "7.3.4"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
 
 "@nx/devkit@16.2.1":
   version "16.2.1"
@@ -1235,35 +1202,6 @@
     chalk "^4.1.0"
     confusing-browser-globals "^1.0.9"
     semver "7.3.4"
-
-"@nx/js@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nx/js/-/js-16.1.4.tgz#3d85f549fceeaf9148edbc82abeec46d34731c80"
-  integrity sha512-LYPKvV7AjYvj25p7SVKny22DKVpGVfZ1y+EkmmqWEMvFSEmf7miOCjZEyZGv30CcxFRVDoZ7JZ16TB3S+Zy/gQ==
-  dependencies:
-    "@babel/core" "^7.15.0"
-    "@babel/plugin-proposal-class-properties" "^7.14.5"
-    "@babel/plugin-proposal-decorators" "^7.14.5"
-    "@babel/plugin-transform-runtime" "^7.15.0"
-    "@babel/preset-env" "^7.15.0"
-    "@babel/preset-typescript" "^7.15.0"
-    "@babel/runtime" "^7.14.8"
-    "@nrwl/js" "16.1.4"
-    "@nx/devkit" "16.1.4"
-    "@nx/workspace" "16.1.4"
-    "@phenomnomnominal/tsquery" "~5.0.1"
-    babel-plugin-const-enum "^1.0.1"
-    babel-plugin-macros "^2.8.0"
-    babel-plugin-transform-typescript-metadata "^0.3.1"
-    chalk "^4.1.0"
-    fast-glob "3.2.7"
-    fs-extra "^11.1.0"
-    ignore "^5.0.4"
-    js-tokens "^4.0.0"
-    minimatch "3.0.5"
-    source-map-support "0.5.19"
-    tree-kill "1.2.2"
-    tslib "^2.3.0"
 
 "@nx/js@16.2.1":
   version "16.2.1"
@@ -1293,14 +1231,14 @@
     source-map-support "0.5.19"
     tslib "^2.3.0"
 
-"@nx/linter@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nx/linter/-/linter-16.1.4.tgz#5cfdcac3f5e9b5ef48e400ed6dbbfd2c0b9301d5"
-  integrity sha512-wxgyOvQJuBUCU0n6YY7QSgCFGUPTqoGp/zXfrcpDYOZZPYEygENw3Y7NPDrffXvJOcNh2Wb5z0ZaVH5sp2LYNw==
+"@nx/linter@16.2.1":
+  version "16.2.1"
+  resolved "https://registry.yarnpkg.com/@nx/linter/-/linter-16.2.1.tgz#4c4d45c0ea0403a961dbcf6b85520d6573c4de1b"
+  integrity sha512-YxIueiJbFkd1Xtno9RbSFXp1J78Fb21N3C0jzPl0K+hHXivAZVfOAx+btYMxPZoGqW7USVeQKaCnoj9jitHo3A==
   dependencies:
-    "@nrwl/linter" "16.1.4"
-    "@nx/devkit" "16.1.4"
-    "@nx/js" "16.1.4"
+    "@nrwl/linter" "16.2.1"
+    "@nx/devkit" "16.2.1"
+    "@nx/js" "16.2.1"
     "@phenomnomnominal/tsquery" "~5.0.1"
     tmp "~0.2.1"
     tslib "^2.3.0"
@@ -1394,32 +1332,6 @@
   version "16.2.1"
   resolved "https://registry.yarnpkg.com/@nx/nx-win32-x64-msvc/-/nx-win32-x64-msvc-16.2.1.tgz#848b4c5b118f6a6f92f59c1643297e938c439242"
   integrity sha512-m5oHCaSKdyydM1n1W9V0m2oxBL8PiF54dZB0+PlKB2fhf1zxiyq8i1hL2hXbKA90IOYcUt5/b7761/BzN5njAw==
-
-"@nx/workspace@16.1.4":
-  version "16.1.4"
-  resolved "https://registry.yarnpkg.com/@nx/workspace/-/workspace-16.1.4.tgz#771c90ae8f158620d6c8b0b6e73c9b8d834592bd"
-  integrity sha512-FjzCmbitepS1pH8fqK2I2W3pbJ20+om8rFAQhMUkdJEtio+AXgHdyRfrkjlmNWXME1E0qZc7R0GzD6tILFb0Ew==
-  dependencies:
-    "@nrwl/workspace" "16.1.4"
-    "@nx/devkit" "16.1.4"
-    "@parcel/watcher" "2.0.4"
-    chalk "^4.1.0"
-    chokidar "^3.5.1"
-    cli-cursor "3.1.0"
-    cli-spinners "2.6.1"
-    dotenv "~10.0.0"
-    figures "3.2.0"
-    flat "^5.0.2"
-    ignore "^5.0.4"
-    minimatch "3.0.5"
-    npm-run-path "^4.0.1"
-    nx "16.1.4"
-    open "^8.4.0"
-    rxjs "^7.8.0"
-    tmp "~0.2.1"
-    tslib "^2.3.0"
-    yargs "^17.6.2"
-    yargs-parser "21.1.1"
 
 "@nx/workspace@16.2.1":
   version "16.2.1"
@@ -5154,7 +5066,7 @@ tr46@^4.1.1:
   dependencies:
     punycode "^2.3.0"
 
-tree-kill@1.2.2, tree-kill@^1.2.2:
+tree-kill@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
   integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
