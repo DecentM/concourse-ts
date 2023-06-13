@@ -14,7 +14,7 @@
     "concourse-ts": "./bin/concourse-ts"
   },
   "dependencies": {
-    "@types/node": "^20.3.0",
+    "@types/node": "^20.3.1",
     "commander": "^10.0.1",
     "cosmiconfig": "^8.2.0",
     "cosmiconfig-typescript-loader": "^4.3.0",
