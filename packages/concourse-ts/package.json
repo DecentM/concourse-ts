@@ -11,12 +11,11 @@
     "test": "c8 --100 --reporter=lcov --reporter=text ava"
   },
   "ava": {
-    "extensions": {
-      "ts": "module"
-    },
-    "nodeArguments": [
-      "--no-warnings",
-      "--loader=ts-node/esm/transpile-only"
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register/transpile-only"
     ]
   },
   "peerDependencies": {
