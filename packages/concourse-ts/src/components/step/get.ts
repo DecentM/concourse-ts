@@ -83,7 +83,7 @@ export class GetStep<
   public serialise() {
     const result: Type.GetStep = {
       ...this.serialise_base(),
-      get: this.resource?.name,
+      get: get_identifier(this.resource?.name),
 
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,

@@ -78,7 +78,7 @@ test('stores steps', (t) => {
 test('stores old_name', (t) => {
   const job = new Job('a')
 
-  job.set_old_name('my-old-name')
+  job.old_name = 'my-old-name'
 
   t.deepEqual(job.serialise(), {
     ...default_job,

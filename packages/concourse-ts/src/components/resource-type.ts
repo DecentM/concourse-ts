@@ -2,7 +2,7 @@ import {VError} from 'verror'
 
 import {Customiser} from '../declarations/customiser'
 import {Duration, DurationInput, get_duration} from '../utils/duration'
-import {get_identifier, Identifier} from '../utils/identifier'
+import {get_identifier} from '../utils/identifier'
 import * as Declaration from '../declarations/types'
 import {Resource} from './resource'
 
@@ -28,13 +28,13 @@ export class ResourceType<
     this.resource_customiser = customiser
   }
 
-  public name: Identifier
+  public name: string
 
   constructor(
     name: string,
     customise?: Customiser<ResourceType<Type, Source>>
   ) {
-    this.name = get_identifier(name)
+    this.name = name
 
     if (ResourceType.customiser) {
       ResourceType.customiser(this)
@@ -118,7 +118,7 @@ export class ResourceType<
 
   public serialise() {
     const result: Declaration.ResourceType = {
-      name: this.name,
+      name: get_identifier(this.name),
       type: get_identifier(this.type),
       source: this.source,
       check_every: this.check_every,

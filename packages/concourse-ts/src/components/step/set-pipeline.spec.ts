@@ -2,6 +2,7 @@ import test from 'ava'
 
 import {SetPipelineStep} from './set-pipeline'
 import {default_set_pipeline_step} from './test-data/default-steps'
+import {Pipeline} from '../pipeline'
 
 test('runs static customiser', (t) => {
   SetPipelineStep.customise((sps) => {
@@ -99,5 +100,16 @@ test('stores var_files', (t) => {
   t.deepEqual(sps.serialise(), {
     ...default_set_pipeline_step,
     var_files: ['my-file'],
+  })
+})
+
+test('stores set-pipeline', (t) => {
+  const sps = new SetPipelineStep('a')
+
+  sps.set_pipeline = new Pipeline('my-pipeline')
+
+  t.deepEqual(sps.serialise(), {
+    ...default_set_pipeline_step,
+    set_pipeline: 'my-pipeline',
   })
 })

@@ -9,7 +9,7 @@ import {ResourceType} from './resource-type'
 import {GetStep, PutStep} from './step'
 import {Job} from './job'
 import {type_of} from '../utils'
-import {get_identifier, Identifier} from '../utils/identifier'
+import {get_identifier} from '../utils/identifier'
 
 type AsPutStepInput<PutParams> = {
   params?: PutParams
@@ -85,14 +85,14 @@ export class Resource<
     this.put_step_customiser = init
   }
 
-  public name: Identifier
+  public name: string
 
   constructor(
     name: string,
     private type: ResourceType,
     customise?: Customiser<Resource<Source, PutParams, GetParams>>
   ) {
-    this.name = get_identifier(name)
+    this.name = name
 
     if (Resource.customiser) {
       Resource.customiser(this)
@@ -118,7 +118,7 @@ export class Resource<
    */
   public icon?: string
 
-  public old_name?: Identifier
+  public old_name?: string
 
   public public: boolean
 
@@ -214,12 +214,12 @@ export class Resource<
     }
 
     const result: Type.Resource = {
-      name: this.name,
-      type: this.type.name,
+      name: get_identifier(this.name),
+      type: get_identifier(this.type.name),
       source: this.source,
       check_every: this.check_every,
       icon: this.icon,
-      old_name: this.old_name,
+      old_name: get_identifier(this.old_name),
       public: this.public,
       tags: this.tags,
       version: this.version,

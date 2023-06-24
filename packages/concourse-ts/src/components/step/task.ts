@@ -48,7 +48,7 @@ export class TaskStep<
     this.file = file
   }
 
-  public image?: Identifier
+  public image?: string
 
   public privileged: boolean
 
@@ -72,20 +72,18 @@ export class TaskStep<
     })
   }
 
-  private input_mapping?: Record<Input, Identifier>
+  private input_mapping?: Record<Input, string>
 
-  public set_input_mapping = (input: Input, mapped_input: Identifier) => {
-    if (!this.input_mapping)
-      this.input_mapping = {} as Record<Input, Identifier>
+  public set_input_mapping = (input: Input, mapped_input: string) => {
+    if (!this.input_mapping) this.input_mapping = {} as Record<Input, string>
 
     this.input_mapping[input] = mapped_input
   }
 
-  private output_mapping?: Record<Output, Identifier>
+  private output_mapping?: Record<Output, string>
 
-  public set_output_mapping = (output: Output, mapped_output: Identifier) => {
-    if (!this.output_mapping)
-      this.output_mapping = {} as Record<Output, Identifier>
+  public set_output_mapping = (output: Output, mapped_output: string) => {
+    if (!this.output_mapping) this.output_mapping = {} as Record<Output, string>
 
     this.output_mapping[output] = mapped_output
   }
@@ -115,7 +113,7 @@ export class TaskStep<
         : get_identifier(`${this.name}_task`),
       config: this.file ? undefined : this.task?.serialise(),
       file: this.file,
-      image: this.image,
+      image: get_identifier(this.image),
       privileged: this.privileged,
       vars: this.vars,
       params: this.params,

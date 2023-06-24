@@ -1,9 +1,10 @@
 import {Customiser} from '../../declarations/customiser'
-import {Identifier} from '../../utils/identifier'
+import {Identifier, get_identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
 import {Step} from './base'
+import {Pipeline} from '../pipeline'
 
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
   private static customiser: Customiser<SetPipelineStep>
@@ -27,7 +28,7 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     }
   }
 
-  public set_pipeline: Identifier | 'self'
+  public set_pipeline: Pipeline | 'self'
 
   public file?: Type.FilePath
 
@@ -77,7 +78,10 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
   public serialise() {
     const result: Type.SetPipelineStep = {
       ...this.serialise_base(),
-      set_pipeline: this.set_pipeline,
+      set_pipeline:
+        this.set_pipeline === 'self'
+          ? 'self'
+          : get_identifier(this.set_pipeline?.name),
       file: this.file,
       instance_vars: this.instance_vars,
       vars: this.vars,

@@ -17,3 +17,7 @@ test('throws for invalid strings', (t) => {
     }
   )
 })
+
+test('autocorrects bad identifiers', (t) => {
+  t.is(get_identifier('test!'), 'test_' as Identifier)
+})

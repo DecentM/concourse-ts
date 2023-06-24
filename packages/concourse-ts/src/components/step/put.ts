@@ -1,5 +1,6 @@
 import {Customiser} from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
+import {get_identifier} from '../../utils'
 
 import {Resource} from '../resource'
 
@@ -87,7 +88,7 @@ export class PutStep<
   public serialise() {
     const result: Type.PutStep = {
       ...this.serialise_base(),
-      put: this.resource?.name,
+      put: get_identifier(this.resource?.name),
 
       // This will rename the resource, but it's the same as "put" above.
       resource: undefined,

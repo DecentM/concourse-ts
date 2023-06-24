@@ -62,8 +62,22 @@ export const is_identifier = (input: string): input is Identifier => {
  * @throws {VError}
  */
 export const get_identifier = (input: string): Identifier => {
+  if (input === '') {
+    throw new VError('identifier cannot be an empty string')
+  }
+
+  if (!input) {
+    return undefined
+  }
+
   if (is_identifier(input)) {
     return input
+  }
+
+  const identifier = input.replace(/[^\w .-]+/gmu, '_')
+
+  if (is_identifier(identifier)) {
+    return identifier
   }
 
   const warnings = validate_identifier(input)

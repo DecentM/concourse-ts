@@ -1,5 +1,5 @@
 import {Customiser} from '../../declarations/customiser'
-import {Identifier} from '../../utils/identifier'
+import {get_identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
@@ -27,7 +27,7 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
     }
   }
 
-  public load_var?: Identifier
+  public load_var?: string
 
   public file?: Type.FilePath
 
@@ -51,7 +51,7 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
   public serialise() {
     const result: Type.LoadVarStep = {
       ...this.serialise_base(),
-      load_var: this.load_var,
+      load_var: get_identifier(this.load_var),
       file: this.file,
       format: this.format,
       reveal: this.reveal,

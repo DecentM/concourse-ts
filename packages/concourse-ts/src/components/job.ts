@@ -1,5 +1,5 @@
 import {Customiser} from '../declarations/customiser'
-import {get_identifier, Identifier} from '../utils/identifier'
+import {get_identifier} from '../utils/identifier'
 import * as Type from '../declarations/types'
 
 import {Resource} from './resource'
@@ -85,16 +85,10 @@ export class Job {
    */
   public max_in_flight?: number
 
-  private old_name?: Identifier
-
   /**
    * https://concourse-ci.org/jobs.html#schema.job.old_name
-   *
-   * @param {string} old_name The name this step used to have
    */
-  public set_old_name = (old_name: string) => {
-    this.old_name = get_identifier(old_name)
-  }
+  public old_name?: string
 
   private on_success?: DoStep
 
@@ -234,7 +228,7 @@ export class Job {
    */
   public serial: boolean
 
-  private serial_groups?: string[] = []
+  private serial_groups?: string[]
 
   /**
    * https://concourse-ci.org/jobs.html#schema.job.serial_groups
@@ -242,6 +236,8 @@ export class Job {
    * @param {string} serial_groups
    */
   public add_serial_group = (serial_group: string) => {
+    if (!this.serial_groups) this.serial_groups = []
+
     this.serial_groups.push(serial_group)
   }
 
@@ -336,19 +332,16 @@ export class Job {
       ensure: this.ensure?.serialise(),
       interruptible: this.interruptible,
       max_in_flight: this.max_in_flight,
-      old_name: this.old_name,
+      old_name: get_identifier(this.old_name),
       on_abort: this.on_abort?.serialise(),
       on_error: this.on_error?.serialise(),
       on_failure: this.on_failure?.serialise(),
       on_success: this.on_success?.serialise(),
       public: this.public,
       serial: this.serial,
-      serial_groups:
-        this.serial_groups.length === 0
-          ? undefined
-          : this.serial_groups.map((serial_group) =>
-              get_identifier(serial_group)
-            ),
+      serial_groups: this.serial_groups?.map((serial_group) =>
+        get_identifier(serial_group)
+      ),
     }
 
     return result
