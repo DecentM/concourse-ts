@@ -1,4 +1,5 @@
 import { Utils } from '@decentm/concourse-ts'
+
 import { Option } from 'commander'
 import deep_merge from 'ts-deepmerge'
 
@@ -16,7 +17,9 @@ export class TransformCommand extends CliCommand {
         new Option(
           '-t --transformers [transformers...]',
           'list of transformers to use'
-        ).choices(Object.keys(Utils.Transform))
+        )
+          .choices(Object.keys(Utils.Transform))
+          .default([])
       )
       .action((params: TransformParams) =>
         run_transform_command(
