@@ -1,9 +1,8 @@
-FROM node:18-alpine3.17 as base
+FROM node:20.2-alpine3.17 as base
 
 #########################################
 FROM base as depskeleton
 WORKDIR /app
-
 
 COPY package.json yarn.lock ./
 COPY ./packages/concourse-ts/package.json ./packages/concourse-ts/package.json
