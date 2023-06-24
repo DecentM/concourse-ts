@@ -129,9 +129,9 @@ export const default_job = {
 
 export const default_pipeline = {
   display: undefined,
-  groups: [],
+  groups: undefined,
   jobs: [],
-  resource_types: [],
-  resources: [],
-  var_sources: [],
+  resource_types: undefined,
+  resources: undefined,
+  var_sources: undefined,
 }

@@ -1,9 +1,9 @@
-import * as YAML from 'yaml'
 import path from 'node:path'
 
 import {Pipeline} from '../components/pipeline'
 import {validate} from '../validation'
 import {ValidationWarningType, WarningStore} from '../utils/warning-store'
+import {write_yaml} from './yaml'
 
 type CompilationResultFile = {
   filename: string
@@ -44,26 +44,15 @@ export class Compilation {
     const warnings = this.validate(input)
     const tasks = input.get_tasks()
 
-    const result = {
-      pipeline: {
-        filename: this.get_pipeline_path(`${input.name}.yml`),
-        serialised: input.serialise(),
-      },
-      tasks: tasks.map((task) => ({
-        filename: this.get_task_path(`${task.name}.yml`),
-        serialised: task.serialise(),
-      })),
-    }
-
     return {
       warnings,
       pipeline: {
-        filename: result.pipeline.filename,
-        content: YAML.stringify(result.pipeline.serialised),
+        filename: this.get_pipeline_path(`${input.name}.yml`),
+        content: write_yaml(input.serialise()),
       },
-      tasks: result.tasks.map((task) => ({
-        filename: task.filename,
-        content: YAML.stringify(task.serialised),
+      tasks: tasks.map((task) => ({
+        filename: this.get_task_path(`${task.name}.yml`),
+        content: write_yaml(task.serialise()),
       })),
     }
   }

@@ -239,8 +239,8 @@ export abstract class Step<StepType extends Type.Step> {
    *
    * @returns {Type.StepBase}
    */
-  protected serialise_base = () => {
-    const result: Type.StepBase = {
+  protected serialise_base = (): Type.StepBase => {
+    return {
       attempts: this.attempts,
       ensure: this.ensure?.serialise(),
       on_abort: this.on_abort?.serialise(),
@@ -251,8 +251,6 @@ export abstract class Step<StepType extends Type.Step> {
       timeout: this.timeout,
       across: this.across.length === 0 ? undefined : this.across,
     }
-
-    return result
   }
 
   /**

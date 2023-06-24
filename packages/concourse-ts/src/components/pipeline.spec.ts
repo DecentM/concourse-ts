@@ -10,11 +10,11 @@ import {Task} from './task'
 const image_url = 'https://example.com/image.jpg'
 
 const default_pipeline = {
-  groups: [],
+  groups: undefined,
   jobs: [],
-  resource_types: [],
-  resources: [],
-  var_sources: [],
+  resource_types: undefined,
+  resources: undefined,
+  var_sources: undefined,
   display: {
     background_image: image_url,
   },

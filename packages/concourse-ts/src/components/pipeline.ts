@@ -70,6 +70,8 @@ export class Pipeline<Group extends string = string> {
 
     if (!group) return
 
+    if (!this.groups) this.groups = []
+
     const group_name = get_identifier(group)
 
     // Find the group this job belongs to, and if there isn't one, push a new
@@ -110,9 +112,9 @@ export class Pipeline<Group extends string = string> {
     this.display.background_image = url
   }
 
-  private groups?: Type.Pipeline['groups'] = []
+  private groups?: Type.Pipeline['groups']
 
-  private var_sources?: Type.VarSource[] = []
+  private var_sources?: Type.VarSource[]
 
   /**
    * Adds one or more [Var
@@ -123,6 +125,8 @@ export class Pipeline<Group extends string = string> {
    * @param var_sources
    */
   public add_var_source = (...var_sources: Type.VarSource[]) => {
+    if (!this.var_sources) this.var_sources = []
+
     this.var_sources.push(...var_sources)
   }
 
@@ -175,16 +179,20 @@ export class Pipeline<Group extends string = string> {
    * @returns {Type.Pipeline} A JSON representation of this Job
    */
   public serialise() {
+    const resource_types = deduplicate_by_identity(
+      this.get_resource_types()
+    ).map((rt) => rt.serialise())
+
+    const resources = deduplicate_by_identity(this.get_resources()).map((r) =>
+      r.serialise()
+    )
+
     const result: Type.Pipeline = {
       jobs: this.jobs.map((j) => j.serialise()),
       display: this.display,
       groups: this.groups,
-      resource_types: deduplicate_by_identity(this.get_resource_types()).map(
-        (rt) => rt.serialise()
-      ),
-      resources: deduplicate_by_identity(this.get_resources()).map((r) =>
-        r.serialise()
-      ),
+      resource_types: resource_types.length ? resource_types : undefined,
+      resources: resources.length ? resources : undefined,
       var_sources: this.var_sources,
     }
 
