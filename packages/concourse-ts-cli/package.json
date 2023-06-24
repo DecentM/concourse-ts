@@ -28,7 +28,7 @@
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   },
   "devDependencies": {
     "@swc/helpers": "~0.5.1",
