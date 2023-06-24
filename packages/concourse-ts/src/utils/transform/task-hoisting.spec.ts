@@ -36,7 +36,10 @@ test('hoists all tasks', (t) => {
 
   t.deepEqual(serialised, {
     display: undefined,
-    groups: [],
+    groups: undefined,
+    resource_types: undefined,
+    resources: undefined,
+    var_sources: undefined,
     jobs: [
       {
         ...default_job,
@@ -64,8 +67,5 @@ test('hoists all tasks', (t) => {
         ],
       },
     ],
-    resource_types: [],
-    resources: [],
-    var_sources: [],
   })
 })
