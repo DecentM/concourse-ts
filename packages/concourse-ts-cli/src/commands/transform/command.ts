@@ -17,9 +17,7 @@ export class TransformCommand extends CliCommand {
         new Option(
           '-t --transformers [transformers...]',
           'list of transformers to use'
-        )
-          .choices(Object.keys(Utils.Transform))
-          .default([])
+        ).choices(Object.keys(Utils.Transform))
       )
       .action((params: TransformParams) =>
         run_transform_command(

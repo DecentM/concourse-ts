@@ -19,7 +19,7 @@ export const run_transform_command = async (params: TransformParams) => {
       const used_transformers = (
         Object.keys(ConcourseTs.Utils.Transform) as TransformParams['transformers']
       ).filter((transformer) => {
-        return params.transformers.includes(transformer)
+        return params.transformers?.includes(transformer)
       })
 
       const pipeline = YAML.parse(input.content)
