@@ -1,5 +1,5 @@
 import test from 'ava'
-import {deduplicate_by_identity, Identifier} from '../utils'
+import {deduplicate_by_identity} from '../utils'
 
 import {Job} from './job'
 import {Resource} from './resource'
@@ -42,14 +42,14 @@ test('stores steps', (t) => {
   job.add_step(
     new LoadVarStep('lv', (lv) => {
       lv.file = 'my-file'
-      lv.load_var = 'my-var' as Identifier
+      lv.load_var = 'my-var'
     })
   )
 
   job.add_step_first(
     new LoadVarStep('lv', (lv) => {
       lv.file = 'my-file-first'
-      lv.load_var = 'my-var-first' as Identifier
+      lv.load_var = 'my-var-first'
     })
   )
 
@@ -96,7 +96,7 @@ test('stores on_success', (t) => {
   job.add_on_success(
     new LoadVarStep('lv', (lv) => {
       lv.file = 'my-file'
-      lv.load_var = 'my-var' as Identifier
+      lv.load_var = 'my-var'
     })
   )
 
@@ -127,7 +127,7 @@ test('stores on_error', (t) => {
   job.add_on_error(
     new LoadVarStep('lv', (lv) => {
       lv.file = 'my-file'
-      lv.load_var = 'my-var' as Identifier
+      lv.load_var = 'my-var'
     })
   )
 
@@ -158,7 +158,7 @@ test('stores on_failure', (t) => {
   job.add_on_failure(
     new LoadVarStep('lv', (lv) => {
       lv.file = 'my-file'
-      lv.load_var = 'my-var' as Identifier
+      lv.load_var = 'my-var'
     })
   )
 
@@ -189,7 +189,7 @@ test('stores on_abort', (t) => {
   job.add_on_abort(
     new LoadVarStep('lv', (lv) => {
       lv.file = 'my-file'
-      lv.load_var = 'my-var' as Identifier
+      lv.load_var = 'my-var'
     })
   )
 
@@ -220,7 +220,7 @@ test('stores ensure', (t) => {
   job.add_ensure(
     new LoadVarStep('lv', (lv) => {
       lv.file = 'my-file'
-      lv.load_var = 'my-var' as Identifier
+      lv.load_var = 'my-var'
     })
   )
 

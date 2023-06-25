@@ -1,6 +1,5 @@
 import test from 'ava'
 import {Resource, ResourceType, Task} from '..'
-import {Identifier} from '../../utils'
 
 import {DoStep} from './do'
 import {LoadVarStep} from './load-var'
@@ -41,11 +40,11 @@ test('runs instance customiser', (t) => {
 test('stores steps', (t) => {
   const ds = new DoStep('ds')
   const step = new LoadVarStep('lvs', (lvs) => {
-    lvs.load_var = 'a' as Identifier
+    lvs.load_var = 'a'
     lvs.file = '/a'
   })
   const step1 = new LoadVarStep('lvs1', (lvs) => {
-    lvs.load_var = 'b' as Identifier
+    lvs.load_var = 'b'
     lvs.file = '/b'
   })
 

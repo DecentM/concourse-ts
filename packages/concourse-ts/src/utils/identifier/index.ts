@@ -39,7 +39,9 @@ export type Identifier = string & {__type: 'Identifier'}
  * @returns {bool} Type guard for valid identifiers, using branded types.
  *
  */
-export const is_identifier = (input: string): input is Identifier => {
+export const is_identifier = <IdentifierType extends Identifier = Identifier>(
+  input: string
+): input is IdentifierType => {
   const warnings = validate_identifier(input)
 
   if (warnings.has_fatal()) {
@@ -61,7 +63,9 @@ export const is_identifier = (input: string): input is Identifier => {
  * @returns {Identifier} The input
  * @throws {VError}
  */
-export const get_identifier = (input: string): Identifier => {
+export const get_identifier = <IdentifierType extends Identifier = Identifier>(
+  input: string
+): IdentifierType => {
   if (input === '') {
     throw new VError('identifier cannot be an empty string')
   }
@@ -70,13 +74,13 @@ export const get_identifier = (input: string): Identifier => {
     return undefined
   }
 
-  if (is_identifier(input)) {
+  if (is_identifier<IdentifierType>(input)) {
     return input
   }
 
   const identifier = input.replace(/[^\w .-]+/gmu, '_')
 
-  if (is_identifier(identifier)) {
+  if (is_identifier<IdentifierType>(identifier)) {
     return identifier
   }
 

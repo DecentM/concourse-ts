@@ -156,27 +156,27 @@ export class Task<
     this.container_limits.memory = get_bytes(input)
   }
 
-  private inputs: Type.TaskInput<Input>[]
+  private inputs: Type.TaskInput<string>[]
 
   /**
    * https://concourse-ci.org/tasks.html#schema.task-config.inputs
    *
-   * @param {Type.TaskInput<Input>} input
+   * @param {Type.TaskInput<string>} input
    */
-  public add_input = (...inputs: Type.TaskInput<Input>[]) => {
+  public add_input = (...inputs: Type.TaskInput<string>[]) => {
     if (!this.inputs) this.inputs = []
 
     this.inputs.push(...inputs)
   }
 
-  private outputs: Type.TaskOutput<Output>[]
+  private outputs: Type.TaskOutput<string>[]
 
   /**
    * https://concourse-ci.org/tasks.html#schema.task-config.outputs
    *
-   * @param {Type.TaskOutput<Output>} output
+   * @param {Type.TaskOutput<string>} output
    */
-  public add_output = (...outputs: Type.TaskOutput<Output>[]) => {
+  public add_output = (...outputs: Type.TaskOutput<string>[]) => {
     if (!this.outputs) this.outputs = []
 
     this.outputs.push(...outputs)
@@ -248,8 +248,14 @@ export class Task<
       run: this.run?.serialise(),
       caches: this.caches.length === 0 ? undefined : this.caches,
       container_limits: this.container_limits,
-      inputs: this.inputs,
-      outputs: this.outputs,
+      inputs: this.inputs?.map((input) => ({
+        ...input,
+        name: get_identifier(input.name),
+      })),
+      outputs: this.outputs?.map((output) => ({
+        ...output,
+        name: get_identifier(output.name),
+      })),
       params: this.params,
       rootfs_uri: this.rootfs_uri,
     }

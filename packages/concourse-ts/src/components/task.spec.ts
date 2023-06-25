@@ -1,5 +1,4 @@
 import test from 'ava'
-import {Identifier} from '../utils'
 import {Command} from './command'
 import {Resource} from './resource'
 import {ResourceType} from './resource-type'
@@ -26,10 +25,10 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const task = new Task('a', (a) => {
-    a.name = 'b' as Identifier
+    a.name = 'b'
   })
 
-  t.is(task.name, 'b' as Identifier)
+  t.is(task.name, 'b')
 })
 
 test('runs task-step customiser', (t) => {
@@ -127,7 +126,7 @@ test('stores container limits', (t) => {
 
 test('stores inputs', (t) => {
   const task = new Task('a', (a) => {
-    a.add_input({name: 'ai' as Identifier})
+    a.add_input({name: 'ai'})
   })
 
   t.deepEqual(task.serialise(), {
@@ -138,7 +137,7 @@ test('stores inputs', (t) => {
 
 test('stores outputs', (t) => {
   const task = new Task('a', (a) => {
-    a.add_output({name: 'ao' as Identifier})
+    a.add_output({name: 'ao'})
   })
 
   t.deepEqual(task.serialise(), {

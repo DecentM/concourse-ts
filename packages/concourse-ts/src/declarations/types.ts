@@ -137,8 +137,8 @@ export type Task<Input extends Identifier, Output extends Identifier> = {
 /**
  * https://concourse-ci.org/across-step.html#schema.across
  */
-export type Across = {
-  var: Identifier
+export type Across<IdentifierType extends string = Identifier> = {
+  var: IdentifierType
   values: string[]
   max_in_flight?: 'all' | number
   fail_fast?: boolean
@@ -195,7 +195,7 @@ export type PutStep = {
  * TransferType is for specifying input and output names to keep user codebase
  * type-safe.
  */
-export type TaskInput<TransferType extends Identifier> = {
+export type TaskInput<TransferType extends string> = {
   name: TransferType
   path?: DirPath
   optional?: boolean
@@ -204,7 +204,7 @@ export type TaskInput<TransferType extends Identifier> = {
 /**
  * https://concourse-ci.org/tasks.html#schema.task-config.outputs
  */
-export type TaskOutput<TransferType extends Identifier> = {
+export type TaskOutput<TransferType extends string> = {
   name: TransferType
   path?: DirPath
 }

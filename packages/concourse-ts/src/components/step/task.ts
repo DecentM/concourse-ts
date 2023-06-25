@@ -72,18 +72,18 @@ export class TaskStep<
     })
   }
 
-  private input_mapping?: Record<Input, string>
+  private input_mapping?: Record<string, string>
 
-  public set_input_mapping = (input: Input, mapped_input: string) => {
-    if (!this.input_mapping) this.input_mapping = {} as Record<Input, string>
+  public set_input_mapping = (input: string, mapped_input: string) => {
+    if (!this.input_mapping) this.input_mapping = {}
 
     this.input_mapping[input] = mapped_input
   }
 
-  private output_mapping?: Record<Output, string>
+  private output_mapping?: Record<string, string>
 
-  public set_output_mapping = (output: Output, mapped_output: string) => {
-    if (!this.output_mapping) this.output_mapping = {} as Record<Output, string>
+  public set_output_mapping = (output: string, mapped_output: string) => {
+    if (!this.output_mapping) this.output_mapping = {}
 
     this.output_mapping[output] = mapped_output
   }
@@ -106,6 +106,26 @@ export class TaskStep<
   }
 
   public serialise() {
+    let input_mapping: Record<Input, string>
+
+    if (this.input_mapping) {
+      input_mapping = {} as Record<Input, string>
+
+      Object.entries(this.input_mapping).forEach(([input, mapped_input]) => {
+        input_mapping[get_identifier(input)] = mapped_input
+      })
+    }
+
+    let output_mapping: Record<Output, string>
+
+    if (this.output_mapping) {
+      output_mapping = {} as Record<Output, string>
+
+      Object.entries(this.output_mapping).forEach(([output, mapped_output]) => {
+        output_mapping[get_identifier(output)] = mapped_output
+      })
+    }
+
     const result: Type.TaskStep = {
       ...this.serialise_base(),
       task: this.task?.name
@@ -117,8 +137,8 @@ export class TaskStep<
       privileged: this.privileged,
       vars: this.vars,
       params: this.params,
-      input_mapping: this.input_mapping,
-      output_mapping: this.output_mapping,
+      input_mapping,
+      output_mapping,
     }
 
     return result

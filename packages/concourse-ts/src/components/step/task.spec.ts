@@ -1,5 +1,4 @@
 import test from 'ava'
-import {Identifier} from '../../utils'
 import {Task} from '../task'
 
 import {TaskStep} from './task'
@@ -134,15 +133,9 @@ test('stores params', (t) => {
 test('stores input_mapping', (t) => {
   const ts = new TaskStep('a')
 
-  ts.set_input_mapping(
-    'my_input' as Identifier,
-    'my_mapped_input' as Identifier
-  )
+  ts.set_input_mapping('my_input', 'my_mapped_input')
 
-  ts.set_input_mapping(
-    'my_input1' as Identifier,
-    'my_mapped_input1' as Identifier
-  )
+  ts.set_input_mapping('my_input1', 'my_mapped_input1')
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,
@@ -157,15 +150,9 @@ test('stores input_mapping', (t) => {
 test('stores ouptut_mapping', (t) => {
   const ts = new TaskStep('a')
 
-  ts.set_output_mapping(
-    'my_output' as Identifier,
-    'my_mapped_output' as Identifier
-  )
+  ts.set_output_mapping('my_output', 'my_mapped_output')
 
-  ts.set_output_mapping(
-    'my_output1' as Identifier,
-    'my_mapped_output1' as Identifier
-  )
+  ts.set_output_mapping('my_output1', 'my_mapped_output1')
 
   t.deepEqual(ts.serialise(), {
     ...default_task_step,

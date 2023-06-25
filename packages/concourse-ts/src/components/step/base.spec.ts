@@ -9,7 +9,7 @@ import {
   default_task_step_with_config,
 } from './test-data/default-steps'
 
-import {Identifier, deduplicate_by_identity} from '../../utils'
+import {deduplicate_by_identity} from '../../utils'
 
 import {Step} from './base'
 
@@ -73,7 +73,7 @@ test('stores tags', (t) => {
 test('stores across', (t) => {
   t.context.step.add_across({
     values: ['my-a', 'my-b'],
-    var: 'asd' as Identifier,
+    var: 'asd',
     fail_fast: true,
     max_in_flight: 1,
   })
