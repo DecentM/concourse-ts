@@ -249,7 +249,7 @@ export type LoadVarStep = {
   reveal?: boolean
 } & StepBase
 
-type InParallelConfig = {
+export type InParallelConfig = {
   steps: Step[]
   limit?: number
   fail_fast?: boolean

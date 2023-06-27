@@ -53,7 +53,9 @@ export class Decompilation {
     }
 
     // Load task configs from disk if they're defined in a separate yaml file
-    apply_task_hoisting(parsed, this.work_dir)
+    apply_task_hoisting(parsed, {
+      work_dir: this.work_dir,
+    })
 
     const warnings = validate(parsed)
 

@@ -33,6 +33,10 @@ const hoist_task = (
   return task
 }
 
+export type TaskHoistingOptions = {
+  work_dir: string
+}
+
 /**
  * Modifies a Pipeline *in-place* by reading task files and embedding the task
  * configuration into the Pipeline instance.
@@ -41,9 +45,11 @@ const hoist_task = (
  * @param {Pipeline} pipeline The pipeline to modify
  * @returns {Pipeline} The same pipeline instance
  */
-export const apply_task_hoisting: Transformer = (
+export const apply_task_hoisting: Transformer<TaskHoistingOptions> = (
   pipeline: Pipeline,
-  work_dir: string
+  options = {
+    work_dir: '.',
+  }
 ): void => {
   pipeline.jobs.forEach((job) =>
     job.plan.forEach((step) => {
@@ -55,7 +61,7 @@ export const apply_task_hoisting: Transformer = (
         return
       }
 
-      step.config = hoist_task(work_dir, step)
+      step.config = hoist_task(options.work_dir, step)
       step.file = undefined
     })
   )

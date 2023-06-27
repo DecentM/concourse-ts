@@ -1,6 +1,13 @@
 import clone_deep from 'lodash.clonedeep'
 
-import {Across, Pipeline, Step, Transformer} from '../../declarations'
+import {
+  Across,
+  InParallelConfig,
+  Pipeline,
+  Step,
+  Transformer,
+} from '../../declarations'
+
 import {visit_variable_attributes} from '../../utils/visitors/variable-attributes'
 
 const get_combinations_rec = <T>(
@@ -57,6 +64,10 @@ type RegExpMatchArrayWithIndices = RegExpMatchArray & {
   }
 }
 
+export type AcrossPolyfillOptions = {
+  in_parallel: Omit<InParallelConfig, 'steps'>
+}
+
 /**
  * Modifies a serialised Pipeline *in-place*, so that all `across` modifiers are
  * removed from steps, and a new step is created for each combination of the
@@ -67,8 +78,14 @@ type RegExpMatchArrayWithIndices = RegExpMatchArray & {
  *
  * @param {Pipeline} pipeline The pipeline to modify
  */
-export const apply_across_polyfill: Transformer = (
-  pipeline: Pipeline
+export const apply_across_polyfill: Transformer<AcrossPolyfillOptions> = (
+  pipeline: Pipeline,
+  options = {
+    in_parallel: {
+      fail_fast: true,
+      limit: 1,
+    },
+  }
 ): void => {
   pipeline.jobs.forEach((job) => {
     job.plan.forEach((step, step_index) => {
@@ -149,7 +166,10 @@ export const apply_across_polyfill: Transformer = (
       })
 
       job.plan[step_index] = {
-        in_parallel: steps,
+        in_parallel: {
+          steps,
+          ...options.in_parallel,
+        },
       }
     })
   })

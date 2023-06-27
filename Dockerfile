@@ -14,14 +14,14 @@ COPY ./packages/${package}/package.json ./packages/${package}/package.json
 FROM depskeleton as proddeps
 WORKDIR /app
 
-RUN yarn --frozen-lockfile --non-interactive --production=true
+RUN yarn --frozen-lockfile --non-interactive --production=true --network-concurrency=5
 
 #########################################
 FROM proddeps as devdeps
 WORKDIR /app
 
 RUN apk add --no-cache python3 make gcc g++
-RUN yarn --frozen-lockfile --non-interactive --production=false
+RUN yarn --frozen-lockfile --non-interactive --production=false --network-concurrency=5
 
 #########################################
 FROM devdeps as sources
