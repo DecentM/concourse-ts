@@ -68,6 +68,57 @@ export type AcrossPolyfillOptions = {
   in_parallel: Omit<InParallelConfig, 'steps'>
 }
 
+const replace_variables = (
+  input: string,
+  var_source_name: string,
+  combination_item: CombinationItem[],
+  replace_value?: boolean
+): string => {
+  const regex =
+    /\(\((?<varsource>[a-zA-Z-.0-9]+):(?<varname>[a-zA-Z-.0-9]+)\)\)/dgimu
+
+  let match: RegExpMatchArrayWithIndices | null = null
+  let wip = input
+
+  // The regex object tracks how many times it's been executed, and
+  // matches the next occurrence every time. We use this to replace
+  // every variable use in the string iteratively.
+  while ((match = regex.exec(wip) as RegExpMatchArrayWithIndices) !== null) {
+    const [, matched_var_source_name, matched_fragment] = match
+
+    const item = combination_item.find(
+      (member) => member.name === matched_fragment
+    )
+
+    if (
+      // Filter out variable names not in the matrix
+      !item ||
+      // Filter out variables used from non-local var_sources
+      matched_var_source_name !== '.'
+    ) {
+      continue
+    }
+
+    if (replace_value) {
+      wip =
+        wip.substring(0, match.indices.groups['varsource'][0] - 2) +
+        item.name +
+        '-' +
+        item.value +
+        wip.substring(match.indices.groups['varname'][1] + 2)
+    } else {
+      wip =
+        wip.substring(0, match.indices.groups['varsource'][0]) +
+        var_source_name +
+        ':' +
+        matched_fragment +
+        wip.substring(match.indices.groups['varname'][1])
+    }
+  }
+
+  return wip
+}
+
 /**
  * Modifies a serialised Pipeline *in-place*, so that all `across` modifiers are
  * removed from steps, and a new step is created for each combination of the
@@ -117,40 +168,12 @@ export const apply_across_polyfill: Transformer<AcrossPolyfillOptions> = (
         // Replace all instances of variable usage in this step and its children
         visit_variable_attributes(new_step, {
           Attribute(attribute, field_index, root) {
-            const regex =
-              /\(\((?<varsource>[a-zA-Z-.0-9]+):(?<varname>[a-zA-Z-.0-9]+)\)\)/dgimu
-
-            let match: RegExpMatchArrayWithIndices | null = null
-            let wip = attribute
-
-            // The regex object tracks how many times it's been executed, and
-            // matches the next occurrence every time. We use this to replace
-            // every variable use in the string iteratively.
-            while (
-              (match = regex.exec(wip) as RegExpMatchArrayWithIndices) !== null
-            ) {
-              const [, matched_var_source_name, matched_fragment] = match
-
-              if (
-                // Filter out variable names not in the matrix
-                !combination_item.some(
-                  (member) => member.name === matched_fragment
-                ) ||
-                // Filter out variables used from non-local var_sources
-                matched_var_source_name !== '.'
-              ) {
-                continue
-              }
-
-              wip =
-                wip.substring(0, match.indices.groups['varsource'][0]) +
-                var_source_name +
-                ':' +
-                matched_fragment +
-                wip.substring(match.indices.groups['varname'][1])
-            }
-
-            root[field_index] = wip
+            root[field_index] = replace_variables(
+              attribute,
+              var_source_name,
+              combination_item,
+              field_index === 'task'
+            )
           },
         })
 

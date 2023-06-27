@@ -27,7 +27,7 @@ const create_pipeline = (): Pipeline => ({
               values: ['13.7', '13.4'],
             },
           ],
-          task: 'running-with-node-((.:node))' as Identifier,
+          task: 'running-with-node_((.:node))' as Identifier,
           config: {
             platform: 'linux',
             image_resource: {
@@ -74,17 +74,29 @@ test('leaves non-across steps alone', (t) => {
   t.deepEqual(pipeline, orig_pipeline)
 })
 
-test('only changes variables that are defined in the matrix', (t) => {
+test('rewrites task names', (t) => {
   const pipeline = create_pipeline()
-
-  pipeline.jobs[0].plan[0].across![0].var = 'something-else' as Identifier
 
   apply_across_polyfill(pipeline)
 
   const step = pipeline.jobs[0].plan[0] as InParallelStep
   const child_step = (step.in_parallel as InParallelConfig).steps[0] as TaskStep
 
-  t.is(child_step.task, 'running-with-node-((.:node))' as Identifier)
+  t.is(child_step.task, 'running-with-node_node-14' as Identifier)
+})
+
+test('avoids rewriting task names if the name is not a local variable', (t) => {
+  const pipeline = create_pipeline()
+
+  ;(pipeline.jobs[0].plan[0] as TaskStep).task =
+    'running-with-node_((a:node))' as Identifier
+
+  apply_across_polyfill(pipeline)
+
+  const step = pipeline.jobs[0].plan[0] as InParallelStep
+  const child_step = (step.in_parallel as InParallelConfig).steps[0] as TaskStep
+
+  t.is(child_step.task, 'running-with-node_((a:node))' as Identifier)
 })
 
 test('replaces multiple variables in a single value', (t) => {
