@@ -167,8 +167,8 @@ export const apply_across_polyfill: Transformer<AcrossPolyfillOptions> = (
 
       job.plan[step_index] = {
         in_parallel: {
-          steps,
           ...options.in_parallel,
+          steps,
         },
       }
     })
