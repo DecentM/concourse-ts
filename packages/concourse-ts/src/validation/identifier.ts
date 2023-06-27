@@ -29,8 +29,9 @@ export const validate_identifier = (
     return warnings
   }
 
+  // This strays from the spec because we may allow variables in identifiers.
   const validate_identifiers =
-    /^[\p{Ll}\p{Lt}\p{Lm}\p{Lo}][\p{Ll}\p{Lt}\p{Lm}\p{Lo}\d\-_.]*$/gu
+    /^[\p{Ll}\p{Lt}\p{Lm}\p{Lo}][\p{Ll}\p{Lt}\p{Lm}\p{Lo}\d\-_.:()]*$/gu
 
   const starts_with_letter = /^[^\p{Ll}\p{Lt}\p{Lm}\p{Lo}]/gu
   const invalid_character = /([^\p{Ll}\p{Lt}\p{Lm}\p{Lo}\d\-_.])/gu

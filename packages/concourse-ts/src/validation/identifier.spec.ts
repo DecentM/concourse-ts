@@ -11,6 +11,13 @@ test('accepts valid identifiers', (t) => {
   t.deepEqual(warnings.get_warnings(), [])
 })
 
+test('accepts identifiers with variables in them', (t) => {
+  const warnings = validate_identifier('asd-((.:thing))')
+
+  t.is(warnings.has_fatal(), false)
+  t.deepEqual(warnings.get_warnings(), [])
+})
+
 test('rejects empty strings', (t) => {
   const warnings = validate_identifier('')
 
