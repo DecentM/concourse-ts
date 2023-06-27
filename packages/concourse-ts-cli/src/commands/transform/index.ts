@@ -23,9 +23,9 @@ export const run_transform_command = async (params: TransformParams) => {
     inputs.map(async (input) => {
       const used_transformers = Object.keys(ConcourseTs.Utils.Transform).filter(
         (transformer) => {
-          return Object.keys(params.transformers).includes(transformer)
+          return (params.transformers as string[]).includes(transformer)
         }
-      ) as Array<keyof typeof ConcourseTs.Utils.Transform>
+      )
 
       const pipeline = YAML.parse(input.content)
       const path_info = path.parse(input.filepath)
