@@ -37,6 +37,13 @@ ARG package
 RUN yarn nx build ${package}
 
 #########################################
+FROM sources as test
+WORKDIR /app
+
+ARG package
+RUN yarn nx test ${package}
+
+#########################################
 FROM base as runtime
 WORKDIR /app
 
