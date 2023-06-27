@@ -1,4 +1,6 @@
-FROM node:20.2-alpine3.17 as base
+ARG BASE_IMAGE
+
+FROM ${BASE_IMAGE} as base
 
 #########################################
 FROM base as depskeleton
