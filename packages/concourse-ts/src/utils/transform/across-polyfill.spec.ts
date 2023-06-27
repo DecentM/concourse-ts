@@ -1,6 +1,12 @@
 import test from 'ava'
 
-import {InParallelStep, Pipeline, Step, TaskStep} from '../../declarations'
+import {
+  InParallelConfig,
+  InParallelStep,
+  Pipeline,
+  Step,
+  TaskStep,
+} from '../../declarations'
 import {Identifier} from '../../utils/identifier'
 
 import {apply_across_polyfill} from './across-polyfill'
@@ -48,10 +54,12 @@ test('creates the correct number of tasks', (t) => {
 
   const step1 = pipeline.jobs[0].plan[0] as InParallelStep
 
+  t.assert('in_parallel' in step1)
+  t.assert('steps' in step1.in_parallel)
   t.is(step1.across, undefined)
 
   // Should create 2 * 3 steps because across[0].values.length * across[1].values.length
-  t.is((step1.in_parallel as Step[]).length, 6)
+  t.is(((step1.in_parallel as InParallelConfig).steps as Step[]).length, 6)
 })
 
 test('leaves non-across steps alone', (t) => {
@@ -74,7 +82,7 @@ test('only changes variables that are defined in the matrix', (t) => {
   apply_across_polyfill(pipeline)
 
   const step = pipeline.jobs[0].plan[0] as InParallelStep
-  const child_step = step.in_parallel[0] as TaskStep
+  const child_step = (step.in_parallel as InParallelConfig).steps[0] as TaskStep
 
   t.is(child_step.task, 'running-with-node-((.:node))' as Identifier)
 })
@@ -85,7 +93,7 @@ test('replaces multiple variables in a single value', (t) => {
   apply_across_polyfill(pipeline)
 
   const step = pipeline.jobs[0].plan[0] as InParallelStep
-  const child_step = step.in_parallel[0] as TaskStep
+  const child_step = (step.in_parallel as InParallelConfig).steps[0] as TaskStep
 
   t.is(
     child_step.config!.run.args![0],
