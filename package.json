@@ -37,6 +37,6 @@
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-coverage": "^2.1.0",
     "typedoc-plugin-markdown": "^3.15.3",
-    "typescript": "~5.1.5"
+    "typescript": "~5.1.6"
   }
 }
