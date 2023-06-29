@@ -1,9 +1,9 @@
 import test from 'ava'
 
-import {ResourceType, Pipeline, Job, GetStep} from '..'
 import {Config} from '../declarations/types'
-import {Duration} from '../utils'
-import {has_duplicates_by_key} from '../utils/array-duplicates'
+import {Duration, has_duplicates_by_key} from '../utils'
+
+import {ResourceType, Pipeline, Job, GetStep} from '..'
 
 test.beforeEach(() => {
   ResourceType.customise((rt) => {
@@ -149,5 +149,46 @@ test('runs instance customiser', (t) => {
     source: undefined,
     tags: ['added'],
     type: 'registry-image',
+  })
+})
+
+test('get_type returns null if the subtype is a string', (t) => {
+  const rt = new ResourceType('rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  t.is(rt.get_type(), null)
+})
+
+test('get_type returns resource type if the subtype is another resource type', (t) => {
+  const sub_rt = new ResourceType('sub_rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  const rt = new ResourceType('rt', (rt) => {
+    rt.set_type(sub_rt)
+  })
+
+  t.is(rt.get_type(), sub_rt)
+})
+
+test('serialises object resource type into an indentifier', (t) => {
+  const sub_rt = new ResourceType('sub_rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  const rt = new ResourceType('rt', (rt) => {
+    rt.set_type(sub_rt)
+  })
+
+  t.deepEqual(rt.serialise(), {
+    check_every: undefined,
+    defaults: undefined,
+    name: 'rt',
+    params: undefined,
+    privileged: undefined,
+    source: undefined,
+    tags: undefined,
+    type: 'sub_rt',
   })
 })

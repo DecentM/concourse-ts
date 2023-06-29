@@ -1,7 +1,9 @@
 import test from 'ava'
-import {ResourceType, Resource, Job} from '..'
+
 import {Duration} from '../utils/duration'
 import {default_step} from './step/test-data/default-steps'
+
+import {ResourceType, Resource, Job} from '..'
 
 test.beforeEach(() => {
   Resource.customise((resource) => {
@@ -193,4 +195,18 @@ test('creates get step', (t) => {
     version: undefined,
     resource: undefined,
   })
+})
+
+test('unwraps deep resource type chains', (t) => {
+  const sub_rt = new ResourceType('sub_rt', (rt) => {
+    rt.set_type('registry-image')
+  })
+
+  const rt = new ResourceType('rt', (rt) => {
+    rt.set_type(sub_rt)
+  })
+
+  const r = new Resource('my-r', rt)
+
+  t.deepEqual(r.get_resource_types(), [rt, sub_rt])
 })

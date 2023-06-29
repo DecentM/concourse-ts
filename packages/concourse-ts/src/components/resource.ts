@@ -103,7 +103,20 @@ export class Resource<
     }
   }
 
-  public get_resource_type = () => this.type
+  public get_resource_types = (): ResourceType[] => {
+    const result: ResourceType[] = []
+
+    result.push(this.type)
+
+    let subtype: ResourceType = this.type.get_type()
+
+    while (subtype instanceof ResourceType) {
+      result.push(subtype)
+      subtype = subtype.get_type()
+    }
+
+    return result
+  }
 
   public source?: Source
 

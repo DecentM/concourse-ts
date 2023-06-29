@@ -145,7 +145,13 @@ export class Pipeline<Group extends string = string> {
   }
 
   private get_resource_types(): ResourceType[] {
-    return this.get_resources().map((r) => r.get_resource_type())
+    const result: ResourceType[] = []
+
+    this.get_resources().forEach((r) => {
+      result.push(...r.get_resource_types())
+    })
+
+    return result
   }
 
   /**

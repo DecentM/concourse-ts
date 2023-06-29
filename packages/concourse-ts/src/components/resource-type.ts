@@ -66,10 +66,21 @@ export class ResourceType<
     return result
   }
 
-  private type: Type
+  private type: Type | ResourceType
 
-  public set_type = (input: Type) => {
+  public set_type = (input: Type | ResourceType) => {
     this.type = input
+  }
+
+  /**
+   * @internal Used by the compiler
+   */
+  public get_type = (): ResourceType | null => {
+    if (typeof this.type === 'string') {
+      return null
+    }
+
+    return this.type
   }
 
   public source?: Source
@@ -119,7 +130,9 @@ export class ResourceType<
   public serialise() {
     const result: Declaration.ResourceType = {
       name: get_identifier(this.name),
-      type: get_identifier(this.type),
+      type: get_identifier(
+        typeof this.type === 'string' ? this.type : this.type.name
+      ),
       source: this.source,
       check_every: this.check_every,
       defaults: this.defaults,
