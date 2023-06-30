@@ -1156,6 +1156,13 @@
   dependencies:
     "@nx/js" "16.4.0"
 
+"@nrwl/js@16.4.1":
+  version "16.4.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-16.4.1.tgz#02b77f9db83ae9c6665de8a4d62616d6e54abe47"
+  integrity sha512-J8tCXAaM8kWCubf1fLXWXvFoJhQa/WDgBd9vCmA7waaeEOHIy0t5bmYuZT+NyF7RvawrijFG6FYIGfVw34XnOQ==
+  dependencies:
+    "@nx/js" "16.4.1"
+
 "@nrwl/linter@16.4.0":
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-16.4.0.tgz#2ee42d24a4cc287e0b1d338499aa15ccb86ef0a9"
@@ -1245,6 +1252,36 @@
     "@nrwl/js" "16.4.0"
     "@nx/devkit" "16.4.0"
     "@nx/workspace" "16.4.0"
+    "@phenomnomnominal/tsquery" "~5.0.1"
+    babel-plugin-const-enum "^1.0.1"
+    babel-plugin-macros "^2.8.0"
+    babel-plugin-transform-typescript-metadata "^0.3.1"
+    chalk "^4.1.0"
+    detect-port "^1.5.1"
+    fast-glob "3.2.7"
+    fs-extra "^11.1.0"
+    ignore "^5.0.4"
+    js-tokens "^4.0.0"
+    minimatch "3.0.5"
+    semver "7.5.3"
+    source-map-support "0.5.19"
+    tslib "^2.3.0"
+
+"@nx/js@16.4.1":
+  version "16.4.1"
+  resolved "https://registry.yarnpkg.com/@nx/js/-/js-16.4.1.tgz#2524819d85c075c334174e269cddfcbca89fab30"
+  integrity sha512-v4tAyCBqlsnk9/pzpdhyIhyoWkPIyx7SmPFTozBGIGUKC4o3nwljFpah/B+Esuk0pztZE1T/CH4XXmWwLE86cQ==
+  dependencies:
+    "@babel/core" "^7.15.0"
+    "@babel/plugin-proposal-class-properties" "^7.14.5"
+    "@babel/plugin-proposal-decorators" "^7.14.5"
+    "@babel/plugin-transform-runtime" "^7.15.0"
+    "@babel/preset-env" "^7.15.0"
+    "@babel/preset-typescript" "^7.15.0"
+    "@babel/runtime" "^7.14.8"
+    "@nrwl/js" "16.4.1"
+    "@nx/devkit" "16.4.1"
+    "@nx/workspace" "16.4.1"
     "@phenomnomnominal/tsquery" "~5.0.1"
     babel-plugin-const-enum "^1.0.1"
     babel-plugin-macros "^2.8.0"
