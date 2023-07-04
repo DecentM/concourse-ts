@@ -1,0 +1,15 @@
+{
+  "name": "@decentm/concourse-ts-resource-fly",
+  "version": "0.0.2",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-fly",
+  "repository": "https://github.com/DecentM/concourse-ts.git",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "build": "nx build"
+  },
+  "peerDependencies": {
+    "@decentm/concourse-ts": "0.x",
+    "@decentm/concourse-ts-resource-registry-image": "0.x"
+  }
+}

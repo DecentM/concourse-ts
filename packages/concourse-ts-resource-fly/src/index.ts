@@ -6,17 +6,29 @@ import * as RegistryImage from '@decentm/concourse-ts-resource-registry-image'
  */
 export type Source = {
   /**
-   * The address this resource will interact with. Any URL accepted by `curl` is
-   * allowed.
+   * A user's username who has access to the `main` team or the team the
+   * resource wants to reference
    */
-  url: string
+  username?: ConcourseTs.Utils.Var | string
   /**
-   * An array of strings to pass to `curl`. For the best results, wrap each in
-   * double quotes. Example:
+   * A user's password who has access to the `main` team or the team the
+   * resource wants to reference
+   */
+  password?: ConcourseTs.Utils.Var
+  /**
+   * The team associated with the pipeline this resource is in. Default: `main`
+   */
+  team?: ConcourseTs.Utils.Var | string
+  /**
+   * An array of strings to pass to `fly`. For the best
+   * reqults, wrap each in double quotes. Do not specify `-t`, as it's always the
+   * local Concourse instance. Default: `[]`
+   * Example:
+   *
    * ```yaml
    * arguments:
-   *   - "-A"
-   *   - "My-User-Agent"
+   *   - "--verbose"
+   *   - "workers"
    * ```
    */
   arguments?: ConcourseTs.Type.YamlValue[]
@@ -25,33 +37,14 @@ export type Source = {
    * behaviour.
    */
   check_arguments?: string[]
-  /**
-   * An object that defines a range of response codes. If the response code of
-   * the URL is within this range, the request will be considered successful.
-   */
-  response_code?: {
-    /**
-     * Default: 200.
-     *
-     * The lower bound of the acceptable range
-     */
-    min?: number
-    /**
-     * Default: 299.
-     *
-     * The upper bound of the acceptable range
-     */
-    max?: number
-  }
 }
 
 export type PutParams = {
   /**
-   * The address this resource will interact with. Any URL accepted by `curl` is
-   * allowed, and if not specified the URL from the source configuration will be
-   * used.
+   * If true, `fly sync` will be ran before the specified command with
+   * arguments. Default: `<empty>`
    */
-  url?: string
+  sync?: boolean
 
   /**
    * An additional array of strings that serve as arguments. This array will be
@@ -68,11 +61,10 @@ export type PutParams = {
 
 export type GetParams = {
   /**
-   * The address this resource will interact with. Any URL accepted by `curl` is
-   * allowed, and if not specified the URL from the source configuration will be
-   * used.
+   * If true, `fly sync` will be ran before the specified command with
+   * arguments. Default: `<empty>`
    */
-  url?: string
+  sync?: boolean
 
   /**
    * An additional array of strings that serve as arguments. This array will be
@@ -91,5 +83,5 @@ export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',
-  RegistryImage.Source<'decentm/concourse-curl-resource'>
+  RegistryImage.Source<'decentm/concourse-fly-resource'>
 >
