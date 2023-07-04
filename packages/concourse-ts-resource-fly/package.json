@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-resource-fly",
-  "version": "0.0.2",
+  "version": "0.2.4",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-fly",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
