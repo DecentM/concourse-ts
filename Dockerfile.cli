@@ -1,0 +1,22 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+ARG CLI_VERSION
+ARG CONCOURSE_TS_VERSION
+ARG AUTO_PIPELINE_VERSION
+ARG OCI_BUILD_VERSION
+ARG TYPESCRIPT_VERSION
+
+RUN yarn global add \
+  --non-interactive \
+  --production=false \
+  --network-concurrency=5 \
+  @decentm/concourse-ts-cli@${CLI_VERSION} \
+  @decentm/concourse-ts@${CONCOURSE_TS_VERSION} \
+  @decentm/concourse-ts-recipe-auto-pipeline@${AUTO_PIPELINE_VERSION} \
+  @decentm/concourse-ts-task-oci-build@${OCI_BUILD_VERSION} \
+  typescript@${TYPESCRIPT_VERSION}
+
+ENV NODE_PATH="${NODE_PATH}:/usr/local/share/.config/yarn/global/node_modules"
+
+CMD ["concourse-ts"]
