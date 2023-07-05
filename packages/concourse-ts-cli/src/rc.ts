@@ -27,9 +27,11 @@ search_roots.forEach((root) => {
     `${root}/.${module_name}rc.js`,
     `${root}/.${module_name}rc.ts`,
     `${root}/.${module_name}rc.cjs`,
+    `${root}/.${module_name}rc.mjs`,
     `${root}/${module_name}.config.js`,
     `${root}/${module_name}.config.ts`,
-    `${root}/${module_name}.config.cjs`
+    `${root}/${module_name}.config.cjs`,
+    `${root}/${module_name}.config.mjs`
   )
 })
 

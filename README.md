@@ -17,8 +17,6 @@
   (scoped)](https://img.shields.io/npm/v/@decentm/concourse-ts?style=for-the-badge)
   ![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@decentm/concourse-ts?style=for-the-badge)](https://bundlephobia.com/package/@decentm/concourse-ts)
   ![NPM](https://img.shields.io/npm/l/@decentm/concourse-ts?style=for-the-badge)
-  ![Snyk Vulnerabilities for npm scoped
-  package](https://img.shields.io/snyk/vulnerabilities/npm/@decentm/concourse-ts?style=for-the-badge)
   ![Libraries.io dependency status for latest release, scoped npm package](https://img.shields.io/librariesio/release/npm/@decentm/concourse-ts?style=for-the-badge)
 
 </div>
@@ -36,9 +34,11 @@
 - [`@decentm/concourse-ts-cli`](#decentmconcourse-ts-cli)
   - [About the CLI](#about-the-cli)
   - [Command line usage](#command-line-usage)
+  - [.rc file](#rc-file)
   - [Features](#features)
     - [Compilation](#compilation)
     - [Decompilation](#decompilation)
+    - [Transformation](#transformation)
 
 ## `@decentm/concourse-ts`
 
@@ -209,6 +209,34 @@ team's requirements will determine which one to use, both are supported.
     - No native `set-pipeline` speed. Before your `set-pipeline` step, you must
       include a step that uses the Docker image to compile your Pipeline file.
 
+### .rc file
+
+`concourse-ts-cli` will look for an .rc file using
+[Cosmiconfig](https://github.com/cosmiconfig/cosmiconfig), with Typescript
+support. This means that files ending with `rc`, `rc.json`, `rc.yaml`, `rc.yml`,
+`rc.js`, `rc.ts`, `rc.cjs`, `.config.js`, `.config.ts`, `.config.cjs` are
+searched in the working directory, and also `./.config`.
+
+`rc` files must export an object with CLI options for each command separately.
+For `.js`, `.cjs`, and `.ts` files, a type helper is available in the package.
+Non-typescript files must export the same interface on their default export.
+(e.g. `module.exports` in `.js`, and an object in `.json` and `.yml`)
+
+For example, the `.concourse-tsrc.ts` file may have the following contents:
+
+```typescript
+import { rc } from '@decentm/concourse-ts-cli'
+
+export default rc({
+  compile: {
+    clean: true,
+  },
+  decompile: {
+    package: '@corpity-corp/ci',
+  },
+})
+```
+
 ### Features
 
 #### Compilation
@@ -233,9 +261,9 @@ concourse-ts compile < ci/pipeline.ts
 #### Decompilation
 
 Use the `decompile` command to convert an existing Concourse YAML pipeline file
-to valid `concourse-ts` typescript code. Use this to turn existing Concourse
-configuration into `concourse-ts` code, without having to reimplement pipelines
-if you already have a YAML file.
+to valid `concourse-ts` typescript code. This will turn existing Concourse
+configuration into `concourse-ts` code, without having to reimplement pipelines,
+provided that you already have a YAML file.
 
 > This command generates code in a non-human-friendly way, where components may
 > be functionally duplicated if multiple similar configurations exist in the
@@ -254,4 +282,28 @@ concourse-ts decompile -i .ci/pipeline.yml -o ci/pipeline.ts
 concourse-ts decompile < .ci/pipeline.yml
 # Outputs the resulting Typescript code, because no "-o" was provided,
 # and output is not redirected
+```
+
+#### Transformation
+
+Use the `transform` command to apply transformations to pipeline yml files. This
+command can be used even on non-concourse-ts pipelines, as it reads yaml and
+also writes yaml.
+
+Examples:
+
+```sh
+cat .ci/pipeline.yml | concourse-ts transform > .ci/pipeline-new.yml
+# No output
+
+concourse-ts transform -i .ci/pipeline.yml -o .ci/pipeline.yml
+# No output, output will be overwritten
+
+concourse-ts transform < .ci/pipeline.yml
+# Outputs the transformed yaml, because no "-o" was provided,
+# and output is not redirected
+
+concourse-ts transform -t apply_across_polyfill,apply_task_hoisting
+# Runs transformation with options only from the .rc file, with the two
+# specified transformers
 ```
