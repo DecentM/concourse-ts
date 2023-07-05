@@ -56,7 +56,7 @@ export const create_auto_pipeline: ConcourseTs.Type.Recipe<AutoPipelineOptions> 
       trigger: true,
     })
 
-    const compile_command = new ConcourseTs.Command('compile_command', (command) => {
+    const compile_command = new ConcourseTs.Command('compile', (command) => {
       command.dir = options.resource.name
 
       command.path = 'concourse-ts'
@@ -73,25 +73,22 @@ export const create_auto_pipeline: ConcourseTs.Type.Recipe<AutoPipelineOptions> 
       command.add_arg('../output')
     })
 
-    const transform_command = new ConcourseTs.Command(
-      'transform_command',
-      (command) => {
-        command.dir = '.'
+    const transform_command = new ConcourseTs.Command('transform', (command) => {
+      command.dir = '.'
 
-        command.path = 'concourse-ts'
+      command.path = 'concourse-ts'
 
-        // Run transforms over the pipeline
-        command.add_arg('transform')
+      // Run transforms over the pipeline
+      command.add_arg('transform')
 
-        // Input path
-        command.add_arg('-i')
-        command.add_arg('../output/pipeline/*.yml')
+      // Input path
+      command.add_arg('-i')
+      command.add_arg('../output/pipeline/*.yml')
 
-        // Output path
-        command.add_arg('-o')
-        command.add_arg('../output/pipeline')
-      }
-    )
+      // Output path
+      command.add_arg('-o')
+      command.add_arg('../output/pipeline')
+    })
 
     const compile_and_transform = ConcourseTs.Utils.join_commands(
       'compile-and-transform',

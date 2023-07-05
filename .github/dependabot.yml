@@ -92,3 +92,7 @@ updates:
     directory: /packages/concourse-ts-resource-time/
     schedule:
       interval: daily
+  - package-ecosystem: npm
+    directory: /packages/concourse-ts-task-oci-build/
+    schedule:
+      interval: daily

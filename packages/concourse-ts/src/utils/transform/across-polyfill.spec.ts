@@ -82,7 +82,7 @@ test('rewrites task names', (t) => {
   const step = pipeline.jobs[0].plan[0] as InParallelStep
   const child_step = (step.in_parallel as InParallelConfig).steps[0] as TaskStep
 
-  t.is(child_step.task, 'running-with-node_node-14' as Identifier)
+  t.is(child_step.task, 'running-with-node_14' as Identifier)
 })
 
 test('avoids rewriting task names if the name is not a local variable', (t) => {
