@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-recipe-auto-pipeline",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-recipe-auto-pipeline",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",

@@ -1,6 +1,6 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-export type AutoPipelineOptions = {
+export type AutoPipelineOptions<Group extends string = never> = {
   /**
    * A Resource that contains at least one valid concourse-ts pipeline file
    */
@@ -13,7 +13,7 @@ export type AutoPipelineOptions = {
   /**
    * If set, the resulting job will be added to the pipeline in this group
    */
-  group?: string
+  group?: Group
   /**
    * This version of the concourse-ts-cli image will be used
    *
@@ -22,9 +22,9 @@ export type AutoPipelineOptions = {
   cli_tag: string
 }
 
-const create_cli_command_task = (
+const create_cli_command_task = <Group extends string = never>(
   input: ConcourseTs.Utils.Identifier,
-  options: AutoPipelineOptions,
+  options: AutoPipelineOptions<Group>,
   command: ConcourseTs.Command
 ) => {
   return new ConcourseTs.Task('compile', (task) => {
@@ -50,8 +50,12 @@ const create_cli_command_task = (
   })
 }
 
-export const create_auto_pipeline: ConcourseTs.Type.Recipe<AutoPipelineOptions> =
-  (options) => (customise) => (pipeline) => {
+export const create_auto_pipeline =
+  <Group extends string = never>(
+    options: AutoPipelineOptions<Group>
+  ): ConcourseTs.Type.Recipe<Group> =>
+  (customise) =>
+  (pipeline) => {
     const get_resource_step = options.resource.as_get_step({
       trigger: true,
     })
