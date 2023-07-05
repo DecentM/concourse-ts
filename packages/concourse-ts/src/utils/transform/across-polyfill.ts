@@ -102,8 +102,6 @@ const replace_variables = (
     if (replace_value) {
       wip =
         wip.substring(0, match.indices.groups['varsource'][0] - 2) +
-        item.name +
-        '-' +
         item.value +
         wip.substring(match.indices.groups['varname'][1] + 2)
     } else {
