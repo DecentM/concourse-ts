@@ -3,8 +3,8 @@ import {Customiser} from './customiser'
 
 export type Recipe<
   Group extends string = never,
-  CustomiserInstance = Pipeline<Group>,
-  CustomiserParent = void,
+  CustomisedComponent = Pipeline<Group>,
+  CustomisedParent = void,
 > = (
-  customise?: Customiser<CustomiserInstance, CustomiserParent>
-) => (pipeline: Pipeline<Group>) => void
+  customise?: Customiser<CustomisedComponent, CustomisedParent>
+) => (component: CustomisedComponent) => void
