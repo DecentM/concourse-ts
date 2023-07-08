@@ -1,6 +1,9 @@
 import {Customiser} from '../../declarations/customiser'
-import {get_identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
+
+import {get_identifier} from '../../utils/identifier'
+import {get_var} from '../../utils/var'
+
 import {Resource} from '../resource'
 
 import {Step} from './base'
@@ -34,6 +37,10 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
   public format?: Type.LoadVarStep['format']
 
   public reveal: boolean
+
+  public get var() {
+    return get_var(`.:${this.load_var}`)
+  }
 
   /**
    * @internal Used by the compiler

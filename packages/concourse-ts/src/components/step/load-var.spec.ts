@@ -1,5 +1,7 @@
 import test from 'ava'
 
+import {get_var, is_var} from '../../utils'
+
 import {LoadVarStep} from './load-var'
 import {default_load_var_step} from './test-data/default-steps'
 
@@ -45,4 +47,12 @@ test('collects task steps', (t) => {
 
   t.is(result.length, 0)
   t.deepEqual(result, [])
+})
+
+test('exposes resulting var', (t) => {
+  const lvs = new LoadVarStep('a')
+  lvs.load_var = 'a'
+
+  t.is(lvs.var, get_var('.:a'))
+  t.true(is_var(lvs.var))
 })
