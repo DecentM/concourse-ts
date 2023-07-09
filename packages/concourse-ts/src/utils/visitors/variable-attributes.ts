@@ -84,6 +84,38 @@ export const visit_variable_attributes = (
       })
     },
 
+    PutStep(ps) {
+      visitor.Attribute(ps.put, 'put', ps)
+
+      if (ps.params) {
+        Object.keys(ps.params).forEach((key) => {
+          const param_value = ps.params[key]
+
+          if (typeof param_value !== 'string') {
+            return
+          }
+
+          visitor.Attribute(param_value, key, ps.params)
+        })
+      }
+    },
+
+    GetStep(gs) {
+      visitor.Attribute(gs.get, 'get', gs)
+
+      if (gs.params) {
+        Object.keys(gs.params).forEach((key) => {
+          const param_value = gs.params[key]
+
+          if (typeof param_value !== 'string') {
+            return
+          }
+
+          visitor.Attribute(param_value, key, gs.params)
+        })
+      }
+    },
+
     TaskStep(ts) {
       visitor.Attribute(ts.task, 'task', ts)
 
