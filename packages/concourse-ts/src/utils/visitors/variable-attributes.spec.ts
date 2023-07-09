@@ -2,7 +2,13 @@ import test from 'ava'
 
 import {visit_variable_attributes} from './variable-attributes'
 import {Identifier} from '../identifier'
-import {Pipeline, Step, Task, TaskStep} from '../../declarations'
+import {
+  InParallelStep,
+  Pipeline,
+  Step,
+  Task,
+  TaskStep,
+} from '../../declarations'
 
 const call_count = test.macro<[Step | Pipeline, number]>(
   (t, input, expected_call_count) => {
@@ -329,6 +335,62 @@ test(
     },
   },
   1
+)
+
+// Regression test for https://github.com/DecentM/concourse-ts/issues/417
+test(
+  'recursively visits put steps',
+  call_count,
+  {
+    in_parallel: {
+      steps: [
+        {
+          task: '' as Identifier,
+          on_success: {
+            do: [
+              {
+                put: '' as Identifier,
+                params: {
+                  image: '',
+                  version: '',
+                  thing: 1,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  } as InParallelStep,
+  4
+)
+
+// Regression test for https://github.com/DecentM/concourse-ts/issues/417
+test(
+  'recursively visits get steps',
+  call_count,
+  {
+    in_parallel: {
+      steps: [
+        {
+          task: '' as Identifier,
+          on_success: {
+            do: [
+              {
+                get: '' as Identifier,
+                params: {
+                  image: '',
+                  version: '',
+                  thing: 1,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  } as InParallelStep,
+  4
 )
 
 test(
