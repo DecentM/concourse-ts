@@ -53,7 +53,7 @@ const create_cli_command_task = <Group extends string = never>(
 export const create_auto_pipeline =
   <Group extends string = never>(
     options: AutoPipelineOptions<Group>
-  ): ConcourseTs.Type.Recipe<Group> =>
+  ): ConcourseTs.Type.Recipe<ConcourseTs.Pipeline<Group>> =>
   (customise) =>
   (pipeline) => {
     const get_resource_step = options.resource.as_get_step({
