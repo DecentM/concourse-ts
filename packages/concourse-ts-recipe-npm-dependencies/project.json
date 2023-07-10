@@ -1,7 +1,7 @@
 {
-  "name": "concourse-ts-task-oci-build",
+  "name": "concourse-ts-recipe-npm-dependencies",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/concourse-ts-task-oci-build/src",
+  "sourceRoot": "packages/concourse-ts-recipe-npm-dependencies/src",
   "projectType": "library",
   "targets": {
     "build": {
@@ -11,11 +11,11 @@
       ],
       "options": {
         "updateBuildableProjectDepsInPackageJson": false,
-        "outputPath": "dist/packages/concourse-ts-task-oci-build",
-        "main": "packages/concourse-ts-task-oci-build/src/index.ts",
-        "tsConfig": "packages/concourse-ts-task-oci-build/tsconfig.lib.json",
+        "outputPath": "dist/packages/concourse-ts-recipe-npm-dependencies",
+        "main": "packages/concourse-ts-recipe-npm-dependencies/src/index.ts",
+        "tsConfig": "packages/concourse-ts-recipe-npm-dependencies/tsconfig.lib.json",
         "assets": [
-          "packages/concourse-ts-task-oci-build/*.md"
+          "packages/concourse-ts-recipe-npm-dependencies/*.md"
         ]
       }
     },
@@ -26,7 +26,7 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "packages/concourse-ts-task-oci-build/**/*.ts"
+          "packages/concourse-ts-recipe-npm-dependencies/**/*.ts"
         ]
       }
     }

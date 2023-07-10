@@ -1,0 +1,22 @@
+{
+  "name": "@decentm/concourse-ts-recipe-npm-dependencies",
+  "version": "0.0.1",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-recipe-npm-dependencies",
+  "repository": "https://github.com/DecentM/concourse-ts.git",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "build": "nx build",
+    "postinstall": "patch-package"
+  },
+  "peerDependencies": {
+    "@decentm/concourse-ts": "0.x",
+    "@decentm/concourse-ts-resource-npm": "0.x"
+  },
+  "dependencies": {
+    "type-fest": "^3.13.0"
+  },
+  "devDependencies": {
+    "patch-package": "^7.0.0"
+  }
+}
