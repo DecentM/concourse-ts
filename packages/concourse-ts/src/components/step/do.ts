@@ -54,7 +54,7 @@ export class DoStep extends Step<Type.DoStep> {
    *
    * @param {AnyStep} step
    */
-  public add_do_first = (step: AnyStep) => {
+  public add_step_first = (step: AnyStep) => {
     this.do.unshift(step)
   }
 
