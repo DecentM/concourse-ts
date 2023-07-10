@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
     "forceConsistentCasingInFileNames": true,
@@ -10,10 +10,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "files": [],
-  "include": ["bin", "ci"],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    }
-  ]
+  "include": ["bin", "ci", ".concourse-tsrc.ts"]
 }

@@ -12,7 +12,10 @@
     "generate-dependabot": "ts-node --transpile-only bin/generate-dependabot.ts",
     "update-tsconfig-paths": "ts-node --transpile-only bin/update-tsconfig-paths.ts",
     "prepare": "husky install",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "concourse-ts": "ts-node --transpile-only -r tsconfig-paths/register packages/concourse-ts-cli/bin/concourse-ts",
+    "ci": "yarn concourse-ts compile",
+    "postci": "yarn concourse-ts transform"
   },
   "dependencies": {
     "@swc/helpers": "~0.5.1"

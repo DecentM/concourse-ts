@@ -37,18 +37,19 @@ const parse_package_name = <VarNames extends string>(
  * Gets a list of package names from a package.json type, where the scope is
  * removed from the package name
  */
-type DependencyPackageNames<TPackageJson extends PackageJson> = LastArrayElement<
-  Split<
-    Extract<
-      | keyof TPackageJson['dependencies']
-      | keyof TPackageJson['devDependencies']
-      | keyof TPackageJson['peerDependencies']
-      | keyof TPackageJson['optionalDependencies'],
-      string
-    >,
-    '/'
+export type DependencyPackageNames<TPackageJson extends PackageJson> =
+  LastArrayElement<
+    Split<
+      Extract<
+        | keyof TPackageJson['dependencies']
+        | keyof TPackageJson['devDependencies']
+        | keyof TPackageJson['peerDependencies']
+        | keyof TPackageJson['optionalDependencies'],
+        string
+      >,
+      '/'
+    >
   >
->
 
 export type CreateNpmDependenciesInput = {
   registry?: string
@@ -60,12 +61,14 @@ export const create_npm_dependencies =
   <TPackageJson extends PackageJson>(
     pkg: TPackageJson,
     input: CreateNpmDependenciesInput
-  ): ConcourseTs.Type.Recipe<
-    ConcourseTs.DoStep | ConcourseTs.InParallelStep,
-    Record<DependencyPackageNames<TPackageJson>, ConcourseTs.Utils.Var>
-  > =>
-  (customise) =>
-  (step) => {
+  ) =>
+  <Step extends ConcourseTs.InParallelStep | ConcourseTs.DoStep>(
+    customise: ConcourseTs.Type.Customiser<
+      Step,
+      Record<DependencyPackageNames<TPackageJson>, ConcourseTs.Utils.Var>
+    >
+  ) =>
+  (step: Step) => {
     type VarNames = DependencyPackageNames<TPackageJson>
 
     const packages: SimplePackageDefinition<VarNames>[] = []
@@ -107,7 +110,12 @@ export const create_npm_dependencies =
       ConcourseTs.Utils.Var
     >
 
-    packages.forEach((pkg) => {
+    const unique_packages = ConcourseTs.Utils.deduplicate_by_key(
+      (item) => item.name,
+      packages
+    )
+
+    unique_packages.forEach((pkg) => {
       const npm_package: Npm.Resource = new ConcourseTs.Resource(
         pkg.name,
         input.resource_type,
