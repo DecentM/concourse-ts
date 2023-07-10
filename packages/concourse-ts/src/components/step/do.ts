@@ -23,7 +23,10 @@ export class DoStep extends Step<Type.DoStep> {
     DoStep.customiser = init
   }
 
-  constructor(public override name: string, customise?: Customiser<DoStep>) {
+  constructor(
+    public override name: string,
+    customise?: Customiser<DoStep>
+  ) {
     super(name)
 
     if (DoStep.customiser) {
@@ -42,7 +45,7 @@ export class DoStep extends Step<Type.DoStep> {
    *
    * @param {AnyStep} step
    */
-  public add_do = (step: AnyStep) => {
+  public add_step = (step: AnyStep) => {
     this.do.push(step)
   }
 

@@ -170,7 +170,7 @@ export abstract class Step<StepType extends Type.Step> {
     if (!this.on_success)
       this.on_success = create_do_step(`${this.name}_on_success`)
 
-    this.on_success.add_do(step)
+    this.on_success.add_step(step)
   }
 
   protected on_failure?: DoStepComponent
@@ -186,7 +186,7 @@ export abstract class Step<StepType extends Type.Step> {
     if (!this.on_failure)
       this.on_failure = create_do_step(`${this.name}_on_failure`)
 
-    this.on_failure.add_do(step)
+    this.on_failure.add_step(step)
   }
 
   protected on_error?: DoStepComponent
@@ -201,7 +201,7 @@ export abstract class Step<StepType extends Type.Step> {
   public add_on_error = (step: AnyStep) => {
     if (!this.on_error) this.on_error = create_do_step(`${this.name}_on_error`)
 
-    this.on_error.add_do(step)
+    this.on_error.add_step(step)
   }
 
   protected on_abort?: DoStepComponent
@@ -216,7 +216,7 @@ export abstract class Step<StepType extends Type.Step> {
   public add_on_abort = (step: AnyStep) => {
     if (!this.on_abort) this.on_abort = create_do_step(`${this.name}_on_abort`)
 
-    this.on_abort.add_do(step)
+    this.on_abort.add_step(step)
   }
 
   protected ensure?: DoStepComponent
@@ -231,7 +231,7 @@ export abstract class Step<StepType extends Type.Step> {
   public add_ensure = (step: AnyStep) => {
     if (!this.ensure) this.ensure = create_do_step(`${this.name}_ensure`)
 
-    this.ensure.add_do(step)
+    this.ensure.add_step(step)
   }
 
   /**

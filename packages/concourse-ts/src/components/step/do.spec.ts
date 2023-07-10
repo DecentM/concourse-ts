@@ -48,8 +48,8 @@ test('stores steps', (t) => {
     lvs.file = '/b'
   })
 
-  ds.add_do(step)
-  ds.add_do_first(step1)
+  ds.add_step(step)
+  ds.add_step_first(step1)
 
   t.deepEqual(ds.serialise(), {
     ...default_step,
@@ -84,7 +84,7 @@ test('collects resources', (t) => {
     })
   )
 
-  ds.add_do(r.as_get_step())
+  ds.add_step(r.as_get_step())
 
   const result = ds.get_resources()
 
@@ -99,7 +99,7 @@ test('collects task steps', (t) => {
     t.platform = 'linux'
   }).as_task_step()
 
-  ds.add_do(ts)
+  ds.add_step(ts)
 
   const result = ds.get_task_steps()
 

@@ -31,7 +31,10 @@ export class Job {
    * @param {string} name The name of the step. This will be visible in the Concourse UI.
    * @param {Customiser<Job>} init Optional customiser function that runs during construction.
    */
-  constructor(public name: string, customise?: Customiser<Job>) {
+  constructor(
+    public name: string,
+    customise?: Customiser<Job>
+  ) {
     if (Job.customiser) {
       Job.customiser(this)
     }
@@ -111,7 +114,7 @@ export class Job {
     if (!this.on_success)
       this.on_success = new DoStep(`${this.name}_on_success`)
 
-    this.on_success.add_do(step)
+    this.on_success.add_step(step)
   }
 
   private on_failure?: DoStep
@@ -138,7 +141,7 @@ export class Job {
     if (!this.on_failure)
       this.on_failure = new DoStep(`${this.name}_on_failure`)
 
-    this.on_failure.add_do(step)
+    this.on_failure.add_step(step)
   }
 
   private on_error?: DoStep
@@ -164,7 +167,7 @@ export class Job {
 
     if (!this.on_error) this.on_error = new DoStep(`${this.name}_on_error`)
 
-    this.on_error.add_do(step)
+    this.on_error.add_step(step)
   }
 
   private on_abort?: DoStep
@@ -190,7 +193,7 @@ export class Job {
 
     if (!this.on_abort) this.on_abort = new DoStep(`${this.name}_on_abort`)
 
-    this.on_abort.add_do(step)
+    this.on_abort.add_step(step)
   }
 
   private ensure?: DoStep
@@ -215,7 +218,7 @@ export class Job {
 
     if (!this.ensure) this.ensure = new DoStep(`${this.name}_ensure`)
 
-    this.ensure.add_do(step)
+    this.ensure.add_step(step)
   }
 
   /**
