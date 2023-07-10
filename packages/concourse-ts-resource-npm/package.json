@@ -1,0 +1,15 @@
+{
+  "name": "@decentm/concourse-ts-resource-npm",
+  "version": "0.2.1",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-resource-npm",
+  "repository": "https://github.com/DecentM/concourse-ts.git",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "build": "nx build"
+  },
+  "peerDependencies": {
+    "@decentm/concourse-ts": "0.x",
+    "@decentm/concourse-ts-resource-registry-image": "0.x"
+  }
+}

@@ -31,6 +31,12 @@
       "@decentm/concourse-ts-recipe-auto-pipeline": [
         "packages/concourse-ts-recipe-auto-pipeline/src/index.ts"
       ],
+      "@decentm/concourse-ts-recipe-npm-dependencies": [
+        "packages/concourse-ts-recipe-npm-dependencies/src/index.ts"
+      ],
+      "@decentm/concourse-ts-recipe-oci-build": [
+        "packages/concourse-ts-recipe-oci-build/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-apache-directory-index": [
         "packages/concourse-ts-resource-apache-directory-index/src/index.ts"
       ],
@@ -61,6 +67,9 @@
       "@decentm/concourse-ts-resource-mock": [
         "packages/concourse-ts-resource-mock/src/index.ts"
       ],
+      "@decentm/concourse-ts-resource-npm": [
+        "packages/concourse-ts-resource-npm/src/index.ts"
+      ],
       "@decentm/concourse-ts-resource-oss-github-pr": [
         "packages/concourse-ts-resource-oss-github-pr/src/index.ts"
       ],
@@ -87,9 +96,6 @@
       ],
       "@decentm/concourse-ts-resource-time": [
         "packages/concourse-ts-resource-time/src/index.ts"
-      ],
-      "@decentm/concourse-ts-task-oci-build": [
-        "packages/concourse-ts-task-oci-build/src/index.ts"
       ]
     }
   },

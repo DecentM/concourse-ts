@@ -17,6 +17,14 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
+    directory: /packages/concourse-ts-recipe-npm-dependencies/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: /packages/concourse-ts-recipe-oci-build/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-apache-directory-index/
     schedule:
       interval: daily
@@ -57,6 +65,10 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
+    directory: /packages/concourse-ts-resource-npm/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-oss-github-pr/
     schedule:
       interval: daily
@@ -90,9 +102,5 @@ updates:
       interval: daily
   - package-ecosystem: npm
     directory: /packages/concourse-ts-resource-time/
-    schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /packages/concourse-ts-task-oci-build/
     schedule:
       interval: daily
