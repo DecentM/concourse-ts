@@ -8,7 +8,7 @@ import {
 
 import { git } from '../../resources/git'
 
-import cli_pkg from '@decentm/concourse-ts-cli/package.json'
+import cli_pkg from '../../../packages/concourse-ts-cli/package.json'
 
 const across_node: ConcourseTs.Type.Across = {
   var: ConcourseTs.Utils.get_identifier('node'),

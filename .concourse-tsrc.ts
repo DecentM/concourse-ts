@@ -2,7 +2,6 @@ import { rc } from '@decentm/concourse-ts-cli'
 
 export default rc({
   compile: {
-    clean: true,
     input: 'ci/pipeline/concourse-ts.pipeline.ts',
     output: '.ci',
   },
