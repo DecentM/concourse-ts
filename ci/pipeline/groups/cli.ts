@@ -71,9 +71,7 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
       },
     })
 
-    const build_cli_task = new ConcourseTs.Task('build_cli', oci_build())
-
-    job.add_step(get_dependencies, build_cli_task.as_task_step())
+    job.add_step(get_dependencies)
 
     const write_tags = new ConcourseTs.Task('write_tags', (task) => {
       task.platform = 'linux'
@@ -103,6 +101,8 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
         )
       })
     })
+
+    const build_cli_task = new ConcourseTs.Task('build_cli', oci_build())
 
     const build_cli_step = build_cli_task.as_task_step((step) => {
       step.add_across(across_node)

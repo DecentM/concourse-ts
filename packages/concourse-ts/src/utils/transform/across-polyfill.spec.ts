@@ -5,6 +5,7 @@ import {
   InParallelStep,
   Pipeline,
   Step,
+  Task,
   TaskStep,
 } from '../../declarations'
 import {Identifier} from '../../utils/identifier'
