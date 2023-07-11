@@ -1,12 +1,14 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
 import * as Npm from '@decentm/concourse-ts-resource-npm'
+import { create_oci_build } from '@decentm/concourse-ts-recipe-oci-build'
 import {
   create_npm_dependencies,
   DependencyPackageNames,
 } from '@decentm/concourse-ts-recipe-npm-dependencies'
 
 import { git } from '../../resources/git'
+import { cli_registry_image } from '../../resources/registry-image'
 
 import cli_pkg from '../../../packages/concourse-ts-cli/package.json'
 
@@ -56,7 +58,22 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
       })
     )
 
-    job.add_step(get_dependencies)
+    const oci_build = create_oci_build({
+      resource: git,
+      options: {
+        dockerfile: `${git.name}/Dockerfile.cli`,
+        build_args: {
+          BASE_IMAGE: `node:${node}-alpine${alpine}`,
+          ...vars,
+        },
+        image_platform: ['linux/amd64'],
+        output_oci: true,
+      },
+    })
+
+    const build_cli_task = new ConcourseTs.Task('build_cli', oci_build())
+
+    job.add_step(get_dependencies, build_cli_task.as_task_step())
 
     const write_tags = new ConcourseTs.Task('write_tags', (task) => {
       task.platform = 'linux'
@@ -86,6 +103,24 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
         )
       })
     })
+
+    const build_cli_step = build_cli_task.as_task_step((step) => {
+      step.add_across(across_node)
+      step.add_across(across_alpine)
+
+      step.add_on_success(write_tags.as_task_step())
+
+      step.add_on_success(
+        cli_registry_image.as_put_step({
+          params: {
+            image: 'image/image.tar',
+            additional_tags: 'image-meta/additional-tags',
+          },
+        })
+      )
+    })
+
+    job.add_step(build_cli_step)
   })
 
   pipeline.add_job(build_cli_job, 'cli')
