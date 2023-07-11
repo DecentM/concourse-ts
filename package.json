@@ -17,6 +17,9 @@
     "ci": "yarn concourse-ts compile",
     "postci": "yarn concourse-ts transform"
   },
+  "resolutions": {
+    "type-fest": "git+https://github.com/DecentM/type-fest.git"
+  },
   "dependencies": {
     "@swc/helpers": "~0.5.1"
   },

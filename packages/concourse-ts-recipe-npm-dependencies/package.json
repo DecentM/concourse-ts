@@ -6,8 +6,7 @@
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
-    "build": "nx build",
-    "postinstall": "patch-package || true"
+    "build": "nx build"
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x",
@@ -15,8 +14,5 @@
   },
   "dependencies": {
     "type-fest": "^3.13.0"
-  },
-  "devDependencies": {
-    "patch-package": "^7.0.1"
   }
 }
