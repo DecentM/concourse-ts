@@ -108,8 +108,6 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
       step.add_across(across_node)
       step.add_across(across_alpine)
 
-      step.add_on_success(write_tags.as_task_step())
-
       step.add_on_success(
         cli_registry_image.as_put_step({
           params: {
@@ -120,7 +118,12 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
       )
     })
 
-    job.add_step(build_cli_step)
+    job.add_step(
+      new ConcourseTs.InParallelStep('build-and-push', (ips) => {
+        ips.add_step(build_cli_step)
+        ips.add_step(write_tags.as_task_step())
+      })
+    )
   })
 
   pipeline.add_job(build_cli_job, 'cli')
