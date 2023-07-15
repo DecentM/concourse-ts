@@ -6,9 +6,14 @@ import {
   Pipeline,
   Step,
   Transformer,
+  TryStep,
+  VarSource,
 } from '../../declarations'
 
 import {visit_variable_attributes} from '../../utils/visitors/variable-attributes'
+
+import {visit_pipeline} from '../visitors/pipeline'
+import {is_do_step, is_in_parallel_step, is_try_step} from '../step-type'
 
 const get_combinations_rec = <T>(
   sources: T[][],
@@ -117,6 +122,147 @@ const replace_variables = (
   return wip
 }
 
+const apply_across_polyfill_step = (
+  step: Step,
+  options: AcrossPolyfillOptions,
+  path: Array<string | number>,
+  root: Step[] | TryStep | Step
+): VarSource[] => {
+  const var_sources: VarSource[] = []
+  const steps: Step[] = []
+
+  if (step.across) {
+    const combinations = across_combinations(step.across)
+
+    combinations.forEach((combination_item, combination_index) => {
+      const vars: Record<string, string> = {}
+
+      combination_item.forEach((member) => {
+        vars[member.name] = member.value
+      })
+
+      const new_step = {
+        ...clone_deep(step),
+        across: undefined,
+      }
+
+      const var_source_name = [...path, `across-${combination_index}`].join('_')
+
+      // Replace all instances of variable usage in this step and its children
+      visit_variable_attributes(new_step, {
+        Attribute(attribute, field_index, root) {
+          root[field_index] = replace_variables(
+            attribute,
+            var_source_name,
+            combination_item,
+            field_index === 'task'
+          )
+        },
+      })
+
+      steps.push(new_step)
+
+      var_sources.push({
+        type: 'dummy',
+        name: var_source_name,
+        config: {
+          vars,
+        },
+      })
+    })
+
+    root[path[path.length - 1]] = {
+      in_parallel: {
+        ...options.in_parallel,
+        steps,
+      },
+    }
+  }
+
+  if (is_do_step(step)) {
+    step.do.forEach((substep, index) => {
+      var_sources.push(
+        ...apply_across_polyfill_step(
+          substep,
+          options,
+          [...path, index],
+          step.do
+        )
+      )
+    })
+  }
+
+  if (is_in_parallel_step(step)) {
+    ;(Array.isArray(step.in_parallel)
+      ? step.in_parallel
+      : step.in_parallel.steps
+    ).forEach((substep, index) => {
+      var_sources.push(
+        ...apply_across_polyfill_step(
+          substep,
+          options,
+          [...path, index],
+          Array.isArray(step.in_parallel)
+            ? step.in_parallel
+            : step.in_parallel.steps
+        )
+      )
+    })
+  }
+
+  if (is_try_step(step)) {
+    var_sources.push(
+      ...apply_across_polyfill_step(step.try, options, [...path, 'try'], step)
+    )
+  }
+
+  if (step.on_abort) {
+    var_sources.push(
+      ...apply_across_polyfill_step(
+        step.on_abort,
+        options,
+        [...path, 'on_abort'],
+        step
+      )
+    )
+  }
+
+  if (step.on_success) {
+    var_sources.push(
+      ...apply_across_polyfill_step(
+        step.on_success,
+        options,
+        [...path, 'on_success'],
+        step
+      )
+    )
+  }
+
+  if (step.on_failure) {
+    var_sources.push(
+      ...apply_across_polyfill_step(
+        step.on_failure,
+        options,
+        [...path, 'on_failure'],
+        step
+      )
+    )
+  }
+
+  if (step.on_error) {
+    var_sources.push(
+      ...apply_across_polyfill_step(
+        step.on_error,
+        options,
+        [...path, 'on_error'],
+        step
+      )
+    )
+  }
+
+  return var_sources
+}
+
 /**
  * Modifies a serialised Pipeline *in-place*, so that all `across` modifiers are
  * removed from steps, and a new step is created for each combination of the
@@ -136,62 +282,26 @@ export const apply_across_polyfill: Transformer<AcrossPolyfillOptions> = (
     },
   }
 ): void => {
-  pipeline.jobs.forEach((job) => {
-    job.plan.forEach((step, step_index) => {
-      if (!step.across || !step.across.length) {
-        return
-      }
+  const var_sources: VarSource[] = []
 
-      const steps: Step[] = []
-      const combinations = across_combinations(step.across)
-
-      if (!pipeline.var_sources) {
-        pipeline.var_sources = []
-      }
-
-      combinations.forEach((combination_item, combination_index) => {
-        const vars: Record<string, string> = {}
-
-        combination_item.forEach((member) => {
-          vars[member.name] = member.value
-        })
-
-        const new_step = {
-          ...clone_deep(step),
-          across: undefined,
-        }
-
-        const var_source_name = `${job.name}_step_${step_index}_across_${combination_index}`
-
-        // Replace all instances of variable usage in this step and its children
-        visit_variable_attributes(new_step, {
-          Attribute(attribute, field_index, root) {
-            root[field_index] = replace_variables(
-              attribute,
-              var_source_name,
-              combination_item,
-              field_index === 'task'
-            )
-          },
-        })
-
-        steps.push(new_step)
-
-        pipeline.var_sources.push({
-          type: 'dummy',
-          name: var_source_name,
-          config: {
-            vars,
-          },
-        })
+  visit_pipeline(pipeline, {
+    Job(job) {
+      job.plan.forEach((plan_step, plan_index) => {
+        var_sources.push(
+          ...apply_across_polyfill_step(
+            plan_step,
+            options,
+            [job.name, plan_index],
+            job.plan
+          )
+        )
       })
-
-      job.plan[step_index] = {
-        in_parallel: {
-          ...options.in_parallel,
-          steps,
-        },
-      }
-    })
+    },
   })
+
+  if (var_sources.length) {
+    if (!pipeline.var_sources) pipeline.var_sources = []
+
+    pipeline.var_sources.push(...var_sources)
+  }
 }

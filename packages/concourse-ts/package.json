@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts",
-  "version": "0.17.2",
+  "version": "0.17.3",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
