@@ -4,7 +4,7 @@ import {is_pipeline} from '../is-pipeline'
 import {visit_pipeline} from './pipeline'
 import {visit_step} from './step'
 
-export type StringVisitor = {
+export type VariableAttributeVisitor = {
   Attribute: (
     attribute: string,
     field_index: string | number,
@@ -31,7 +31,7 @@ export type StringVisitor = {
  */
 export const visit_variable_attributes = (
   component: Type.Step | Type.Pipeline,
-  visitor: StringVisitor
+  visitor: VariableAttributeVisitor
 ) => {
   if (is_pipeline(component)) {
     visit_pipeline(component, {

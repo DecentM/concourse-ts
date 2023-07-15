@@ -34,6 +34,8 @@ const npm_type: Npm.ResourceType = new ConcourseTs.ResourceType('npm', (rt) => {
   }
 })
 
+cli_pkg.dependencies[cli_pkg.name] = cli_pkg.version
+
 export type CliGroup = 'cli'
 
 export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
@@ -61,7 +63,8 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
     const oci_build = create_oci_build({
       resource: git,
       options: {
-        dockerfile: `${git.name}/Dockerfile.cli`,
+        dockerfile: `${git.name}/Dockerfile`,
+        target: 'cli',
         build_args: {
           BASE_IMAGE: `node:${node}-alpine${alpine}`,
           ...vars,
@@ -116,12 +119,13 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
           },
         })
       )
+
+      step.add_on_success(write_tags.as_task_step())
     })
 
     job.add_step(
       new ConcourseTs.InParallelStep('build-and-push', (ips) => {
         ips.add_step(build_cli_step)
-        ips.add_step(write_tags.as_task_step())
       })
     )
   })

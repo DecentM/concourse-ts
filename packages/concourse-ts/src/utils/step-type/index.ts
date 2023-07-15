@@ -13,42 +13,50 @@ const stepTypes = [
 
 export type StepType = (typeof stepTypes)[number]
 
-export const get_step_type = (step: Type.Step): StepType => {
-  return stepTypes.find((stepType) => stepType in step)
+export const get_step_type = (step: unknown): StepType | null => {
+  if (typeof step !== 'object') {
+    return null
+  }
+
+  return stepTypes.find((stepType) => stepType in step) ?? null
+}
+
+export const is_step = (input: unknown): input is Type.Step => {
+  return !!get_step_type(input)
 }
 
 export const is_do_step = (step: Type.Step): step is Type.DoStep => {
-  return !!step && get_step_type(step) === 'do'
+  return get_step_type(step) === 'do'
 }
 
 export const is_get_step = (step: Type.Step): step is Type.GetStep => {
-  return !!step && get_step_type(step) === 'get'
+  return get_step_type(step) === 'get'
 }
 
 export const is_in_parallel_step = (
   step: Type.Step
 ): step is Type.InParallelStep => {
-  return !!step && get_step_type(step) === 'in_parallel'
+  return get_step_type(step) === 'in_parallel'
 }
 
 export const is_load_var_step = (step: Type.Step): step is Type.LoadVarStep => {
-  return !!step && get_step_type(step) === 'load_var'
+  return get_step_type(step) === 'load_var'
 }
 
 export const is_put_step = (step: Type.Step): step is Type.PutStep => {
-  return !!step && get_step_type(step) === 'put'
+  return get_step_type(step) === 'put'
 }
 
 export const is_set_pipeline_step = (
   step: Type.Step
 ): step is Type.SetPipelineStep => {
-  return !!step && get_step_type(step) === 'set_pipeline'
+  return get_step_type(step) === 'set_pipeline'
 }
 
 export const is_task_step = (step: Type.Step): step is Type.TaskStep => {
-  return !!step && get_step_type(step) === 'task'
+  return get_step_type(step) === 'task'
 }
 
 export const is_try_step = (step: Type.Step): step is Type.TryStep => {
-  return !!step && get_step_type(step) === 'try'
+  return get_step_type(step) === 'try'
 }

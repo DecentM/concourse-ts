@@ -19,7 +19,7 @@ export const visit_pipeline = (
     pipeline.resource_types.forEach(visitor.ResourceType)
   }
 
-  if (pipeline.jobs) {
+  if (pipeline.jobs && visitor.Job) {
     pipeline.jobs.forEach((job) => {
       visitor.Job(job)
     })
