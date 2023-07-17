@@ -5067,7 +5067,7 @@ type-check@^0.4.0, type-check@~0.4.0:
   dependencies:
     prelude-ls "^1.2.1"
 
-type-fest@^0.13.1, type-fest@^0.20.2, type-fest@^2.0.0, type-fest@^2.13.0, type-fest@^2.5.0, type-fest@^3.1.0, type-fest@^3.13.0, type-fest@^3.9.0, "type-fest@git+https://github.com/DecentM/type-fest.git":
+type-fest@^0.13.1, type-fest@^0.20.2, type-fest@^2.0.0, type-fest@^2.13.0, type-fest@^2.5.0, type-fest@^3.1.0, type-fest@^3.9.0, type-fest@^4.0.0, "type-fest@git+https://github.com/DecentM/type-fest.git":
   version "3.13.0"
   uid c43d48e45418dab47e69cd597710dcaad842e884
   resolved "git+https://github.com/DecentM/type-fest.git#c43d48e45418dab47e69cd597710dcaad842e884"
