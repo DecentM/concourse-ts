@@ -17,7 +17,7 @@
     "commander": "^11.0.0",
     "cosmiconfig": "^8.2.0",
     "cosmiconfig-typescript-loader": "^4.3.0",
-    "fast-glob": "^3.3.0",
+    "fast-glob": "^3.3.1",
     "mkdirp": "^3.0.1",
     "rimraf": "^5.0.1",
     "tmp-promise": "^3.0.3",
