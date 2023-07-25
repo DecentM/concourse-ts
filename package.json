@@ -42,7 +42,7 @@
     "typedoc": "^0.24.8",
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-coverage": "^2.1.0",
-    "typedoc-plugin-markdown": "^3.15.3",
+    "typedoc-plugin-markdown": "^3.15.4",
     "typescript": "~5.1.6"
   }
 }
