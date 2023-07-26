@@ -87,14 +87,12 @@ test('stores files', (t) => {
 test('stores vars', (t) => {
   const ts = new TaskStep('a')
 
-  ts.set_var({
-    key: 'my-var',
-    value: '1',
+  ts.set_vars({
+    'my-var': '1',
   })
 
-  ts.set_var({
-    key: 'my-var1',
-    value: '2',
+  ts.set_vars({
+    'my-var1': '2',
   })
 
   t.deepEqual(ts.serialise(), {
@@ -110,14 +108,12 @@ test('stores vars', (t) => {
 test('stores params', (t) => {
   const ts = new TaskStep('a')
 
-  ts.set_param({
-    key: 'my-param',
-    value: '1',
+  ts.set_params({
+    'my-param': '1',
   })
 
-  ts.set_param({
-    key: 'my-param1',
-    value: '2',
+  ts.set_params({
+    'my-param1': '2',
   })
 
   t.deepEqual(ts.serialise(), {

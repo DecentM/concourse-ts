@@ -14,7 +14,7 @@ import {TaskStep} from './step'
  */
 export class Task<
   Input extends Identifier = Identifier,
-  Output extends Identifier = Identifier
+  Output extends Identifier = Identifier,
 > {
   private static customiser: Customiser<Task>
 
@@ -189,7 +189,7 @@ export class Task<
    * For example:
    *
    * ```typescript
-   * task.set_params({key: 'a', value: '1'}, {key: 'b', value: '2'})
+   * task.set_params(a: 1, b: 2)
    *
    * task.serialise().params
    * //               ^ {a: '1', b: '2'}
@@ -197,14 +197,15 @@ export class Task<
    *
    * https://concourse-ci.org/tasks.html#schema.task-config.params
    *
-   * @param {Type.EnvVar} params
+   * @param {Type.EnvVars} params
    */
-  public set_params = (...params: Type.EnvVar[]) => {
+  public set_params = (params: Type.EnvVars) => {
     if (!this.params) this.params = {}
 
-    params.forEach((param) => {
-      this.params[param.key] = param.value
-    })
+    this.params = {
+      ...this.params,
+      ...params,
+    }
   }
 
   /**

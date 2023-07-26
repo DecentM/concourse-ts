@@ -9,7 +9,7 @@ import {Step} from './base'
 export class PutStep<
   Source extends Type.Config = Type.Config,
   PutParams extends Type.Config = Type.Config,
-  GetParams extends Type.Config = Type.Config
+  GetParams extends Type.Config = Type.Config,
 > extends Step<Type.PutStep> {
   private static customiser: Customiser<PutStep>
 
@@ -33,7 +33,7 @@ export class PutStep<
   }
 
   public set_put = <
-    ResourceType extends Resource<Source, PutParams, GetParams>
+    ResourceType extends Resource<Source, PutParams, GetParams>,
   >(
     resource: ResourceType
   ) => {
@@ -77,12 +77,13 @@ export class PutStep<
 
   private get_params: Type.Config
 
-  public set_get_param = (...params: Type.Param[]) => {
+  public set_get_params = (params: GetParams) => {
     if (!this.get_params) this.get_params = {}
 
-    params.forEach((param) => {
-      this.get_params[param.key] = param.value
-    })
+    this.get_params = {
+      ...this.get_params,
+      ...params,
+    }
   }
 
   public serialise() {

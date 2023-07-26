@@ -58,19 +58,9 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
           .join(', ')})`
     )}
 
-    ${empty_string_or(task.params, (params) =>
-      Object.entries(params)
-        .filter(
-          ([, value]) =>
-            type_of(value) !== 'null' && type_of(value) !== 'undefined'
-        )
-        .map(([name, value]) => {
-          return `task.set_params({
-            key: ${JSON.stringify(name)},
-            value: ${JSON.stringify(String(value))}
-          })`
-        })
-        .join('\n')
+    ${empty_string_or(
+      task.params,
+      (params) => `task.set_params(${JSON.stringify(params)})`
     )}
 
     ${empty_string_or(

@@ -8,7 +8,7 @@ import {Resource} from './resource'
 
 export class ResourceType<
   Type extends string = string,
-  Source extends Declaration.Config = Declaration.Config
+  Source extends Declaration.Config = Declaration.Config,
 > {
   private static customiser: Customiser<ResourceType>
 
@@ -21,7 +21,7 @@ export class ResourceType<
   public customise_resource = <
     Source extends Declaration.Config = Declaration.Config,
     PutParams extends Declaration.Config = Declaration.Config,
-    GetParams extends Declaration.Config = Declaration.Config
+    GetParams extends Declaration.Config = Declaration.Config,
   >(
     customiser: Customiser<Resource<Source, PutParams, GetParams>>
   ) => {
@@ -48,7 +48,7 @@ export class ResourceType<
   public create_resource = <
     Source extends Declaration.Config = Declaration.Config,
     PutParams extends Declaration.Config = Declaration.Config,
-    GetParams extends Declaration.Config = Declaration.Config
+    GetParams extends Declaration.Config = Declaration.Config,
   >(
     name: string,
     customise?: Customiser<Resource<Source, PutParams, GetParams>>
@@ -99,25 +99,27 @@ export class ResourceType<
 
   private defaults?: Declaration.Config
 
-  public set_default = (...defaults: Declaration.Param[]) => {
+  public set_defaults = (defaults: Declaration.Config) => {
     if (!this.defaults) this.defaults = {}
 
-    defaults.forEach((item) => {
-      this.defaults[item.key] = item.value
-    })
+    this.defaults = {
+      ...this.defaults,
+      ...defaults,
+    }
   }
 
   private params?: Declaration.Config
 
-  public set_param = (...params: Declaration.Param[]) => {
+  public set_params = (params: Declaration.Config) => {
     if (!this.params) this.params = {}
 
-    params.forEach((param) => {
-      this.params[param.key] = param.value
-    })
+    this.params = {
+      ...this.params,
+      ...params,
+    }
   }
 
-  public privileged: boolean
+  public privileged?: boolean
 
   private tags?: Declaration.Tags
 

@@ -18,16 +18,6 @@ export type YamlValue =
   | YamlValue[]
   | {[key in string]: YamlValue}
 
-export type EnvVar = {
-  key: string
-  value: string
-}
-
-export type Param = {
-  key: string
-  value: YamlValue
-}
-
 /**
  * JSON representation of {@link ResourceType:class}
  *
@@ -214,7 +204,7 @@ export type TaskOutput<TransferType extends string> = {
  */
 export type TaskStep<
   Input extends Identifier = Identifier,
-  Output extends Identifier = Identifier
+  Output extends Identifier = Identifier,
 > = {
   task: Identifier
   config?: Task<Input, Output>

@@ -1,5 +1,5 @@
 import {Customiser} from '../../declarations/customiser'
-import {Identifier, get_identifier} from '../../utils/identifier'
+import {get_identifier} from '../../utils/identifier'
 import * as Type from '../../declarations/types'
 import {Resource} from '../resource'
 
@@ -34,22 +34,24 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
 
   private instance_vars: Type.Vars
 
-  public set_instance_var = (...vars: Type.Param[]) => {
+  public set_instance_vars = (vars: Type.Vars) => {
     if (!this.instance_vars) this.instance_vars = {}
 
-    vars.forEach((variable) => {
-      this.instance_vars[variable.key] = variable.value
-    })
+    this.instance_vars = {
+      ...this.instance_vars,
+      ...vars,
+    }
   }
 
   private vars: Type.Vars
 
-  public set_var = (...vars: Type.Param[]) => {
+  public set_vars = (vars: Type.Vars) => {
     if (!this.vars) this.vars = {}
 
-    vars.forEach((variable) => {
-      this.vars[variable.key] = variable.value
-    })
+    this.vars = {
+      ...this.vars,
+      ...vars,
+    }
   }
 
   private var_files: Type.FilePath[]
@@ -60,17 +62,18 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     this.var_files.push(...paths)
   }
 
-  public team?: Identifier
+  public team?: string
 
   /**
    * @internal Used by the compiler
-   *
-   * @returns {TaskStep[]}
    */
   public get_task_steps() {
     return this.get_base_task_steps()
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resources(): Resource[] {
     return this.get_base_resources()
   }
@@ -86,7 +89,7 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
       instance_vars: this.instance_vars,
       vars: this.vars,
       var_files: this.var_files,
-      team: this.team,
+      team: get_identifier(this.team),
     }
 
     return result

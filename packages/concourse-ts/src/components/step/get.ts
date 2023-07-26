@@ -10,7 +10,7 @@ import {Step} from './base'
 export class GetStep<
   Source extends Type.Config = Type.Config,
   PutParams extends Type.Config = Type.Config,
-  GetParams extends Type.Config = Type.Config
+  GetParams extends Type.Config = Type.Config,
 > extends Step<Type.GetStep> {
   private static customiser: Customiser<GetStep>
 
@@ -34,7 +34,7 @@ export class GetStep<
   }
 
   public set_get = <
-    ResourceType extends Resource<Source, PutParams, GetParams>
+    ResourceType extends Resource<Source, PutParams, GetParams>,
   >(
     resource: ResourceType
   ) => {
@@ -43,8 +43,6 @@ export class GetStep<
 
   /**
    * @internal Used by the compiler
-   *
-   * @returns {TaskStep[]}
    */
   public get_task_steps() {
     return this.get_base_task_steps()

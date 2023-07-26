@@ -66,7 +66,7 @@ test('stores tags', (t) => {
 test('stores params', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.set_param({key: 'name', value: '33'})
+  rt.set_params({name: '33'})
 
   const result = rt.serialise()
 
@@ -76,7 +76,7 @@ test('stores params', (t) => {
 test('stores defaults', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.set_default({key: 'name', value: '33'})
+  rt.set_defaults({name: '33'})
 
   const result = rt.serialise()
 

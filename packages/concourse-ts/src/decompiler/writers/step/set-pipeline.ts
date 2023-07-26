@@ -20,24 +20,15 @@ export const write_set_pipeline_step = (
       (file) => `step.file = ${JSON.stringify(file)}`
     )}
 
-    ${empty_string_or(step.instance_vars, (instance_vars) =>
-      Object.entries(instance_vars)
-        .map(([var_name, var_value]) => {
-          return `step.set_instance_var({key: ${JSON.stringify(
-            var_name
-          )}, value: ${JSON.stringify(var_value)}})`
-        })
-        .join('\n')
+    ${empty_string_or(
+      step.instance_vars,
+      (instance_vars) =>
+        `step.set_instance_vars(${JSON.stringify(instance_vars)})`
     )}
 
-    ${empty_string_or(step.vars, (vars) =>
-      Object.entries(vars)
-        .map(([var_name, var_value]) => {
-          return `step.set_var({key: ${JSON.stringify(
-            var_name
-          )}, value: ${JSON.stringify(var_value)}})`
-        })
-        .join('\n')
+    ${empty_string_or(
+      step.vars,
+      (vars) => `step.set_vars(${JSON.stringify(vars)})`
     )}
 
     ${empty_string_or(
