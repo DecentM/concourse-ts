@@ -32,7 +32,7 @@ const create_registry_image_resource = (
     }
 
     r.customise_put_step((ps) => {
-      ps.set_get_param({ key: 'skip_download', value: true })
+      ps.set_get_params({ skip_download: true })
     })
   })
 
