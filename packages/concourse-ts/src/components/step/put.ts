@@ -86,6 +86,8 @@ export class PutStep<
     }
   }
 
+  public no_get?: boolean
+
   public serialise() {
     const result: Type.PutStep = {
       ...this.serialise_base(),
@@ -96,6 +98,7 @@ export class PutStep<
       params: this.params,
       inputs: this.inputs,
       get_params: this.get_params,
+      no_get: this.no_get,
     }
 
     return result

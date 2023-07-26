@@ -30,5 +30,7 @@ export const write_put_step = (
       step.get_params,
       (get_params) => `step.set_get_params(${JSON.stringify(get_params)})`
     )}
+
+    ${empty_string_or(step.no_get, (no_get) => `step.no_get = ${no_get}`)}
   })`
 }

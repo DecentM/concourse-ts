@@ -177,6 +177,7 @@ export type PutStep = {
   inputs?: Inputs
   params?: Config
   get_params?: Config
+  no_get?: boolean
 } & StepBase
 
 /**

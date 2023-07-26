@@ -120,3 +120,14 @@ test('stores get_params', (t) => {
     },
   })
 })
+
+test('stores no_get', (t) => {
+  const ps = new PutStep('ps')
+
+  ps.no_get = true
+
+  t.deepEqual(ps.serialise(), {
+    ...default_put_step,
+    no_get: true,
+  })
+})

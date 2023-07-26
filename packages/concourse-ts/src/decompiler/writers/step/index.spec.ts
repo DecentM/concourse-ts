@@ -177,6 +177,7 @@ test('writes put steps', (t) => {
     inputs: undefined,
     params: undefined,
     resource: undefined,
+    no_get: undefined,
   })
 })
 

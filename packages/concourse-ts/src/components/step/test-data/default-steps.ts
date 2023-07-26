@@ -87,6 +87,7 @@ export const default_put_step = {
   params: undefined,
   put: undefined,
   resource: undefined,
+  no_get: undefined,
 }
 
 export const default_set_pipeline_step = {

@@ -128,6 +128,7 @@ test('runs put-step customiser', (t) => {
     tags: ['static', 'customised'],
     inputs: undefined,
     get_params: undefined,
+    no_get: undefined,
   })
 })
 
@@ -159,6 +160,7 @@ test('creates put step', (t) => {
     resource: undefined,
     tags: ['static', 'tag'],
     get_params: undefined,
+    no_get: undefined,
   })
 })
 

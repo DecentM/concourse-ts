@@ -125,3 +125,18 @@ test('writes get_params', (t) => {
     },
   })
 })
+
+test('writes no_get', (t) => {
+  const {result, diagnostics} = chain(
+    'a',
+    {put: 'a' as Identifier, no_get: true},
+    default_pipeline
+  )
+
+  t.deepEqual(diagnostics, [])
+  t.deepEqual(result, {
+    ...default_put_step,
+    put: 'a',
+    no_get: true,
+  })
+})
