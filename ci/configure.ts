@@ -50,7 +50,7 @@ ConcourseTs.Task.customise((task) => {
     type: 'registry-image',
     source: {
       repository: 'alpine',
-      tag: 'latest',
+      tag: '3.17',
     },
   })
 })

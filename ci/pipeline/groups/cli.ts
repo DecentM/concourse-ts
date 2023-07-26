@@ -92,7 +92,7 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
         },
       })
 
-      task.run = new ConcourseTs.Command('write_tags', (command) => {
+      task.run = new ConcourseTs.Command((command) => {
         command.path = '/bin/sh'
         command.add_arg('-exuc')
 

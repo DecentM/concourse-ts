@@ -40,7 +40,7 @@ export const get_config = async (): Promise<RCOptions | null> => {
     searchPlaces: paths,
     loaders: {
       '.ts': TypeScriptLoader({
-        transpileOnly: true,
+        interopDefault: true,
       }),
     },
   })
