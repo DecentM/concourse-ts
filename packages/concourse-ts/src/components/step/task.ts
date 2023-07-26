@@ -9,7 +9,7 @@ import {Step} from './base'
 
 export class TaskStep<
   Input extends Identifier = Identifier,
-  Output extends Identifier = Identifier
+  Output extends Identifier = Identifier,
 > extends Step<Type.TaskStep> {
   private static customiser: Customiser<TaskStep>
 
@@ -54,22 +54,24 @@ export class TaskStep<
 
   private vars: Type.Vars
 
-  public set_var = (...vars: Type.Param[]) => {
+  public set_vars = (vars: Type.Vars) => {
     if (!this.vars) this.vars = {}
 
-    vars.forEach((variable) => {
-      this.vars[variable.key] = variable.value
-    })
+    this.vars = {
+      ...this.vars,
+      ...vars,
+    }
   }
 
   private params: Type.EnvVars
 
-  public set_param = (...params: Type.EnvVar[]) => {
+  public set_params = (params: Type.EnvVars) => {
     if (!this.params) this.params = {}
 
-    params.forEach((param) => {
-      this.params[param.key] = param.value
-    })
+    this.params = {
+      ...this.params,
+      ...params,
+    }
   }
 
   private input_mapping?: Record<string, string>
@@ -90,8 +92,6 @@ export class TaskStep<
 
   /**
    * @internal Used by the compiler
-   *
-   * @returns {TaskStep[]}
    */
   public get_task_steps() {
     const result = this.get_base_task_steps()
@@ -101,6 +101,9 @@ export class TaskStep<
     return result
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resources(): Resource[] {
     return this.get_base_resources()
   }

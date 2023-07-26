@@ -26,14 +26,9 @@ export const write_put_step = (
       (params) => `step.set_params(${JSON.stringify(params)})`
     )}
 
-    ${empty_string_or(step.get_params, (get_params) =>
-      Object.entries(get_params)
-        .map(([name, value]) => {
-          return `step.set_get_param({key: ${JSON.stringify(
-            name
-          )}, value: ${JSON.stringify(value)}})`
-        })
-        .join('\n')
+    ${empty_string_or(
+      step.get_params,
+      (get_params) => `step.set_get_params(${JSON.stringify(get_params)})`
     )}
   })`
 }

@@ -16,9 +16,6 @@ import {DoStep as DoStepComponent} from './do'
  * error.
  *
  * @internal
- *
- * @param {string} name
- * @returns {DoStep}
  */
 const create_do_step = (name: string) => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -59,7 +56,7 @@ export abstract class Step<StepType extends Type.Step> {
 
   private timeout: Duration
 
-  private across: Type.Across[] = []
+  private across: Type.Across[]
 
   /**
    * https://concourse-ci.org/across-step.html
@@ -67,6 +64,8 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {Across} across The modifier to add
    */
   public add_across = (...across: Type.Across[]) => {
+    if (!this.across) this.across = []
+
     this.across.push(...across)
   }
 
@@ -84,7 +83,7 @@ export abstract class Step<StepType extends Type.Step> {
    */
   public attempts: number
 
-  protected tags: Type.Tags = []
+  protected tags: Type.Tags
 
   /**
    * @internal Used by the compiler
@@ -154,6 +153,8 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {...string[]} tags
    */
   public add_tag = (...tags: string[]) => {
+    if (!this.tags) this.tags = []
+
     this.tags.push(...tags)
   }
 
@@ -247,9 +248,9 @@ export abstract class Step<StepType extends Type.Step> {
       on_error: this.on_error?.serialise(),
       on_failure: this.on_failure?.serialise(),
       on_success: this.on_success?.serialise(),
-      tags: this.tags.length === 0 ? undefined : this.tags,
+      tags: this.tags,
       timeout: this.timeout,
-      across: this.across.length === 0 ? undefined : this.across,
+      across: this.across,
     }
   }
 

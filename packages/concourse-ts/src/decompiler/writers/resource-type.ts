@@ -35,24 +35,14 @@ export const write_resource_type = (
         `rt.set_check_every(${JSON.stringify(parse_duration(check_every))})`
     )}
 
-    ${empty_string_or(resource_type.defaults, (defaults) =>
-      Object.entries(defaults)
-        .map(([name, value]) => {
-          return `rt.set_default({key: ${JSON.stringify(
-            name
-          )}, value: ${JSON.stringify(value)}})`
-        })
-        .join('\n')
+    ${empty_string_or(
+      resource_type.defaults,
+      (defaults) => `rt.set_defaults(${JSON.stringify(defaults)})`
     )}
 
-    ${empty_string_or(resource_type.params, (params) =>
-      Object.entries(params)
-        .map(([name, value]) => {
-          return `rt.set_param({key: ${JSON.stringify(
-            name
-          )}, value: ${JSON.stringify(value)}})`
-        })
-        .join('\n')
+    ${empty_string_or(
+      resource_type.params,
+      (params) => `rt.set_params(${JSON.stringify(params)})`
     )}
 
     ${empty_string_or(

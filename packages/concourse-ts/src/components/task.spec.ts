@@ -8,7 +8,7 @@ import {default_task, default_task_step} from './step/test-data/default-steps'
 
 test('runs static customiser', (t) => {
   Task.customise((task) => {
-    task.set_params({key: 'my-param', value: '1'})
+    task.set_params({'my-param': '1'})
   })
 
   const task = new Task('a')

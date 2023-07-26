@@ -342,9 +342,7 @@ export class Job {
       on_success: this.on_success?.serialise(),
       public: this.public,
       serial: this.serial,
-      serial_groups: this.serial_groups?.map((serial_group) =>
-        get_identifier(serial_group)
-      ),
+      serial_groups: this.serial_groups?.map(get_identifier),
     }
 
     return result

@@ -32,34 +32,14 @@ export const write_task_step = (
       (privileged) => `step.privileged = ${privileged}`
     )}
 
-    ${empty_string_or(step.vars, (variable) =>
-      Object.entries(variable)
-        .filter(
-          ([, value]) =>
-            type_of(value) !== 'null' && type_of(value) !== 'undefined'
-        )
-        .map(([var_name, var_value]) => {
-          return `step.set_var({
-            key: ${JSON.stringify(var_name)},
-            value: ${JSON.stringify(String(var_value))}
-          })`
-        })
-        .join('\n')
+    ${empty_string_or(
+      step.vars,
+      (vars) => `step.set_vars(${JSON.stringify(vars)})`
     )}
 
-    ${empty_string_or(step.params, (params) =>
-      Object.entries(params)
-        .filter(
-          ([, value]) =>
-            type_of(value) !== 'null' && type_of(value) !== 'undefined'
-        )
-        .map(([param_name, param_value]) => {
-          return `step.set_param({
-            key: ${JSON.stringify(param_name)},
-            value: ${JSON.stringify(String(param_value))}
-          })`
-        })
-        .join('\n')
+    ${empty_string_or(
+      step.params,
+      (params) => `step.set_params(${JSON.stringify(params)})`
     )}
 
     ${empty_string_or(step.input_mapping, (input_mapping) =>

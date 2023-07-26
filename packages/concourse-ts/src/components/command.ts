@@ -24,7 +24,10 @@ export class Command {
    * error messages, and will not be included in the serialised output.
    * @param {Type.Customiser} customise
    */
-  constructor(public name: string, customise?: Customiser<Command>) {
+  constructor(
+    public name: string,
+    customise?: Customiser<Command>
+  ) {
     if (Command.customiser) {
       Command.customiser(this)
     }
@@ -37,7 +40,7 @@ export class Command {
   /**
    * https://concourse-ci.org/tasks.html#schema.command.path
    */
-  public path: Type.FilePath
+  public path?: Type.FilePath
 
   private args: string[] = []
 
@@ -55,12 +58,12 @@ export class Command {
   /**
    * https://concourse-ci.org/tasks.html#schema.command.dir
    */
-  public dir: Type.DirPath
+  public dir?: Type.DirPath
 
   /**
    * https://concourse-ci.org/tasks.html#schema.command.user
    */
-  public user: string
+  public user?: string
 
   /**
    * Converts this Command to its JSON representation

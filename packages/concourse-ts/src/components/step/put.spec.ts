@@ -109,9 +109,8 @@ test('stores params', (t) => {
 test('stores get_params', (t) => {
   const ps = new PutStep('ps')
 
-  ps.set_get_param({
-    key: 'my-param',
-    value: '1',
+  ps.set_get_params({
+    'my-param': '1',
   })
 
   t.deepEqual(ps.serialise(), {

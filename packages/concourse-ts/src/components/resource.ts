@@ -25,7 +25,7 @@ type AsGetStepInput<GetParams> = {
 export class Resource<
   Source extends Type.Config = Type.Config,
   PutParams extends Type.Config = Type.Config,
-  GetParams extends Type.Config = Type.Config
+  GetParams extends Type.Config = Type.Config,
 > {
   private static customiser: Customiser<Resource>
 
@@ -38,7 +38,7 @@ export class Resource<
   public static customise_get_step = <
     Source extends Type.Config = Type.Config,
     PutParams extends Type.Config = Type.Config,
-    GetParams extends Type.Config = Type.Config
+    GetParams extends Type.Config = Type.Config,
   >(
     init: Customiser<
       GetStep<Source, PutParams, GetParams>,
@@ -53,7 +53,7 @@ export class Resource<
   public static customise_put_step = <
     Source extends Type.Config = Type.Config,
     PutParams extends Type.Config = Type.Config,
-    GetParams extends Type.Config = Type.Config
+    GetParams extends Type.Config = Type.Config,
   >(
     init: Customiser<
       PutStep<Source, PutParams, GetParams>,
@@ -133,7 +133,7 @@ export class Resource<
 
   public old_name?: string
 
-  public public: boolean
+  public public?: boolean
 
   private tags?: Type.Tags
 
@@ -219,7 +219,7 @@ export class Resource<
     )
   }
 
-  serialise() {
+  public serialise() {
     if (!this.type) {
       throw new VError('Cannot serialise resource without a resource type', {
         resource: this.name,

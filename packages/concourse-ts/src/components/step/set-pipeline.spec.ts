@@ -51,14 +51,12 @@ test('collects task steps', (t) => {
 test('stores instance vars', (t) => {
   const sps = new SetPipelineStep('a')
 
-  sps.set_instance_var({
-    key: 'my-var',
-    value: '1',
+  sps.set_instance_vars({
+    'my-var': '1',
   })
 
-  sps.set_instance_var({
-    key: 'my-var1',
-    value: '2',
+  sps.set_instance_vars({
+    'my-var1': '2',
   })
 
   t.deepEqual(sps.serialise(), {
@@ -73,14 +71,12 @@ test('stores instance vars', (t) => {
 test('stores vars', (t) => {
   const sps = new SetPipelineStep('a')
 
-  sps.set_var({
-    key: 'my-var',
-    value: '1',
+  sps.set_vars({
+    'my-var': '1',
   })
 
-  sps.set_var({
-    key: 'my-var1',
-    value: '2',
+  sps.set_vars({
+    'my-var1': '2',
   })
 
   t.deepEqual(sps.serialise(), {
