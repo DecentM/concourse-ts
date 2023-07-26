@@ -21,7 +21,7 @@ export const write_resource_type = (
   return `new ResourceType(${JSON.stringify(resource_type.name)}, (rt) => {
     ${empty_string_or(
       resource_type.type,
-      (type) => `rt.type = ${JSON.stringify(type)}`
+      (type) => `rt.set_type(${JSON.stringify(type)})`
     )}
 
     ${empty_string_or(

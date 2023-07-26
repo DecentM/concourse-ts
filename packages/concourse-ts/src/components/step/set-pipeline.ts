@@ -28,7 +28,7 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     }
   }
 
-  public set_pipeline: Pipeline | 'self'
+  public set_pipeline: Pipeline | string
 
   public file?: Type.FilePath
 
@@ -82,8 +82,8 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     const result: Type.SetPipelineStep = {
       ...this.serialise_base(),
       set_pipeline:
-        this.set_pipeline === 'self'
-          ? 'self'
+        typeof this.set_pipeline === 'string'
+          ? get_identifier(this.set_pipeline)
           : get_identifier(this.set_pipeline?.name),
       file: this.file,
       instance_vars: this.instance_vars,
