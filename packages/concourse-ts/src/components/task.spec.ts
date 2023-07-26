@@ -148,7 +148,7 @@ test('stores outputs', (t) => {
 
 test('stores commands', (t) => {
   const task = new Task('a', (a) => {
-    a.run = new Command('ac')
+    a.run = new Command()
   })
 
   t.deepEqual(task.serialise(), {

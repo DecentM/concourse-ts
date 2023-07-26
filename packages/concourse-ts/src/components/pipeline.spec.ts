@@ -132,7 +132,7 @@ test('collects tasks', (t) => {
   const task = new Task('ajt', (ajt) => {
     ajt.platform = 'linux'
 
-    ajt.run = new Command('ajtc', (ajtc) => {
+    ajt.run = new Command((ajtc) => {
       ajtc.path = 'echo'
       ajtc.add_arg('ajtc')
     })

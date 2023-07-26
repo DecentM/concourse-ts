@@ -2,7 +2,6 @@ import {Command} from '../../components'
 import {Customiser} from '../../declarations'
 
 export const join_commands = (
-  name: string,
   customise: Customiser<string[], Command>,
   ...commands: Command[]
 ): Command => {
@@ -29,7 +28,7 @@ export const join_commands = (
     )
   })
 
-  return new Command(name, (command) => {
+  return new Command((command) => {
     if (dir) command.dir = dir
     if (user) command.user = user
 

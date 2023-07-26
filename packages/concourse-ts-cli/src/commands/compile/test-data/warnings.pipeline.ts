@@ -14,7 +14,7 @@ export default () => {
                 tag: 'latest',
               },
             })
-            task.run = new Command('asd', (command) => {
+            task.run = new Command((command) => {
               command.path = 'which'
               command.add_arg('echo')
             })
