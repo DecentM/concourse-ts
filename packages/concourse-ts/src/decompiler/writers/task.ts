@@ -1,6 +1,6 @@
 import {Task} from '../../declarations'
 import {Identifier} from '../../utils/identifier'
-import {parse_bytes, type_of} from '../../utils'
+import {parse_bytes} from '../../utils'
 
 import {write_command} from './command'
 import {empty_string_or} from '../../utils/empty_string_or'
@@ -21,10 +21,7 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
       (platform) => `task.platform = ${JSON.stringify(platform)}`
     )}
 
-    ${empty_string_or(
-      task.run,
-      (run) => `task.run = ${write_command(`${name}_run`, run)}`
-    )}
+    ${empty_string_or(task.run, (run) => `task.run = ${write_command(run)}`)}
 
     ${empty_string_or(
       task.caches,

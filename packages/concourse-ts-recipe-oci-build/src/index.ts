@@ -175,7 +175,7 @@ export const create_oci_build =
       path: 'cache',
     })
 
-    task.run = new ConcourseTs.Command('oci-build', (command) => {
+    task.run = new ConcourseTs.Command((command) => {
       command.path = '/usr/bin/build'
     })
 

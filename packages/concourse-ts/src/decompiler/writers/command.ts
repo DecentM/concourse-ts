@@ -1,8 +1,8 @@
 import {Command} from '../../declarations'
 import {empty_string_or} from '../../utils/empty_string_or'
 
-export const write_command = (name: string, command: Command): string => {
-  return `new Command(${JSON.stringify(name)}, (command) => {
+export const write_command = (command: Command): string => {
+  return `new Command((command) => {
     ${empty_string_or(command.args, (args) =>
       args.map((arg) => `command.add_arg(${JSON.stringify(arg)})`).join('\n')
     )}

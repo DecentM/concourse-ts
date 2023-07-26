@@ -14,7 +14,7 @@ export default async () => {
                 tag: 'latest',
               },
             })
-            task.run = new Command('asd', (command) => {
+            task.run = new Command((command) => {
               command.path = 'echo'
               command.add_arg('Hello, world!')
             })

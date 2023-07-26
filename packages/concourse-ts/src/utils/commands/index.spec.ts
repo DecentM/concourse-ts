@@ -4,18 +4,17 @@ import {join_commands} from '.'
 import {Command} from '../../components'
 
 test('joins commands', (t) => {
-  const a = new Command('a', (a) => {
+  const a = new Command((a) => {
     a.path = 'echo'
     a.add_arg('Hello, world!')
   })
 
-  const b = new Command('b', (a) => {
+  const b = new Command((a) => {
     a.path = 'echo'
     a.add_arg('mynames Jeff!')
   })
 
   const joined = join_commands(
-    'joined',
     (args, command) => {
       command.add_arg(args.join(' && '))
     },
@@ -32,19 +31,15 @@ test('joins commands', (t) => {
 })
 
 test('joins commands with multiple arguments', (t) => {
-  const a = new Command('a', (a) => {
+  const a = new Command((a) => {
     a.path = 'echo'
     a.add_arg('Hello, world!')
     a.add_arg('mynames Jeff!')
   })
 
-  const joined = join_commands(
-    'joined',
-    (args, command) => {
-      command.add_arg(args.join(' && '))
-    },
-    a
-  )
+  const joined = join_commands((args, command) => {
+    command.add_arg(args.join(' && '))
+  }, a)
 
   t.deepEqual(joined.serialise(), {
     path: undefined,
@@ -55,19 +50,15 @@ test('joins commands with multiple arguments', (t) => {
 })
 
 test('copies dir', (t) => {
-  const a = new Command('a', (a) => {
+  const a = new Command((a) => {
     a.path = 'echo'
     a.dir = '/app'
     a.add_arg('Hello, world!')
   })
 
-  const joined = join_commands(
-    'joined',
-    (args, command) => {
-      command.add_arg(args.join(' && '))
-    },
-    a
-  )
+  const joined = join_commands((args, command) => {
+    command.add_arg(args.join(' && '))
+  }, a)
 
   t.deepEqual(joined.serialise(), {
     path: undefined,
@@ -78,19 +69,15 @@ test('copies dir', (t) => {
 })
 
 test('copies user', (t) => {
-  const a = new Command('a', (a) => {
+  const a = new Command((a) => {
     a.path = 'echo'
     a.user = '1000'
     a.add_arg('Hello, world!')
   })
 
-  const joined = join_commands(
-    'joined',
-    (args, command) => {
-      command.add_arg(args.join(' && '))
-    },
-    a
-  )
+  const joined = join_commands((args, command) => {
+    command.add_arg(args.join(' && '))
+  }, a)
 
   t.deepEqual(joined.serialise(), {
     path: undefined,

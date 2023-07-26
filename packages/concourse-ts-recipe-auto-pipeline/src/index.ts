@@ -60,7 +60,7 @@ export const create_auto_pipeline =
       trigger: true,
     })
 
-    const compile_command = new ConcourseTs.Command('compile', (command) => {
+    const compile_command = new ConcourseTs.Command((command) => {
       command.dir = options.resource.name
 
       command.path = 'concourse-ts'
@@ -77,7 +77,7 @@ export const create_auto_pipeline =
       command.add_arg('../output')
     })
 
-    const transform_command = new ConcourseTs.Command('transform', (command) => {
+    const transform_command = new ConcourseTs.Command((command) => {
       command.dir = '.'
 
       command.path = 'concourse-ts'
@@ -95,7 +95,6 @@ export const create_auto_pipeline =
     })
 
     const compile_and_transform = ConcourseTs.Utils.join_commands(
-      'compile-and-transform',
       (args, command) => {
         command.path = '/bin/sh'
         command.add_arg('-exuc')

@@ -20,14 +20,9 @@ export class Command {
   /**
    * https://concourse-ci.org/tasks.html#schema.command
    *
-   * @param {string} name The name of the command. This will only be used for
-   * error messages, and will not be included in the serialised output.
    * @param {Type.Customiser} customise
    */
-  constructor(
-    public name: string,
-    customise?: Customiser<Command>
-  ) {
+  constructor(customise?: Customiser<Command>) {
     if (Command.customiser) {
       Command.customiser(this)
     }

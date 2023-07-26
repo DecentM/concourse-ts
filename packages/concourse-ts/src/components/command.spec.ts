@@ -9,7 +9,7 @@ test.beforeEach(() => {
 })
 
 test('runs static customiser', (t) => {
-  const command = new Command('a')
+  const command = new Command()
 
   t.deepEqual(command.serialise(), {
     path: undefined,
@@ -20,7 +20,7 @@ test('runs static customiser', (t) => {
 })
 
 test('runs instance customiser', (t) => {
-  const command = new Command('a', (a) => {
+  const command = new Command((a) => {
     a.dir = '/a'
   })
 
@@ -33,7 +33,7 @@ test('runs instance customiser', (t) => {
 })
 
 test('stores args', (t) => {
-  const command = new Command('a')
+  const command = new Command()
 
   command.add_arg('my-arg')
 
