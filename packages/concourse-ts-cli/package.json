@@ -30,7 +30,7 @@
     "typescript": "^5.1.3"
   },
   "optionalDependencies": {
-    "@decentm/concourse-ts-recipe-auto-pipeline": "0.0.2",
+    "@decentm/concourse-ts-recipe-auto-pipeline": "0.1.0",
     "@decentm/concourse-ts-recipe-npm-dependencies": "0.1.1",
     "@decentm/concourse-ts-recipe-oci-build": "0.0.1"
   },
