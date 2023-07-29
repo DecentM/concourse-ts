@@ -63,7 +63,7 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
     const oci_build = create_oci_build({
       resource: git,
       options: {
-        dockerfile: `Dockerfile`,
+        dockerfile: `${git.name}/Dockerfile`,
         target: 'cli',
         build_args: {
           BASE_IMAGE: `node:${node}-alpine${alpine}`,
@@ -111,6 +111,8 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
       step.add_across(across_node)
       step.add_across(across_alpine)
 
+      step.add_on_success(write_tags.as_task_step())
+
       step.add_on_success(
         cli_registry_image.as_put_step({
           params: {
@@ -119,8 +121,6 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
           },
         })
       )
-
-      step.add_on_success(write_tags.as_task_step())
     })
 
     job.add_step(

@@ -32,7 +32,9 @@
   "optionalDependencies": {
     "@decentm/concourse-ts-recipe-auto-pipeline": "0.1.0",
     "@decentm/concourse-ts-recipe-npm-dependencies": "0.1.1",
-    "@decentm/concourse-ts-recipe-oci-build": "0.1.0"
+    "@decentm/concourse-ts-recipe-oci-build": "0.1.0",
+    "@decentm/concourse-ts-resource-registry-image": "0.2.2",
+    "@decentm/concourse-ts-resource-npm": "0.2.1"
   },
   "devDependencies": {
     "@swc/helpers": "~0.5.1",
