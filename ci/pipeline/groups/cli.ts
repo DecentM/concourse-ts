@@ -63,7 +63,7 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
     const oci_build = create_oci_build({
       resource: git,
       options: {
-        dockerfile: `${git.name}/Dockerfile`,
+        dockerfile: `Dockerfile`,
         target: 'cli',
         build_args: {
           BASE_IMAGE: `node:${node}-alpine${alpine}`,

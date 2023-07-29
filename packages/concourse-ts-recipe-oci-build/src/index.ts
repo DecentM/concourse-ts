@@ -48,65 +48,38 @@ export const create_oci_build =
       },
     })
 
-    task.set_params({
-      key: 'CONTEXT',
-      value: input.resource.name,
-    })
+    task.set_params({ CONTEXT: input.resource.name })
 
     if (input.options?.output_oci) {
-      task.set_params({
-        key: 'OUTPUT_OCI',
-        value: 'true',
-      })
+      task.set_params({ OUTPUT_OCI: 'true' })
     }
 
     if (input.options?.unpack_rootfs) {
-      task.set_params({
-        key: 'UNPACK_ROOTFS',
-        value: 'true',
-      })
+      task.set_params({ UNPACK_ROOTFS: 'true' })
     }
 
     if (input.options?.build_args_file) {
-      task.set_params({
-        key: 'BUILD_ARGS_FILE',
-        value: input.options.build_args_file,
-      })
+      task.set_params({ BUILD_ARGS_FILE: input.options.build_args_file })
     }
 
     if (input.options?.buildkit_ssh) {
-      task.set_params({
-        key: 'BUILDKIT_SSH',
-        value: input.options.buildkit_ssh,
-      })
+      task.set_params({ BUILDKIT_SSH: input.options.buildkit_ssh })
     }
 
     if (input.options?.dockerfile) {
-      task.set_params({
-        key: 'DOCKERFILE',
-        value: input.options.dockerfile,
-      })
+      task.set_params({ DOCKERFILE: input.options.dockerfile })
     }
 
     if (input.options?.image_platform && input.options.image_platform.length) {
-      task.set_params({
-        key: 'IMAGE_PLATFORM',
-        value: input.options.image_platform.join(','),
-      })
+      task.set_params({ IMAGE_PLATFORM: input.options.image_platform.join(',') })
     }
 
     if (input.options?.target) {
-      task.set_params({
-        key: 'TARGET',
-        value: input.options.target,
-      })
+      task.set_params({ TARGET: input.options.target })
     }
 
     if (input.options?.target_file) {
-      task.set_params({
-        key: 'TARGET_FILE',
-        value: input.options.target_file,
-      })
+      task.set_params({ TARGET_FILE: input.options.target_file })
     }
 
     if (
@@ -114,53 +87,46 @@ export const create_oci_build =
       input.options.additional_targets.length
     ) {
       task.set_params({
-        key: 'ADDITIONAL_TARGETS',
-        value: input.options.additional_targets.join(','),
+        ADDITIONAL_TARGETS: input.options.additional_targets.join(','),
       })
     }
 
     if (input.options?.build_args) {
       Object.entries(input.options.build_args).forEach(([key, value]) => {
-        task.set_params({ key: `BUILD_ARG_${key}`, value })
+        task.set_params({ [`BUILD_ARG_${key}`]: value })
       })
     }
 
     if (input.options?.buildkit_secret) {
       Object.entries(input.options.buildkit_secret).forEach(([key, value]) => {
-        task.set_params({ key: `BUILDKIT_SECRET_${key}`, value })
+        task.set_params({ [`BUILDKIT_SECRET_${key}`]: value })
       })
     }
 
     if (input.options?.buildkit_secrettext) {
       Object.entries(input.options.buildkit_secrettext).forEach(([key, value]) => {
-        task.set_params({ key: `BUILDKIT_SECRETTEXT_${key}`, value })
+        task.set_params({ [`BUILDKIT_SECRETTEXT_${key}`]: value })
       })
     }
 
     if (input.options?.image_arg) {
       Object.entries(input.options.image_arg).forEach(([key, value]) => {
-        task.set_params({ key: `IMAGE_ARG_${key}`, value })
+        task.set_params({ [`IMAGE_ARG_${key}`]: value })
       })
     }
 
     if (input.options?.label) {
       Object.entries(input.options.label).forEach(([key, value]) => {
-        task.set_params({ key: `LABEL_${key}`, value })
+        task.set_params({ [`LABEL_${key}`]: value })
       })
     }
 
     if (input.options?.labels_file) {
-      task.set_params({
-        key: 'LABELS_FILE',
-        value: input.options.labels_file,
-      })
+      task.set_params({ LABELS_FILE: input.options.labels_file })
     }
 
     if (input.options?.registry_mirrors && input.options?.registry_mirrors.length) {
-      task.set_params({
-        key: 'REGISTRY_MIRRORS',
-        value: input.options.registry_mirrors.join(','),
-      })
+      task.set_params({ REGISTRY_MIRRORS: input.options.registry_mirrors.join(',') })
     }
 
     task.add_input({
