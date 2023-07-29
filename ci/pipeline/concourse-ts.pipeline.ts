@@ -9,7 +9,7 @@ import { CliGroup, add_cli_group } from './groups/cli'
 type Group = 'ci' | CliGroup
 
 const auto_pipeline = create_auto_pipeline<Group>({
-  cli_tag: 'vundefined-node20.3.1',
+  cli_tag: 'v0.12.7-node20.3.1',
   path: 'ci/pipeline/concourse-ts.pipeline.ts',
   resource: git_ci,
   group: 'ci',
