@@ -56,7 +56,10 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
       npm_dependencies((ips, var_names) => {
         ips.fail_fast = true
         ips.limit = 3
-        vars = var_names
+
+        Object.entries(var_names).forEach(([name, version]) => {
+          vars[name.replace(/[-]/gu, '_')] = version
+        })
       })
     )
 
@@ -100,7 +103,7 @@ export const add_cli_group = (pipeline: ConcourseTs.Pipeline<CliGroup>) => {
         command.add_arg('-exuc')
 
         command.add_arg(
-          `echo v${vars['concourse-ts-cli']}-node${node} > image-meta/additional-tags`
+          `echo v${vars['concourse_ts_cli']}-node${node} > image-meta/additional-tags`
         )
       })
     })

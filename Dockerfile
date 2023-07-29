@@ -71,8 +71,8 @@ ARG concourse_ts
 ARG concourse_ts_recipe_auto_pipeline
 ARG concourse_ts_recipe_oci_build
 ARG concourse_ts_recipe_npm_dependencies
-ARG concourse-ts-resource-npm
-ARG concourse-ts-resource-registry-image
+ARG concourse_ts_resource_npm
+ARG concourse_ts_resource_registry_image
 ARG typescript
 
 RUN yarn global add \
@@ -84,8 +84,8 @@ RUN yarn global add \
   @decentm/concourse-ts-recipe-auto-pipeline@${concourse_ts_recipe_auto_pipeline} \
   @decentm/concourse-ts-recipe-oci-build@${concourse_ts_recipe_oci_build} \
   @decentm/concourse-ts-recipe-npm-dependencies@${concourse_ts_recipe_npm_dependencies} \
-  @decentm/concourse-ts-resource-npm@${concourse-ts-resource-npm} \
-  @decentm/concourse-ts-resource-registry-image@${concourse-ts-resource-registry-image} \
+  @decentm/concourse-ts-resource-npm@${concourse_ts_resource_npm} \
+  @decentm/concourse-ts-resource-registry-image@${concourse_ts_resource_registry_image} \
   typescript@${typescript}
 
 ENV NODE_PATH="${NODE_PATH}:/usr/local/share/.config/yarn/global/node_modules"
