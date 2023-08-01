@@ -109,7 +109,7 @@ test('replaces multiple variables in a single value', (t) => {
 
   t.is(
     child_step.config!.run.args![0],
-    'alpine ((my-job_0_across-0:alpine)) with node ((my-job_0_across-0:node))' as Identifier
+    'alpine 13.7 with node 14' as Identifier
   )
 })
 
@@ -128,7 +128,7 @@ const step_with_across = {
   },
 }
 
-const polyfilled_step_with_across = (parent: string, key: string | number) => ({
+const polyfilled_step_with_across = {
   in_parallel: {
     fail_fast: true,
     limit: 1,
@@ -138,24 +138,14 @@ const polyfilled_step_with_across = (parent: string, key: string | number) => ({
         task: 'write_tags',
         config: {
           run: {
-            args: [`node((${parent}_0_${key}_across-0:node))`],
+            args: [`node20`],
             path: undefined,
           },
         },
       },
     ],
   },
-})
-
-const polyfilled_var_source = (parent: string, key: string | number) => ({
-  type: 'dummy',
-  name: `${parent}_0_${key}_across-0`,
-  config: {
-    vars: {
-      node: '20',
-    },
-  },
-})
+}
 
 test('recurses into in_parallel steps', (t) => {
   const input = {
@@ -182,13 +172,12 @@ test('recurses into in_parallel steps', (t) => {
         plan: [
           {
             in_parallel: {
-              steps: [polyfilled_step_with_across('build-cli', 0)],
+              steps: [polyfilled_step_with_across],
             },
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('build-cli', 0)],
   })
 })
 
@@ -214,12 +203,11 @@ test('recurses into in_parallel steps with shorthand config', (t) => {
         name: 'build-cli',
         plan: [
           {
-            in_parallel: [polyfilled_step_with_across('build-cli', 0)],
+            in_parallel: [polyfilled_step_with_across],
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('build-cli', 0)],
   })
 })
 
@@ -247,12 +235,11 @@ test('recurses into on_error', (t) => {
         plan: [
           {
             do: [],
-            on_error: polyfilled_step_with_across('a', 'on_error'),
+            on_error: polyfilled_step_with_across,
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('a', 'on_error')],
   })
 })
 
@@ -280,12 +267,11 @@ test('recurses into on_success', (t) => {
         plan: [
           {
             do: [],
-            on_success: polyfilled_step_with_across('a', 'on_success'),
+            on_success: polyfilled_step_with_across,
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('a', 'on_success')],
   })
 })
 
@@ -313,12 +299,11 @@ test('recurses into on_abort', (t) => {
         plan: [
           {
             do: [],
-            on_abort: polyfilled_step_with_across('a', 'on_abort'),
+            on_abort: polyfilled_step_with_across,
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('a', 'on_abort')],
   })
 })
 
@@ -346,12 +331,11 @@ test('recurses into on_failure', (t) => {
         plan: [
           {
             do: [],
-            on_failure: polyfilled_step_with_across('a', 'on_failure'),
+            on_failure: polyfilled_step_with_across,
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('a', 'on_failure')],
   })
 })
 
@@ -377,12 +361,11 @@ test('recurses into try steps', (t) => {
         name: 'a',
         plan: [
           {
-            try: polyfilled_step_with_across('a', 'try'),
+            try: polyfilled_step_with_across,
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('a', 'try')],
   })
 })
 
@@ -408,12 +391,11 @@ test('recurses into do steps', (t) => {
         name: 'a',
         plan: [
           {
-            do: [polyfilled_step_with_across('a', 0)],
+            do: [polyfilled_step_with_across],
           },
         ],
       },
     ],
-    var_sources: [polyfilled_var_source('a', 0)],
   })
 })
 
@@ -436,10 +418,7 @@ const step_with_nested_across = {
   ],
 }
 
-const polyfilled_step_with_nested_across = (
-  parent: string,
-  key: string | number
-) => ({
+const polyfilled_step_with_nested_across = {
   in_parallel: {
     fail_fast: true,
     limit: 1,
@@ -451,7 +430,7 @@ const polyfilled_step_with_nested_across = (
             task: 'write_tags',
             config: {
               run: {
-                args: [`node((${parent}_${key}_across-0:node))`],
+                args: [`node20`],
                 path: undefined,
               },
             },
@@ -460,20 +439,7 @@ const polyfilled_step_with_nested_across = (
       },
     ],
   },
-})
-
-const polyfilled_nested_var_source = (
-  parent: string,
-  key: string | number
-) => ({
-  type: 'dummy',
-  name: `${parent}_${key}_across-0`,
-  config: {
-    vars: {
-      node: '20',
-    },
-  },
-})
+}
 
 test('recurses for variables from a parent step', (t) => {
   const input = {
@@ -491,9 +457,8 @@ test('recurses for variables from a parent step', (t) => {
     jobs: [
       {
         name: 'a',
-        plan: [polyfilled_step_with_nested_across('a', 0)],
+        plan: [polyfilled_step_with_nested_across],
       },
     ],
-    var_sources: [polyfilled_nested_var_source('a', 0)],
   })
 })

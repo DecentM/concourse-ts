@@ -1,6 +1,7 @@
 import * as Type from '../../declarations/types'
 import {Identifier} from '../identifier'
 import {is_pipeline} from '../is-pipeline'
+import {is_get_step, is_put_step, is_task_step} from '../step-type'
 import {visit_pipeline} from './pipeline'
 import {visit_step} from './step'
 
@@ -64,171 +65,167 @@ export const visit_variable_attributes = (
   }
 
   visit_step(component, {
-    DoStep(ds) {
-      ds.do.forEach((step) => {
-        visit_variable_attributes(step, visitor)
-      })
-    },
+    Step(step) {
+      if (is_put_step(step)) {
+        visitor.Attribute(step.put, 'put', step)
 
-    InParallelStep(ips) {
-      if (Array.isArray(ips.in_parallel)) {
-        ips.in_parallel.forEach((step) => {
-          visit_variable_attributes(step, visitor)
-        })
+        if (step.params) {
+          Object.keys(step.params).forEach((key) => {
+            const param_value = step.params[key]
+
+            if (typeof param_value !== 'string') {
+              return
+            }
+
+            visitor.Attribute(param_value, key, step.params)
+          })
+        }
 
         return
       }
 
-      ips.in_parallel.steps.forEach((step) => {
-        visit_variable_attributes(step, visitor)
-      })
-    },
+      if (is_get_step(step)) {
+        visitor.Attribute(step.get, 'get', step)
 
-    PutStep(ps) {
-      visitor.Attribute(ps.put, 'put', ps)
+        if (step.params) {
+          Object.keys(step.params).forEach((key) => {
+            const param_value = step.params[key]
 
-      if (ps.params) {
-        Object.keys(ps.params).forEach((key) => {
-          const param_value = ps.params[key]
+            if (typeof param_value !== 'string') {
+              return
+            }
 
-          if (typeof param_value !== 'string') {
-            return
-          }
-
-          visitor.Attribute(param_value, key, ps.params)
-        })
-      }
-    },
-
-    GetStep(gs) {
-      visitor.Attribute(gs.get, 'get', gs)
-
-      if (gs.params) {
-        Object.keys(gs.params).forEach((key) => {
-          const param_value = gs.params[key]
-
-          if (typeof param_value !== 'string') {
-            return
-          }
-
-          visitor.Attribute(param_value, key, gs.params)
-        })
-      }
-    },
-
-    TaskStep(ts) {
-      visitor.Attribute(ts.task, 'task', ts)
-
-      if (ts.params) {
-        Object.keys(ts.params).forEach((key) => {
-          visitor.Attribute(ts.params[key], key, ts.params)
-        })
-      }
-
-      if (ts.file) {
-        visitor.Attribute(ts.file, 'file', ts)
-      }
-
-      if (ts.config) {
-        if (ts.config.caches)
-          ts.config.caches.forEach((cache) =>
-            visitor.Attribute(cache.path, 'path', cache)
-          )
-
-        if (ts.config.image_resource?.type) {
-          visitor.Attribute(
-            ts.config.image_resource.type,
-            'type',
-            ts.config.image_resource
-          )
+            visitor.Attribute(param_value, key, step.params)
+          })
         }
 
-        if (ts.config.image_resource?.version) {
-          if (typeof ts.config.image_resource.version === 'string') {
-            visitor.Attribute(
-              ts.config.image_resource.version,
-              'version',
-              ts.config.image_resource
-            )
-          } else {
-            Object.keys(ts.config.image_resource.version).forEach((key) => {
-              const value = ts.config.image_resource.version[key]
+        return
+      }
 
-              visitor.Attribute(value, key, ts.config.image_resource.version)
+      if (is_task_step(step)) {
+        visitor.Attribute(step.task, 'task', step)
+
+        if (step.params) {
+          Object.keys(step.params).forEach((key) => {
+            visitor.Attribute(step.params[key], key, step.params)
+          })
+        }
+
+        if (step.file) {
+          visitor.Attribute(step.file, 'file', step)
+        }
+
+        if (step.config) {
+          if (step.config.caches)
+            step.config.caches.forEach((cache) =>
+              visitor.Attribute(cache.path, 'path', cache)
+            )
+
+          if (step.config.image_resource?.type) {
+            visitor.Attribute(
+              step.config.image_resource.type,
+              'type',
+              step.config.image_resource
+            )
+          }
+
+          if (step.config.image_resource?.version) {
+            if (typeof step.config.image_resource.version === 'string') {
+              visitor.Attribute(
+                step.config.image_resource.version,
+                'version',
+                step.config.image_resource
+              )
+            } else {
+              Object.keys(step.config.image_resource.version).forEach((key) => {
+                const value = step.config.image_resource.version[key]
+
+                visitor.Attribute(
+                  value,
+                  key,
+                  step.config.image_resource.version
+                )
+              })
+            }
+          }
+
+          if (step.config.image_resource?.source) {
+            Object.keys(step.config.image_resource.source).forEach((key) => {
+              const value = step.config.image_resource.source[key]
+
+              if (typeof value !== 'string') {
+                return
+              }
+
+              visitor.Attribute(value, key, step.config.image_resource.source)
             })
           }
-        }
 
-        if (ts.config.image_resource?.source) {
-          Object.keys(ts.config.image_resource.source).forEach((key) => {
-            const value = ts.config.image_resource.source[key]
+          if (step.config.image_resource?.params) {
+            Object.keys(step.config.image_resource.params).forEach((key) => {
+              const value = step.config.image_resource.params[key]
 
-            if (typeof value !== 'string') {
-              return
-            }
+              if (typeof value !== 'string') {
+                return
+              }
 
-            visitor.Attribute(value, key, ts.config.image_resource.source)
-          })
-        }
-
-        if (ts.config.image_resource?.params) {
-          Object.keys(ts.config.image_resource.params).forEach((key) => {
-            const value = ts.config.image_resource.params[key]
-
-            if (typeof value !== 'string') {
-              return
-            }
-
-            visitor.Attribute(value, key, ts.config.image_resource.params)
-          })
-        }
-
-        if (ts.config.inputs) {
-          ts.config.inputs.forEach((input) => {
-            visitor.Attribute(input.name, 'name', input)
-
-            if (input.path) visitor.Attribute(input.path, 'path', input)
-          })
-        }
-
-        if (ts.config.outputs) {
-          ts.config.outputs.forEach((output) => {
-            visitor.Attribute(output.name, 'name', output)
-
-            if (output.path) visitor.Attribute(output.path, 'path', output)
-          })
-        }
-
-        if (ts.config.params) {
-          Object.keys(ts.config.params).forEach((key) => {
-            visitor.Attribute(ts.config.params[key], key, ts.config.params)
-          })
-        }
-
-        if (ts.config.run) {
-          visitor.Attribute(ts.config.run.path, 'path', ts.config.run)
-
-          if (ts.config.run.args)
-            ts.config.run.args.forEach((arg, index) =>
-              visitor.Attribute(arg, index, ts.config.run.args)
-            )
-
-          if (ts.config.run.dir)
-            visitor.Attribute(ts.config.run.dir, 'dir', ts.config.run)
-
-          if (ts.config.run.user)
-            visitor.Attribute(ts.config.run.user, 'user', ts.config.run)
-        }
-
-        Object.keys(ts.config).forEach((key) => {
-          const value = ts.config[key]
-
-          if (typeof value !== 'string') {
-            return
+              visitor.Attribute(value, key, step.config.image_resource.params)
+            })
           }
 
-          visitor.Attribute(value, key, ts.config)
-        })
+          if (step.config.inputs) {
+            step.config.inputs.forEach((input) => {
+              visitor.Attribute(input.name, 'name', input)
+
+              if (input.path) visitor.Attribute(input.path, 'path', input)
+            })
+          }
+
+          if (step.config.outputs) {
+            step.config.outputs.forEach((output) => {
+              visitor.Attribute(output.name, 'name', output)
+
+              if (output.path) visitor.Attribute(output.path, 'path', output)
+            })
+          }
+
+          if (step.config.params) {
+            Object.keys(step.config.params).forEach((key) => {
+              visitor.Attribute(
+                step.config.params[key],
+                key,
+                step.config.params
+              )
+            })
+          }
+
+          if (step.config.run) {
+            visitor.Attribute(step.config.run.path, 'path', step.config.run)
+
+            if (step.config.run.args)
+              step.config.run.args.forEach((arg, index) =>
+                visitor.Attribute(arg, index, step.config.run.args)
+              )
+
+            if (step.config.run.dir)
+              visitor.Attribute(step.config.run.dir, 'dir', step.config.run)
+
+            if (step.config.run.user)
+              visitor.Attribute(step.config.run.user, 'user', step.config.run)
+          }
+
+          Object.keys(step.config).forEach((key) => {
+            const value = step.config[key]
+
+            if (typeof value !== 'string') {
+              return
+            }
+
+            visitor.Attribute(value, key, step.config)
+          })
+        }
+
+        return
       }
     },
   })
