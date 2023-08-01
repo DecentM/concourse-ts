@@ -1,7 +1,7 @@
 // https://github.com/concourse/concourse/blob/6841cd592dfe844599b73e333ea66c650f2f237b/atc/step_validator.go#L109
 
 import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
-import {is_get_step} from '../../utils/step-type'
+import {is_get_step, is_put_step} from '../../utils/step-type'
 
 import * as Type from '../../declarations/types'
 import {validate_identifier} from '../identifier'
@@ -47,14 +47,12 @@ export const validate_get_steps = (pipeline: Type.Pipeline) => {
 
           job.plan.forEach((job_step) => {
             visit_step(job_step, {
-              GetStep: (other_step) => {
-                if (other_step.get === step.get) {
+              Step(component) {
+                if (is_get_step(component) && component.get === step.get) {
                   found_resource = true
                 }
-              },
 
-              PutStep: (other_step) => {
-                if (other_step.put === step.get) {
+                if (is_put_step(component) && component.put === step.get) {
                   found_resource = true
                 }
               },
