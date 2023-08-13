@@ -12,7 +12,6 @@
  * })
  * ```
  */
-export type Customiser<Type, Options = void> = (
-  instance: Type,
-  parent: Options
-) => void
+export type Customiser<Type, Options = void> = Options extends void
+  ? (instance: Type) => void
+  : (instance: Type, parent: Options) => void

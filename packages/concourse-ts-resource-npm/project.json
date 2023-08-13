@@ -10,7 +10,6 @@
         "{options.outputPath}"
       ],
       "options": {
-        "updateBuildableProjectDepsInPackageJson": false,
         "outputPath": "dist/packages/concourse-ts-resource-npm",
         "main": "packages/concourse-ts-resource-npm/src/index.ts",
         "tsConfig": "packages/concourse-ts-resource-npm/tsconfig.lib.json",
