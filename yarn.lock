@@ -1193,6 +1193,13 @@
   dependencies:
     "@nx/devkit" "16.7.1"
 
+"@nrwl/devkit@16.7.2":
+  version "16.7.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-16.7.2.tgz#2aad677797c594c42138ce7dea960d35e4a82997"
+  integrity sha512-xJIQFtmPoLFWX5gKl6QOGMzXjn+TZPkTMv5pQ12y2StpuGa3T2n8m7TnHPHGAk43ayiPDcDD97cZ75Fue+mK/w==
+  dependencies:
+    "@nx/devkit" "16.7.2"
+
 "@nrwl/eslint-plugin-nx@16.7.1":
   version "16.7.1"
   resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-16.7.1.tgz#60f1fd5d412dd7534e2018d99a09483a8c4bff45"
@@ -1206,6 +1213,13 @@
   integrity sha512-LI/qlKQIBFTaFMTGXu+fUxRVmGiPHEw/9C3HTQS8a+bTYuN2aow+GL/Fg1RN/3qOVutOJbEcDi4XhzbB7VDnOQ==
   dependencies:
     "@nx/js" "16.7.1"
+
+"@nrwl/js@16.7.2":
+  version "16.7.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/js/-/js-16.7.2.tgz#53b488c2c8bf8dc4c5fe0e19af2bcd37c0263497"
+  integrity sha512-RflIReJoMmBhvBuSKzWLNJvqhz0uDy3Alg7QylGct0uzrTFqOH9fn35W9gYYN3EE8WQXpBlcQk3t+5xs9oHGXg==
+  dependencies:
+    "@nx/js" "16.7.2"
 
 "@nrwl/linter@16.7.1":
   version "16.7.1"
@@ -1237,12 +1251,32 @@
   dependencies:
     "@nx/workspace" "16.7.1"
 
+"@nrwl/workspace@16.7.2":
+  version "16.7.2"
+  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-16.7.2.tgz#8ef4eb11acc7d95c4f2e663a095b477cb2bbfcb8"
+  integrity sha512-PTYFfSG64DBJPII/AiUQXP9uuPRfllVBMKKLwvMgVp9siClvgmyctlf5XONlbWfYNJ5jRI7/To8FF52EuQ95Zg==
+  dependencies:
+    "@nx/workspace" "16.7.2"
+
 "@nx/devkit@16.7.1":
   version "16.7.1"
   resolved "https://registry.yarnpkg.com/@nx/devkit/-/devkit-16.7.1.tgz#9be0f903e62e09939abc446594d35dc8631af11b"
   integrity sha512-PASQGd1YhcAA/hpupCsSakP71Qh1pYle4dtF+wh3KDe2kdeM6BgccClapiGcXAI46JKLUGAbNYJ8pg7GEPY5Nw==
   dependencies:
     "@nrwl/devkit" "16.7.1"
+    ejs "^3.1.7"
+    enquirer "~2.3.6"
+    ignore "^5.0.4"
+    semver "7.5.3"
+    tmp "~0.2.1"
+    tslib "^2.3.0"
+
+"@nx/devkit@16.7.2":
+  version "16.7.2"
+  resolved "https://registry.yarnpkg.com/@nx/devkit/-/devkit-16.7.2.tgz#cb34103221a257608ee9f330e615071a430148eb"
+  integrity sha512-Gf6FwxhVUH7h3u6Vp/62sDAqgiPR0WvU/etw/DQmJvOqauM9Nj43r0mBCmgh29yZZEgW1zMIMCTOtUYqFFl1ew==
+  dependencies:
+    "@nrwl/devkit" "16.7.2"
     ejs "^3.1.7"
     enquirer "~2.3.6"
     ignore "^5.0.4"
@@ -1281,6 +1315,38 @@
     "@nrwl/js" "16.7.1"
     "@nx/devkit" "16.7.1"
     "@nx/workspace" "16.7.1"
+    "@phenomnomnominal/tsquery" "~5.0.1"
+    babel-plugin-const-enum "^1.0.1"
+    babel-plugin-macros "^2.8.0"
+    babel-plugin-transform-typescript-metadata "^0.3.1"
+    chalk "^4.1.0"
+    detect-port "^1.5.1"
+    fast-glob "3.2.7"
+    fs-extra "^11.1.0"
+    ignore "^5.0.4"
+    js-tokens "^4.0.0"
+    minimatch "3.0.5"
+    semver "7.5.3"
+    source-map-support "0.5.19"
+    ts-node "10.9.1"
+    tsconfig-paths "^4.1.2"
+    tslib "^2.3.0"
+
+"@nx/js@16.7.2":
+  version "16.7.2"
+  resolved "https://registry.yarnpkg.com/@nx/js/-/js-16.7.2.tgz#32f576bd7a48c7fb00ab21910a22061a13148a47"
+  integrity sha512-6mkOfZlI+RpqkF8Lwte+ZmC2Lx46cHcDUjvdYkoIud40C2uf7eaqnMKh4zw3M25mdzm51BAf22LV31b8q3mBmg==
+  dependencies:
+    "@babel/core" "^7.22.9"
+    "@babel/plugin-proposal-class-properties" "^7.18.6"
+    "@babel/plugin-proposal-decorators" "^7.22.7"
+    "@babel/plugin-transform-runtime" "^7.22.9"
+    "@babel/preset-env" "^7.22.9"
+    "@babel/preset-typescript" "^7.22.5"
+    "@babel/runtime" "^7.22.6"
+    "@nrwl/js" "16.7.2"
+    "@nx/devkit" "16.7.2"
+    "@nx/workspace" "16.7.2"
     "@phenomnomnominal/tsquery" "~5.0.1"
     babel-plugin-const-enum "^1.0.1"
     babel-plugin-macros "^2.8.0"
@@ -1420,6 +1486,20 @@
     chalk "^4.1.0"
     ignore "^5.0.4"
     nx "16.7.1"
+    rxjs "^7.8.0"
+    tslib "^2.3.0"
+    yargs-parser "21.1.1"
+
+"@nx/workspace@16.7.2":
+  version "16.7.2"
+  resolved "https://registry.yarnpkg.com/@nx/workspace/-/workspace-16.7.2.tgz#25b54090b37db9f45d795327c013781d290b6a95"
+  integrity sha512-6bI2EBXxbMcUI/Gtin+M95l9kQdoov9UIB97j8pX/V/4K8Xvegn01+MF99De9/oApkQjNehmR2dpi4hPo0FFUw==
+  dependencies:
+    "@nrwl/workspace" "16.7.2"
+    "@nx/devkit" "16.7.2"
+    chalk "^4.1.0"
+    ignore "^5.0.4"
+    nx "16.7.2"
     rxjs "^7.8.0"
     tslib "^2.3.0"
     yargs-parser "21.1.1"
