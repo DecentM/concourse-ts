@@ -33,7 +33,7 @@
     "eslint-config-prettier": "9.0.0",
     "husky": "^8.0.3",
     "jsdom": "~22.1.0",
-    "nx": "16.7.2",
+    "nx": "16.7.3",
     "prettier": "^3.0.2",
     "sort-package-json": "^2.5.1",
     "typedoc": "^0.24.8",
