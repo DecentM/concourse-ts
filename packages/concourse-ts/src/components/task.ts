@@ -1,13 +1,13 @@
-import {Customiser} from '../declarations/customiser'
-import {get_identifier, Identifier} from '../utils/identifier'
+import { Customiser } from '../declarations/customiser'
+import { get_identifier, Identifier } from '../utils/identifier'
 
 import * as Type from '../declarations/types'
 
-import {BytesInput, get_bytes} from '../utils/bytes'
+import { BytesInput, get_bytes } from '../utils/bytes'
 
-import {Command} from './command'
-import {Resource} from './resource'
-import {TaskStep} from './step'
+import { Command } from './command'
+import { Resource } from './resource'
+import { TaskStep } from './step'
 
 /**
  * https://concourse-ci.org/tasks.html
@@ -86,9 +86,7 @@ export class Task<
    *
    * @param {Resource | Type.AnonymousResource<string>} input
    */
-  public set_image_resource = (
-    input: Resource | Type.AnonymousResource<string>
-  ) => {
+  public set_image_resource = (input: Resource | Type.AnonymousResource<string>) => {
     if (input instanceof Resource) {
       const serialised = input.serialise()
 
@@ -130,12 +128,6 @@ export class Task<
 
   private container_limits: Type.ContainerLimits
 
-  /*
-    TODO
-
-    This shares logic can be improved by having some sort of internal
-    share allocator that maps task importance to shares.
-   */
   /**
    * https://concourse-ci.org/tasks.html#schema.container_limits.cpu
    *

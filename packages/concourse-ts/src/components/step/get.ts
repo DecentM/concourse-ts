@@ -1,11 +1,11 @@
-import {Customiser} from '../../declarations/customiser'
+import { Customiser } from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
-import {get_identifier} from '../../utils'
+import { get_identifier } from '../../utils'
 
-import {Job} from '../job'
-import {Resource} from '../resource'
+import { Job } from '../job'
+import { Resource } from '../resource'
 
-import {Step} from './base'
+import { Step } from './base'
 
 export class GetStep<
   Source extends Type.Config = Type.Config,
@@ -33,9 +33,7 @@ export class GetStep<
     }
   }
 
-  public set_get = <
-    ResourceType extends Resource<Source, PutParams, GetParams>,
-  >(
+  public set_get = <ResourceType extends Resource<Source, PutParams, GetParams>>(
     resource: ResourceType
   ) => {
     this.resource = resource
@@ -50,6 +48,9 @@ export class GetStep<
 
   private resource?: Resource
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resources = () => {
     const result = this.get_base_resources()
 
@@ -62,9 +63,11 @@ export class GetStep<
     return result
   }
 
-  private passed: Job[] = []
+  private passed: Job[]
 
   public add_passed = (...jobs: Job[]) => {
+    if (!this.passed) this.passed = []
+
     this.passed.push(...jobs)
   }
 
@@ -78,22 +81,19 @@ export class GetStep<
 
   public version: Type.Version
 
-  public serialise() {
-    const result: Type.GetStep = {
+  public serialise(): Type.GetStep {
+    return {
       ...this.serialise_base(),
       get: get_identifier(this.resource?.name),
 
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,
-      passed:
-        this.passed.length === 0
-          ? undefined
-          : this.passed.map((passed_job) => get_identifier(passed_job.name)),
+      passed: this.passed
+        ? this.passed.map((passed_job) => get_identifier(passed_job.name))
+        : undefined,
       params: this.params,
       trigger: this.trigger,
       version: this.version,
     }
-
-    return result
   }
 }

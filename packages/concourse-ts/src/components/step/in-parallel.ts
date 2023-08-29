@@ -1,9 +1,9 @@
-import {Customiser} from '../../declarations/customiser'
+import { Customiser } from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
 
-import {Step} from './base'
-import {Resource} from '../resource'
-import {AnyStep} from '../../declarations'
+import { Step } from './base'
+import { Resource } from '../resource'
+import { AnyStep } from '../../declarations'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
   private static customiser: Customiser<InParallelStep>
@@ -39,8 +39,6 @@ export class InParallelStep extends Step<Type.InParallelStep> {
 
   /**
    * @internal Used by the compiler
-   *
-   * @returns {TaskStep[]}
    */
   public get_task_steps() {
     const result = this.get_base_task_steps()
@@ -52,6 +50,9 @@ export class InParallelStep extends Step<Type.InParallelStep> {
     return result
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resources(): Resource[] {
     const result = this.get_base_resources()
 

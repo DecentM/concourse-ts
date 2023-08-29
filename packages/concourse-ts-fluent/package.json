@@ -1,0 +1,33 @@
+{
+  "name": "@decentm/concourse-ts-fluent",
+  "version": "0.0.2",
+  "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-fluent",
+  "repository": "https://github.com/DecentM/concourse-ts.git",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "build": "nx build",
+    "t": "yarn test",
+    "test": "c8 --100 --reporter=lcov --reporter=text ava"
+  },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register/transpile-only",
+      "tsconfig-paths/register"
+    ]
+  },
+  "peerDependencies": {
+    "@decentm/concourse-ts": "0.x"
+  },
+  "devDependencies": {
+    "ava": "^5.3.1",
+    "c8": "^8.0.1",
+    "ts-node-dev": "^2.0.0"
+  },
+  "dependencies": {
+    "verror": "^1.10.1"
+  }
+}

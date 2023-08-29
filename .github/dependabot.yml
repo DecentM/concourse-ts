@@ -13,6 +13,10 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: npm
+    directory: /packages/concourse-ts-fluent/
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
     directory: /packages/concourse-ts-recipe-auto-pipeline/
     schedule:
       interval: daily

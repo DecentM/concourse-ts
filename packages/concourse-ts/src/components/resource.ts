@@ -1,15 +1,15 @@
-import {VError} from 'verror'
+import { VError } from 'verror'
 
-import {Customiser} from '../declarations/customiser'
+import { Customiser } from '../declarations/customiser'
 import * as Type from '../declarations/types'
 
-import {Duration, DurationInput, get_duration} from '../utils/duration'
+import { Duration, DurationInput, get_duration } from '../utils/duration'
 
-import {ResourceType} from './resource-type'
-import {GetStep, PutStep} from './step'
-import {Job} from './job'
-import {type_of} from '../utils'
-import {get_identifier} from '../utils/identifier'
+import { ResourceType } from './resource-type'
+import { GetStep, PutStep } from './step'
+import { Job } from './job'
+import { type_of } from '../utils'
+import { get_identifier } from '../utils/identifier'
 
 type AsPutStepInput<PutParams> = {
   params?: PutParams
@@ -103,6 +103,9 @@ export class Resource<
     }
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resource_types = (): ResourceType[] => {
     const result: ResourceType[] = []
 
@@ -155,68 +158,62 @@ export class Resource<
     input?: AsPutStepInput<PutParams>,
     customise?: Customiser<PutStep<Source, PutParams, GetParams>>
   ) => {
-    return new PutStep<Source, PutParams, GetParams>(
-      `${this.name}_put`,
-      (step) => {
-        if (Resource.put_step_customiser) {
-          Resource.put_step_customiser(step, this)
-        }
-
-        if (this.put_step_customiser) {
-          this.put_step_customiser(step, this)
-        }
-
-        step.set_put(this)
-
-        if (input?.params) {
-          step.set_params(input.params)
-        }
-
-        if (input?.inputs) {
-          step.set_inputs(input.inputs)
-        }
-
-        if (customise) {
-          customise(step)
-        }
+    return new PutStep<Source, PutParams, GetParams>(`${this.name}_put`, (step) => {
+      if (Resource.put_step_customiser) {
+        Resource.put_step_customiser(step, this)
       }
-    )
+
+      if (this.put_step_customiser) {
+        this.put_step_customiser(step, this)
+      }
+
+      step.set_put(this)
+
+      if (input?.params) {
+        step.set_params(input.params)
+      }
+
+      if (input?.inputs) {
+        step.set_inputs(input.inputs)
+      }
+
+      if (customise) {
+        customise(step)
+      }
+    })
   }
 
   public as_get_step = (
     input?: AsGetStepInput<GetParams>,
     customise?: Customiser<GetStep<Source, PutParams, GetParams>>
   ) => {
-    return new GetStep<Source, PutParams, GetParams>(
-      `${this.name}_get`,
-      (step) => {
-        if (Resource.get_step_customiser) {
-          Resource.get_step_customiser(step, this)
-        }
-
-        if (this.get_step_customiser) {
-          this.get_step_customiser(step, this)
-        }
-
-        step.set_get(this)
-
-        if (input?.params) {
-          step.set_params(input.params)
-        }
-
-        if (input?.passed) {
-          step.add_passed(...input.passed)
-        }
-
-        if (type_of(input?.trigger) === 'boolean') {
-          step.trigger = input.trigger
-        }
-
-        if (customise) {
-          customise(step)
-        }
+    return new GetStep<Source, PutParams, GetParams>(`${this.name}_get`, (step) => {
+      if (Resource.get_step_customiser) {
+        Resource.get_step_customiser(step, this)
       }
-    )
+
+      if (this.get_step_customiser) {
+        this.get_step_customiser(step, this)
+      }
+
+      step.set_get(this)
+
+      if (input?.params) {
+        step.set_params(input.params)
+      }
+
+      if (input?.passed) {
+        step.add_passed(...input.passed)
+      }
+
+      if (type_of(input?.trigger) === 'boolean') {
+        step.trigger = input.trigger
+      }
+
+      if (customise) {
+        customise(step)
+      }
+    })
   }
 
   public serialise() {
