@@ -1,12 +1,12 @@
 import * as Type from '../declarations/types'
-import {Customiser} from '../declarations/customiser'
-import {Resource} from './resource'
-import {Job} from './job'
-import {ResourceType} from './resource-type'
-import {deduplicate_by_identity} from '../utils/array-duplicates'
-import {Task} from './task'
-import {TaskStep} from './step'
-import {get_identifier} from '../utils/identifier'
+import { Customiser } from '../declarations/customiser'
+import { Resource } from './resource'
+import { Job } from './job'
+import { ResourceType } from './resource-type'
+import { deduplicate_by_identity } from '../utils/array-duplicates'
+import { Task } from './task'
+import { TaskStep } from './step'
+import { get_identifier } from '../utils/identifier'
 
 export class Pipeline<Group extends string = string> {
   private static customiser: Customiser<Pipeline>
@@ -15,7 +15,10 @@ export class Pipeline<Group extends string = string> {
     Pipeline.customiser = init
   }
 
-  constructor(public name: string, customise?: Customiser<Pipeline<Group>>) {
+  constructor(
+    public name: string,
+    customise?: Customiser<Pipeline<Group>>
+  ) {
     if (Pipeline.customiser) {
       Pipeline.customiser(this)
     }
@@ -182,12 +185,12 @@ export class Pipeline<Group extends string = string> {
    * Serialises this Pipeline into a valid Concourse configuration fixture. The
    * returned value needs to be converted into YAML to be used in Concourse.
    *
-   * @returns {Type.Pipeline} A JSON representation of this Job
+   * @returns {Type.Pipeline} A JSON representation of this Pipeline
    */
   public serialise() {
-    const resource_types = deduplicate_by_identity(
-      this.get_resource_types()
-    ).map((rt) => rt.serialise())
+    const resource_types = deduplicate_by_identity(this.get_resource_types()).map(
+      (rt) => rt.serialise()
+    )
 
     const resources = deduplicate_by_identity(this.get_resources()).map((r) =>
       r.serialise()

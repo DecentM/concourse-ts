@@ -1,10 +1,10 @@
-import {Customiser} from '../../declarations/customiser'
+import { Customiser } from '../../declarations/customiser'
 import * as Type from '../../declarations/types'
-import {get_identifier} from '../../utils'
+import { get_identifier } from '../../utils'
 
-import {Resource} from '../resource'
+import { Resource } from '../resource'
 
-import {Step} from './base'
+import { Step } from './base'
 
 export class PutStep<
   Source extends Type.Config = Type.Config,
@@ -32,9 +32,7 @@ export class PutStep<
     }
   }
 
-  public set_put = <
-    ResourceType extends Resource<Source, PutParams, GetParams>,
-  >(
+  public set_put = <ResourceType extends Resource<Source, PutParams, GetParams>>(
     resource: ResourceType
   ) => {
     this.resource = resource
@@ -51,6 +49,9 @@ export class PutStep<
 
   private resource?: Resource<Source, PutParams, GetParams>
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resources = (): Resource[] => {
     const result = this.get_base_resources()
 
