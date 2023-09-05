@@ -36,7 +36,7 @@
     "nx": "16.7.4",
     "prettier": "^3.0.3",
     "sort-package-json": "^2.5.1",
-    "typedoc": "^0.25.0",
+    "typedoc": "^0.25.1",
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-coverage": "^2.2.0",
     "typedoc-plugin-markdown": "^3.16.0",
