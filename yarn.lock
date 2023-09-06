@@ -1200,12 +1200,12 @@
   dependencies:
     "@nx/devkit" "16.8.0"
 
-"@nrwl/eslint-plugin-nx@16.7.4":
-  version "16.7.4"
-  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-16.7.4.tgz#2719debd24db6829908e63d8f22527122f289034"
-  integrity sha512-/qN/Gn0f+7fxmxLO/mSacous3fkBXCeauKKIeJQl6uSi1aVhV/u4BddNK+d2zn5WNN/xBI+xZThM+DYJMsiXjA==
+"@nrwl/eslint-plugin-nx@16.8.0":
+  version "16.8.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-16.8.0.tgz#0af7fdb99c75b4620338e7f9735f18c633c33cac"
+  integrity sha512-reDSV18k9wFomOn80BwhtHjzIigWQX+GcO9l9UhAPskLA2d61jWaXYxeVQrx7sh0kzZum856VGgTBStECHElaw==
   dependencies:
-    "@nx/eslint-plugin" "16.7.4"
+    "@nx/eslint-plugin" "16.8.0"
 
 "@nrwl/js@16.7.4":
   version "16.7.4"
@@ -1284,14 +1284,14 @@
     tmp "~0.2.1"
     tslib "^2.3.0"
 
-"@nx/eslint-plugin@16.7.4":
-  version "16.7.4"
-  resolved "https://registry.yarnpkg.com/@nx/eslint-plugin/-/eslint-plugin-16.7.4.tgz#09c04ff657955959f061724f8018dcfcd64677a6"
-  integrity sha512-PjpXeW/Tr/y/PJSEaB9X2xNaqW6mYXzcFSAXQrlxuDNdVEtrieSj+OiAGKfaYjkcN1d/X9dupV6b/L0V+HcSlw==
+"@nx/eslint-plugin@16.8.0":
+  version "16.8.0"
+  resolved "https://registry.yarnpkg.com/@nx/eslint-plugin/-/eslint-plugin-16.8.0.tgz#cde31b83b4dff9fc1b337ca1dca8a49fc4698cf8"
+  integrity sha512-QWVEkPx7zGfINYJIXhtBe3OVBNtxP6reay+MkMGT+xQGEDTqFt+qrjUW77rjTffmNnNcvl1ECzEzHFvriT0Vlg==
   dependencies:
-    "@nrwl/eslint-plugin-nx" "16.7.4"
-    "@nx/devkit" "16.7.4"
-    "@nx/js" "16.7.4"
+    "@nrwl/eslint-plugin-nx" "16.8.0"
+    "@nx/devkit" "16.8.0"
+    "@nx/js" "16.8.0"
     "@typescript-eslint/type-utils" "^5.60.1"
     "@typescript-eslint/utils" "^5.60.1"
     chalk "^4.1.0"
