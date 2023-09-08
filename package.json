@@ -21,7 +21,7 @@
     "@swc/helpers": "~0.5.1"
   },
   "devDependencies": {
-    "@nrwl/eslint-plugin-nx": "16.8.0",
+    "@nrwl/eslint-plugin-nx": "16.8.1",
     "@nrwl/js": "16.8.1",
     "@nrwl/linter": "16.8.0",
     "@nrwl/workspace": "16.8.0",
