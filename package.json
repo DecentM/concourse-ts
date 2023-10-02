@@ -18,7 +18,7 @@
     "postci": "yarn concourse-ts transform"
   },
   "dependencies": {
-    "@swc/helpers": "~0.5.1"
+    "@swc/helpers": "~0.5.2"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "16.8.1",
