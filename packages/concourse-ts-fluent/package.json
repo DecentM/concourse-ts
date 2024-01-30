@@ -23,7 +23,7 @@
     "@decentm/concourse-ts": "0.x"
   },
   "devDependencies": {
-    "ava": "^5.3.1",
+    "ava": "^6.1.1",
     "c8": "^8.0.1",
     "ts-node-dev": "^2.0.0"
   },
