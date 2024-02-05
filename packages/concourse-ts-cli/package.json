@@ -37,7 +37,7 @@
     "@decentm/concourse-ts-resource-npm": "0.2.1"
   },
   "devDependencies": {
-    "@swc/helpers": "~0.5.1",
+    "@swc/helpers": "~0.5.5",
     "@types/rimraf": "^4.0.5",
     "@types/tmp": "^0.2.3",
     "@types/verror": "^1.10.6"

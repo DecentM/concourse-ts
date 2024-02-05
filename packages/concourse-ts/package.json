@@ -22,7 +22,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@swc/helpers": "~0.5.1",
+    "@swc/helpers": "~0.5.5",
     "lodash.clonedeep": "^4.5.0",
     "tslib": "^2.6.2",
     "verror": "^1.10.1",
