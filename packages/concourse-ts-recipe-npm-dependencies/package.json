@@ -13,6 +13,6 @@
     "@decentm/concourse-ts-resource-npm": "0.x"
   },
   "dependencies": {
-    "type-fest": "^4.3.1"
+    "type-fest": "^4.14.0"
   }
 }
