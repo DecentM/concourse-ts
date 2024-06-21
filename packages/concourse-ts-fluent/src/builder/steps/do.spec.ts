@@ -26,6 +26,7 @@ test('throws when building without a name', (t) => {
       builder.build()
     },
     {
+      any: true,
       name: 'VError',
       message: 'Cannot build do step without a name',
     }

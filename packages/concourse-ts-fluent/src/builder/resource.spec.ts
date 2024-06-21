@@ -57,6 +57,7 @@ test('throws when building without a type', (t) => {
       builder.build()
     },
     {
+      any: true,
       name: 'VError',
       message: 'Cannot build resource "my-r" without a type',
     }
@@ -71,6 +72,7 @@ test('throws when building without a name', (t) => {
       builder.build()
     },
     {
+      any: true,
       name: 'VError',
       message: 'Cannot build resource without a name',
     }

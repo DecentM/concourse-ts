@@ -42,6 +42,7 @@ test('throws without name', (t) => {
       builder.build()
     },
     {
+      any: true,
       name: 'VError',
       message: 'Cannot build get step without a name',
     }
@@ -74,6 +75,7 @@ test('throws when attempting to overwrite an existing resource', (t) => {
       builder.get(r)
     },
     {
+      any: true,
       name: 'VError',
       message: 'Cannot overwrite resource or resource customiser on "my-get-step"',
     }

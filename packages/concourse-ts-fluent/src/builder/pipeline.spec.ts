@@ -47,6 +47,7 @@ test('throws when building without a name', (t) => {
       builder.build()
     },
     {
+      any: true,
       name: 'VError',
       message: 'Cannot build pipeline without a name',
     }

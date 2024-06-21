@@ -1,5 +1,5 @@
 import test from 'ava'
-import {is_shebang} from '.'
+import { is_shebang } from '.'
 
 test('finds shebangs', (t) => {
   t.true(is_shebang('#!'))
@@ -16,4 +16,5 @@ test('no false positives', (t) => {
   t.false(is_shebang('/bin/sh'))
   t.false(is_shebang('sh -e'))
   t.false(is_shebang('/bin/sh -e'))
+  t.false(is_shebang('#/bin/sh'))
 })

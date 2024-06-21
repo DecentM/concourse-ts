@@ -11,6 +11,7 @@ test('throws without a step type', (t) => {
       builder.build()
     },
     {
+      any: true,
       name: 'VError',
       message: 'Cannot build step without a step type',
     }
