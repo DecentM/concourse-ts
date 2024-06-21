@@ -2,7 +2,7 @@ import test from 'ava'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-import {Decompilation} from '.'
+import { Decompilation } from '.'
 
 test('decompiles normally', async (t) => {
   const decompilation = new Decompilation()
@@ -43,9 +43,7 @@ test('does not produce undefined assignments', async (t) => {
 
 test('throws when input is not a pipeline', async (t) => {
   const decompilation = new Decompilation()
-  const file = await fs.readFile(
-    path.resolve(__dirname, 'test/not-pipeline.yml')
-  )
+  const file = await fs.readFile(path.resolve(__dirname, 'test/not-pipeline.yml'))
 
   decompilation
     .set_name('pipeline')
@@ -57,6 +55,7 @@ test('throws when input is not a pipeline', async (t) => {
       decompilation.decompile(file.toString('utf8'))
     },
     {
+      any: true,
       message: 'Input is not a pipeline!',
     }
   )

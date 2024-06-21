@@ -1,9 +1,9 @@
 import test from 'ava'
 
-import {Config} from '../declarations/types'
-import {Duration, has_duplicates_by_key} from '../utils'
+import { Config } from '../declarations/types'
+import { Duration, has_duplicates_by_key } from '../utils'
 
-import {ResourceType, Pipeline, Job, GetStep} from '..'
+import { ResourceType, Pipeline, Job, GetStep } from '..'
 
 test.beforeEach(() => {
   ResourceType.customise((rt) => {
@@ -49,6 +49,7 @@ test('throws if the type is unassigned', (t) => {
     },
     {
       message: 'identifier cannot be an empty string',
+      any: true,
     }
   )
 })
@@ -66,7 +67,7 @@ test('stores tags', (t) => {
 test('stores params', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.set_params({name: '33'})
+  rt.set_params({ name: '33' })
 
   const result = rt.serialise()
 
@@ -76,7 +77,7 @@ test('stores params', (t) => {
 test('stores defaults', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.set_defaults({name: '33'})
+  rt.set_defaults({ name: '33' })
 
   const result = rt.serialise()
 
@@ -86,7 +87,7 @@ test('stores defaults', (t) => {
 test('stores valid Durations into check_every', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.set_check_every({minutes: 1})
+  rt.set_check_every({ minutes: 1 })
 
   const result = rt.serialise()
 
@@ -97,6 +98,7 @@ test('refuses to store "never" into check_every', (t) => {
   const rt = new ResourceType('my-rt')
 
   t.throws(() => rt.set_check_every('never'), {
+    any: true,
     message: `Duration "never" given to ${rt.name} is not allowed`,
   })
 })
@@ -104,7 +106,8 @@ test('refuses to store "never" into check_every', (t) => {
 test('refuses to store invalid Durations into check_every', (t) => {
   const rt = new ResourceType('my-rt')
 
-  t.throws(() => rt.set_check_every({microseconds: -1}), {
+  t.throws(() => rt.set_check_every({ microseconds: -1 }), {
+    any: true,
     message:
       'Duration value must be positive, but got -1. Change this to a positive number, or remove the duration component.',
   })

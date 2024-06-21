@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../..'
-import {Job} from '../../components'
-import {Duration, Identifier} from '../../utils'
+import { Type } from '../..'
+import { Job } from '../../components'
+import { Duration, Identifier } from '../../utils'
 
-import {write_resource_type} from './resource-type'
+import { write_resource_type } from './resource-type'
 
 const chain = (name: string, pipeline: Type.Pipeline) => {
   const code = `
@@ -46,6 +46,7 @@ test("throws when resource type doesn't exist in the pipeline", (t) => {
   }
 
   t.throws(() => chain('a', pipeline), {
+    any: true,
     message: 'Resource type "a" does not exist in the pipeline',
   })
 })
@@ -56,6 +57,7 @@ test('throws when there are no resource_types in the pipeline', (t) => {
   }
 
   t.throws(() => chain('a', pipeline), {
+    any: true,
     message: 'Resource type "a" does not exist in the pipeline',
   })
 })
@@ -72,7 +74,7 @@ test('writes empty resource type', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -97,7 +99,7 @@ test('writes source', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -122,7 +124,7 @@ test('writes check_every', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -146,7 +148,7 @@ test('writes defaults', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -171,7 +173,7 @@ test('writes params', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -194,7 +196,7 @@ test('writes privileged', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -217,7 +219,7 @@ test('writes tags', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {

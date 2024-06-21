@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import {get_identifier, Identifier} from '.'
+import { get_identifier, Identifier } from '.'
 
 test('converts valid strings', (t) => {
   t.is(get_identifier('a'), 'a' as Identifier)
@@ -12,8 +12,8 @@ test('throws for invalid strings', (t) => {
       get_identifier('A')
     },
     {
-      message:
-        '"A" is not a valid identifier: must start with a lowercase letter',
+      any: true,
+      message: '"A" is not a valid identifier: must start with a lowercase letter',
     }
   )
 })

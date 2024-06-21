@@ -1,9 +1,9 @@
 import test from 'ava'
 
-import {Duration} from '../utils/duration'
-import {default_step} from './step/test-data/default-steps'
+import { Duration } from '../utils/duration'
+import { default_step } from './step/test-data/default-steps'
 
-import {ResourceType, Resource, Job} from '..'
+import { ResourceType, Resource, Job } from '..'
 
 test.beforeEach(() => {
   Resource.customise((resource) => {
@@ -22,7 +22,7 @@ test.beforeEach(() => {
 test('throws if the type is unassigned', (t) => {
   const r = new Resource('my-r', null as never)
 
-  t.throws(() => r.serialise())
+  t.throws(() => r.serialise(), { any: true })
 })
 
 test('stores versions', (t) => {
@@ -34,8 +34,8 @@ test('stores versions', (t) => {
   rt.set_version('latest')
   t.is(rt.serialise().version, 'latest')
 
-  rt.set_version({someKey: 'someValue'})
-  t.deepEqual(rt.serialise().version, {someKey: 'someValue'})
+  rt.set_version({ someKey: 'someValue' })
+  t.deepEqual(rt.serialise().version, { someKey: 'someValue' })
 })
 
 test('stores tags', (t) => {
@@ -51,7 +51,7 @@ test('stores tags', (t) => {
 test('stores valid Durations into check_every', (t) => {
   const r = new ResourceType('my-rt').create_resource('r')
 
-  r.set_check_every({minutes: 1})
+  r.set_check_every({ minutes: 1 })
 
   const result = r.serialise()
 
@@ -71,7 +71,7 @@ test('stores "never" into check_every', (t) => {
 test('refuses to store invalid Durations into check_every', (t) => {
   const r = new ResourceType('my-rt').create_resource('r')
 
-  t.throws(() => r.set_check_every({hours: -1}))
+  t.throws(() => r.set_check_every({ hours: -1 }), { any: true })
 })
 
 test('initialiser passes reference to "this"', (t) => {

@@ -1,12 +1,12 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
+import { Type } from '../../..'
 
-import {write_step} from '.'
-import {AnyStep} from '../../../declarations'
-import {Identifier} from '../../../utils'
-import {default_step} from '../../../components/step/test-data/default-steps'
+import { write_step } from '.'
+import { AnyStep } from '../../../declarations'
+import { Identifier } from '../../../utils'
+import { default_step } from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.Step, pipeline: Type.Pipeline) => {
   const code = `
@@ -72,6 +72,7 @@ test('throws when passed invalid input', (t) => {
       )
     },
     {
+      any: true,
       message:
         'Step "a" cannot be stringified to code as it\'s not a recognised type',
     }
@@ -79,7 +80,7 @@ test('throws when passed invalid input', (t) => {
 })
 
 test('writes do steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,
@@ -96,7 +97,7 @@ test('writes do steps', (t) => {
 })
 
 test('writes get steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,
@@ -118,7 +119,7 @@ test('writes get steps', (t) => {
 })
 
 test('writes in_parallel steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,
@@ -139,7 +140,7 @@ test('writes in_parallel steps', (t) => {
 })
 
 test('writes load_var steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,
@@ -160,7 +161,7 @@ test('writes load_var steps', (t) => {
 })
 
 test('writes put steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,
@@ -182,7 +183,7 @@ test('writes put steps', (t) => {
 })
 
 test('writes set_pipeline steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,
@@ -205,7 +206,7 @@ test('writes set_pipeline steps', (t) => {
 })
 
 test('writes task steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,
@@ -230,7 +231,7 @@ test('writes task steps', (t) => {
 })
 
 test('writes try steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       ...default_step,

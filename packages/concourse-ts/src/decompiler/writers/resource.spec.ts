@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../..'
-import {Job} from '../../components'
-import {Duration, Identifier} from '../../utils'
+import { Type } from '../..'
+import { Job } from '../../components'
+import { Duration, Identifier } from '../../utils'
 
-import {write_resource} from './resource'
+import { write_resource } from './resource'
 
 const chain = (name: string, pipeline: Type.Pipeline) => {
   const code = `
@@ -65,7 +65,7 @@ test('writes empty resource', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -85,6 +85,7 @@ test("throws if the resource doesn't exist", (t) => {
       chain('a', pipeline)
     },
     {
+      any: true,
       message: 'Resource "a" does not exist in the pipeline',
     }
   )
@@ -105,13 +106,13 @@ test('writes source', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_resource,
     ...pipeline.resources![0],
-    source: {a: 1},
+    source: { a: 1 },
   })
 })
 
@@ -129,7 +130,7 @@ test('writes check_every', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -154,7 +155,7 @@ test('writes icon', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -179,7 +180,7 @@ test('writes old_name', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -204,7 +205,7 @@ test('writes public', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -229,7 +230,7 @@ test('writes tags', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -254,7 +255,7 @@ test('writes version', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -279,7 +280,7 @@ test('writes webhook_token', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
