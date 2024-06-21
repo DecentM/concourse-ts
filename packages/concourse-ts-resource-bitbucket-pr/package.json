@@ -10,7 +10,7 @@
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x",
-    "@decentm/concourse-ts-resource-registry-image": "0.x",
-    "@decentm/concourse-ts-resource-git": "0.x"
+    "@decentm/concourse-ts-resource-git": "0.x",
+    "@decentm/concourse-ts-resource-registry-image": "0.x"
   }
 }

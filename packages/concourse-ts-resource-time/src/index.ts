@@ -6,7 +6,10 @@ import * as RegistryImage from '@decentm/concourse-ts-resource-registry-image'
  */
 export type Source = {
   /**
-   * The interval on which to report new versions. Valid examples: 60s, 90m, 1h.
+   * The interval on which to report new versions.
+   *
+   * Valid examples: `60s`, `90m`, `1h`.
+   *
    * If not specified, this resource will generate exactly 1 new version per
    * calendar day on each of the valid days.
    */
