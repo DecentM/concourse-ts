@@ -2121,7 +2121,7 @@ __metadata:
     verror: "npm:^1.10.1"
     yaml: "npm:^2.4.5"
   peerDependencies:
-    typescript: ^5.0.4
+    typescript: ^5.5.2
   languageName: unknown
   linkType: soft
 

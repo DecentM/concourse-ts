@@ -1,5 +1,5 @@
 import { Option } from 'commander'
-import deep_merge from 'ts-deepmerge'
+import { merge } from 'ts-deepmerge'
 
 import { CliCommand } from '../../command'
 import { CompileParams, run_compile_command } from '.'
@@ -14,7 +14,7 @@ export class CompileCommand extends CliCommand {
       )
       .action((params: CompileParams) =>
         run_compile_command(
-          deep_merge.withOptions({ mergeArrays: false }, defaults ?? {}, params)
+          merge.withOptions({ mergeArrays: false }, defaults ?? {}, params)
         )
       )
   }

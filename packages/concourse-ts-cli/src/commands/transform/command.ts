@@ -1,7 +1,7 @@
 import { Utils } from '@decentm/concourse-ts'
 
 import { Option } from 'commander'
-import deep_merge from 'ts-deepmerge'
+import { merge } from 'ts-deepmerge'
 
 import { CliCommand } from '../../command'
 import { TransformParams, run_transform_command } from '.'
@@ -21,7 +21,7 @@ export class TransformCommand extends CliCommand {
       )
       .action((params: TransformParams) =>
         run_transform_command(
-          deep_merge.withOptions({ mergeArrays: false }, defaults ?? {}, params)
+          merge.withOptions({ mergeArrays: false }, defaults ?? {}, params)
         )
       )
   }
