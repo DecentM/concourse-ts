@@ -45,7 +45,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
+          yarn --immutable
 
       - uses: nrwl/nx-set-shas@v3
 
@@ -92,7 +92,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
+          yarn --immutable
 
       - uses: nrwl/nx-set-shas@v3
 
@@ -135,7 +135,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
+          yarn --immutable
 
       - uses: nrwl/nx-set-shas@v3
 
@@ -180,7 +180,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
+          yarn --immutable
 
       - name: Generate docs
         run: |
@@ -239,7 +239,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
+          yarn --immutable
 
       - uses: nrwl/nx-set-shas@v3
 
