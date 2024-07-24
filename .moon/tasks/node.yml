@@ -1,0 +1,29 @@
+fileGroups:
+  default:
+  - '**/*'
+  production:
+  - '!.eslintrc.json'
+  - '!**/?(*.)+(spec|test).[jt]s?(x)?(.snap)'
+  - '!tsconfig.spec.json'
+tasks:
+  build:
+    deps:
+    - ^:build
+    inputs:
+    - '@group(production)'
+    options:
+      cache: true
+  e2e:
+    options:
+      cache: true
+  lint:
+    inputs:
+    - '@group(default)'
+    - /.eslintrc.json
+    options:
+      cache: true
+  test:
+    inputs:
+    - '@group(default)'
+    options:
+      cache: true

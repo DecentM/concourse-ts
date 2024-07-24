@@ -18,29 +18,23 @@
     "ci": "yarn concourse-ts compile",
     "postci": "yarn concourse-ts transform"
   },
-  "dependencies": {
-    "@swc/helpers": "0.5.11"
-  },
   "devDependencies": {
-    "@nrwl/eslint-plugin-nx": "19.3.1",
-    "@nrwl/js": "19.3.1",
-    "@nrwl/linter": "19.3.1",
-    "@nrwl/workspace": "19.3.1",
-    "@swc/cli": "0.3.12",
-    "@swc/core": "1.6.3",
+    "@moonrepo/cli": "^1.27.3",
     "@typescript-eslint/eslint-plugin": "7.13.1",
     "@typescript-eslint/parser": "7.13.1",
     "eslint": "9.5.0",
     "eslint-config-prettier": "9.1.0",
     "husky": "^9.0.11",
     "jsdom": "~24.1.0",
-    "nx": "19.3.1",
     "prettier": "^3.3.2",
     "sort-package-json": "^2.10.0",
     "typedoc": "^0.25.13",
     "typedoc-github-wiki-theme": "^2.0.0",
     "typedoc-plugin-coverage": "^3.2.0",
     "typedoc-plugin-markdown": "^4.0.3",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.4"
+  },
+  "engines": {
+    "node": "20.15.0"
   }
 }

@@ -37,7 +37,6 @@
     "@decentm/concourse-ts-resource-registry-image": "0.2.2"
   },
   "devDependencies": {
-    "@swc/helpers": "~0.5.11",
     "@types/rimraf": "^4.0.5",
     "@types/tmp": "^0.2.6",
     "@types/verror": "^1.10.10"

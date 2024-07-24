@@ -1,0 +1,26 @@
+id: concourse-ts-recipe-npm-dependencies
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-recipe-npm-dependencies
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-recipe-npm-dependencies/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-recipe-npm-dependencies/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-recipe-npm-dependencies/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts-recipe-npm-dependencies/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'

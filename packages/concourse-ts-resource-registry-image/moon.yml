@@ -1,0 +1,26 @@
+id: concourse-ts-resource-registry-image
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-resource-registry-image
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-resource-registry-image/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-resource-registry-image/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-resource-registry-image/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts-resource-registry-image/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'

@@ -1,0 +1,26 @@
+id: concourse-ts-resource-keyval
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-resource-keyval
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-resource-keyval/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-resource-keyval/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-resource-keyval/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts-resource-keyval/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'

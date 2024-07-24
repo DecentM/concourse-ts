@@ -1,0 +1,26 @@
+id: concourse-ts-resource-curl
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-resource-curl
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-resource-curl/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-resource-curl/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-resource-curl/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts-resource-curl/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'

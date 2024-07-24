@@ -1,0 +1,26 @@
+id: concourse-ts-resource-pool
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-resource-pool
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-resource-pool/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-resource-pool/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-resource-pool/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts-resource-pool/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'
