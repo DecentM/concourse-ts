@@ -115,7 +115,7 @@ export const create_npm_dependencies =
       packages
     )
 
-    unique_packages.forEach((pkg) => {
+    for (const pkg of unique_packages) {
       const npm_package: Npm.Resource = new ConcourseTs.Resource(
         pkg.name,
         input.resource_type,
@@ -152,7 +152,7 @@ export const create_npm_dependencies =
       )
 
       var_names[pkg.name] = load_var.var
-    })
+    }
 
     if (customise) {
       customise(step, var_names)

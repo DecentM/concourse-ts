@@ -1,10 +1,10 @@
-import {VError} from 'verror'
-import {type_of} from '../type-of'
+import { VError } from 'verror'
+import { type_of } from '../type-of'
 
 /**
  * Related: {@link DurationInput}
  */
-export type Duration = string & {__type: 'Duration'}
+export type Duration = string & { __type: 'Duration' }
 
 // https://pkg.go.dev/time#ParseDuration
 const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']
@@ -35,6 +35,9 @@ type RequireAtLeastOne<T> = {
   [K in keyof T]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>>
 }[keyof T]
 
+/**
+ * https://pkg.go.dev/time#ParseDuration
+ */
 export type DurationInput = RequireAtLeastOne<{
   nanoseconds?: number
   microseconds?: number
@@ -99,10 +102,7 @@ type ParseNode = {
   value: number
 }
 
-export const parse_duration = (
-  input: string,
-  extra_valid_units: string[] = []
-) => {
+export const parse_duration = (input: string, extra_valid_units: string[] = []) => {
   if (type_of(input) !== 'string') {
     throw new VError(
       `value of type "${type_of(input)}" cannot be parsed as duration`

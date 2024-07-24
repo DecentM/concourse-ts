@@ -8,7 +8,7 @@ import {
   WarningStore,
 } from '../utils/warning-store'
 
-import {validate_identifier} from './identifier'
+import { validate_identifier } from './identifier'
 
 export const validate_jobs = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
@@ -22,7 +22,7 @@ export const validate_jobs = (pipeline: Type.Pipeline) => {
   }
 
   pipeline.jobs.forEach((job, index) => {
-    const location: Location = {section: 'jobs', index}
+    const location: Location = { section: 'jobs', index }
     const identifier = to_identifier(location, job.name)
 
     warnings.copy_from(validate_identifier(job.name, `jobs[${index}]`))

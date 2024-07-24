@@ -1,5 +1,5 @@
-import {Duration} from '../utils/duration'
-import {Identifier} from '../utils/identifier'
+import { Duration } from '../utils/duration'
+import { Identifier } from '../utils/identifier'
 
 export type Config = Record<string, YamlValue>
 export type Version = 'latest' | 'every' | Record<string, string>
@@ -16,7 +16,7 @@ export type YamlValue =
   | null
   | undefined
   | YamlValue[]
-  | {[key in string]: YamlValue}
+  | { [key in string]: YamlValue }
 
 /**
  * JSON representation of {@link ResourceType:class}
@@ -47,6 +47,8 @@ export type Resource = {
   icon?: string
   version?: Version
   check_every?: Duration | 'never'
+  check_timeout?: Duration
+  expose_build_created_by?: boolean
   tags?: Tags
   public?: boolean
   webhook_token?: string
@@ -59,13 +61,12 @@ export type Resource = {
  *
  * https://concourse-ci.org/tasks.html#schema.task-config.image_resource
  */
-export type AnonymousResource<AnonymousIdentifier extends string = Identifier> =
-  {
-    type: AnonymousIdentifier
-    source: Config
-    params?: Config
-    version?: Version
-  }
+export type AnonymousResource<AnonymousIdentifier extends string = Identifier> = {
+  type: AnonymousIdentifier
+  source: Config
+  params?: Config
+  version?: Version
+}
 
 /**
  * JSON representation of {@link Command:class}
@@ -297,10 +298,10 @@ export type Job = {
   plan: Step[]
   old_name?: Identifier
   serial?: boolean
-  build_log_retention?: BuildLogRetentionPolicy
-  build_logs_to_retain?: number
   serial_groups?: Identifier[]
   max_in_flight?: number
+  build_log_retention?: BuildLogRetentionPolicy
+  build_logs_to_retain?: number
   public?: boolean
   disable_manual_trigger?: boolean
   interruptible?: boolean
