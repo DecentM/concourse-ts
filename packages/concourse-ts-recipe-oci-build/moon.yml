@@ -1,0 +1,26 @@
+id: concourse-ts-recipe-oci-build
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-recipe-oci-build
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-recipe-oci-build/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-recipe-oci-build/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-recipe-oci-build/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts-recipe-oci-build/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'

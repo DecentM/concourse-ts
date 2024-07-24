@@ -1,0 +1,26 @@
+id: concourse-ts-resource-fly
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-resource-fly
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-resource-fly/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-resource-fly/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-resource-fly/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts-resource-fly/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'

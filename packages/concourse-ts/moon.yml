@@ -1,0 +1,24 @@
+id: concourse-ts
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - src/index.ts
+      - -d
+      - swc-out
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'
+
+  test:
+    command: c8 --100 --reporter=lcov --reporter=text ava

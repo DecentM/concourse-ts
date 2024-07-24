@@ -1,0 +1,26 @@
+id: concourse-ts-fluent
+language: typescript
+platform: node
+type: library
+
+tasks:
+  build:
+    command: swc
+    args:
+      - --outputPath
+      - $workspaceRoot/dist/packages/concourse-ts-fluent
+      - --tsConfig
+      - $workspaceRoot/packages/concourse-ts-fluent/tsconfig.lib.json
+      - --main
+      - $workspaceRoot/packages/concourse-ts-fluent/src/index.ts
+      - --assets
+      - '["packages/concourse-ts-fluent/*.md"]'
+    outputs:
+      - '{options.outputPath}'
+
+  lint:
+    command: eslint
+    args:
+      - '["packages/concourse-ts/**/*.ts"]'
+    outputs:
+      - '{options.outputFile}'
