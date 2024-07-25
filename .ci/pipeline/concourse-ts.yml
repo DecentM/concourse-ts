@@ -1,4 +1,4 @@
-# Generated with concourse-ts at 00:13:06 on 26/07/2024
+# Generated with concourse-ts at 01:30:59 on 26/07/2024
 #
 # jobs: 1
 # groups: 0
@@ -7,14 +7,14 @@
 # var_sources: 0
 
 jobs:
-  - name: ci
+  - name: auto-pipeline
     plan:
       - attempts: 3
         timeout: 1h
         get: git-ci
         trigger: true
       - timeout: 6h
-        set_pipeline: self
+        set_pipeline: concourse-ts
         file: git-ci/.ci/pipeline/concourse-ts.yml
     max_in_flight: 1
 display:

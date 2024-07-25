@@ -1,5 +1,10 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
+export enum AutoPipelineCompilation {
+  Local,
+  Docker,
+}
+
 export type AutoPipelineOptions<Group extends string = never> = {
   /**
    * A Resource that contains at least one valid concourse-ts pipeline file
@@ -19,7 +24,7 @@ export type AutoPipelineOptions<Group extends string = never> = {
    *
    * https://hub.docker.com/r/decentm/concourse-ts-cli/tags
    */
-  cli_tag: string
+  cli_tag?: string
 }
 
 const create_cli_command_task = <Group extends string = never>(
@@ -111,20 +116,31 @@ export const create_auto_pipeline =
       compile_and_transform
     )
 
-    const set_pipeline_step = new ConcourseTs.SetPipelineStep(
-      'set-pipeline',
+    const set_compiled_pipeline_step = new ConcourseTs.SetPipelineStep(
+      'set-compiled-pipeline',
       (step) => {
         step.set_pipeline = pipeline
         step.file = `output/pipeline/${pipeline.name}.yml`
       }
     )
 
-    const auto_pipeline_job = new ConcourseTs.Job('auto-pipeline', (job) => {
-      job.max_in_flight = 1
+    const set_pipeline_step = new ConcourseTs.SetPipelineStep(
+      'set-pipeline',
+      (step) => {
+        step.set_pipeline = pipeline
+        step.file = `${options.resource.name}/${options.path}`
+      }
+    )
 
+    const auto_pipeline_job = new ConcourseTs.Job('auto-pipeline', (job) => {
       job.add_step(get_resource_step)
-      job.add_step(compile_task.as_task_step())
-      job.add_step(set_pipeline_step)
+
+      if (options.cli_tag) {
+        job.add_step(compile_task.as_task_step())
+        job.add_step(set_compiled_pipeline_step)
+      } else {
+        job.add_step(set_pipeline_step)
+      }
     })
 
     if (customise) {
