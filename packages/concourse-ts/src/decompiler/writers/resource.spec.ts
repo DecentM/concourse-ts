@@ -4,7 +4,6 @@ import fs from 'node:fs/promises'
 import test from 'ava'
 
 import { Type } from '../../index.js'
-import { Resource } from '../../components/index.js'
 import { Duration, Identifier } from '../../utils/index.js'
 
 import { write_resource } from './resource.js'

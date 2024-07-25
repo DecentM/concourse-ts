@@ -5,7 +5,6 @@ import test from 'ava'
 import { tsImport } from 'tsx/esm/api'
 
 import { Type } from '../../../index.js'
-import { DoStep } from '../../../components/index.js'
 
 import { write_do_step } from './do.js'
 import { default_do_step } from '../../../components/step/test-data/default-steps.js'

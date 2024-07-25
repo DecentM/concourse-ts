@@ -7,7 +7,6 @@ import { tsImport } from 'tsx/esm/api'
 import { Type } from '../../../index.js'
 
 import { write_step } from './index.js'
-import { AnyStep } from '../../../declarations/index.js'
 import { Identifier } from '../../../utils/index.js'
 import { default_step } from '../../../components/step/test-data/default-steps.js'
 

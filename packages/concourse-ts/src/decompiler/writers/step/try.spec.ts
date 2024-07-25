@@ -5,7 +5,6 @@ import test from 'ava'
 import { tsImport } from 'tsx/esm/api'
 
 import { Type } from '../../../index.js'
-import { TryStep } from '../../../components/index.js'
 import { Identifier } from '../../../utils/index.js'
 
 import { write_try_step } from './try.js'

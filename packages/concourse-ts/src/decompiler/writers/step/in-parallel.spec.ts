@@ -5,7 +5,6 @@ import test from 'ava'
 import { tsImport } from 'tsx/esm/api'
 
 import { Type } from '../../../index.js'
-import { InParallelStep } from '../../../components/index.js'
 
 import { write_in_parallel_step } from './in-parallel.js'
 import { default_in_parallel_step } from '../../../components/step/test-data/default-steps.js'
