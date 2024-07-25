@@ -2,6 +2,7 @@ import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 
 import path from 'node:path'
+import fs from 'node:fs/promises'
 
 import { HandleOutputParams, handle_output } from '../../lib/handle-output.js'
 import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs.js'
@@ -30,10 +31,10 @@ export const run_decompile_command = async (params: DecompileParams) => {
         decompilation.set_import_path(params.package)
       }
 
-      const path_info = path.parse(input.filepath)
+      const path_info = path.parse(input)
       decompilation.set_name(path_info.name).set_work_dir(process.cwd())
 
-      return decompilation.decompile(input.content)
+      return decompilation.decompile(await fs.readFile(input, 'utf-8'))
     })
   )
 

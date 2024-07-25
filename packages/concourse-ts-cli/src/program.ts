@@ -1,5 +1,3 @@
-import 'ts-node/register/transpile-only'
-
 import { Command } from 'commander'
 
 import pkg from '../package.json'

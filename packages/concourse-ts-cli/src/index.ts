@@ -2,8 +2,6 @@ import VError from 'verror'
 
 import { get_program } from './program.js'
 
-export { rc } from './rc.js'
-
 const main = async () => {
   const program = await get_program()
 

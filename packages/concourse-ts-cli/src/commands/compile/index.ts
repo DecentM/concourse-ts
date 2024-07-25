@@ -3,6 +3,7 @@ import VError from 'verror'
 
 import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs.js'
 import { HandleOutputParams, handle_output } from '../../lib/handle-output.js'
+import { tsImport } from 'tsx/esm/api'
 
 export type CompileParams = HandleInputParams &
   HandleOutputParams & {
@@ -45,7 +46,7 @@ export const run_compile_command = async (params: CompileParams) => {
   const pipelines = (
     await Promise.all(
       inputs.map(async (input) => {
-        const file = await import(input.filepath)
+        const file = await tsImport(input, import.meta.url)
 
         return get_pipeline_from_file(file)
       })
