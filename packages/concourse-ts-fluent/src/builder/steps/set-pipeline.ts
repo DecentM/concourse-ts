@@ -1,6 +1,6 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { StepBuilderBase } from './base'
+import { StepBuilderBase } from './base.js'
 
 export class SetPipelineStepBuilder extends StepBuilderBase<ConcourseTs.SetPipelineStep> {
   public override build(): ConcourseTs.SetPipelineStep {

@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { PipelineBuilder } from './pipeline'
+import { PipelineBuilder } from './pipeline.js'
 
 test('builds pipeline', (t) => {
   const pipeline = new PipelineBuilder()

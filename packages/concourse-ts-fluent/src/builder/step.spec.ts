@@ -1,7 +1,7 @@
 import test from 'ava'
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { StepBuilder } from './step'
+import { StepBuilder } from './step.js'
 
 test('throws without a step type', (t) => {
   const builder = new StepBuilder()

@@ -1,7 +1,7 @@
 import test from 'ava'
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { PutStepBuilder } from './put'
+import { PutStepBuilder } from './put.js'
 
 test('builds', (t) => {
   const builder = new PutStepBuilder()

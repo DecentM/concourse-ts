@@ -1,7 +1,7 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 
-import { ResourceTypeBuilder } from './resource-type'
+import { ResourceTypeBuilder } from './resource-type.js'
 
 export class ResourceBuilder<
   Source extends ConcourseTs.Type.Config = ConcourseTs.Type.Config,

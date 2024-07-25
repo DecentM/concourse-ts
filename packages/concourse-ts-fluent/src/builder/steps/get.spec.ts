@@ -1,7 +1,7 @@
 import test from 'ava'
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { GetStepBuilder } from './get'
+import { GetStepBuilder } from './get.js'
 
 test('builds', (t) => {
   const builder = new GetStepBuilder()

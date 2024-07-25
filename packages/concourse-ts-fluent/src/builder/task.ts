@@ -1,6 +1,6 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { CommandBuilder } from './command'
+import { CommandBuilder } from './command.js'
 
 export class TaskBuilder<
   Input extends ConcourseTs.Utils.Identifier = ConcourseTs.Utils.Identifier,

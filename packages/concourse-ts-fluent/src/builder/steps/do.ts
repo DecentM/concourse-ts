@@ -1,8 +1,8 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
+import VError from 'verror'
 
-import { StepBuilder } from '../step'
-import { StepBuilderBase } from './base'
-import { VError } from 'verror'
+import { StepBuilder } from '../step.js'
+import { StepBuilderBase } from './base.js'
 
 export class DoStepBuilder extends StepBuilderBase<ConcourseTs.DoStep> {
   public override build(): ConcourseTs.DoStep {

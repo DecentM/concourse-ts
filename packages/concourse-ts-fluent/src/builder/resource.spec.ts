@@ -1,7 +1,7 @@
 import test from 'ava'
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { ResourceBuilder } from './resource'
+import { ResourceBuilder } from './resource.js'
 
 test('builds', (t) => {
   const builder = new ResourceBuilder()

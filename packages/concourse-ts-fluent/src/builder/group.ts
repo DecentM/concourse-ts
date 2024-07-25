@@ -1,6 +1,6 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { JobBuilder } from './job'
+import { JobBuilder } from './job.js'
 
 type BuiltGroup = {
   name: string

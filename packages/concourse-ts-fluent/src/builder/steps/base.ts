@@ -1,5 +1,5 @@
-import { SealedBuilder } from '../../declarations/builder'
-import { AllStep } from '../step'
+import { SealedBuilder } from '../../declarations/builder.js'
+import { AllStep } from '../step.js'
 
 export abstract class StepBuilderBase<Type extends AllStep>
   implements SealedBuilder<AllStep>

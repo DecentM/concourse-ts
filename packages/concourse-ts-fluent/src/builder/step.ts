@@ -1,17 +1,17 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 
-import { SealedBuilder } from '../declarations/builder'
+import { SealedBuilder } from '../declarations/builder.js'
 
-import { TryStepBuilder } from './steps/try'
-import { DoStepBuilder } from './steps/do'
-import { GetStepBuilder } from './steps/get'
-import { InParallelStepBuilder } from './steps/in-parallel'
-import { LoadVarStepBuilder } from './steps/load-var'
-import { PutStepBuilder } from './steps/put'
-import { SetPipelineStepBuilder } from './steps/set-pipeline'
-import { TaskStepBuilder } from './steps/task'
-import { StepBuilderBase } from './steps/base'
+import { TryStepBuilder } from './steps/try.js'
+import { DoStepBuilder } from './steps/do.js'
+import { GetStepBuilder } from './steps/get.js'
+import { InParallelStepBuilder } from './steps/in-parallel.js'
+import { LoadVarStepBuilder } from './steps/load-var.js'
+import { PutStepBuilder } from './steps/put.js'
+import { SetPipelineStepBuilder } from './steps/set-pipeline.js'
+import { TaskStepBuilder } from './steps/task.js'
+import { StepBuilderBase } from './steps/base.js'
 
 export type AllStep =
   | ConcourseTs.DoStep
