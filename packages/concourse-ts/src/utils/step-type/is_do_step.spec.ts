@@ -1,10 +1,10 @@
 import test from 'ava'
 
-import * as Type from '../../declarations'
-import {is_do_step} from '.'
+import * as Type from '../../declarations/index.js'
+import { is_do_step } from './index.js'
 
 test('returns false', (t) => {
-  t.is(is_do_step({in_parallel: []}), false)
+  t.is(is_do_step({ in_parallel: [] }), false)
 })
 
 test('returns true', (t) => {

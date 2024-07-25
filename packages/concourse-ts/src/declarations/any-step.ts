@@ -1,5 +1,5 @@
-import {Step} from '../components/step/base'
-import * as Type from './types'
+import { Step } from '../components/step/base.js'
+import * as Type from './types.js'
 
 /**
  * AnyStep will match any of the `*Step` components.

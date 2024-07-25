@@ -1,5 +1,5 @@
-import {Identifier} from '../identifier'
-import * as Type from '../../declarations/types'
+import { Identifier } from './identifier.js'
+import * as Type from '../../declarations/types.js'
 
 export const is_task = <Input extends Identifier, Output extends Identifier>(
   input: object

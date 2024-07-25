@@ -1,11 +1,11 @@
-import { Customiser } from '../../declarations/customiser'
-import * as Type from '../../declarations/types'
-import { get_identifier } from '../../utils'
+import { Customiser } from '../../declarations/customiser.js'
+import * as Type from '../../declarations/types.js'
+import { get_identifier } from '../../utils/index.js'
 
-import { Job } from '../job'
-import { Resource } from '../resource'
+import { Job } from '../job.js'
+import { Resource } from '../resource.js'
 
-import { Step } from './base'
+import { Step } from './base.js'
 
 export class GetStep<
   Source extends Type.Config = Type.Config,

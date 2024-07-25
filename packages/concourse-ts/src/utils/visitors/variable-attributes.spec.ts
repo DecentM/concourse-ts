@@ -1,14 +1,14 @@
 import test from 'ava'
 
-import {visit_variable_attributes} from './variable-attributes'
-import {Identifier} from '../identifier'
+import { visit_variable_attributes } from './variable-attributes.js'
+import { Identifier } from '../identifier/index.js'
 import {
   InParallelStep,
   Pipeline,
   Step,
   Task,
   TaskStep,
-} from '../../declarations'
+} from '../../declarations/index.js'
 
 const call_count = test.macro<[Step | Pipeline, number]>(
   (t, input, expected_call_count) => {

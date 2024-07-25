@@ -1,4 +1,4 @@
-import * as Type from '../../declarations/types'
+import * as Type from '../../declarations/types.js'
 
 const stepTypes = [
   'do',

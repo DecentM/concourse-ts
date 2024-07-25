@@ -1,11 +1,11 @@
-import {Customiser} from '../../declarations/customiser'
-import {get_identifier, Identifier} from '../../utils/identifier'
-import * as Type from '../../declarations/types'
-import {Resource} from '../resource'
+import { Customiser } from '../../declarations/customiser.js'
+import { get_identifier, Identifier } from '../../utils/identifier/index.js'
+import * as Type from '../../declarations/types.js'
+import { Resource } from '../resource.js'
 
-import {Task} from '../task'
+import { Task } from '../task.js'
 
-import {Step} from './base'
+import { Step } from './base.js'
 
 export class TaskStep<
   Input extends Identifier = Identifier,

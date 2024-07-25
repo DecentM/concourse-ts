@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
-import {Platform} from '../../../declarations'
-import {Duration, Identifier} from '../../../utils'
+import { Type } from '../../..'
+import { Platform } from '../../../declarations/index.js'
+import { Duration, Identifier } from '../../../utils/index.js'
 
-import {write_step_base} from './base'
+import { write_step_base } from './base.js'
 
 const chain = (name: string, input: Type.Step, pipeline: Type.Pipeline) => {
   const code = write_step_base('step', name, input, pipeline)
@@ -49,15 +49,15 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step modifiers', (t) => {
-  const {diagnostics} = chain('a', default_step, default_pipeline)
+  const { diagnostics } = chain('a', default_step, default_pipeline)
 
   t.deepEqual(diagnostics, [])
 })
 
 test('writes attempts', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, attempts: 5},
+    { ...default_step, attempts: 5 },
     default_pipeline
   )
 
@@ -66,9 +66,9 @@ test('writes attempts', (t) => {
 })
 
 test('writes tags', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, tags: ['tag-a', 'tag-b']},
+    { ...default_step, tags: ['tag-a', 'tag-b'] },
     default_pipeline
   )
 
@@ -77,9 +77,9 @@ test('writes tags', (t) => {
 })
 
 test('writes timeout', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, timeout: '1h2m' as Duration},
+    { ...default_step, timeout: '1h2m' as Duration },
     default_pipeline
   )
 
@@ -88,7 +88,7 @@ test('writes timeout', (t) => {
 })
 
 test('writes across', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
     {
       ...default_step,
@@ -113,9 +113,9 @@ test('writes across', (t) => {
 })
 
 test('writes ensure', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, ensure: default_step},
+    { ...default_step, ensure: default_step },
     default_pipeline
   )
 
@@ -124,9 +124,9 @@ test('writes ensure', (t) => {
 })
 
 test('writes on_success', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, on_success: default_step},
+    { ...default_step, on_success: default_step },
     default_pipeline
   )
 
@@ -135,9 +135,9 @@ test('writes on_success', (t) => {
 })
 
 test('writes on_error', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, on_error: default_step},
+    { ...default_step, on_error: default_step },
     default_pipeline
   )
 
@@ -146,9 +146,9 @@ test('writes on_error', (t) => {
 })
 
 test('writes on_failure', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, on_failure: default_step},
+    { ...default_step, on_failure: default_step },
     default_pipeline
   )
 
@@ -157,9 +157,9 @@ test('writes on_failure', (t) => {
 })
 
 test('writes on_abort', (t) => {
-  const {diagnostics, code} = chain(
+  const { diagnostics, code } = chain(
     'a',
-    {...default_step, on_abort: default_step},
+    { ...default_step, on_abort: default_step },
     default_pipeline
   )
 

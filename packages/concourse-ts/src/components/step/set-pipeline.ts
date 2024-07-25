@@ -1,10 +1,10 @@
-import {Customiser} from '../../declarations/customiser'
-import {get_identifier} from '../../utils/identifier'
-import * as Type from '../../declarations/types'
-import {Resource} from '../resource'
+import { Customiser } from '../../declarations/customiser.js'
+import { get_identifier } from '../../utils/identifier/index.js'
+import * as Type from '../../declarations/types.js'
+import { Resource } from '../resource.js'
 
-import {Step} from './base'
-import {Pipeline} from '../pipeline'
+import { Step } from './base.js'
+import { Pipeline } from '../pipeline.js'
 
 export class SetPipelineStep extends Step<Type.SetPipelineStep> {
   private static customiser: Customiser<SetPipelineStep>

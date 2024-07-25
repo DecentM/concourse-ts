@@ -1,5 +1,5 @@
 import test from 'ava'
-import {type_of} from '.'
+import { type_of } from './index.js'
 
 test('null', (t) => {
   t.is(type_of(null), 'null')

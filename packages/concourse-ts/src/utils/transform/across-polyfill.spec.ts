@@ -6,10 +6,10 @@ import {
   Pipeline,
   Step,
   TaskStep,
-} from '../../declarations'
-import {Identifier} from '../../utils/identifier'
+} from '../../declarations/index.js'
+import { Identifier } from '../../utils/identifier/index.js'
 
-import {apply_across_polyfill} from './across-polyfill'
+import { apply_across_polyfill } from './across-polyfill.js'
 
 const create_pipeline = (): Pipeline => ({
   jobs: [
@@ -107,10 +107,7 @@ test('replaces multiple variables in a single value', (t) => {
   const step = pipeline.jobs[0].plan[0] as InParallelStep
   const child_step = (step.in_parallel as InParallelConfig).steps[0] as TaskStep
 
-  t.is(
-    child_step.config!.run.args![0],
-    'alpine 13.7 with node 14' as Identifier
-  )
+  t.is(child_step.config!.run.args![0], 'alpine 13.7 with node 14' as Identifier)
 })
 
 const step_with_across = {

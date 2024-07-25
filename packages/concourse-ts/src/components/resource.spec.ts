@@ -1,9 +1,9 @@
 import test from 'ava'
 
-import { Duration } from '../utils/duration'
-import { default_step } from './step/test-data/default-steps'
+import { Duration } from '../utils/duration/index.js'
+import { default_step } from './step/test-data/default-steps.js'
 
-import { ResourceType, Resource, Job } from '..'
+import { ResourceType, Resource, Job } from '../index.js'
 
 test.beforeEach(() => {
   Resource.customise((resource) => {

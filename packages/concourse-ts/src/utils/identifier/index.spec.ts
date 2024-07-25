@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { get_identifier, Identifier } from '.'
+import { get_identifier, Identifier } from './index.js'
 
 test('converts valid strings', (t) => {
   t.is(get_identifier('a'), 'a' as Identifier)

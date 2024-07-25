@@ -1,8 +1,8 @@
 import test from 'ava'
 
-import {SetPipelineStep} from './set-pipeline'
-import {default_set_pipeline_step} from './test-data/default-steps'
-import {Pipeline} from '../pipeline'
+import { SetPipelineStep } from './set-pipeline.js'
+import { default_set_pipeline_step } from './test-data/default-steps.js'
+import { Pipeline } from '../pipeline.js'
 
 test('runs static customiser', (t) => {
   SetPipelineStep.customise((sps) => {

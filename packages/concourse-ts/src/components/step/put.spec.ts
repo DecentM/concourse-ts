@@ -1,8 +1,8 @@
 import test from 'ava'
-import {Resource, ResourceType} from '..'
+import { Resource, ResourceType } from '../index.js'
 
-import {PutStep} from './put'
-import {default_put_step} from './test-data/default-steps'
+import { PutStep } from './put.js'
+import { default_put_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   PutStep.customise((ps) => {

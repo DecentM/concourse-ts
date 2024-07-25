@@ -1,11 +1,11 @@
-import * as Type from '../../declarations/types'
+import * as Type from '../../declarations/types.js'
 
 import {
   is_do_step,
   is_in_parallel_step,
   is_step,
   is_try_step,
-} from '../step-type'
+} from '../step-type/index.js'
 
 export type StepVisitor = {
   Step?: (
@@ -24,9 +24,7 @@ export const visit_step = (
   if (is_step(step) && visitor.Step) visitor.Step(step, index, root)
 
   if (is_do_step(step)) {
-    step.do.forEach((do_step, index) =>
-      visit_step(do_step, visitor, index, step.do)
-    )
+    step.do.forEach((do_step, index) => visit_step(do_step, visitor, index, step.do))
   }
 
   if (is_in_parallel_step(step)) {

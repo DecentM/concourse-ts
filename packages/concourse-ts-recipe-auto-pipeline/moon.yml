@@ -2,25 +2,3 @@ id: concourse-ts-recipe-auto-pipeline
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-recipe-auto-pipeline
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-recipe-auto-pipeline/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-recipe-auto-pipeline/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-recipe-auto-pipeline/*.md"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-recipe-auto-pipeline/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

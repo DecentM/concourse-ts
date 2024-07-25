@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import {Command} from './command'
+import { Command } from './command.js'
 
 test.beforeEach(() => {
   Command.customise((command) => {

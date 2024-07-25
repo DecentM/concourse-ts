@@ -1,7 +1,8 @@
-import {Document} from 'yaml'
+import { Document } from 'yaml'
 
-import {Pipeline, Task} from '../declarations'
-import {Identifier, is_pipeline} from '../utils'
+import { Pipeline, Task } from '../declarations/index.js'
+import { is_pipeline } from '../utils/index.js'
+import { Identifier } from '../utils/identifier/index.js'
 
 const write_yaml_pipeline = (pipeline: Pipeline): string => {
   const document = new Document(pipeline)

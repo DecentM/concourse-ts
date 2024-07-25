@@ -1,12 +1,12 @@
 import test from 'ava'
-import {deduplicate_by_identity} from '../utils'
+import { deduplicate_by_identity } from '../utils/index.js'
 
-import {Job} from './job'
-import {Resource} from './resource'
-import {ResourceType} from './resource-type'
-import {DoStep, LoadVarStep} from './step'
-import {Task} from './task'
-import {default_job, default_step} from './step/test-data/default-steps'
+import { Job } from './job.js'
+import { Resource } from './resource.js'
+import { ResourceType } from './resource-type.js'
+import { DoStep, LoadVarStep } from './step/index.js'
+import { Task } from './task.js'
+import { default_job, default_step } from './step/test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   Job.customise((job) => {

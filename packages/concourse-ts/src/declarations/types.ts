@@ -1,5 +1,5 @@
-import { Duration } from '../utils/duration'
-import { Identifier } from '../utils/identifier'
+import { Duration } from '../utils/duration/index.js'
+import { Identifier } from '../utils/identifier/index.js'
 
 export type Config = Record<string, YamlValue>
 export type Version = 'latest' | 'every' | Record<string, string>

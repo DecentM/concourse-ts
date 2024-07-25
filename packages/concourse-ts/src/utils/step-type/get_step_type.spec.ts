@@ -1,7 +1,7 @@
 import test from 'ava'
 
-import * as Type from '../../declarations'
-import {get_step_type} from '.'
+import * as Type from '../../declarations/index.js'
+import { get_step_type } from './index.js'
 
 test('returns null for non-step object', (t) => {
   t.is(get_step_type({}), null)

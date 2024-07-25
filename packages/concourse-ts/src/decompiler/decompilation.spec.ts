@@ -2,7 +2,7 @@ import test from 'ava'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-import { Decompilation } from '.'
+import { Decompilation } from './index.js'
 
 test('decompiles normally', async (t) => {
   const decompilation = new Decompilation()

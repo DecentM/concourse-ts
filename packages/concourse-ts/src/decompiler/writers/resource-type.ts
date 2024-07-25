@@ -1,8 +1,8 @@
-import {VError} from 'verror'
+import { VError } from 'verror'
 
-import {Pipeline} from '../../declarations'
-import {parse_duration} from '../../utils/duration'
-import {empty_string_or} from '../../utils/empty_string_or'
+import { Pipeline } from '../../declarations/index.js'
+import { parse_duration } from '../../utils/duration/index.js'
+import { empty_string_or } from '../../utils/empty_string_or/index.js'
 
 export const write_resource_type = (
   resource_type_name: string,
@@ -52,8 +52,7 @@ export const write_resource_type = (
 
     ${empty_string_or(
       resource_type.tags,
-      (tags) =>
-        `rt.add_tag(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
+      (tags) => `rt.add_tag(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
     )}
   })`
 }

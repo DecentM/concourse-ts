@@ -3,9 +3,9 @@ import * as ts from 'typescript'
 
 import { Type } from '../../..'
 
-import { write_step } from '.'
-import { AnyStep } from '../../../declarations'
-import { Identifier } from '../../../utils'
+import { write_step } from './index.js'
+import { AnyStep } from '../../../declarations/index.js'
+import { Identifier } from '../../../utils/index.js'
 import { default_step } from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.Step, pipeline: Type.Pipeline) => {

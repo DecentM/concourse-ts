@@ -1,8 +1,8 @@
 import test from 'ava'
-import {Resource, ResourceType, Task} from '..'
+import { Resource, ResourceType, Task } from '../index.js'
 
-import {InParallelStep} from './in-parallel'
-import {default_in_parallel_step} from './test-data/default-steps'
+import { InParallelStep } from './in-parallel.js'
+import { default_in_parallel_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   InParallelStep.customise((ips) => {

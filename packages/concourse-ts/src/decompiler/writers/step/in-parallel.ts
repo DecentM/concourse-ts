@@ -1,8 +1,8 @@
-import {write_step} from '.'
-import {InParallelStep, Pipeline} from '../../../declarations'
-import {empty_string_or} from '../../../utils/empty_string_or'
+import { write_step } from './index.js'
+import { InParallelStep, Pipeline } from '../../../declarations/index.js'
+import { empty_string_or } from '../../../utils/empty_string_or'
 
-import {write_step_base} from './base'
+import { write_step_base } from './base.js'
 
 export const write_in_parallel_step = (
   name: string,

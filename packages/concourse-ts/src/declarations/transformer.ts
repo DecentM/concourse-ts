@@ -1,4 +1,4 @@
-import {Pipeline} from './types'
+import { Pipeline } from './types.js'
 
 /**
  * A function that modifies serialised Pipeline objects in-place

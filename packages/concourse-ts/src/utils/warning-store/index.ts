@@ -1,4 +1,4 @@
-import {type_of} from '../type-of'
+import { type_of } from '../type-of/index.js'
 
 export enum ValidationWarningType {
   Fatal,
@@ -24,10 +24,7 @@ export class ValidationWarning {
 export class WarningStore {
   private warnings: ValidationWarning[] = []
 
-  public add_warning = (
-    type: ValidationWarningType,
-    ...messages: unknown[]
-  ) => {
+  public add_warning = (type: ValidationWarningType, ...messages: unknown[]) => {
     this.warnings.push(
       new ValidationWarning({
         type,

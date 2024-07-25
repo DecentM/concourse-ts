@@ -1,13 +1,13 @@
 import test from 'ava'
-import {deduplicate_by_identity} from '.'
+import { deduplicate_by_identity } from './index.js'
 
 test('returns empty array for non-arrays', (t) => {
   t.deepEqual(deduplicate_by_identity(null as unknown as string[]), [])
 })
 
 test('filters duplicates', (t) => {
-  const a = {key: '1', a: '1'}
-  const b = {key: '1', a: '2'}
+  const a = { key: '1', a: '1' }
+  const b = { key: '1', a: '2' }
 
   const data = [a, b, b]
 

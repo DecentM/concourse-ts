@@ -1,5 +1,5 @@
 import test from 'ava'
-import {deduplicate_by_key} from '.'
+import { deduplicate_by_key } from './index.js'
 
 test('returns empty array for non-arrays', (t) => {
   t.deepEqual(

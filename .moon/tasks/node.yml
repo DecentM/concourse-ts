@@ -1,29 +1,27 @@
-fileGroups:
-  default:
-  - '**/*'
-  production:
-  - '!.eslintrc.json'
-  - '!**/?(*.)+(spec|test).[jt]s?(x)?(.snap)'
-  - '!tsconfig.spec.json'
 tasks:
   build:
-    deps:
-    - ^:build
-    inputs:
-    - '@group(production)'
+    command: pkgroll
+    args:
+      - --clean-dist
+      - --sourcemap
     options:
       cache: true
-  e2e:
-    options:
-      cache: true
+    outputs:
+      - dist
+
   lint:
-    inputs:
-    - '@group(default)'
-    - /.eslintrc.json
+    command: eslint
+    args:
+      - '.'
     options:
       cache: true
+
   test:
-    inputs:
-    - '@group(default)'
+    command: c8
+    args:
+      - --100
+      - --reporter=lcov
+      - --reporter=text
+      - ava
     options:
       cache: true

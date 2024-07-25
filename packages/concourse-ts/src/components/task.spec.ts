@@ -1,14 +1,14 @@
 import test from 'ava'
-import {Command} from './command'
-import {Resource} from './resource'
-import {ResourceType} from './resource-type'
+import { Command } from './command.js'
+import { Resource } from './resource.js'
+import { ResourceType } from './resource-type.js'
 
-import {Task} from './task'
-import {default_task, default_task_step} from './step/test-data/default-steps'
+import { Task } from './task.js'
+import { default_task, default_task_step } from './step/test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   Task.customise((task) => {
-    task.set_params({'my-param': '1'})
+    task.set_params({ 'my-param': '1' })
   })
 
   const task = new Task('a')
@@ -100,19 +100,19 @@ test('stores component image resource', (t) => {
 
 test('stores caches', (t) => {
   const task = new Task('a', (a) => {
-    a.add_cache({path: 'c'})
+    a.add_cache({ path: 'c' })
   })
 
   t.deepEqual(task.serialise(), {
     ...default_task,
-    caches: [{path: 'c'}],
+    caches: [{ path: 'c' }],
   })
 })
 
 test('stores container limits', (t) => {
   const task = new Task('a', (a) => {
     a.set_cpu_limit_shares(50)
-    a.set_memory_limit({mb: 512})
+    a.set_memory_limit({ mb: 512 })
   })
 
   t.deepEqual(task.serialise(), {
@@ -126,23 +126,23 @@ test('stores container limits', (t) => {
 
 test('stores inputs', (t) => {
   const task = new Task('a', (a) => {
-    a.add_input({name: 'ai'})
+    a.add_input({ name: 'ai' })
   })
 
   t.deepEqual(task.serialise(), {
     ...default_task,
-    inputs: [{name: 'ai'}],
+    inputs: [{ name: 'ai' }],
   })
 })
 
 test('stores outputs', (t) => {
   const task = new Task('a', (a) => {
-    a.add_output({name: 'ao'})
+    a.add_output({ name: 'ao' })
   })
 
   t.deepEqual(task.serialise(), {
     ...default_task,
-    outputs: [{name: 'ao'}],
+    outputs: [{ name: 'ao' }],
   })
 })
 

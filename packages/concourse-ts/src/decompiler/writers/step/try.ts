@@ -1,7 +1,7 @@
-import {Pipeline, TryStep} from '../../../declarations'
-import {write_step_base} from './base'
+import { Pipeline, TryStep } from '../../../declarations/index.js'
+import { write_step_base } from './base.js'
 
-import {write_step} from '.'
+import { write_step } from './index.js'
 
 export const write_try_step = (
   name: string,

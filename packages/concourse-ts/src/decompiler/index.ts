@@ -1,16 +1,16 @@
-import {VError} from 'verror'
+import { VError } from 'verror'
 import * as YAML from 'yaml'
-import {transpile, ScriptTarget} from 'typescript'
+import { transpile, ScriptTarget } from 'typescript'
 
 import pkg from '../../package.json'
 
-import * as Components from '../components'
-import {is_pipeline} from '../utils/is-pipeline'
+import * as Components from '../components/index.js'
+import { is_pipeline } from '../utils/is-pipeline/index.js'
 
-import {write_pipeline} from './writers/pipeline'
-import {validate} from '../validation'
-import {WarningStore} from '../utils'
-import {apply_task_hoisting} from '../utils/transform'
+import { write_pipeline } from './writers/pipeline.js'
+import { validate } from '../validation/index.js'
+import { WarningStore } from '../utils/index.js'
+import { apply_task_hoisting } from '../utils/transform/index.js'
 
 export type DecompilationResult = {
   warnings: WarningStore

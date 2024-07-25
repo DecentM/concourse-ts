@@ -1,9 +1,12 @@
 import test from 'ava'
-import {Identifier} from '../utils'
+import { Identifier } from '../utils/index.js'
 
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_jobs} from './jobs'
+import { validate_jobs } from './jobs.js'
 
 test('requires at least one job', (t) => {
   const warnings = validate_jobs({

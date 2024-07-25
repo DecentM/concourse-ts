@@ -1,13 +1,13 @@
-import * as Type from '../../declarations/types'
+import * as Type from '../../declarations/types.js'
 
-import {Resource} from '../resource'
+import { Resource } from '../resource.js'
 
-import {Customiser} from '../../declarations'
-import {Duration, DurationInput, get_duration} from '../../utils/duration'
-import {AnyStep} from '../../declarations/any-step'
+import { Customiser } from '../../declarations/index.js'
+import { Duration, DurationInput, get_duration } from '../../utils/duration/index.js'
+import { AnyStep } from '../../declarations/any-step.js'
 
-import {TaskStep} from './task'
-import {DoStep as DoStepComponent} from './do'
+import { TaskStep } from './task.js'
+import { DoStep as DoStepComponent } from './do.js'
 
 /**
  * Ugly hack to trick the compiler into not writing `require('./do')` into the
@@ -19,7 +19,7 @@ import {DoStep as DoStepComponent} from './do'
  */
 const create_do_step = (name: string) => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const {DoStep}: {DoStep: typeof DoStepComponent} = require('./do')
+  const { DoStep }: { DoStep: typeof DoStepComponent } = require('./do')
 
   return new DoStep(name)
 }
@@ -168,8 +168,7 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_success = (step: AnyStep) => {
-    if (!this.on_success)
-      this.on_success = create_do_step(`${this.name}_on_success`)
+    if (!this.on_success) this.on_success = create_do_step(`${this.name}_on_success`)
 
     this.on_success.add_step(step)
   }
@@ -184,8 +183,7 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_failure = (step: AnyStep) => {
-    if (!this.on_failure)
-      this.on_failure = create_do_step(`${this.name}_on_failure`)
+    if (!this.on_failure) this.on_failure = create_do_step(`${this.name}_on_failure`)
 
     this.on_failure.add_step(step)
   }

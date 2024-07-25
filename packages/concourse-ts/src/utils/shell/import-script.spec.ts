@@ -2,7 +2,7 @@ import test from 'ava'
 import path from 'node:path'
 import fs from 'node:fs/promises'
 
-import { import_script } from '.'
+import { import_script } from './index.js'
 
 test('does not import scripts without shebang', (t) => {
   const fullPath = path.resolve(__dirname, 'test/script-no-shebang.sh')

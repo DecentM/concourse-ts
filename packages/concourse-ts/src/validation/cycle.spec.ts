@@ -1,10 +1,10 @@
 import test from 'ava'
-import {Pipeline} from '../declarations'
-import {Identifier} from '../utils'
+import { Pipeline } from '../declarations/index.js'
+import { Identifier } from '../utils/index.js'
 
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { ValidationWarning, ValidationWarningType } from '../utils/warning-store'
 
-import {validate_cycle} from './cycle'
+import { validate_cycle } from './cycle.js'
 
 test('passes with no cycle', (t) => {
   const warnings = validate_cycle({

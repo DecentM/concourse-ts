@@ -2,25 +2,3 @@ id: concourse-ts-resource-bitbucket-pr
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-resource-bitbucket-pr
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-resource-bitbucket-pr/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-resource-bitbucket-pr/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-resource-bitbucket-pr/*.md"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-resource-bitbucket-pr/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

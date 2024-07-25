@@ -1,9 +1,12 @@
 import test from 'ava'
 
-import {Identifier} from '../utils'
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { Identifier } from '../utils/index.js'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_tasks} from './tasks'
+import { validate_tasks } from './tasks.js'
 
 test('validates jobs with no plan', (t) => {
   const warnings = validate_tasks({

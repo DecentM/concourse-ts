@@ -1,5 +1,5 @@
 import test from 'ava'
-import {is_var} from '.'
+import { is_var } from './index.js'
 
 test('no false negatives', (t) => {
   t.true(is_var('((test))'))

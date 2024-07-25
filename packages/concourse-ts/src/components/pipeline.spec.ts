@@ -1,11 +1,11 @@
 import test from 'ava'
-import {Command} from './command'
-import {Job} from './job'
+import { Command } from './command.js'
+import { Job } from './job.js'
 
-import {Pipeline} from './pipeline'
-import {Resource} from './resource'
-import {ResourceType} from './resource-type'
-import {Task} from './task'
+import { Pipeline } from './pipeline.js'
+import { Resource } from './resource.js'
+import { ResourceType } from './resource-type.js'
+import { Task } from './task.js'
 
 const image_url = 'https://example.com/image.jpg'
 

@@ -1,9 +1,9 @@
 import test from 'ava'
 
-import { Config } from '../declarations/types'
-import { Duration, has_duplicates_by_key } from '../utils'
+import { Config } from '../declarations/types.js'
+import { Duration, has_duplicates_by_key } from '../utils/index.js'
 
-import { ResourceType, Pipeline, Job, GetStep } from '..'
+import { ResourceType, Pipeline, Job, GetStep } from '../index.js'
 
 test.beforeEach(() => {
   ResourceType.customise((rt) => {

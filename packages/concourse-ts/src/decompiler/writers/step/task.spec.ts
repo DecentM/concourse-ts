@@ -1,12 +1,12 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
-import {TaskStep} from '../../../components'
-import {Identifier} from '../../../utils'
+import { Type } from '../../..'
+import { TaskStep } from '../../../components'
+import { Identifier } from '../../../utils/index.js'
 
-import {write_task_step} from './task'
-import {default_task_step} from '../../../components/step/test-data/default-steps'
+import { write_task_step } from './task.js'
+import { default_task_step } from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.TaskStep, pipeline: Type.Pipeline) => {
   const code = `
@@ -36,9 +36,9 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {task: 'at' as Identifier},
+    { task: 'at' as Identifier },
     default_pipeline
   )
 
@@ -50,9 +50,9 @@ test('writes empty step', (t) => {
 })
 
 test('writes file', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {task: 'at' as Identifier, file: 'my-file.yml'},
+    { task: 'at' as Identifier, file: 'my-file.yml' },
     default_pipeline
   )
 
@@ -65,9 +65,9 @@ test('writes file', (t) => {
 })
 
 test('writes image', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {task: 'at' as Identifier, image: 'my-image' as Identifier},
+    { task: 'at' as Identifier, image: 'my-image' as Identifier },
     default_pipeline
   )
 
@@ -80,9 +80,9 @@ test('writes image', (t) => {
 })
 
 test('writes privileged', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {task: 'at' as Identifier, privileged: true},
+    { task: 'at' as Identifier, privileged: true },
     default_pipeline
   )
 
@@ -95,41 +95,41 @@ test('writes privileged', (t) => {
 })
 
 test('writes vars', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {task: 'at' as Identifier, vars: {my_var: '1'}},
+    { task: 'at' as Identifier, vars: { my_var: '1' } },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task_step,
-    vars: {my_var: '1'},
+    vars: { my_var: '1' },
     task: 'a_task',
   })
 })
 
 test('writes params', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {task: 'at' as Identifier, params: {my_param: '1'}},
+    { task: 'at' as Identifier, params: { my_param: '1' } },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task_step,
-    params: {my_param: '1'},
+    params: { my_param: '1' },
     task: 'a_task',
   })
 })
 
 test('writes input_mapping', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       task: 'at' as Identifier,
-      input_mapping: {input: 'mapped'} as Record<Identifier, Identifier>,
+      input_mapping: { input: 'mapped' } as Record<Identifier, Identifier>,
     },
     default_pipeline
   )
@@ -137,17 +137,17 @@ test('writes input_mapping', (t) => {
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task_step,
-    input_mapping: {input: 'mapped'},
+    input_mapping: { input: 'mapped' },
     task: 'a_task',
   })
 })
 
 test('writes output_mapping', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       task: 'at' as Identifier,
-      output_mapping: {output: 'mapped'} as Record<Identifier, Identifier>,
+      output_mapping: { output: 'mapped' } as Record<Identifier, Identifier>,
     },
     default_pipeline
   )
@@ -156,7 +156,7 @@ test('writes output_mapping', (t) => {
   t.deepEqual(result, {
     ...default_task_step,
     config: undefined,
-    output_mapping: {output: 'mapped'},
+    output_mapping: { output: 'mapped' },
     task: 'a_task',
   })
 })

@@ -1,8 +1,8 @@
-import {Pipeline, Step} from '../../../declarations'
-import {empty_string_or} from '../../../utils/empty_string_or'
-import {parse_duration} from '../../../utils'
+import { Pipeline, Step } from '../../../declarations/index.js'
+import { empty_string_or } from '../../../utils/empty_string_or'
+import { parse_duration } from '../../../utils/index.js'
 
-import {write_step} from '.'
+import { write_step } from './index.js'
 
 export const write_step_base = (
   variable_name: string,
@@ -27,9 +27,7 @@ export const write_step_base = (
     ${empty_string_or(
       step.timeout,
       (timeout) =>
-        `${variable_name}.set_timeout(${JSON.stringify(
-          parse_duration(timeout)
-        )})`
+        `${variable_name}.set_timeout(${JSON.stringify(parse_duration(timeout))})`
     )}
   `
 

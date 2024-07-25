@@ -1,8 +1,11 @@
 import test from 'ava'
-import {Type} from '..'
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { Type } from '../index.js'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_prototypes} from './prototypes'
+import { validate_prototypes } from './prototypes.js'
 
 test('ignores pipelines without prototypes', (t) => {
   const warnings = validate_prototypes({

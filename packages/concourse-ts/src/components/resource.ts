@@ -1,15 +1,15 @@
 import { VError } from 'verror'
 
-import { Customiser } from '../declarations/customiser'
-import * as Type from '../declarations/types'
+import { Customiser } from '../declarations/customiser.js'
+import * as Type from '../declarations/types.js'
 
-import { Duration, DurationInput, get_duration } from '../utils/duration'
+import { Duration, DurationInput, get_duration } from '../utils/duration/index.js'
 
-import { ResourceType } from './resource-type'
-import { GetStep, PutStep } from './step'
-import { Job } from './job'
-import { type_of } from '../utils'
-import { get_identifier } from '../utils/identifier'
+import { ResourceType } from './resource-type.js'
+import { GetStep, PutStep } from './step/index.js'
+import { Job } from './job.js'
+import { type_of } from '../utils/index.js'
+import { get_identifier } from '../utils/identifier/index.js'
 
 type AsPutStepInput<PutParams> = {
   params?: PutParams

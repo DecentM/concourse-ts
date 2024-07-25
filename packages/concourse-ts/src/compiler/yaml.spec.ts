@@ -1,10 +1,10 @@
 import test from 'ava'
 import * as YAML from 'yaml'
 
-import {Identifier} from '../utils'
-import {Pipeline, Task} from '../declarations'
+import { Identifier } from '../utils/identifier/index.js'
+import { Pipeline, Task } from '../declarations/index.js'
 
-import {write_yaml} from './yaml'
+import { write_yaml } from './yaml.js'
 
 test('writes empty pipeline', (t) => {
   const result = write_yaml({

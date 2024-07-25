@@ -6,12 +6,12 @@ import {
   Pipeline,
   Step,
   Transformer,
-} from '../../declarations'
+} from '../../declarations/index.js'
 
-import {visit_variable_attributes} from '../../utils/visitors/variable-attributes'
+import { visit_variable_attributes } from '../../utils/visitors/variable-attributes.js'
 
-import {visit_pipeline} from '../visitors/pipeline'
-import {visit_step} from '../visitors/step'
+import { visit_pipeline } from '../visitors/pipeline.js'
+import { visit_step } from '../visitors/step.js'
 
 const get_combinations_rec = <T>(
   sources: T[][],
@@ -35,7 +35,7 @@ const get_combinations = <T>(enumerables: T[][]): T[][] => {
   const combinations: T[][] = []
 
   if (enumerables.length > 0) {
-    const chain: T[] = Array.from({length: enumerables.length})
+    const chain: T[] = Array.from({ length: enumerables.length })
     get_combinations_rec(enumerables, chain, 0, combinations)
   }
 
@@ -87,9 +87,7 @@ const replace_variables = (
   while ((match = regex.exec(wip) as RegExpMatchArrayWithIndices) !== null) {
     const [, matched_var_source_name, matched_fragment] = match
 
-    const item = combination_item.find(
-      (member) => member.name === matched_fragment
-    )
+    const item = combination_item.find((member) => member.name === matched_fragment)
 
     if (
       // Filter out variable names not in the matrix

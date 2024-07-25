@@ -1,21 +1,21 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L98
 
-import * as Type from '../declarations/types'
+import * as Type from '../declarations/types.js'
 import {
   Location,
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from '../utils/warning-store'
+} from '../utils/warning-store/index.js'
 
-import {validate_identifier} from './identifier'
+import { validate_identifier } from './identifier.js'
 
 export const validate_groups = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
   const group_names: Record<string, number> = {}
 
   pipeline.groups?.forEach((group, index) => {
-    const location: Location = {section: 'groups', index}
+    const location: Location = { section: 'groups', index }
     const identifier = to_identifier(location, group.name)
 
     warnings.copy_from(validate_identifier(group.name, identifier))

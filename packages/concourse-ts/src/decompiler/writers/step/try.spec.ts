@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
-import {TryStep} from '../../../components'
-import {Identifier} from '../../../utils'
+import { Type } from '../../..'
+import { TryStep } from '../../../components'
+import { Identifier } from '../../../utils/index.js'
 
-import {write_try_step} from './try'
+import { write_try_step } from './try.js'
 
 import {
   default_load_var_step,
@@ -40,7 +40,7 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes step', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
     {
       try: {

@@ -2,25 +2,3 @@ id: concourse-ts-resource-git
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-resource-git
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-resource-git/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-resource-git/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-resource-git/*.md"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-resource-git/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

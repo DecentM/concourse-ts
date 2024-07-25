@@ -1,8 +1,8 @@
 import test from 'ava'
 
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { ValidationWarning, ValidationWarningType } from './utils/warning-store.js'
 
-import {validate_display} from './display'
+import { validate_display } from './display.js'
 
 test('allows https URLs', (t) => {
   const warnings = validate_display({
@@ -90,9 +90,7 @@ test('refuses non-http(s) URLs', (t) => {
   t.deepEqual(warnings.get_warnings(), [
     new ValidationWarning({
       type: ValidationWarningType.Fatal,
-      messages: [
-        'background_image scheme must be either http, https or relative',
-      ],
+      messages: ['background_image scheme must be either http, https or relative'],
     }),
   ])
 })

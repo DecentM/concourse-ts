@@ -1,16 +1,16 @@
-import * as Type from '../declarations/types'
+import * as Type from '../declarations/types.js'
 
-import {is_task_step} from '../utils/step-type'
+import { is_task_step } from '../utils/step-type/index.js'
 
-import {ValidationWarningType, WarningStore} from '../utils/warning-store'
+import { ValidationWarningType, WarningStore } from '../utils/warning-store/index.js'
 
 export const validate_tasks = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
 
-  pipeline.jobs.forEach((job) => {
-    job.plan.forEach((step) => {
+  for (const job of pipeline.jobs) {
+    for (const step of job.plan) {
       if (!is_task_step(step) || !step.config) {
-        return
+        continue
       }
 
       const task = step.config
@@ -21,8 +21,8 @@ export const validate_tasks = (pipeline: Type.Pipeline) => {
           `Image resources are ignored on "${task.platform}", they're only used on "linux"`
         )
       }
-    })
-  })
+    }
+  }
 
   return warnings
 }

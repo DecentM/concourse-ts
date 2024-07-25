@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import {is_duration} from '.'
+import { is_duration } from './index.js'
 
 const VALID_DURATION_UNITS = ['ns', 'us', 'µs', 'ms', 's', 'm', 'h']
 

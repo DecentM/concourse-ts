@@ -1,10 +1,10 @@
-import {Customiser} from '../declarations/customiser'
-import {get_identifier} from '../utils/identifier'
-import * as Type from '../declarations/types'
+import { Customiser } from '../declarations/customiser.js'
+import { get_identifier } from '../utils/identifier/index.js'
+import * as Type from '../declarations/types.js'
 
-import {Resource} from './resource'
-import {DoStep, TaskStep} from './step'
-import {AnyStep} from '../declarations'
+import { Resource } from './resource.js'
+import { DoStep, TaskStep } from './step/index.js'
+import { AnyStep } from '../declarations/index.js'
 
 /**
  * https://concourse-ci.org/jobs.html
@@ -111,8 +111,7 @@ export class Job {
       return
     }
 
-    if (!this.on_success)
-      this.on_success = new DoStep(`${this.name}_on_success`)
+    if (!this.on_success) this.on_success = new DoStep(`${this.name}_on_success`)
 
     this.on_success.add_step(step)
   }
@@ -138,8 +137,7 @@ export class Job {
       return
     }
 
-    if (!this.on_failure)
-      this.on_failure = new DoStep(`${this.name}_on_failure`)
+    if (!this.on_failure) this.on_failure = new DoStep(`${this.name}_on_failure`)
 
     this.on_failure.add_step(step)
   }

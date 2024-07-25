@@ -1,8 +1,11 @@
 import test from 'ava'
-import {Identifier} from '../utils'
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { Identifier } from '../utils/index.js'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_resource_types} from './resource-types'
+import { validate_resource_types } from './resource-types.js'
 
 test('allows empty resource types array', (t) => {
   const seen_types = {}
