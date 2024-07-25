@@ -1,6 +1,6 @@
 {
   "name": "@decentm/concourse-ts-cli",
-  "version": "0.12.7",
+  "version": "0.13.0",
   "description": "command line tool for compiling concourse-ts pipelines",
   "author": "DecentM <decentm@decentm.com>",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-cli",
@@ -8,12 +8,12 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "concourse-ts": "./dist/index.js"
+    "concourse-ts": "./dist/bin.js"
   },
   "exports": {
-    "rc": {
-      "import": "./dist/rc.js",
-      "types": "./dist/rc.d.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "dependencies": {
@@ -24,13 +24,13 @@
     "fast-glob": "^3.3.2",
     "mkdirp": "^3.0.1",
     "tmp-promise": "^3.0.3",
-    "ts-deepmerge": "^7.0.0",
+    "ts-deepmerge": "^7.0.1",
     "tsx": "^4.16.2",
     "verror": "^1.10.1"
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.4"
   },
   "optionalDependencies": {
     "@decentm/concourse-ts-recipe-auto-pipeline": "0.1.0",

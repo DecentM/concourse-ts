@@ -1,6 +1,4 @@
-import { rc } from '@decentm/concourse-ts-cli'
-
-export default rc({
+export default {
   compile: {
     input: 'ci/pipeline/concourse-ts.pipeline.ts',
     output: '.ci',
@@ -8,7 +6,7 @@ export default rc({
   transform: {
     input: '.ci/pipeline/*.yml',
     output: '.ci/pipeline/',
-    transformers: ['apply_across_polyfill'],
+    transformers: [],
     options: {
       apply_across_polyfill: {
         in_parallel: {
@@ -18,4 +16,4 @@ export default rc({
       },
     },
   },
-})
+}
