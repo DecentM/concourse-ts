@@ -2334,6 +2334,7 @@ __metadata:
     jsdom: "npm:~24.1.0"
     prettier: "npm:^3.3.2"
     sort-package-json: "npm:^2.10.0"
+    tsx: "npm:^4.16.2"
     typedoc: "npm:^0.25.13"
     typedoc-github-wiki-theme: "npm:^2.0.0"
     typedoc-plugin-coverage: "npm:^3.2.0"

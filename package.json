@@ -10,8 +10,8 @@
   "scripts": {
     "build": "nx run-many --target=build",
     "test": "nx affected --target=test",
-    "generate-dependabot": "ts-node --transpile-only bin/generate-dependabot.ts",
-    "update-tsconfig-paths": "ts-node --transpile-only bin/update-tsconfig-paths.ts",
+    "generate-dependabot": "tsx bin/generate-dependabot.ts",
+    "update-tsconfig-paths": "tsx bin/update-tsconfig-paths.ts",
     "prepare": "husky install",
     "docs": "typedoc",
     "concourse-ts": "ts-node --transpile-only -r tsconfig-paths/register packages/concourse-ts-cli/bin/concourse-ts",
@@ -31,6 +31,7 @@
     "jsdom": "~24.1.0",
     "prettier": "^3.3.2",
     "sort-package-json": "^2.10.0",
+    "tsx": "^4.16.2",
     "typedoc": "^0.25.13",
     "typedoc-github-wiki-theme": "^2.0.0",
     "typedoc-plugin-coverage": "^3.2.0",
