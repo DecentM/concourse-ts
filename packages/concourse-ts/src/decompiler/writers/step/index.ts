@@ -1,4 +1,4 @@
-import { VError } from 'verror'
+import VError from 'verror'
 import { Pipeline, Step } from '../../../declarations/index.js'
 
 import {
@@ -10,14 +10,14 @@ import {
   is_set_pipeline_step,
   is_task_step,
   is_try_step,
-} from '../../../utils/step-type'
+} from '../../../utils/step-type/index.js'
 
 import { write_do_step } from './do.js'
 import { write_get_step } from './get.js'
-import { write_in_parallel_step } from './in-parallel'
-import { write_load_var_step } from './load-var'
+import { write_in_parallel_step } from './in-parallel.js'
+import { write_load_var_step } from './load-var.js'
 import { write_put_step } from './put.js'
-import { write_set_pipeline_step } from './set-pipeline'
+import { write_set_pipeline_step } from './set-pipeline.js'
 import { write_task_step } from './task.js'
 import { write_try_step } from './try.js'
 

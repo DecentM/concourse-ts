@@ -1,8 +1,11 @@
+import path from 'node:path'
+import fs from 'node:fs/promises'
+
 import test from 'ava'
-import * as ts from 'typescript'
+import { tsImport } from 'tsx/esm/api'
 
 import { Type } from '../../index.js'
-import { Job } from '../../components/index.js'
+import { Pipeline } from '../../components/index.js'
 import { Identifier } from '../../utils/index.js'
 
 import { write_pipeline } from './pipeline.js'
@@ -12,41 +15,49 @@ import {
   default_pipeline,
 } from '../../components/step/test-data/default-steps.js'
 
-const chain = (name: string, input: Type.Pipeline) => {
+const chain = async (name: string, input: Type.Pipeline) => {
   const code = `
     import {Pipeline, Job, LoadVarStep} from '../../components/index.js'
 
-    ${write_pipeline(name, input)}
+    export default ${write_pipeline(name, input)}
   `
 
-  const result = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const job: Job = eval(result.outputText)
+  let error: Error | null = null
+  let result: Pipeline | null = null
 
-  return {
-    result: job.serialise(),
-    diagnostics: result.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
-test('writes empty pipeline', (t) => {
+test('writes empty pipeline', async (t) => {
   const pipeline: Type.Pipeline = {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, default_pipeline)
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), default_pipeline)
 })
 
-test('writes display', (t) => {
+test('writes display', async (t) => {
   const pipeline: Type.Pipeline = {
     jobs: [],
     display: {
@@ -54,13 +65,13 @@ test('writes display', (t) => {
     },
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, { ...default_pipeline, ...pipeline })
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), { ...default_pipeline, ...pipeline })
 })
 
-test('writes var_sources', (t) => {
+test('writes var_sources', async (t) => {
   const pipeline: Type.Pipeline = {
     jobs: [],
     var_sources: [
@@ -76,13 +87,13 @@ test('writes var_sources', (t) => {
     ],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, { ...default_pipeline, ...pipeline })
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), { ...default_pipeline, ...pipeline })
 })
 
-test('writes groups', (t) => {
+test('writes groups', async (t) => {
   const pipeline: Type.Pipeline = {
     groups: [
       {
@@ -103,10 +114,10 @@ test('writes groups', (t) => {
     ],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_pipeline,
     ...pipeline,
     jobs: [
@@ -125,7 +136,7 @@ test('writes groups', (t) => {
   })
 })
 
-test('writes ungrouped jobs', (t) => {
+test('writes ungrouped jobs', async (t) => {
   const pipeline: Type.Pipeline = {
     jobs: [
       {
@@ -140,10 +151,10 @@ test('writes ungrouped jobs', (t) => {
     ],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_pipeline,
     ...pipeline,
     jobs: [

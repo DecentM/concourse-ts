@@ -1,34 +1,45 @@
-import test from 'ava'
-import * as ts from 'typescript'
+import path from 'node:path'
+import fs from 'node:fs/promises'
 
-import { Type } from '../../..'
-import { PutStep } from '../../../components'
+import test from 'ava'
+import { tsImport } from 'tsx/esm/api'
+
+import { Type } from '../../../index.js'
+import { PutStep } from '../../../components/index.js'
 import { Identifier } from '../../../utils/index.js'
 
 import { write_put_step } from './put.js'
-import { default_put_step } from '../../../components/step/test-data/default-steps'
+import { default_put_step } from '../../../components/step/test-data/default-steps.js'
 
-const chain = (name: string, input: Type.PutStep, pipeline: Type.Pipeline) => {
+const chain = async (name: string, input: Type.PutStep, pipeline: Type.Pipeline) => {
   const code = `
-    import {PutStep, Resource, ResourceType} from '../../../components'
+    import {PutStep, Resource, ResourceType} from '../../../components/index.js'
 
-    ${write_put_step(name, input, pipeline)}
+    export default ${write_put_step(name, input, pipeline)}
   `
 
-  const transpiled = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const result: PutStep = eval(transpiled.outputText)
+  let error: Error | null = null
+  let result: PutStep | null = null
 
-  return {
-    result: result.serialise(),
-    diagnostics: transpiled.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -49,58 +60,58 @@ const default_pipeline: Type.Pipeline = {
   jobs: [],
 }
 
-test('writes empty step', (t) => {
-  const { result, diagnostics } = chain(
+test('writes empty step', async (t) => {
+  const { result, error } = await chain(
     'a',
     { put: 'a' as Identifier },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_put_step,
     put: 'a',
   })
 })
 
-test('writes empty step from alias', (t) => {
-  const { result, diagnostics } = chain(
+test('writes empty step from alias', async (t) => {
+  const { result, error } = await chain(
     'a',
     { put: 'b' as Identifier, resource: 'a' as Identifier },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_put_step,
     put: 'a',
   })
 })
 
-test('writes inputs', (t) => {
-  const { result, diagnostics } = chain(
+test('writes inputs', async (t) => {
+  const { result, error } = await chain(
     'a',
     { put: 'a' as Identifier, inputs: 'detect' },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_put_step,
     put: 'a',
     inputs: 'detect',
   })
 })
 
-test('writes params', (t) => {
-  const { result, diagnostics } = chain(
+test('writes params', async (t) => {
+  const { result, error } = await chain(
     'a',
     { put: 'a' as Identifier, params: { my_param: '1' } },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_put_step,
     put: 'a',
     params: {
@@ -109,15 +120,15 @@ test('writes params', (t) => {
   })
 })
 
-test('writes get_params', (t) => {
-  const { result, diagnostics } = chain(
+test('writes get_params', async (t) => {
+  const { result, error } = await chain(
     'a',
     { put: 'a' as Identifier, get_params: { my_param: '1' } },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_put_step,
     put: 'a',
     get_params: {
@@ -126,15 +137,15 @@ test('writes get_params', (t) => {
   })
 })
 
-test('writes no_get', (t) => {
-  const { result, diagnostics } = chain(
+test('writes no_get', async (t) => {
+  const { result, error } = await chain(
     'a',
     { put: 'a' as Identifier, no_get: true },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_put_step,
     put: 'a',
     no_get: true,

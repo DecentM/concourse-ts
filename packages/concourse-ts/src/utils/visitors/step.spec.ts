@@ -1,5 +1,5 @@
 import test from 'ava'
-import { Type } from '../..'
+import { Type } from '../../index.js'
 
 import { visit_step } from './step.js'
 

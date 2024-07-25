@@ -1,5 +1,5 @@
 import { Job, Pipeline } from '../../declarations/index.js'
-import { empty_string_or } from '../../utils/empty_string_or'
+import { empty_string_or } from '../../utils/empty_string_or/index.js'
 
 import { write_job } from './job.js'
 

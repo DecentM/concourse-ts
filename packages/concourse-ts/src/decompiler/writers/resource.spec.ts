@@ -1,33 +1,44 @@
+import path from 'node:path'
+import fs from 'node:fs/promises'
+
 import test from 'ava'
-import * as ts from 'typescript'
 
 import { Type } from '../../index.js'
-import { Job } from '../../components/index.js'
+import { Resource } from '../../components/index.js'
 import { Duration, Identifier } from '../../utils/index.js'
 
 import { write_resource } from './resource.js'
+import { tsImport } from 'tsx/esm/api'
 
-const chain = (name: string, pipeline: Type.Pipeline) => {
+const chain = async (name: string, pipeline: Type.Pipeline) => {
   const code = `
     import {Resource, ResourceType} from '../../components/index.js'
 
-    ${write_resource(name, pipeline)}
+    export default ${write_resource(name, pipeline)}
   `
 
-  const result = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const job: Job = eval(result.outputText)
+  let error: Error | null = null
+  let result: Resource | null = null
 
-  return {
-    result: job.serialise(),
-    diagnostics: result.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
 const default_resource = {
@@ -52,7 +63,7 @@ const resource_type = {
   },
 }
 
-test('writes empty resource', (t) => {
+test('writes empty resource', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -65,24 +76,24 @@ test('writes empty resource', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
   })
 })
 
-test("throws if the resource doesn't exist", (t) => {
+test("throws if the resource doesn't exist", async (t) => {
   const pipeline: Type.Pipeline = {
     jobs: [],
   }
 
-  t.throws(
-    () => {
-      chain('a', pipeline)
+  await t.throwsAsync(
+    async () => {
+      await chain('a', pipeline)
     },
     {
       any: true,
@@ -91,7 +102,7 @@ test("throws if the resource doesn't exist", (t) => {
   )
 })
 
-test('writes source', (t) => {
+test('writes source', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -106,17 +117,17 @@ test('writes source', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: { a: 1 },
   })
 })
 
-test('writes check_every', (t) => {
+test('writes check_every', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -130,10 +141,10 @@ test('writes check_every', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
@@ -141,7 +152,7 @@ test('writes check_every', (t) => {
   })
 })
 
-test('writes icon', (t) => {
+test('writes icon', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -155,10 +166,10 @@ test('writes icon', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
@@ -166,7 +177,7 @@ test('writes icon', (t) => {
   })
 })
 
-test('writes old_name', (t) => {
+test('writes old_name', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -180,10 +191,10 @@ test('writes old_name', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
@@ -191,7 +202,7 @@ test('writes old_name', (t) => {
   })
 })
 
-test('writes public', (t) => {
+test('writes public', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -205,10 +216,10 @@ test('writes public', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
@@ -216,7 +227,7 @@ test('writes public', (t) => {
   })
 })
 
-test('writes tags', (t) => {
+test('writes tags', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -230,10 +241,10 @@ test('writes tags', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
@@ -241,7 +252,7 @@ test('writes tags', (t) => {
   })
 })
 
-test('writes version', (t) => {
+test('writes version', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -255,10 +266,10 @@ test('writes version', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
@@ -266,7 +277,7 @@ test('writes version', (t) => {
   })
 })
 
-test('writes webhook_token', (t) => {
+test('writes webhook_token', async (t) => {
   const pipeline: Type.Pipeline = {
     resource_types: [resource_type],
     resources: [
@@ -280,10 +291,10 @@ test('writes webhook_token', (t) => {
     jobs: [],
   }
 
-  const { result, diagnostics } = chain('a', pipeline)
+  const { result, error } = await chain('a', pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,

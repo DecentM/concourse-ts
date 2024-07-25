@@ -1,5 +1,8 @@
+import path from 'node:path'
+import fs from 'node:fs/promises'
+
 import test from 'ava'
-import * as ts from 'typescript'
+import { tsImport } from 'tsx/esm/api'
 
 import { Type } from '../../index.js'
 import { Task } from '../../components/index.js'
@@ -7,27 +10,35 @@ import { Identifier } from '../../utils/index.js'
 
 import { write_task } from './task.js'
 
-const chain = (name: string, input: Type.Task<Identifier, Identifier>) => {
+const chain = async (name: string, input: Type.Task<Identifier, Identifier>) => {
   const code = `
     import {Task, Command} from '../../components/index.js'
 
-    ${write_task(name, input)}
+    export default ${write_task(name, input)}
   `
 
-  const transpiled = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const result: Task = eval(transpiled.outputText)
+  let error: Error | null = null
+  let result: Task | null = null
 
-  return {
-    result: result.serialise(),
-    diagnostics: transpiled.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
 const default_task = {
@@ -50,7 +61,7 @@ const default_task = {
   },
 }
 
-test('writes empty task', (t) => {
+test('writes empty task', async (t) => {
   const task: Type.Task<Identifier, Identifier> = {
     platform: 'linux',
     image_resource: {
@@ -63,13 +74,13 @@ test('writes empty task', (t) => {
     },
   }
 
-  const { result, diagnostics } = chain('a', task)
+  const { result, error } = await chain('a', task)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, default_task)
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), default_task)
 })
 
-test('writes caches', (t) => {
+test('writes caches', async (t) => {
   const task: Type.Task<Identifier, Identifier> = {
     platform: 'linux',
     image_resource: {
@@ -83,16 +94,16 @@ test('writes caches', (t) => {
     caches: [{ path: 'my-cache' }],
   }
 
-  const { result, diagnostics } = chain('a', task)
+  const { result, error } = await chain('a', task)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task,
     caches: [{ path: 'my-cache' }],
   })
 })
 
-test('writes container_limits', (t) => {
+test('writes container_limits', async (t) => {
   const task: Type.Task<Identifier, Identifier> = {
     platform: 'linux',
     image_resource: {
@@ -109,10 +120,10 @@ test('writes container_limits', (t) => {
     },
   }
 
-  const { result, diagnostics } = chain('a', task)
+  const { result, error } = await chain('a', task)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task,
     container_limits: {
       cpu: 50,
@@ -121,7 +132,7 @@ test('writes container_limits', (t) => {
   })
 })
 
-test('writes inputs', (t) => {
+test('writes inputs', async (t) => {
   const task: Type.Task<Identifier, Identifier> = {
     platform: 'linux',
     image_resource: {
@@ -135,16 +146,16 @@ test('writes inputs', (t) => {
     inputs: [{ name: 'my-input' as Identifier }],
   }
 
-  const { result, diagnostics } = chain('a', task)
+  const { result, error } = await chain('a', task)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task,
     inputs: [{ name: 'my-input' }],
   })
 })
 
-test('writes outputs', (t) => {
+test('writes outputs', async (t) => {
   const task: Type.Task<Identifier, Identifier> = {
     platform: 'linux',
     image_resource: {
@@ -158,16 +169,16 @@ test('writes outputs', (t) => {
     outputs: [{ name: 'my-output' as Identifier }],
   }
 
-  const { result, diagnostics } = chain('a', task)
+  const { result, error } = await chain('a', task)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task,
     outputs: [{ name: 'my-output' }],
   })
 })
 
-test('writes params', (t) => {
+test('writes params', async (t) => {
   const task: Type.Task<Identifier, Identifier> = {
     platform: 'linux',
     image_resource: {
@@ -183,10 +194,10 @@ test('writes params', (t) => {
     },
   }
 
-  const { result, diagnostics } = chain('a', task)
+  const { result, error } = await chain('a', task)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task,
     params: {
       my_param: '1',

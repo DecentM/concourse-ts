@@ -6,7 +6,9 @@ import { Decompilation } from './index.js'
 
 test('decompiles normally', async (t) => {
   const decompilation = new Decompilation()
-  const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
+  const file = await fs.readFile(
+    path.resolve(import.meta.dirname, 'test/pipeline.yml')
+  )
 
   decompilation
     .set_name('pipeline')
@@ -20,7 +22,9 @@ test('decompiles normally', async (t) => {
 
 test('decompiles without name', async (t) => {
   const decompilation = new Decompilation()
-  const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
+  const file = await fs.readFile(
+    path.resolve(import.meta.dirname, 'test/pipeline.yml')
+  )
 
   decompilation
     .set_import_path('@decentm/concourse-ts')
@@ -32,7 +36,9 @@ test('decompiles without name', async (t) => {
 })
 
 test('does not produce undefined assignments', async (t) => {
-  const file = await fs.readFile(path.resolve(__dirname, 'test/pipeline.yml'))
+  const file = await fs.readFile(
+    path.resolve(import.meta.dirname, 'test/pipeline.yml')
+  )
   const result = new Decompilation()
     .set_name('pipeline')
     .set_work_dir('src/decompiler/test')
@@ -43,7 +49,9 @@ test('does not produce undefined assignments', async (t) => {
 
 test('throws when input is not a pipeline', async (t) => {
   const decompilation = new Decompilation()
-  const file = await fs.readFile(path.resolve(__dirname, 'test/not-pipeline.yml'))
+  const file = await fs.readFile(
+    path.resolve(import.meta.dirname, 'test/not-pipeline.yml')
+  )
 
   decompilation
     .set_name('pipeline')

@@ -1,53 +1,64 @@
-import test from 'ava'
-import * as ts from 'typescript'
+import path from 'node:path'
+import fs from 'node:fs/promises'
 
-import { Type } from '../../..'
-import { DoStep } from '../../../components'
+import test from 'ava'
+import { tsImport } from 'tsx/esm/api'
+
+import { Type } from '../../../index.js'
+import { DoStep } from '../../../components/index.js'
 
 import { write_do_step } from './do.js'
-import { default_do_step } from '../../../components/step/test-data/default-steps'
+import { default_do_step } from '../../../components/step/test-data/default-steps.js'
 
-const chain = (name: string, input: Type.DoStep, pipeline: Type.Pipeline) => {
+const chain = async (name: string, input: Type.DoStep, pipeline: Type.Pipeline) => {
   const code = `
-    import {DoStep} from '../../../components'
+    import {DoStep} from '../../../components/index.js'
 
-    ${write_do_step(name, input, pipeline)}
+    export default ${write_do_step(name, input, pipeline)}
   `
 
-  const transpiled = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const result: DoStep = eval(transpiled.outputText)
+  let error: Error | null = null
+  let result: DoStep | null = null
 
-  return {
-    result: result.serialise(),
-    diagnostics: transpiled.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
 const default_pipeline: Type.Pipeline = {
   jobs: [],
 }
 
-test('writes empty step', (t) => {
-  const { result, diagnostics } = chain('a', { do: [] }, default_pipeline)
+test('writes empty step', async (t) => {
+  const { result, error } = await chain('a', { do: [] }, default_pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, default_do_step)
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), default_do_step)
 })
 
-test('writes steps', (t) => {
-  const { result, diagnostics } = chain(
+test('writes steps', async (t) => {
+  const { result, error } = await chain(
     'a',
     { do: [default_do_step] },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, { ...default_do_step, do: [default_do_step] })
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), { ...default_do_step, do: [default_do_step] })
 })

@@ -1,7 +1,10 @@
 import test from 'ava'
 
 import { Identifier } from '../../utils/index.js'
-import { ValidationWarning, ValidationWarningType } from '../../utils/warning-store'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../../utils/warning-store/index.js'
 
 import { validate_get_steps } from './get.js'
 

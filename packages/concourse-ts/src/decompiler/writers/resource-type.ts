@@ -1,4 +1,4 @@
-import { VError } from 'verror'
+import VError from 'verror'
 
 import { Pipeline } from '../../declarations/index.js'
 import { parse_duration } from '../../utils/duration/index.js'

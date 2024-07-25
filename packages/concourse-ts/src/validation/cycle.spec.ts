@@ -2,7 +2,10 @@ import test from 'ava'
 import { Pipeline } from '../declarations/index.js'
 import { Identifier } from '../utils/index.js'
 
-import { ValidationWarning, ValidationWarningType } from '../utils/warning-store'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
 import { validate_cycle } from './cycle.js'
 

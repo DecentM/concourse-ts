@@ -1,4 +1,4 @@
-import { VError } from 'verror'
+import VError from 'verror'
 
 import { Customiser } from '../declarations/customiser.js'
 import { Duration, DurationInput, get_duration } from '../utils/duration/index.js'

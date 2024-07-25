@@ -117,11 +117,11 @@ test('collects base resources', (t) => {
   t.deepEqual(deduplicate_by_identity(result), [r])
   t.deepEqual(t.context.step.serialise(), {
     ...default_step,
-    on_abort: { ...default_step, do: [default_get_step] },
-    on_success: { ...default_step, do: [default_get_step] },
-    on_error: { ...default_step, do: [default_get_step] },
-    on_failure: { ...default_step, do: [default_get_step] },
-    ensure: { ...default_step, do: [default_get_step] },
+    on_abort: { do: [default_get_step] },
+    on_success: { do: [default_get_step] },
+    on_error: { do: [default_get_step] },
+    on_failure: { do: [default_get_step] },
+    ensure: { do: [default_get_step] },
   })
 })
 
@@ -148,23 +148,18 @@ test('collects base task steps', (t) => {
   t.deepEqual(t.context.step.serialise(), {
     ...default_step,
     on_abort: {
-      ...default_step,
       do: [{ ...default_task_step_with_config, task: 't' }],
     },
     on_success: {
-      ...default_step,
       do: [{ ...default_task_step_with_config, task: 't' }],
     },
     on_error: {
-      ...default_step,
       do: [{ ...default_task_step_with_config, task: 't' }],
     },
     on_failure: {
-      ...default_step,
       do: [{ ...default_task_step_with_config, task: 't' }],
     },
     ensure: {
-      ...default_step,
       do: [{ ...default_task_step_with_config, task: 't' }],
     },
   })

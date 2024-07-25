@@ -1,59 +1,70 @@
+import path from 'node:path'
+import fs from 'node:fs/promises'
+
 import test from 'ava'
-import * as ts from 'typescript'
+import { tsImport } from 'tsx/esm/api'
 
-import {Type} from '../../..'
-import {InParallelStep} from '../../../components'
+import { Type } from '../../../index.js'
+import { InParallelStep } from '../../../components/index.js'
 
-import {write_in_parallel_step} from './in-parallel'
-import {default_in_parallel_step} from '../../../components/step/test-data/default-steps'
+import { write_in_parallel_step } from './in-parallel.js'
+import { default_in_parallel_step } from '../../../components/step/test-data/default-steps.js'
 
-const chain = (
+const chain = async (
   name: string,
   input: Type.InParallelStep,
   pipeline: Type.Pipeline
 ) => {
   const code = `
-    import {InParallelStep} from '../../../components'
+    import {InParallelStep} from '../../../components/index.js'
 
-    ${write_in_parallel_step(name, input, pipeline)}
+    export default ${write_in_parallel_step(name, input, pipeline)}
   `
 
-  const transpiled = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const result: InParallelStep = eval(transpiled.outputText)
+  let error: Error | null = null
+  let result: InParallelStep | null = null
 
-  return {
-    result: result.serialise(),
-    diagnostics: transpiled.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
 const default_pipeline: Type.Pipeline = {
   jobs: [],
 }
 
-test('writes empty step', (t) => {
-  const {result, diagnostics} = chain('a', {in_parallel: []}, default_pipeline)
+test('writes empty step', async (t) => {
+  const { result, error } = await chain('a', { in_parallel: [] }, default_pipeline)
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, default_in_parallel_step)
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), default_in_parallel_step)
 })
 
-test('writes steps', (t) => {
-  const {result, diagnostics} = chain(
+test('writes steps', async (t) => {
+  const { result, error } = await chain(
     'a',
-    {in_parallel: {steps: [default_in_parallel_step]}},
+    { in_parallel: { steps: [default_in_parallel_step] } },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_in_parallel_step,
     in_parallel: {
       fail_fast: undefined,
@@ -63,15 +74,15 @@ test('writes steps', (t) => {
   })
 })
 
-test('writes limit', (t) => {
-  const {result, diagnostics} = chain(
+test('writes limit', async (t) => {
+  const { result, error } = await chain(
     'a',
-    {in_parallel: {steps: [], limit: 4}},
+    { in_parallel: { steps: [], limit: 4 } },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_in_parallel_step,
     in_parallel: {
       fail_fast: undefined,
@@ -81,15 +92,15 @@ test('writes limit', (t) => {
   })
 })
 
-test('writes fail_fast', (t) => {
-  const {result, diagnostics} = chain(
+test('writes fail_fast', async (t) => {
+  const { result, error } = await chain(
     'a',
-    {in_parallel: {steps: [], fail_fast: false}},
+    { in_parallel: { steps: [], fail_fast: false } },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_in_parallel_step,
     in_parallel: {
       fail_fast: false,

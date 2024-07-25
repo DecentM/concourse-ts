@@ -7,7 +7,7 @@ import { apply_task_hoisting } from './index.js'
 import {
   default_job,
   default_task_step,
-} from '../../components/step/test-data/default-steps'
+} from '../../components/step/test-data/default-steps.js'
 
 test('hoists all tasks', (t) => {
   const pipeline = new Pipeline('p', (p) => {
@@ -33,7 +33,7 @@ test('hoists all tasks', (t) => {
   const serialised = pipeline.serialise()
 
   apply_task_hoisting(serialised, {
-    work_dir: path.join(__dirname, 'test-data'),
+    work_dir: path.join(import.meta.dirname, 'test-data'),
   })
 
   t.deepEqual(serialised, {

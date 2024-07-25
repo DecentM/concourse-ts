@@ -1,6 +1,9 @@
 import test from 'ava'
 
-import { ValidationWarning, ValidationWarningType } from './utils/warning-store.js'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
 import { validate_display } from './display.js'
 

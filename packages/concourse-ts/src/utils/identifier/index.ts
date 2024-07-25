@@ -1,6 +1,7 @@
-import { VError } from 'verror'
+import VError from 'verror'
 
 import { validate_identifier } from '../../validation/identifier.js'
+import { type_of } from '../type-of/index.js'
 
 /**
  * https://concourse-ci.org/config-basics.html#schema.identifier
@@ -40,9 +41,13 @@ export type Identifier = string & { __type: 'Identifier' }
  *
  */
 export const is_identifier = <IdentifierType extends Identifier = Identifier>(
-  input: string
+  input: unknown
 ): input is IdentifierType => {
-  const warnings = validate_identifier(input)
+  if (type_of(input) !== 'string') {
+    return false
+  }
+
+  const warnings = validate_identifier(input as string)
 
   if (warnings.has_fatal()) {
     return false
