@@ -18,27 +18,15 @@ const chain = async (name: string, input: Type.DoStep, pipeline: Type.Pipeline) 
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: DoStep | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -46,19 +34,13 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', async (t) => {
-  const { result, error } = await chain('a', { do: [] }, default_pipeline)
+  const { result } = await chain('a', { do: [] }, default_pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), default_do_step)
 })
 
 test('writes steps', async (t) => {
-  const { result, error } = await chain(
-    'a',
-    { do: [default_do_step] },
-    default_pipeline
-  )
+  const { result } = await chain('a', { do: [default_do_step] }, default_pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), { ...default_do_step, do: [default_do_step] })
 })

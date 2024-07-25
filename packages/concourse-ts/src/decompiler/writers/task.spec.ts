@@ -18,27 +18,15 @@ const chain = async (name: string, input: Type.Task<Identifier, Identifier>) => 
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: Task | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_task = {
@@ -74,9 +62,8 @@ test('writes empty task', async (t) => {
     },
   }
 
-  const { result, error } = await chain('a', task)
+  const { result } = await chain('a', task)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), default_task)
 })
 
@@ -94,9 +81,8 @@ test('writes caches', async (t) => {
     caches: [{ path: 'my-cache' }],
   }
 
-  const { result, error } = await chain('a', task)
+  const { result } = await chain('a', task)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task,
     caches: [{ path: 'my-cache' }],
@@ -120,9 +106,8 @@ test('writes container_limits', async (t) => {
     },
   }
 
-  const { result, error } = await chain('a', task)
+  const { result } = await chain('a', task)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task,
     container_limits: {
@@ -146,9 +131,8 @@ test('writes inputs', async (t) => {
     inputs: [{ name: 'my-input' as Identifier }],
   }
 
-  const { result, error } = await chain('a', task)
+  const { result } = await chain('a', task)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task,
     inputs: [{ name: 'my-input' }],
@@ -169,9 +153,8 @@ test('writes outputs', async (t) => {
     outputs: [{ name: 'my-output' as Identifier }],
   }
 
-  const { result, error } = await chain('a', task)
+  const { result } = await chain('a', task)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task,
     outputs: [{ name: 'my-output' }],
@@ -194,9 +177,8 @@ test('writes params', async (t) => {
     },
   }
 
-  const { result, error } = await chain('a', task)
+  const { result } = await chain('a', task)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task,
     params: {

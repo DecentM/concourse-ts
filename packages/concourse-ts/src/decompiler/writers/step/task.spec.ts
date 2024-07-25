@@ -23,27 +23,15 @@ const chain = async (
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: TaskStep | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -51,13 +39,8 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', async (t) => {
-  const { result, error } = await chain(
-    'a',
-    { task: 'at' as Identifier },
-    default_pipeline
-  )
+  const { result } = await chain('a', { task: 'at' as Identifier }, default_pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     task: 'a_task',
@@ -65,13 +48,12 @@ test('writes empty step', async (t) => {
 })
 
 test('writes file', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { task: 'at' as Identifier, file: 'my-file.yml' },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     file: 'my-file.yml',
@@ -80,13 +62,12 @@ test('writes file', async (t) => {
 })
 
 test('writes image', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { task: 'at' as Identifier, image: 'my-image' as Identifier },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     image: 'my-image',
@@ -95,13 +76,12 @@ test('writes image', async (t) => {
 })
 
 test('writes privileged', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { task: 'at' as Identifier, privileged: true },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     privileged: true,
@@ -110,13 +90,12 @@ test('writes privileged', async (t) => {
 })
 
 test('writes vars', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { task: 'at' as Identifier, vars: { my_var: '1' } },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     vars: { my_var: '1' },
@@ -125,13 +104,12 @@ test('writes vars', async (t) => {
 })
 
 test('writes params', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { task: 'at' as Identifier, params: { my_param: '1' } },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     params: { my_param: '1' },
@@ -140,7 +118,7 @@ test('writes params', async (t) => {
 })
 
 test('writes input_mapping', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       task: 'at' as Identifier,
@@ -149,7 +127,6 @@ test('writes input_mapping', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     input_mapping: { input: 'mapped' },
@@ -158,7 +135,7 @@ test('writes input_mapping', async (t) => {
 })
 
 test('writes output_mapping', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       task: 'at' as Identifier,
@@ -167,7 +144,6 @@ test('writes output_mapping', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_task_step,
     config: undefined,

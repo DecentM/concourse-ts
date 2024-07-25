@@ -24,27 +24,15 @@ const chain = async (input: Type.Job, pipeline: Type.Pipeline) => {
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: Job | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'step.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 test('writes empty job', async (t) => {
@@ -53,9 +41,8 @@ test('writes empty job', async (t) => {
     plan: [],
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), { ...default_job, ...job })
 })
 
@@ -70,9 +57,8 @@ test('writes plan', async (t) => {
     ],
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -95,9 +81,8 @@ test('writes build_log_retention', async (t) => {
     },
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -111,9 +96,8 @@ test('writes disable_manual_trigger', async (t) => {
     disable_manual_trigger: true,
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -127,9 +111,8 @@ test('writes interruptible', async (t) => {
     interruptible: false,
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -143,9 +126,8 @@ test('writes max_in_flight', async (t) => {
     max_in_flight: 8,
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -159,9 +141,8 @@ test('writes old_name', async (t) => {
     old_name: 'jo' as Identifier,
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -178,9 +159,8 @@ test('writes on_success', async (t) => {
     },
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -207,9 +187,8 @@ test('writes on_error', async (t) => {
     },
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -236,9 +215,8 @@ test('writes on_failure', async (t) => {
     },
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -265,9 +243,8 @@ test('writes on_abort', async (t) => {
     },
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -294,9 +271,8 @@ test('writes ensure', async (t) => {
     },
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -320,9 +296,8 @@ test('writes public', async (t) => {
     public: true,
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,
@@ -336,9 +311,8 @@ test('writes serial_groups', async (t) => {
     serial_groups: ['asd' as Identifier],
   }
 
-  const { result, error } = await chain(job, { jobs: [job] })
+  const { result } = await chain(job, { jobs: [job] })
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_job,
     ...job,

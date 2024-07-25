@@ -23,27 +23,15 @@ const chain = async (name: string, input: Type.Pipeline) => {
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: Pipeline | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 test('writes empty pipeline', async (t) => {
@@ -51,9 +39,8 @@ test('writes empty pipeline', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), default_pipeline)
 })
 
@@ -65,9 +52,8 @@ test('writes display', async (t) => {
     },
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), { ...default_pipeline, ...pipeline })
 })
 
@@ -87,9 +73,8 @@ test('writes var_sources', async (t) => {
     ],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), { ...default_pipeline, ...pipeline })
 })
 
@@ -114,9 +99,8 @@ test('writes groups', async (t) => {
     ],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_pipeline,
     ...pipeline,
@@ -151,9 +135,8 @@ test('writes ungrouped jobs', async (t) => {
     ],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_pipeline,
     ...pipeline,

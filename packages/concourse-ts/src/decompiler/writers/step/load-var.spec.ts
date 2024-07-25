@@ -23,27 +23,15 @@ const chain = async (
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: LoadVarStep | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -51,13 +39,12 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { load_var: 'my-var' as Identifier, file: 'my-file' },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_load_var_step,
     file: 'my-file',
@@ -66,13 +53,12 @@ test('writes empty step', async (t) => {
 })
 
 test('writes format', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { load_var: 'my-var' as Identifier, file: 'my-file', format: 'json' },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_load_var_step,
     file: 'my-file',
@@ -82,13 +68,12 @@ test('writes format', async (t) => {
 })
 
 test('writes reveal', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { load_var: 'my-var' as Identifier, file: 'my-file', reveal: false },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_load_var_step,
     file: 'my-file',

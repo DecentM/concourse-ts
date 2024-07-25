@@ -18,8 +18,11 @@
     "nodeArguments": [
       "--import=tsimp"
     ],
-    "workerThreads": false,
-    "timeout": "30s"
+    "environmentVariables": {
+      "TSIMP_DIAG": "ignore"
+    },
+    "timeout": "15s",
+    "concurrency": 2
   },
   "peerDependencies": {
     "@decentm/concourse-ts": "0.x"

@@ -18,27 +18,15 @@ const chain = async (name: string, pipeline: Type.Pipeline) => {
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: ResourceType | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_resource_type = {
@@ -85,9 +73,8 @@ test('writes empty resource type', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource_type,
     ...pipeline.resource_types![0],
@@ -110,9 +97,8 @@ test('writes source', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource_type,
     ...pipeline.resource_types![0],
@@ -135,9 +121,8 @@ test('writes check_every', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource_type,
     ...pipeline.resource_types![0],
@@ -159,9 +144,8 @@ test('writes defaults', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource_type,
     ...pipeline.resource_types![0],
@@ -184,9 +168,8 @@ test('writes params', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource_type,
     ...pipeline.resource_types![0],
@@ -207,9 +190,8 @@ test('writes privileged', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource_type,
     ...pipeline.resource_types![0],
@@ -230,9 +212,8 @@ test('writes tags', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource_type,
     ...pipeline.resource_types![0],
