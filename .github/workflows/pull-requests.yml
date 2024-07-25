@@ -6,61 +6,9 @@ on:
       - main
 
 jobs:
-  determine-matrix:
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        shell: bash
-
-    outputs:
-      affected: ${{ steps.affected.outputs.projects }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        id: cache-node-modules
-        with:
-          path: |
-            node_modules
-            packages/*/node_modules
-          key: lock-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            lock-
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.2.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: |
-          set -exu
-          yarn --frozen-lockfile --non-interactive
-
-      - uses: nrwl/nx-set-shas@v3
-
-      - name: Determine affected packages
-        id: affected
-        run: |
-          set -exu
-          echo projects=$(yarn --silent nx print-affected | jq -c '.projects') >> $GITHUB_OUTPUT
-
   lint:
     name: lint-packages
 
-    needs:
-      - determine-matrix
-
-    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -94,67 +42,13 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
+          yarn --immutable
 
-      - uses: nrwl/nx-set-shas@v3
+      - run: yarn moon :lint
 
-      - run: yarn nx affected --target=lint
-
-  tests:
-    name: test-packages
-
-    needs:
-      - determine-matrix
-
-    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
-
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        shell: bash
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        id: cache-node-modules
-        with:
-          path: |
-            node_modules
-            packages/*/node_modules
-          key: lock-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            lock-
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.2.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: |
-          set -exu
-          yarn --frozen-lockfile --non-interactive
-
-      - uses: nrwl/nx-set-shas@v3
-
-      - run: yarn nx affected --target=test
-
-  build:
+  build-and-test:
     name: build-packages
 
-    needs:
-      - determine-matrix
-
-    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -188,23 +82,19 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
-
-      - uses: nrwl/nx-set-shas@v3
+          yarn --immutable
 
       - name: Build packages
-        run: yarn nx affected --target=build
+        run: yarn moon :build
+
+      - name: Test packages
+        run: yarn moon '#testable:test'
 
   docs:
     name: build-docs
 
     runs-on: ubuntu-latest
 
-    needs:
-      - determine-matrix
-
-    if: ${{ needs.determine-matrix.outputs.affected != '[]' }}
-
     defaults:
       run:
         shell: bash
@@ -234,7 +124,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -exu
-          yarn --frozen-lockfile --non-interactive
+          yarn --immutable
 
       - name: Generate docs
         run: |
@@ -246,35 +136,10 @@ jobs:
 
     needs:
       - lint
-      - tests
-      - build
+      - build-and-test
       - docs
 
     if: ${{ github.actor == 'dependabot[bot]' }}
-
-    # Set the access for individual scopes, or use permissions: write-all
-    permissions: write-all
-
-    steps:
-      - name: Approve the PR
-        run: gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Merge the PR
-        run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-  auto-merge-no-checks:
-    runs-on: ubuntu-latest
-
-    needs:
-      - determine-matrix
-
-    if: ${{ github.actor == 'dependabot[bot]' && needs.determine-matrix.outputs.affected == '[]' }}
 
     # Set the access for individual scopes, or use permissions: write-all
     permissions: write-all
