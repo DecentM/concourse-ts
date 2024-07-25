@@ -3,8 +3,8 @@ import * as ConcourseTs from '@decentm/concourse-ts'
 import path from 'path'
 import * as YAML from 'yaml'
 
-import { HandleOutputParams, handle_output } from '../../lib/handle-output'
-import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs'
+import { HandleOutputParams, handle_output } from '../../lib/handle-output.js'
+import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs.js'
 
 export type TransformParams = HandleInputParams &
   HandleOutputParams & {

@@ -1,8 +1,6 @@
 import fsp from 'node:fs/promises'
 import path from 'node:path'
 
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import * as rimraf from 'rimraf'
 import { mkdirp } from 'mkdirp'
 
 export type HandleOutputParams = {
@@ -32,7 +30,7 @@ export const handle_output = async (
         const output_dir = path.resolve(params.output)
 
         if (params.clean) {
-          rimraf.sync(output_dir)
+          await fsp.rm(output_dir, { recursive: true, force: true })
         }
 
         const output_file = path.join(output_dir, result.filename)

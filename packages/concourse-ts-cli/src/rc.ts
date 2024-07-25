@@ -1,9 +1,9 @@
 import { cosmiconfig } from 'cosmiconfig'
 import { TypeScriptLoader } from 'cosmiconfig-typescript-loader'
 
-import { CompileParams } from './commands/compile'
-import { DecompileParams } from './commands/decompile'
-import { TransformParams } from './commands/transform'
+import { CompileParams } from './commands/compile/index.js'
+import { DecompileParams } from './commands/decompile/index.js'
+import { TransformParams } from './commands/transform/index.js'
 
 type RCOptions = {
   compile?: Partial<CompileParams>
@@ -18,7 +18,7 @@ const module_name = 'concourse-ts'
 const paths: string[] = []
 const search_roots = ['.', '.config']
 
-search_roots.forEach((root) => {
+for (const root of search_roots) {
   paths.push(
     `${root}/.${module_name}rc`,
     `${root}/.${module_name}rc.json`,
@@ -33,7 +33,7 @@ search_roots.forEach((root) => {
     `${root}/${module_name}.config.cjs`,
     `${root}/${module_name}.config.mjs`
   )
-})
+}
 
 export const get_config = async (): Promise<RCOptions | null> => {
   const explorer = cosmiconfig(module_name, {

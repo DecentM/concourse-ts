@@ -1,8 +1,8 @@
 import { Option } from 'commander'
 import { merge } from 'ts-deepmerge'
 
-import { CliCommand } from '../../command'
-import { CompileParams, run_compile_command } from '.'
+import { CliCommand } from '../../command.js'
+import { CompileParams, run_compile_command } from './index.js'
 
 export class CompileCommand extends CliCommand {
   constructor(defaults?: Partial<CompileParams>) {
