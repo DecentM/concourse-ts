@@ -1,0 +1,39 @@
+# Generated with concourse-ts at 22:32:57 on 25/07/2024
+#
+# jobs: 1
+# groups: 0
+# resource_types: 1
+# resources: 1
+# var_sources: 0
+
+jobs:
+  - name: ci
+    plan:
+      - attempts: 3
+        timeout: 1h
+        get: git-ci
+        trigger: true
+      - timeout: 6h
+        set_pipeline: self
+        file: .ci/pipeline/concourse-ts.yml
+    max_in_flight: 1
+display:
+  background_image: https://bing.biturl.top/?resolution=1920&format=image
+resource_types:
+  - name: git
+    type: registry-image
+    source:
+      repository: concourse/git-resource
+      tag: 1.14.7-alpine-20230312
+    check_every: 1h
+resources:
+  - name: git-ci
+    type: git
+    source:
+      uri: https://github.com/DecentM/concourse-ts.git
+      branch: main
+      paths:
+        - ci
+    check_every: 1h
+    icon: github
+    webhook_token: 1570823665f66932a328791c753672e4d1ff67dd72eab3d6fba8a2fc48edef1e

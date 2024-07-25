@@ -21,9 +21,8 @@ export type GitInput = {
 const create_git_resource = (input: GitInput): Git.Resource =>
   new ConcourseTs.Resource(input.name, git_type, (r) => {
     r.source = {
-      uri: `ssh://git@github.com/${input.repo}.git`,
+      uri: `https://github.com/${input.repo}.git`,
       branch: input.branch,
-      private_key: ConcourseTs.Utils.get_var('git.private-key'),
       ignore_paths: input.ignore_paths,
       paths: input.paths,
     }
