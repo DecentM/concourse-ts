@@ -4,10 +4,10 @@ import { Command } from 'commander'
 
 import pkg from '../package.json'
 
-import { CompileCommand } from './commands/compile/command'
-import { DecompileCommand } from './commands/decompile/command'
-import { TransformCommand } from './commands/transform/command'
-import { get_config } from './rc'
+import { CompileCommand } from './commands/compile/command.js'
+import { DecompileCommand } from './commands/decompile/command.js'
+import { TransformCommand } from './commands/transform/command.js'
+import { get_config } from './rc.js'
 
 export const get_program = async () => {
   const program = new Command()

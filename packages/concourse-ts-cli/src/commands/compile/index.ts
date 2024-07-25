@@ -1,8 +1,8 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 
-import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs'
-import { HandleOutputParams, handle_output } from '../../lib/handle-output'
+import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs.js'
+import { HandleOutputParams, handle_output } from '../../lib/handle-output.js'
 
 export type CompileParams = HandleInputParams &
   HandleOutputParams & {

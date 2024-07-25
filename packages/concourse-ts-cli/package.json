@@ -1,11 +1,12 @@
 {
   "name": "@decentm/concourse-ts-cli",
   "version": "0.12.7",
-  "description": "command line interface for compiling concourse-ts pipelines",
+  "description": "command line tool for compiling concourse-ts pipelines",
   "author": "DecentM <decentm@decentm.com>",
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-cli",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
+  "type": "module",
   "bin": {
     "concourse-ts": "./dist/index.js"
   },
@@ -16,7 +17,6 @@
     "cosmiconfig-typescript-loader": "^5.0.0",
     "fast-glob": "^3.3.2",
     "mkdirp": "^3.0.1",
-    "rimraf": "^5.0.7",
     "tmp-promise": "^3.0.3",
     "ts-deepmerge": "^7.0.0",
     "ts-node": "^10.9.2",
@@ -34,7 +34,6 @@
     "@decentm/concourse-ts-resource-registry-image": "0.2.2"
   },
   "devDependencies": {
-    "@types/rimraf": "^4.0.5",
     "@types/tmp": "^0.2.6",
     "@types/verror": "^1.10.10"
   }

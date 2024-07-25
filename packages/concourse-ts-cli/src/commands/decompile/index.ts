@@ -3,8 +3,8 @@ import VError from 'verror'
 
 import path from 'node:path'
 
-import { HandleOutputParams, handle_output } from '../../lib/handle-output'
-import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs'
+import { HandleOutputParams, handle_output } from '../../lib/handle-output.js'
+import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs.js'
 
 export type ImportEventMap = {
   globs: (files: string[]) => void
