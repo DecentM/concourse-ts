@@ -10,7 +10,10 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
@@ -19,9 +22,15 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@decentm/concourse-ts": ["packages/concourse-ts/src/index.ts"],
-      "@decentm/concourse-ts-cli": ["packages/concourse-ts-cli/src/index.ts"],
-      "@decentm/concourse-ts-fluent": ["packages/concourse-ts-fluent/src/index.ts"],
+      "@decentm/concourse-ts": [
+        "packages/concourse-ts/src/index.ts"
+      ],
+      "@decentm/concourse-ts-cli": [
+        "packages/concourse-ts-cli/src/index.ts"
+      ],
+      "@decentm/concourse-ts-fluent": [
+        "packages/concourse-ts-fluent/src/index.ts"
+      ],
       "@decentm/concourse-ts-recipe-auto-pipeline": [
         "packages/concourse-ts-recipe-auto-pipeline/src/index.ts"
       ],
@@ -93,5 +102,8 @@
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
