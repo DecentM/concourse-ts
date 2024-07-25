@@ -1,8 +1,8 @@
 import test from 'ava'
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { StepBuilderBase } from './base'
-import { AllStep } from '../step'
+import { StepBuilderBase } from './base.js'
+import { AllStep } from '../step.js'
 
 class TestStepBuilder extends StepBuilderBase<AllStep> {
   public override build(): AllStep {

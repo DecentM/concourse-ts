@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { SetPipelineStepBuilder } from './set-pipeline'
+import { SetPipelineStepBuilder } from './set-pipeline.js'
 
 test('builds', (t) => {
   const builder = new SetPipelineStepBuilder()

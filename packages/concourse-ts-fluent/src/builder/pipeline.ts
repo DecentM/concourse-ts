@@ -1,8 +1,8 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 import VError from 'verror'
 
-import { GroupBuilder } from './group'
-import { JobBuilder } from './job'
+import { GroupBuilder } from './group.js'
+import { JobBuilder } from './job.js'
 
 export class PipelineBuilder {
   public build() {

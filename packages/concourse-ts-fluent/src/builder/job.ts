@@ -1,7 +1,7 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { StepBuilder } from './step'
-import { GetStepBuilder } from './steps/get'
+import { StepBuilder } from './step.js'
+import { GetStepBuilder } from './steps/get.js'
 
 export class JobBuilder {
   public build(): ConcourseTs.Job {

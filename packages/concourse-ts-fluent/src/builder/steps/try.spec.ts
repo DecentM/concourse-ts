@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { TryStepBuilder } from './try'
+import { TryStepBuilder } from './try.js'
 
 test('builds', (t) => {
   const builder = new TryStepBuilder().name('my-do-step').try((s) => {

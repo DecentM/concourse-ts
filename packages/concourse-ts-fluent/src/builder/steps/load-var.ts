@@ -1,6 +1,6 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { StepBuilderBase } from './base'
+import { StepBuilderBase } from './base.js'
 
 export class LoadVarStepBuilder extends StepBuilderBase<ConcourseTs.LoadVarStep> {
   public override build(): ConcourseTs.LoadVarStep {

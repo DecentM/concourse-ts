@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { TaskStepBuilder } from './task'
+import { TaskStepBuilder } from './task.js'
 
 test('builds', (t) => {
   const builder = new TaskStepBuilder()

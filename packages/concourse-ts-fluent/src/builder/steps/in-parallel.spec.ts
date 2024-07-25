@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { InParallelStepBuilder } from './in-parallel'
+import { InParallelStepBuilder } from './in-parallel.js'
 
 test('builds', (t) => {
   const builder = new InParallelStepBuilder()

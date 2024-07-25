@@ -1,7 +1,7 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { StepBuilderBase } from './base'
-import { StepBuilder } from '../step'
+import { StepBuilderBase } from './base.js'
+import { StepBuilder } from '../step.js'
 
 export class InParallelStepBuilder extends StepBuilderBase<ConcourseTs.InParallelStep> {
   public override build(): ConcourseTs.InParallelStep {

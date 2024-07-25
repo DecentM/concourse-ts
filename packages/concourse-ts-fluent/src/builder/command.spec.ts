@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { CommandBuilder } from './command'
+import { CommandBuilder } from './command.js'
 
 test('builds command', (t) => {
   const command = new CommandBuilder().dir('.').path('echo').arg('test').user('root')

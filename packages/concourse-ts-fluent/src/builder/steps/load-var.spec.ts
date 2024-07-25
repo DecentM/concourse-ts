@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { LoadVarStepBuilder } from './load-var'
+import { LoadVarStepBuilder } from './load-var.js'
 
 test('builds', (t) => {
   const builder = new LoadVarStepBuilder()

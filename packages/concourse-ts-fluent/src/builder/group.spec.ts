@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { GroupBuilder } from './group'
+import { GroupBuilder } from './group.js'
 
 test('builds group', (t) => {
   const group = new GroupBuilder().name('test').job(() => {})

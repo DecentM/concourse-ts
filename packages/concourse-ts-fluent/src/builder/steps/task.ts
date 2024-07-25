@@ -1,7 +1,7 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import { StepBuilderBase } from './base'
-import { TaskBuilder } from '../task'
+import { StepBuilderBase } from './base.js'
+import { TaskBuilder } from '../task.js'
 
 export class TaskStepBuilder extends StepBuilderBase<ConcourseTs.TaskStep> {
   public override build(): ConcourseTs.TaskStep<

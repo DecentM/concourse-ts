@@ -1,5 +1,5 @@
 import test from 'ava'
-import { DoStepBuilder } from './do'
+import { DoStepBuilder } from './do.js'
 
 test('builds', (t) => {
   const builder = new DoStepBuilder().name('my-do-step').do((s) => {

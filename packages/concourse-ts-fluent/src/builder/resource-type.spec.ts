@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { ResourceTypeBuilder } from './resource-type'
+import { ResourceTypeBuilder } from './resource-type.js'
 
 test('builds', (t) => {
   const builder = new ResourceTypeBuilder()

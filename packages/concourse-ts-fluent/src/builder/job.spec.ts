@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { JobBuilder } from './job'
+import { JobBuilder } from './job.js'
 
 test('builds job', (t) => {
   const job = new JobBuilder()
