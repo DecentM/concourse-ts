@@ -1,7 +1,7 @@
 import test from 'ava'
 
 import * as Type from '../../declarations/index.js'
-import { Identifier } from './identifier.js'
+import { Identifier } from '../identifier/index.js'
 
 import { is_load_var_step } from './index.js'
 

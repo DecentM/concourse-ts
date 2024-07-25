@@ -2,7 +2,7 @@ import { DoStep, Pipeline } from '../../../declarations/index.js'
 
 import { write_step_base } from './base.js'
 import { write_step } from './index.js'
-import { empty_string_or } from '../../../utils/empty_string_or'
+import { empty_string_or } from '../../../utils/empty_string_or/index.js'
 
 export const write_do_step = (name: string, step: DoStep, pipeline: Pipeline) => {
   return `new DoStep(${JSON.stringify(name)}, (step) => {

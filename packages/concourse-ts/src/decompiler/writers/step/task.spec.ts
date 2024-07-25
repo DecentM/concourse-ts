@@ -1,131 +1,146 @@
-import test from 'ava'
-import * as ts from 'typescript'
+import path from 'node:path'
+import fs from 'node:fs/promises'
 
-import { Type } from '../../..'
-import { TaskStep } from '../../../components'
+import test from 'ava'
+import { tsImport } from 'tsx/esm/api'
+
+import { Type } from '../../../index.js'
+import { TaskStep } from '../../../components/index.js'
 import { Identifier } from '../../../utils/index.js'
 
 import { write_task_step } from './task.js'
-import { default_task_step } from '../../../components/step/test-data/default-steps'
+import { default_task_step } from '../../../components/step/test-data/default-steps.js'
 
-const chain = (name: string, input: Type.TaskStep, pipeline: Type.Pipeline) => {
+const chain = async (
+  name: string,
+  input: Type.TaskStep,
+  pipeline: Type.Pipeline
+) => {
   const code = `
-    import {TaskStep} from '../../../components'
+    import {TaskStep} from '../../../components/index.js'
 
-    ${write_task_step(name, input, pipeline)}
+    export default ${write_task_step(name, input, pipeline)}
   `
 
-  const transpiled = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const result: TaskStep = eval(transpiled.outputText)
+  let error: Error | null = null
+  let result: TaskStep | null = null
 
-  return {
-    result: result.serialise(),
-    diagnostics: transpiled.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
 const default_pipeline: Type.Pipeline = {
   jobs: [],
 }
 
-test('writes empty step', (t) => {
-  const { result, diagnostics } = chain(
+test('writes empty step', async (t) => {
+  const { result, error } = await chain(
     'a',
     { task: 'at' as Identifier },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     task: 'a_task',
   })
 })
 
-test('writes file', (t) => {
-  const { result, diagnostics } = chain(
+test('writes file', async (t) => {
+  const { result, error } = await chain(
     'a',
     { task: 'at' as Identifier, file: 'my-file.yml' },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     file: 'my-file.yml',
     task: 'a_task',
   })
 })
 
-test('writes image', (t) => {
-  const { result, diagnostics } = chain(
+test('writes image', async (t) => {
+  const { result, error } = await chain(
     'a',
     { task: 'at' as Identifier, image: 'my-image' as Identifier },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     image: 'my-image',
     task: 'a_task',
   })
 })
 
-test('writes privileged', (t) => {
-  const { result, diagnostics } = chain(
+test('writes privileged', async (t) => {
+  const { result, error } = await chain(
     'a',
     { task: 'at' as Identifier, privileged: true },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     privileged: true,
     task: 'a_task',
   })
 })
 
-test('writes vars', (t) => {
-  const { result, diagnostics } = chain(
+test('writes vars', async (t) => {
+  const { result, error } = await chain(
     'a',
     { task: 'at' as Identifier, vars: { my_var: '1' } },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     vars: { my_var: '1' },
     task: 'a_task',
   })
 })
 
-test('writes params', (t) => {
-  const { result, diagnostics } = chain(
+test('writes params', async (t) => {
+  const { result, error } = await chain(
     'a',
     { task: 'at' as Identifier, params: { my_param: '1' } },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     params: { my_param: '1' },
     task: 'a_task',
   })
 })
 
-test('writes input_mapping', (t) => {
-  const { result, diagnostics } = chain(
+test('writes input_mapping', async (t) => {
+  const { result, error } = await chain(
     'a',
     {
       task: 'at' as Identifier,
@@ -134,16 +149,16 @@ test('writes input_mapping', (t) => {
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     input_mapping: { input: 'mapped' },
     task: 'a_task',
   })
 })
 
-test('writes output_mapping', (t) => {
-  const { result, diagnostics } = chain(
+test('writes output_mapping', async (t) => {
+  const { result, error } = await chain(
     'a',
     {
       task: 'at' as Identifier,
@@ -152,8 +167,8 @@ test('writes output_mapping', (t) => {
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_task_step,
     config: undefined,
     output_mapping: { output: 'mapped' },

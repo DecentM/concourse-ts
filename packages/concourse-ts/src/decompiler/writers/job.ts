@@ -81,9 +81,12 @@ export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
 
     ${empty_string_or(job.public, (is_public) => `job.public = ${is_public}`)}
 
-    ${empty_string_or(
-      job.serial_groups,
-      (serial_groups) => `job.serial_groups = ${JSON.stringify(serial_groups)}`
+    ${empty_string_or(job.serial_groups, (serial_groups) =>
+      serial_groups
+        .map(
+          (serial_group) => `job.add_serial_group(${JSON.stringify(serial_group)})`
+        )
+        .join('\n')
     )}
   })`
 }

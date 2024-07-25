@@ -7,22 +7,6 @@ import { Duration, DurationInput, get_duration } from '../../utils/duration/inde
 import { AnyStep } from '../../declarations/any-step.js'
 
 import { TaskStep } from './task.js'
-import { DoStep as DoStepComponent } from './do.js'
-
-/**
- * Ugly hack to trick the compiler into not writing `require('./do')` into the
- * top level of the output. Otherwise, DoStep construction fails because it
- * happens before this base class is defined, resulting in a hard to debug
- * error.
- *
- * @internal
- */
-const create_do_step = (name: string) => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { DoStep }: { DoStep: typeof DoStepComponent } = require('./do')
-
-  return new DoStep(name)
-}
 
 export abstract class Step<StepType extends Type.Step> {
   private static base_customiser: Customiser<Step<Type.Step>>
@@ -94,23 +78,33 @@ export abstract class Step<StepType extends Type.Step> {
     const result: Resource[] = []
 
     if (this.on_success) {
-      result.push(...this.on_success.get_resources())
+      for (const resources of this.on_success.map((s) => s.get_resources())) {
+        result.push(...resources)
+      }
     }
 
     if (this.on_failure) {
-      result.push(...this.on_failure.get_resources())
+      for (const resources of this.on_failure.map((s) => s.get_resources())) {
+        result.push(...resources)
+      }
     }
 
     if (this.on_error) {
-      result.push(...this.on_error.get_resources())
+      for (const resources of this.on_error.map((s) => s.get_resources())) {
+        result.push(...resources)
+      }
     }
 
     if (this.on_abort) {
-      result.push(...this.on_abort.get_resources())
+      for (const resources of this.on_abort.map((s) => s.get_resources())) {
+        result.push(...resources)
+      }
     }
 
     if (this.ensure) {
-      result.push(...this.ensure.get_resources())
+      for (const resources of this.ensure.map((s) => s.get_resources())) {
+        result.push(...resources)
+      }
     }
 
     return result
@@ -125,23 +119,33 @@ export abstract class Step<StepType extends Type.Step> {
     const result: TaskStep[] = []
 
     if (this.on_success) {
-      result.push(...this.on_success.get_task_steps())
+      for (const steps of this.on_success.map((s) => s.get_task_steps())) {
+        result.push(...steps)
+      }
     }
 
     if (this.on_failure) {
-      result.push(...this.on_failure.get_task_steps())
+      for (const steps of this.on_failure.map((s) => s.get_task_steps())) {
+        result.push(...steps)
+      }
     }
 
     if (this.on_error) {
-      result.push(...this.on_error.get_task_steps())
+      for (const steps of this.on_error.map((s) => s.get_task_steps())) {
+        result.push(...steps)
+      }
     }
 
     if (this.on_abort) {
-      result.push(...this.on_abort.get_task_steps())
+      for (const steps of this.on_abort.map((s) => s.get_task_steps())) {
+        result.push(...steps)
+      }
     }
 
     if (this.ensure) {
-      result.push(...this.ensure.get_task_steps())
+      for (const steps of this.ensure.map((s) => s.get_task_steps())) {
+        result.push(...steps)
+      }
     }
 
     return result
@@ -158,7 +162,7 @@ export abstract class Step<StepType extends Type.Step> {
     this.tags.push(...tags)
   }
 
-  protected on_success?: DoStepComponent
+  protected on_success?: AnyStep[]
 
   /**
    * Adds a step to be run after this one succeeds.
@@ -168,12 +172,12 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_success = (step: AnyStep) => {
-    if (!this.on_success) this.on_success = create_do_step(`${this.name}_on_success`)
+    if (!this.on_success) this.on_success = [] // this.on_success = new DoStep(`${this.name}_on_success`)
 
-    this.on_success.add_step(step)
+    this.on_success.push(step)
   }
 
-  protected on_failure?: DoStepComponent
+  protected on_failure?: AnyStep[]
 
   /**
    * Adds a step to be run after this one fails.
@@ -183,12 +187,12 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_failure = (step: AnyStep) => {
-    if (!this.on_failure) this.on_failure = create_do_step(`${this.name}_on_failure`)
+    if (!this.on_failure) this.on_failure = [] // this.on_failure = new DoStep(`${this.name}_on_failure`)
 
-    this.on_failure.add_step(step)
+    this.on_failure.push(step)
   }
 
-  protected on_error?: DoStepComponent
+  protected on_error?: AnyStep[]
 
   /**
    * Adds a step to be run after this one errors.
@@ -198,12 +202,12 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_error = (step: AnyStep) => {
-    if (!this.on_error) this.on_error = create_do_step(`${this.name}_on_error`)
+    if (!this.on_error) this.on_error = [] // this.on_error = new DoStep(`${this.name}_on_error`)
 
-    this.on_error.add_step(step)
+    this.on_error.push(step)
   }
 
-  protected on_abort?: DoStepComponent
+  protected on_abort?: AnyStep[]
 
   /**
    * Adds a step to be run after this one is aborted.
@@ -213,12 +217,12 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_on_abort = (step: AnyStep) => {
-    if (!this.on_abort) this.on_abort = create_do_step(`${this.name}_on_abort`)
+    if (!this.on_abort) this.on_abort = [] // this.on_abort = new DoStep(`${this.name}_on_abort`)
 
-    this.on_abort.add_step(step)
+    this.on_abort.push(step)
   }
 
-  protected ensure?: DoStepComponent
+  protected ensure?: AnyStep[]
 
   /**
    * Adds a step to always be run after this one.
@@ -228,9 +232,9 @@ export abstract class Step<StepType extends Type.Step> {
    * @param {AnyStep} step
    */
   public add_ensure = (step: AnyStep) => {
-    if (!this.ensure) this.ensure = create_do_step(`${this.name}_ensure`)
+    if (!this.ensure) this.ensure = [] // this.ensure = new DoStep(`${this.name}_ensure`)
 
-    this.ensure.add_step(step)
+    this.ensure.push(step)
   }
 
   /**
@@ -241,11 +245,21 @@ export abstract class Step<StepType extends Type.Step> {
   protected serialise_base = (): Type.StepBase => {
     return {
       attempts: this.attempts,
-      ensure: this.ensure?.serialise(),
-      on_abort: this.on_abort?.serialise(),
-      on_error: this.on_error?.serialise(),
-      on_failure: this.on_failure?.serialise(),
-      on_success: this.on_success?.serialise(),
+      ensure: this.ensure
+        ? { do: this.ensure.map((s) => s.serialise()) }
+        : undefined,
+      on_abort: this.on_abort
+        ? { do: this.on_abort.map((s) => s.serialise()) }
+        : undefined,
+      on_error: this.on_error
+        ? { do: this.on_error.map((s) => s.serialise()) }
+        : undefined,
+      on_failure: this.on_failure
+        ? { do: this.on_failure.map((s) => s.serialise()) }
+        : undefined,
+      on_success: this.on_success
+        ? { do: this.on_success.map((s) => s.serialise()) }
+        : undefined,
       tags: this.tags,
       timeout: this.timeout,
       across: this.across,

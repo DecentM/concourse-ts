@@ -1,7 +1,8 @@
 import { GetStep, Pipeline } from '../../../declarations/index.js'
 import { write_step_base } from './base.js'
 import { write_resource } from '../resource.js'
-import { empty_string_or } from '../../../utils/empty_string_or'
+import { empty_string_or } from '../../../utils/empty_string_or/index.js'
+import { is_identifier } from 'packages/concourse-ts/src/utils/index.js'
 
 export const write_get_step = (name: string, step: GetStep, pipeline: Pipeline) => {
   return `new GetStep(${JSON.stringify(name)}, (step) => {
@@ -15,7 +16,7 @@ export const write_get_step = (name: string, step: GetStep, pipeline: Pipeline) 
     ${empty_string_or(step.passed, (passed) =>
       passed
         .map((job) => {
-          return `step.add_passed({name: ${JSON.stringify(job)}})`
+          return `step.add_passed(${JSON.stringify(job)})`
         })
         .join('\n')
     )}

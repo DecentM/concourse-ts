@@ -1,4 +1,4 @@
-import { VError } from 'verror'
+import VError from 'verror'
 import fs from 'node:fs'
 import path from 'node:path'
 

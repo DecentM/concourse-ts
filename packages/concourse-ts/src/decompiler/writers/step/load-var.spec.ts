@@ -1,64 +1,79 @@
-import test from 'ava'
-import * as ts from 'typescript'
+import path from 'node:path'
+import fs from 'node:fs/promises'
 
-import { Type } from '../../..'
-import { LoadVarStep } from '../../../components'
+import test from 'ava'
+import { tsImport } from 'tsx/esm/api'
+
+import { Type } from '../../../index.js'
+import { LoadVarStep } from '../../../components/index.js'
 import { Identifier } from '../../../utils/index.js'
 
-import { write_load_var_step } from './load-var'
-import { default_load_var_step } from '../../../components/step/test-data/default-steps'
+import { write_load_var_step } from './load-var.js'
+import { default_load_var_step } from '../../../components/step/test-data/default-steps.js'
 
-const chain = (name: string, input: Type.LoadVarStep, pipeline: Type.Pipeline) => {
+const chain = async (
+  name: string,
+  input: Type.LoadVarStep,
+  pipeline: Type.Pipeline
+) => {
   const code = `
-    import {LoadVarStep} from '../../../components'
+    import {LoadVarStep} from '../../../components/index.js'
 
-    ${write_load_var_step(name, input, pipeline)}
+    export default ${write_load_var_step(name, input, pipeline)}
   `
 
-  const transpiled = ts.transpileModule(code, {
-    reportDiagnostics: true,
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      strict: true,
-    },
-  })
+  const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
 
-  const result: LoadVarStep = eval(transpiled.outputText)
+  let error: Error | null = null
+  let result: LoadVarStep | null = null
 
-  return {
-    result: result.serialise(),
-    diagnostics: transpiled.diagnostics,
+  try {
+    const tmpPath = path.join(tmpDir, 'index.ts')
+
+    await fs.writeFile(tmpPath, code, 'utf-8')
+
+    const loaded = await tsImport(tmpPath, import.meta.url)
+
+    result = loaded.default
+  } catch (error2) {
+    if (error2 instanceof Error) {
+      error = error2
+    }
   }
+
+  await fs.rm(tmpDir, { recursive: true, force: true })
+
+  return { result, error, code }
 }
 
 const default_pipeline: Type.Pipeline = {
   jobs: [],
 }
 
-test('writes empty step', (t) => {
-  const { result, diagnostics } = chain(
+test('writes empty step', async (t) => {
+  const { result, error } = await chain(
     'a',
     { load_var: 'my-var' as Identifier, file: 'my-file' },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_load_var_step,
     file: 'my-file',
     load_var: 'my-var',
   })
 })
 
-test('writes format', (t) => {
-  const { result, diagnostics } = chain(
+test('writes format', async (t) => {
+  const { result, error } = await chain(
     'a',
     { load_var: 'my-var' as Identifier, file: 'my-file', format: 'json' },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_load_var_step,
     file: 'my-file',
     load_var: 'my-var',
@@ -66,15 +81,15 @@ test('writes format', (t) => {
   })
 })
 
-test('writes reveal', (t) => {
-  const { result, diagnostics } = chain(
+test('writes reveal', async (t) => {
+  const { result, error } = await chain(
     'a',
     { load_var: 'my-var' as Identifier, file: 'my-file', reveal: false },
     default_pipeline
   )
 
-  t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {
+  t.is(error, null)
+  t.deepEqual(result?.serialise(), {
     ...default_load_var_step,
     file: 'my-file',
     load_var: 'my-var',

@@ -1,6 +1,6 @@
 import { Customiser } from '../../declarations/customiser.js'
 import * as Type from '../../declarations/types.js'
-import { get_identifier } from '../../utils/index.js'
+import { get_identifier, Identifier, is_identifier } from '../../utils/index.js'
 
 import { Job } from '../job.js'
 import { Resource } from '../resource.js'
@@ -63,9 +63,9 @@ export class GetStep<
     return result
   }
 
-  private passed: Job[]
+  private passed: Array<Job | string>
 
-  public add_passed = (...jobs: Job[]) => {
+  public add_passed = (...jobs: Array<Job | string>) => {
     if (!this.passed) this.passed = []
 
     this.passed.push(...jobs)
@@ -89,7 +89,14 @@ export class GetStep<
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,
       passed: this.passed
-        ? this.passed.map((passed_job) => get_identifier(passed_job.name))
+        ? (this.passed
+            .map((passed_job) => {
+              if (is_identifier(passed_job)) return passed_job
+              if (passed_job instanceof Job) return passed_job.name
+
+              return null
+            })
+            .filter((i) => !!i) as Identifier[])
         : undefined,
       params: this.params,
       trigger: this.trigger,

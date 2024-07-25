@@ -1,6 +1,6 @@
 import test from 'ava'
-import { Type } from '../..'
-import { Identifier } from './identifier.js'
+import { Type } from '../../index.js'
+import { Identifier } from '../identifier/index.js'
 
 import { visit_pipeline } from './pipeline.js'
 

@@ -1,5 +1,5 @@
 import { Pipeline, Step } from '../../../declarations/index.js'
-import { empty_string_or } from '../../../utils/empty_string_or'
+import { empty_string_or } from '../../../utils/empty_string_or/index.js'
 import { parse_duration } from '../../../utils/index.js'
 
 import { write_step } from './index.js'

@@ -1,12 +1,15 @@
 // https://github.com/concourse/concourse/blob/6841cd592dfe844599b73e333ea66c650f2f237b/atc/step_validator.go#L109
 
-import { ValidationWarningType, WarningStore } from '../../utils/warning-store'
-import { is_get_step, is_put_step } from '../../utils/step-type'
+import {
+  ValidationWarningType,
+  WarningStore,
+} from '../../utils/warning-store/index.js'
+import { is_get_step, is_put_step } from '../../utils/step-type/index.js'
 
 import * as Type from '../../declarations/types.js'
-import { validate_identifier } from './identifier.js'
-import { find_job_by_name } from '../../utils/find-job'
-import { visit_step } from '../../utils/visitors/step'
+import { validate_identifier } from '../identifier.js'
+import { find_job_by_name } from '../../utils/find-job/index.js'
+import { visit_step } from '../../utils/visitors/step.js'
 
 export const validate_get_steps = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()
@@ -31,7 +34,7 @@ export const validate_get_steps = (pipeline: Type.Pipeline) => {
       }
 
       if (step.passed) {
-        step.passed.forEach((passed_job) => {
+        for (const passed_job of step.passed) {
           const job = find_job_by_name(passed_job, pipeline)
 
           if (!job) {
@@ -45,7 +48,7 @@ export const validate_get_steps = (pipeline: Type.Pipeline) => {
 
           let found_resource = false
 
-          job.plan.forEach((job_step) => {
+          for (const job_step of job.plan) {
             visit_step(job_step, {
               Step(component) {
                 if (is_get_step(component) && component.get === step.get) {
@@ -57,7 +60,7 @@ export const validate_get_steps = (pipeline: Type.Pipeline) => {
                 }
               },
             })
-          })
+          }
 
           if (!found_resource) {
             warnings.add_warning(
@@ -65,7 +68,7 @@ export const validate_get_steps = (pipeline: Type.Pipeline) => {
               `Job "${job.name}" does not interact with resource "${step.get}"`
             )
           }
-        })
+        }
       }
     })
   })

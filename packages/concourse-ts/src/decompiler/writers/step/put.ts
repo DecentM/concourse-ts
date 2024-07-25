@@ -1,7 +1,7 @@
 import { Pipeline, PutStep } from '../../../declarations/index.js'
 import { write_step_base } from './base.js'
 import { write_resource } from '../resource.js'
-import { empty_string_or } from '../../../utils/empty_string_or'
+import { empty_string_or } from '../../../utils/empty_string_or/index.js'
 
 export const write_put_step = (name: string, step: PutStep, pipeline: Pipeline) => {
   return `new PutStep(${JSON.stringify(name)}, (step) => {
