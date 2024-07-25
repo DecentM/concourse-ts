@@ -4,7 +4,6 @@ import fs from 'node:fs/promises'
 import test from 'ava'
 
 import { Type } from '../../../index.js'
-import { SetPipelineStep } from '../../../components/index.js'
 import { Identifier } from '../../../utils/index.js'
 
 import { write_set_pipeline_step } from './set-pipeline.js'

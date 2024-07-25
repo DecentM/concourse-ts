@@ -5,7 +5,6 @@ import test from 'ava'
 import { tsImport } from 'tsx/esm/api'
 
 import { Type } from '../../index.js'
-import { ResourceType } from '../../components/index.js'
 import { Duration, Identifier } from '../../utils/index.js'
 
 import { write_resource_type } from './resource-type.js'

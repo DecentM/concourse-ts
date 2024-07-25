@@ -4,7 +4,7 @@ import test from 'ava'
 import { tsImport } from 'tsx/esm/api'
 
 import { Type } from '../../../index.js'
-import { AnyStep, Platform } from '../../../declarations/index.js'
+import { Platform } from '../../../declarations/index.js'
 import { Duration, Identifier } from '../../../utils/index.js'
 
 import { write_step_base } from './base.js'

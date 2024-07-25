@@ -4,7 +4,6 @@ import fs from 'node:fs/promises'
 import test from 'ava'
 
 import { Type } from '../../index.js'
-import { Command } from '../../components/index.js'
 
 import { write_command } from './command.js'
 import { tsImport } from 'tsx/esm/api'
