@@ -42,45 +42,7 @@ jobs:
           set -exu
           yarn --immutable
 
-      - uses: nrwl/nx-set-shas@v3
-
       - run: yarn moon :lint
-
-  tests:
-    name: test-packages
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        id: cache-node-modules
-        with:
-          path: |
-            node_modules
-            packages/*/node_modules
-          key: lock-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            lock-
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.2.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: |
-          set -exu
-          yarn --immutable
-
-      - run: yarn moon :test
 
   docs:
     name: build-docs
@@ -134,7 +96,7 @@ jobs:
           user-email: 41898282+github-actions[bot]@users.noreply.github.com
           target-branch: master
 
-  build:
+  build-and-test:
     name: build-packages
 
     runs-on: ubuntu-latest
@@ -175,8 +137,5 @@ jobs:
       - name: Build packages
         run: yarn moon :build
 
-      - name: Upload build result
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: dist/packages/*
+      - name: Test packages
+        run: yarn moon '#testable:test'
