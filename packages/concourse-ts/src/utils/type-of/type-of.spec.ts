@@ -39,7 +39,6 @@ test('function', (t) => {
     'function'
   )
   t.is(
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     type_of(function () {}),
     'function'
   )
