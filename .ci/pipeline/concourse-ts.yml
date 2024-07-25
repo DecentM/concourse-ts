@@ -1,4 +1,4 @@
-# Generated with concourse-ts at 22:32:57 on 25/07/2024
+# Generated with concourse-ts at 00:13:06 on 26/07/2024
 #
 # jobs: 1
 # groups: 0
@@ -15,7 +15,7 @@ jobs:
         trigger: true
       - timeout: 6h
         set_pipeline: self
-        file: .ci/pipeline/concourse-ts.yml
+        file: git-ci/.ci/pipeline/concourse-ts.yml
     max_in_flight: 1
 display:
   background_image: https://bing.biturl.top/?resolution=1920&format=image

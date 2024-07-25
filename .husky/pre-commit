@@ -6,3 +6,6 @@ git add .github/dependabot.yml
 
 yarn update-tsconfig-paths
 git add tsconfig.base.json
+
+yarn ci
+git add .ci

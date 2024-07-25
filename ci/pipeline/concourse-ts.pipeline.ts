@@ -14,7 +14,7 @@ export default () => {
         job.add_step(git_ci.as_get_step())
         job.add_step(
           new ConcourseTs.SetPipelineStep('set-pipeline', (step) => {
-            step.file = '.ci/pipeline/concourse-ts.yml'
+            step.file = `${git_ci.name}/.ci/pipeline/concourse-ts.yml`
             step.set_pipeline = 'self'
           })
         )
