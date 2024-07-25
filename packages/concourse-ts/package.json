@@ -17,7 +17,9 @@
     },
     "nodeArguments": [
       "--import=tsimp"
-    ]
+    ],
+    "workerThreads": false,
+    "timeout": "30s"
   },
   "peerDependencies": {
     "typescript": "^5.5.2"
