@@ -1,15 +1,15 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../..'
-import {Task} from '../../components'
-import {Identifier} from '../../utils'
+import { Type } from '../../index.js'
+import { Task } from '../../components/index.js'
+import { Identifier } from '../../utils/index.js'
 
-import {write_task} from './task'
+import { write_task } from './task.js'
 
 const chain = (name: string, input: Type.Task<Identifier, Identifier>) => {
   const code = `
-    import {Task, Command} from '../../components'
+    import {Task, Command} from '../../components/index.js'
 
     ${write_task(name, input)}
   `
@@ -63,7 +63,7 @@ test('writes empty task', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain('a', task)
+  const { result, diagnostics } = chain('a', task)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, default_task)
@@ -80,15 +80,15 @@ test('writes caches', (t) => {
       path: 'echo',
       args: [],
     },
-    caches: [{path: 'my-cache'}],
+    caches: [{ path: 'my-cache' }],
   }
 
-  const {result, diagnostics} = chain('a', task)
+  const { result, diagnostics } = chain('a', task)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task,
-    caches: [{path: 'my-cache'}],
+    caches: [{ path: 'my-cache' }],
   })
 })
 
@@ -109,7 +109,7 @@ test('writes container_limits', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain('a', task)
+  const { result, diagnostics } = chain('a', task)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -132,15 +132,15 @@ test('writes inputs', (t) => {
       path: 'echo',
       args: [],
     },
-    inputs: [{name: 'my-input' as Identifier}],
+    inputs: [{ name: 'my-input' as Identifier }],
   }
 
-  const {result, diagnostics} = chain('a', task)
+  const { result, diagnostics } = chain('a', task)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task,
-    inputs: [{name: 'my-input'}],
+    inputs: [{ name: 'my-input' }],
   })
 })
 
@@ -155,15 +155,15 @@ test('writes outputs', (t) => {
       path: 'echo',
       args: [],
     },
-    outputs: [{name: 'my-output' as Identifier}],
+    outputs: [{ name: 'my-output' as Identifier }],
   }
 
-  const {result, diagnostics} = chain('a', task)
+  const { result, diagnostics } = chain('a', task)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
     ...default_task,
-    outputs: [{name: 'my-output'}],
+    outputs: [{ name: 'my-output' }],
   })
 })
 
@@ -183,7 +183,7 @@ test('writes params', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain('a', task)
+  const { result, diagnostics } = chain('a', task)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {

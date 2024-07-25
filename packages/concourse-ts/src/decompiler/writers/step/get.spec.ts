@@ -1,12 +1,12 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
-import {GetStep} from '../../../components'
-import {Identifier} from '../../../utils'
+import { Type } from '../../..'
+import { GetStep } from '../../../components'
+import { Identifier } from '../../../utils/index.js'
 
-import {write_get_step} from './get'
-import {default_get_step} from '../../../components/step/test-data/default-steps'
+import { write_get_step } from './get.js'
+import { default_get_step } from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.GetStep, pipeline: Type.Pipeline) => {
   const code = `
@@ -50,31 +50,31 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {get: 'a' as Identifier},
+    { get: 'a' as Identifier },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, get: 'a'})
+  t.deepEqual(result, { ...default_get_step, get: 'a' })
 })
 
 test('writes empty step from resource property', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {get: 'b' as Identifier, resource: 'a' as Identifier},
+    { get: 'b' as Identifier, resource: 'a' as Identifier },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, get: 'a'})
+  t.deepEqual(result, { ...default_get_step, get: 'a' })
 })
 
 test('writes passed', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {get: 'a' as Identifier, passed: ['step-a', 'step-b'] as Identifier[]},
+    { get: 'a' as Identifier, passed: ['step-a', 'step-b'] as Identifier[] },
     default_pipeline
   )
 
@@ -87,34 +87,34 @@ test('writes passed', (t) => {
 })
 
 test('writes params', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {get: 'a' as Identifier, params: {my_param: '1'}},
+    { get: 'a' as Identifier, params: { my_param: '1' } },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, get: 'a', params: {my_param: '1'}})
+  t.deepEqual(result, { ...default_get_step, get: 'a', params: { my_param: '1' } })
 })
 
 test('writes trigger', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {get: 'a' as Identifier, trigger: false},
+    { get: 'a' as Identifier, trigger: false },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, get: 'a', trigger: false})
+  t.deepEqual(result, { ...default_get_step, get: 'a', trigger: false })
 })
 
 test('writes version', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {get: 'a' as Identifier, version: 'latest'},
+    { get: 'a' as Identifier, version: 'latest' },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_get_step, get: 'a', version: 'latest'})
+  t.deepEqual(result, { ...default_get_step, get: 'a', version: 'latest' })
 })

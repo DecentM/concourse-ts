@@ -1,5 +1,5 @@
 import test from 'ava'
-import {has_duplicates_by_key} from '.'
+import { has_duplicates_by_key } from './index.js'
 
 test('finds duplicates', (t) => {
   const data = [

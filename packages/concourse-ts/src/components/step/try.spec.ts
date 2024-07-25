@@ -1,12 +1,12 @@
 import test from 'ava'
-import {LoadVarStep, Resource, ResourceType, Task} from '..'
+import { LoadVarStep, Resource, ResourceType, Task } from '../index.js'
 
-import {TryStep} from './try'
+import { TryStep } from './try.js'
 
 import {
   default_load_var_step,
   default_try_step,
-} from './test-data/default-steps'
+} from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   TryStep.customise((ts) => {

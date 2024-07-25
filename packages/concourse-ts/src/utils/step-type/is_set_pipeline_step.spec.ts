@@ -1,12 +1,12 @@
 import test from 'ava'
 
-import * as Type from '../../declarations'
-import {Identifier} from '../identifier'
+import * as Type from '../../declarations/index.js'
+import { Identifier } from './identifier.js'
 
-import {is_set_pipeline_step} from '.'
+import { is_set_pipeline_step } from './index.js'
 
 test('returns false', (t) => {
-  t.is(is_set_pipeline_step({do: []}), false)
+  t.is(is_set_pipeline_step({ do: [] }), false)
 })
 
 test('returns true', (t) => {

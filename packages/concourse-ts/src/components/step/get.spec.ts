@@ -1,8 +1,8 @@
 import test from 'ava'
-import { Job, Resource, ResourceType } from '..'
+import { Job, Resource, ResourceType } from '../index.js'
 
-import { GetStep } from './get'
-import { default_get_step } from './test-data/default-steps'
+import { GetStep } from './get.js'
+import { default_get_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   GetStep.customise((ds) => {

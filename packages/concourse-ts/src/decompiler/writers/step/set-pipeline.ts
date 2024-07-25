@@ -1,6 +1,6 @@
-import {Pipeline, SetPipelineStep} from '../../../declarations'
-import {write_step_base} from './base'
-import {empty_string_or} from '../../../utils/empty_string_or'
+import { Pipeline, SetPipelineStep } from '../../../declarations/index.js'
+import { write_step_base } from './base.js'
+import { empty_string_or } from '../../../utils/empty_string_or'
 
 export const write_set_pipeline_step = (
   name: string,
@@ -15,21 +15,14 @@ export const write_set_pipeline_step = (
       (set_pipeline) => `step.set_pipeline = ${JSON.stringify(set_pipeline)}`
     )}
 
-    ${empty_string_or(
-      step.file,
-      (file) => `step.file = ${JSON.stringify(file)}`
-    )}
+    ${empty_string_or(step.file, (file) => `step.file = ${JSON.stringify(file)}`)}
 
     ${empty_string_or(
       step.instance_vars,
-      (instance_vars) =>
-        `step.set_instance_vars(${JSON.stringify(instance_vars)})`
+      (instance_vars) => `step.set_instance_vars(${JSON.stringify(instance_vars)})`
     )}
 
-    ${empty_string_or(
-      step.vars,
-      (vars) => `step.set_vars(${JSON.stringify(vars)})`
-    )}
+    ${empty_string_or(step.vars, (vars) => `step.set_vars(${JSON.stringify(vars)})`)}
 
     ${empty_string_or(
       step.var_files,
@@ -39,9 +32,6 @@ export const write_set_pipeline_step = (
           .join(', ')})`
     )}
 
-    ${empty_string_or(
-      step.team,
-      (team) => `step.team = ${JSON.stringify(team)}`
-    )}
+    ${empty_string_or(step.team, (team) => `step.team = ${JSON.stringify(team)}`)}
   })`
 }

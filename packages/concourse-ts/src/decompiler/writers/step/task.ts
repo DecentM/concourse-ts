@@ -1,7 +1,7 @@
-import {Pipeline, TaskStep} from '../../../declarations'
-import {write_step_base} from './base'
-import {write_task} from '../task'
-import {empty_string_or} from '../../../utils/empty_string_or'
+import { Pipeline, TaskStep } from '../../../declarations/index.js'
+import { write_step_base } from './base.js'
+import { write_task } from '../task.js'
+import { empty_string_or } from '../../../utils/empty_string_or'
 
 export const write_task_step = (
   name: string,
@@ -16,10 +16,7 @@ export const write_task_step = (
       (config) => `step.set_task(${write_task(step.task, config)})`
     )}
 
-    ${empty_string_or(
-      step.file,
-      (file) => `step.set_file(${JSON.stringify(file)})`
-    )}
+    ${empty_string_or(step.file, (file) => `step.set_file(${JSON.stringify(file)})`)}
 
     ${empty_string_or(
       step.image,
@@ -31,10 +28,7 @@ export const write_task_step = (
       (privileged) => `step.privileged = ${privileged}`
     )}
 
-    ${empty_string_or(
-      step.vars,
-      (vars) => `step.set_vars(${JSON.stringify(vars)})`
-    )}
+    ${empty_string_or(step.vars, (vars) => `step.set_vars(${JSON.stringify(vars)})`)}
 
     ${empty_string_or(
       step.params,

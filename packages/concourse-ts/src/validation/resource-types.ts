@@ -1,14 +1,14 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L216
 
-import * as Type from '../declarations/types'
+import * as Type from '../declarations/types.js'
 import {
   Location,
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from '../utils/warning-store'
+} from '../utils/warning-store/index.js'
 
-import {validate_identifier} from './identifier'
+import { validate_identifier } from './identifier.js'
 
 export const validate_resource_types = (
   pipeline: Type.Pipeline,
@@ -17,7 +17,7 @@ export const validate_resource_types = (
   const warnings = new WarningStore()
 
   pipeline.resource_types?.forEach((resource_type, index) => {
-    const location: Location = {section: 'resource_types', index}
+    const location: Location = { section: 'resource_types', index }
     const identifier = to_identifier(location, resource_type.name)
 
     warnings.copy_from(validate_identifier(resource_type.name, identifier))

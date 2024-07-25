@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../..'
-import {Job} from '../../components'
-import {Identifier} from '../../utils'
+import { Type } from '../../index.js'
+import { Job } from '../../components/index.js'
+import { Identifier } from '../../utils/index.js'
 
-import {write_job} from './job'
+import { write_job } from './job.js'
 
 import {
   default_job,
@@ -42,10 +42,10 @@ test('writes empty job', (t) => {
     plan: [],
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_job, ...job})
+  t.deepEqual(result, { ...default_job, ...job })
 })
 
 test('writes plan', (t) => {
@@ -59,7 +59,7 @@ test('writes plan', (t) => {
     ],
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -84,7 +84,7 @@ test('writes build_log_retention', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -100,7 +100,7 @@ test('writes disable_manual_trigger', (t) => {
     disable_manual_trigger: true,
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -116,7 +116,7 @@ test('writes interruptible', (t) => {
     interruptible: false,
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -132,7 +132,7 @@ test('writes max_in_flight', (t) => {
     max_in_flight: 8,
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -148,7 +148,7 @@ test('writes old_name', (t) => {
     old_name: 'jo' as Identifier,
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -167,7 +167,7 @@ test('writes on_success', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -196,7 +196,7 @@ test('writes on_error', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -225,7 +225,7 @@ test('writes on_failure', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -254,7 +254,7 @@ test('writes on_abort', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -283,7 +283,7 @@ test('writes ensure', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -309,7 +309,7 @@ test('writes public', (t) => {
     public: true,
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -325,7 +325,7 @@ test('writes serial_groups', (t) => {
     serial_groups: ['asd' as Identifier],
   }
 
-  const {result, diagnostics} = chain(job, {jobs: [job]})
+  const { result, diagnostics } = chain(job, { jobs: [job] })
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {

@@ -1,20 +1,20 @@
 import test from 'ava'
-import {parse_bytes} from '.'
+import { parse_bytes } from './index.js'
 
 test('parses single bytes', (t) => {
-  t.deepEqual(parse_bytes(1), {b: 1})
+  t.deepEqual(parse_bytes(1), { b: 1 })
 })
 
 test('parses kb', (t) => {
-  t.deepEqual(parse_bytes(1_000), {kb: 1})
+  t.deepEqual(parse_bytes(1_000), { kb: 1 })
 })
 
 test('parses mb', (t) => {
-  t.deepEqual(parse_bytes(1_000_000), {mb: 1})
+  t.deepEqual(parse_bytes(1_000_000), { mb: 1 })
 })
 
 test('parses gb', (t) => {
-  t.deepEqual(parse_bytes(1_000_000_000), {gb: 1})
+  t.deepEqual(parse_bytes(1_000_000_000), { gb: 1 })
 })
 
 test('handles remainders right', (t) => {

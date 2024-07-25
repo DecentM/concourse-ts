@@ -1,7 +1,7 @@
-import {Job, Pipeline} from '../../declarations'
-import {empty_string_or} from '../../utils/empty_string_or'
+import { Job, Pipeline } from '../../declarations/index.js'
+import { empty_string_or } from '../../utils/empty_string_or/index.js'
 
-import {write_step} from './step'
+import { write_step } from './step/index.js'
 
 export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
   return `new Job(${JSON.stringify(name)}, (job) => {
@@ -11,11 +11,7 @@ export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
           return empty_string_or(
             step,
             (step) =>
-              `job.add_step(${write_step(
-                `${name}_step-${index}`,
-                step,
-                pipeline
-              )})`
+              `job.add_step(${write_step(`${name}_step-${index}`, step, pipeline)})`
           )
         })
         .join('\n')
@@ -23,8 +19,7 @@ export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
 
     ${empty_string_or(
       job.build_log_retention,
-      () =>
-        `job.build_log_retention = ${JSON.stringify(job.build_log_retention)}`
+      () => `job.build_log_retention = ${JSON.stringify(job.build_log_retention)}`
     )}
 
     ${empty_string_or(
@@ -70,27 +65,18 @@ export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
     ${empty_string_or(
       job.on_error,
       (on_error) =>
-        `job.add_on_error(${write_step(
-          `${name}_on_error`,
-          on_error,
-          pipeline
-        )})`
+        `job.add_on_error(${write_step(`${name}_on_error`, on_error, pipeline)})`
     )}
 
     ${empty_string_or(
       job.on_abort,
       (on_abort) =>
-        `job.add_on_abort(${write_step(
-          `${name}_on_abort`,
-          on_abort,
-          pipeline
-        )})`
+        `job.add_on_abort(${write_step(`${name}_on_abort`, on_abort, pipeline)})`
     )}
 
     ${empty_string_or(
       job.ensure,
-      (ensure) =>
-        `job.add_ensure(${write_step(`${name}_ensure`, ensure, pipeline)})`
+      (ensure) => `job.add_ensure(${write_step(`${name}_ensure`, ensure, pipeline)})`
     )}
 
     ${empty_string_or(job.public, (is_public) => `job.public = ${is_public}`)}

@@ -1,10 +1,11 @@
-import {VError} from 'verror'
+import { VError } from 'verror'
 
-import {Customiser} from '../declarations/customiser'
-import {Duration, DurationInput, get_duration} from '../utils/duration'
-import {get_identifier} from '../utils/identifier'
-import * as Declaration from '../declarations/types'
-import {Resource} from './resource'
+import { Customiser } from '../declarations/customiser.js'
+import { Duration, DurationInput, get_duration } from '../utils/duration/index.js'
+import { get_identifier } from '../utils/identifier/index.js'
+import * as Declaration from '../declarations/types.js'
+
+import { Resource } from './resource.js'
 
 export class ResourceType<
   Type extends string = string,
@@ -30,10 +31,7 @@ export class ResourceType<
 
   public name: string
 
-  constructor(
-    name: string,
-    customise?: Customiser<ResourceType<Type, Source>>
-  ) {
+  constructor(name: string, customise?: Customiser<ResourceType<Type, Source>>) {
     this.name = name
 
     if (ResourceType.customiser) {
@@ -89,9 +87,7 @@ export class ResourceType<
 
   public set_check_every = (input: DurationInput | 'never') => {
     if (input === 'never') {
-      throw new VError(
-        `Duration "${input}" given to ${this.name} is not allowed`
-      )
+      throw new VError(`Duration "${input}" given to ${this.name} is not allowed`)
     }
 
     this.check_every = get_duration(input)

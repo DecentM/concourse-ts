@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
-import {DoStep} from '../../../components'
+import { Type } from '../../..'
+import { DoStep } from '../../../components'
 
-import {write_do_step} from './do'
-import {default_do_step} from '../../../components/step/test-data/default-steps'
+import { write_do_step } from './do.js'
+import { default_do_step } from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.DoStep, pipeline: Type.Pipeline) => {
   const code = `
@@ -35,19 +35,19 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', (t) => {
-  const {result, diagnostics} = chain('a', {do: []}, default_pipeline)
+  const { result, diagnostics } = chain('a', { do: [] }, default_pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, default_do_step)
 })
 
 test('writes steps', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {do: [default_do_step]},
+    { do: [default_do_step] },
     default_pipeline
   )
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_do_step, do: [default_do_step]})
+  t.deepEqual(result, { ...default_do_step, do: [default_do_step] })
 })

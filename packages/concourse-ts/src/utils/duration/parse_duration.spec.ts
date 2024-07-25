@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { Duration, parse_duration } from '.'
+import { Duration, parse_duration } from './index.js'
 
 test('parses durations', (t) => {
   const result = parse_duration('2h5m8s6ms1us9ns' as Duration, ['h', 'm'])

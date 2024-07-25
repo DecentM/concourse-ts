@@ -1,20 +1,20 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../..'
-import {Job} from '../../components'
-import {Identifier} from '../../utils'
+import { Type } from '../../index.js'
+import { Job } from '../../components/index.js'
+import { Identifier } from '../../utils/index.js'
 
-import {write_pipeline} from './pipeline'
+import { write_pipeline } from './pipeline.js'
 import {
   default_job,
   default_load_var_step,
   default_pipeline,
-} from '../../components/step/test-data/default-steps'
+} from '../../components/step/test-data/default-steps.js'
 
 const chain = (name: string, input: Type.Pipeline) => {
   const code = `
-    import {Pipeline, Job, LoadVarStep} from '../../components'
+    import {Pipeline, Job, LoadVarStep} from '../../components/index.js'
 
     ${write_pipeline(name, input)}
   `
@@ -40,7 +40,7 @@ test('writes empty pipeline', (t) => {
     jobs: [],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, default_pipeline)
@@ -54,10 +54,10 @@ test('writes display', (t) => {
     },
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_pipeline, ...pipeline})
+  t.deepEqual(result, { ...default_pipeline, ...pipeline })
 })
 
 test('writes var_sources', (t) => {
@@ -76,10 +76,10 @@ test('writes var_sources', (t) => {
     ],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
-  t.deepEqual(result, {...default_pipeline, ...pipeline})
+  t.deepEqual(result, { ...default_pipeline, ...pipeline })
 })
 
 test('writes groups', (t) => {
@@ -103,7 +103,7 @@ test('writes groups', (t) => {
     ],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -140,7 +140,7 @@ test('writes ungrouped jobs', (t) => {
     ],
   }
 
-  const {result, diagnostics} = chain('a', pipeline)
+  const { result, diagnostics } = chain('a', pipeline)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {

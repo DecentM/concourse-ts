@@ -2,25 +2,3 @@ id: concourse-ts-resource-github-release
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-resource-github-release
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-resource-github-release/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-resource-github-release/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-resource-github-release/*.md"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-resource-github-release/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

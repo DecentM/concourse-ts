@@ -1,4 +1,4 @@
-import {Config} from '../../declarations/types'
+import { Config } from '../../declarations/types.js'
 
 type GetKey<Item> = (item: Item) => string
 
@@ -39,14 +39,10 @@ export const deduplicate_by_key = <Item = Config>(
 
   const seen_keys: string[] = []
 
-  return array.filter((item) =>
-    check_duplicates_by_key(get_key, item, seen_keys)
-  )
+  return array.filter((item) => check_duplicates_by_key(get_key, item, seen_keys))
 }
 
-export const deduplicate_by_identity = <Item = Config>(
-  array: Item[]
-): Item[] => {
+export const deduplicate_by_identity = <Item = Config>(array: Item[]): Item[] => {
   if (!Array.isArray(array)) {
     return []
   }
@@ -62,9 +58,7 @@ export const has_duplicates_by_key = <Item = Config>(
 ) => {
   const seen_keys: string[] = []
 
-  return array.some(
-    (item) => !check_duplicates_by_key(get_key, item, seen_keys)
-  )
+  return array.some((item) => !check_duplicates_by_key(get_key, item, seen_keys))
 }
 
 export const has_duplicates_by_identity = <Item = Config>(array: Item[]) => {

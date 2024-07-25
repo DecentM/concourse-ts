@@ -1,8 +1,11 @@
 import test from 'ava'
-import {Identifier} from '../utils'
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { Identifier } from '../utils/index.js'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_commands} from './commands'
+import { validate_commands } from './commands.js'
 
 test('passes with correct commands', (t) => {
   const warnings = validate_commands({

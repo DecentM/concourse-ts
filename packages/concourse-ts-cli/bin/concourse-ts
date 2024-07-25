@@ -1,8 +1,0 @@
-#!/usr/bin/env node
-
-require('../src')
-  .run_cli()
-  .catch(function (error) {
-    process.exitCode = 1
-    console.error('\n' + error.stack, '\n')
-  })

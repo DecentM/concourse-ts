@@ -1,12 +1,12 @@
-import {Customiser} from '../../declarations/customiser'
-import * as Type from '../../declarations/types'
+import { Customiser } from '../../declarations/customiser.js'
+import * as Type from '../../declarations/types.js'
 
-import {get_identifier} from '../../utils/identifier'
-import {get_var} from '../../utils/var'
+import { get_identifier } from '../../utils/identifier/index.js'
+import { get_var } from '../../utils/var/index.js'
 
-import {Resource} from '../resource'
+import { Resource } from '../resource.js'
 
-import {Step} from './base'
+import { Step } from './base.js'
 
 export class LoadVarStep extends Step<Type.LoadVarStep> {
   private static customiser: Customiser<LoadVarStep>

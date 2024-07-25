@@ -6,11 +6,8 @@
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-cli",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
-  "scripts": {
-    "cli": "ts-node --transpile-only -r tsconfig-paths/register bin/concourse-ts"
-  },
   "bin": {
-    "concourse-ts": "./bin/concourse-ts"
+    "concourse-ts": "./dist/index.js"
   },
   "dependencies": {
     "@types/node": "^20.14.7",

@@ -1,7 +1,7 @@
 import test from 'ava'
 
-import {join_commands} from '.'
-import {Command} from '../../components'
+import { join_commands } from './index.js'
+import { Command } from '../../components'
 
 test('joins commands', (t) => {
   const a = new Command((a) => {

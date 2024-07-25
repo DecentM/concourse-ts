@@ -1,2 +1,2 @@
-export * from './across-polyfill'
-export * from './task-hoisting'
+export * from './across-polyfill.js'
+export * from './task-hoisting.js'

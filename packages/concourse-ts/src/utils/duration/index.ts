@@ -1,5 +1,5 @@
 import { VError } from 'verror'
-import { type_of } from '../type-of'
+import { type_of } from '../type-of/index.js'
 
 /**
  * Related: {@link DurationInput}

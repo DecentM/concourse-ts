@@ -1,6 +1,6 @@
-export * as Type from './declarations'
-export * as Utils from './utils'
-export * as Compiler from './compiler'
-export * as Decompiler from './decompiler'
+export * as Type from './declarations/index.js'
+export * as Utils from './utils/index.js'
+export * as Compiler from './compiler/index.js'
+export * as Decompiler from './decompiler/index.js'
 
-export * from './components'
+export * from './components/index.js'

@@ -1,8 +1,11 @@
 import test from 'ava'
 
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_identifier} from './identifier'
+import { validate_identifier } from './identifier.js'
 
 test('accepts valid identifiers', (t) => {
   const warnings = validate_identifier('asd')

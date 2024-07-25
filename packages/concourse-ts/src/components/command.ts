@@ -1,5 +1,5 @@
-import {Customiser} from '../declarations/customiser'
-import * as Type from '../declarations/types'
+import { Customiser } from '../declarations/customiser.js'
+import * as Type from '../declarations/types.js'
 
 /**
  * https://concourse-ci.org/tasks.html#schema.command

@@ -1,9 +1,9 @@
-import { Customiser } from '../../declarations/customiser'
-import * as Type from '../../declarations/types'
+import { Customiser } from '../../declarations/customiser.js'
+import * as Type from '../../declarations/types.js'
 
-import { Step } from './base'
-import { Resource } from '../resource'
-import { AnyStep } from '../../declarations'
+import { Step } from './base.js'
+import { Resource } from '../resource.js'
+import { AnyStep } from '../../declarations/index.js'
 
 export class InParallelStep extends Step<Type.InParallelStep> {
   private static customiser: Customiser<InParallelStep>

@@ -1,12 +1,12 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
-import {PutStep} from '../../../components'
-import {Identifier} from '../../../utils'
+import { Type } from '../../..'
+import { PutStep } from '../../../components'
+import { Identifier } from '../../../utils/index.js'
 
-import {write_put_step} from './put'
-import {default_put_step} from '../../../components/step/test-data/default-steps'
+import { write_put_step } from './put.js'
+import { default_put_step } from '../../../components/step/test-data/default-steps'
 
 const chain = (name: string, input: Type.PutStep, pipeline: Type.Pipeline) => {
   const code = `
@@ -50,9 +50,9 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {put: 'a' as Identifier},
+    { put: 'a' as Identifier },
     default_pipeline
   )
 
@@ -64,9 +64,9 @@ test('writes empty step', (t) => {
 })
 
 test('writes empty step from alias', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {put: 'b' as Identifier, resource: 'a' as Identifier},
+    { put: 'b' as Identifier, resource: 'a' as Identifier },
     default_pipeline
   )
 
@@ -78,9 +78,9 @@ test('writes empty step from alias', (t) => {
 })
 
 test('writes inputs', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {put: 'a' as Identifier, inputs: 'detect'},
+    { put: 'a' as Identifier, inputs: 'detect' },
     default_pipeline
   )
 
@@ -93,9 +93,9 @@ test('writes inputs', (t) => {
 })
 
 test('writes params', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {put: 'a' as Identifier, params: {my_param: '1'}},
+    { put: 'a' as Identifier, params: { my_param: '1' } },
     default_pipeline
   )
 
@@ -110,9 +110,9 @@ test('writes params', (t) => {
 })
 
 test('writes get_params', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {put: 'a' as Identifier, get_params: {my_param: '1'}},
+    { put: 'a' as Identifier, get_params: { my_param: '1' } },
     default_pipeline
   )
 
@@ -127,9 +127,9 @@ test('writes get_params', (t) => {
 })
 
 test('writes no_get', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {put: 'a' as Identifier, no_get: true},
+    { put: 'a' as Identifier, no_get: true },
     default_pipeline
   )
 

@@ -1,5 +1,5 @@
-import {Command} from '../../components'
-import {Customiser} from '../../declarations'
+import { Command } from '../../components/index.js'
+import { Customiser } from '../../declarations/index.js'
 
 export const join_commands = (
   customise: Customiser<string[], Command>,

@@ -1,7 +1,7 @@
 import test from 'ava'
-import {Type} from '../..'
+import { Type } from '../..'
 
-import {visit_step} from './step'
+import { visit_step } from './step.js'
 
 const step: Type.DoStep = {
   do: [],

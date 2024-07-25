@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import {empty_string_or} from '.'
+import { empty_string_or } from './index.js'
 
 const value = () => 'my_value'
 

@@ -1,5 +1,5 @@
 import test from 'ava'
-import {get_var, Var} from '.'
+import { get_var, Var } from './index.js'
 
 test('wraps input string', (t) => {
   const result = get_var('my-secret')

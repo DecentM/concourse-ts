@@ -2,25 +2,3 @@ id: concourse-ts-resource-s3
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-resource-s3
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-resource-s3/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-resource-s3/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-resource-s3/*.md"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-resource-s3/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

@@ -1,6 +1,6 @@
-import {VError} from 'verror'
+import { VError } from 'verror'
 
-import {validate_identifier} from '../../validation/identifier'
+import { validate_identifier } from '../../validation/identifier.js'
 
 /**
  * https://concourse-ci.org/config-basics.html#schema.identifier
@@ -9,7 +9,7 @@ import {validate_identifier} from '../../validation/identifier'
  *
  * {@link get_identifier}
  */
-export type Identifier = string & {__type: 'Identifier'}
+export type Identifier = string & { __type: 'Identifier' }
 
 /**
  * Returns if the input is a valid Identifier, using the compiler's validator.

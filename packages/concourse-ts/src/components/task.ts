@@ -1,13 +1,13 @@
-import { Customiser } from '../declarations/customiser'
-import { get_identifier, Identifier } from '../utils/identifier'
+import { Customiser } from '../declarations/customiser.js'
+import { get_identifier, Identifier } from '../utils/identifier/index.js'
 
-import * as Type from '../declarations/types'
+import * as Type from '../declarations/types.js'
 
-import { BytesInput, get_bytes } from '../utils/bytes'
+import { BytesInput, get_bytes } from '../utils/bytes/index.js'
 
-import { Command } from './command'
-import { Resource } from './resource'
-import { TaskStep } from './step'
+import { Command } from './command.js'
+import { Resource } from './resource.js'
+import { TaskStep } from './step/index.js'
 
 /**
  * https://concourse-ci.org/tasks.html

@@ -1,9 +1,9 @@
 import test from 'ava'
 
-import {get_var, is_var} from '../../utils'
+import { get_var, is_var } from '../../utils/index.js'
 
-import {LoadVarStep} from './load-var'
-import {default_load_var_step} from './test-data/default-steps'
+import { LoadVarStep } from './load-var.js'
+import { default_load_var_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   LoadVarStep.customise((lvs) => {

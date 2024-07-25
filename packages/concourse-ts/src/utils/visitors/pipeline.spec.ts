@@ -1,8 +1,8 @@
 import test from 'ava'
-import {Type} from '../..'
-import {Identifier} from '../identifier'
+import { Type } from '../..'
+import { Identifier } from './identifier.js'
 
-import {visit_pipeline} from './pipeline'
+import { visit_pipeline } from './pipeline.js'
 
 test('finds resources', (t) => {
   const r: Type.Resource = {

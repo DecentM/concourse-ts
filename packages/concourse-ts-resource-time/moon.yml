@@ -2,25 +2,3 @@ id: concourse-ts-resource-time
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-resource-time
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-resource-time/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-resource-time/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-resource-time/*.md"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-resource-time/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

@@ -1,9 +1,12 @@
 import test from 'ava'
-import {Identifier} from '../utils'
+import { Identifier } from '../utils/index.js'
 
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_groups} from './groups'
+import { validate_groups } from './groups.js'
 
 test('accepts valid input', (t) => {
   const warnings = validate_groups({

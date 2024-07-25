@@ -1,8 +1,8 @@
-import {Customiser} from '../../declarations/customiser'
-import * as Type from '../../declarations/types'
-import {Resource} from '../resource'
+import { Customiser } from '../../declarations/customiser.js'
+import * as Type from '../../declarations/types.js'
+import { Resource } from '../resource.js'
 
-import {Step} from './base'
+import { Step } from './base.js'
 
 export class TryStep extends Step<Type.TryStep> {
   private static customiser: Customiser<TryStep>
@@ -11,7 +11,10 @@ export class TryStep extends Step<Type.TryStep> {
     TryStep.customiser = init
   }
 
-  constructor(public override name: string, customise?: Customiser<TryStep>) {
+  constructor(
+    public override name: string,
+    customise?: Customiser<TryStep>
+  ) {
     super(name)
 
     if (TryStep.customiser) {

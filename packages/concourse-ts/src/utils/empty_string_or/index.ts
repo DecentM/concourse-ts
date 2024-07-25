@@ -1,4 +1,4 @@
-import {type_of} from '../type-of'
+import { type_of } from '../type-of/index.js'
 
 export const empty_string_or = <T = unknown>(
   predicate: T,
@@ -10,9 +10,7 @@ export const empty_string_or = <T = unknown>(
       return ''
 
     case 'array':
-      return (predicate as Array<unknown>).length
-        ? value_factory(predicate)
-        : ''
+      return (predicate as Array<unknown>).length ? value_factory(predicate) : ''
 
     case 'object':
       return Object.keys(predicate as Record<never, string>).length

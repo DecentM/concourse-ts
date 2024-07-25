@@ -4,7 +4,7 @@ import { get_program } from './program'
 
 export { rc } from './rc'
 
-export const run_cli = async () => {
+const main = async () => {
   const program = await get_program()
 
   if (!process.argv.slice(2).length) {
@@ -14,3 +14,5 @@ export const run_cli = async () => {
 
   return await program.parseAsync(process.argv)
 }
+
+main().catch(console.error)

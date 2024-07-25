@@ -2,25 +2,3 @@ id: concourse-ts-resource-mock
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-resource-mock
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-resource-mock/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-resource-mock/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-resource-mock/*.md"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-resource-mock/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

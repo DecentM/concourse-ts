@@ -1,14 +1,14 @@
 // https://github.com/concourse/concourse/blob/6e9795b98254c86ca1c5ebed138d427424eae5f1/atc/configvalidate/validate.go#L323
 
-import * as Type from '../declarations/types'
+import * as Type from '../declarations/types.js'
 import {
   Location,
   to_identifier,
   ValidationWarningType,
   WarningStore,
-} from '../utils/warning-store'
+} from '../utils/warning-store/index.js'
 
-import { validate_identifier } from './identifier'
+import { validate_identifier } from './identifier.js'
 
 export const validate_jobs = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()

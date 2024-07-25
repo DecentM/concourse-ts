@@ -1,10 +1,10 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../..'
-import {Command} from '../../components'
+import { Type } from '../../index.js'
+import { Command } from '../../components'
 
-import {write_command} from './command'
+import { write_command } from './command.js'
 
 const chain = (input: Type.Command) => {
   const code = `
@@ -41,7 +41,7 @@ test('writes empty command', (t) => {
     path: '',
   }
 
-  const {result, diagnostics} = chain(command)
+  const { result, diagnostics } = chain(command)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, default_command)
@@ -53,7 +53,7 @@ test('writes args', (t) => {
     args: ['my_arg1', 'my_arg2'],
   }
 
-  const {result, diagnostics} = chain(command)
+  const { result, diagnostics } = chain(command)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -68,7 +68,7 @@ test('writes dir', (t) => {
     dir: '.',
   }
 
-  const {result, diagnostics} = chain(command)
+  const { result, diagnostics } = chain(command)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {
@@ -83,7 +83,7 @@ test('writes user', (t) => {
     user: 'root',
   }
 
-  const {result, diagnostics} = chain(command)
+  const { result, diagnostics } = chain(command)
 
   t.deepEqual(diagnostics, [])
   t.deepEqual(result, {

@@ -1,5 +1,5 @@
-import {VError} from 'verror'
-import {Pipeline, Step} from '../../../declarations'
+import { VError } from 'verror'
+import { Pipeline, Step } from '../../../declarations/index.js'
 
 import {
   is_do_step,
@@ -12,26 +12,21 @@ import {
   is_try_step,
 } from '../../../utils/step-type'
 
-import {write_do_step} from './do'
-import {write_get_step} from './get'
-import {write_in_parallel_step} from './in-parallel'
-import {write_load_var_step} from './load-var'
-import {write_put_step} from './put'
-import {write_set_pipeline_step} from './set-pipeline'
-import {write_task_step} from './task'
-import {write_try_step} from './try'
+import { write_do_step } from './do.js'
+import { write_get_step } from './get.js'
+import { write_in_parallel_step } from './in-parallel'
+import { write_load_var_step } from './load-var'
+import { write_put_step } from './put.js'
+import { write_set_pipeline_step } from './set-pipeline'
+import { write_task_step } from './task.js'
+import { write_try_step } from './try.js'
 
-export const write_step = (
-  name: string,
-  step: Step,
-  pipeline: Pipeline
-): string => {
+export const write_step = (name: string, step: Step, pipeline: Pipeline): string => {
   if (is_do_step(step)) return write_do_step(name, step, pipeline)
 
   if (is_get_step(step)) return write_get_step(name, step, pipeline)
 
-  if (is_in_parallel_step(step))
-    return write_in_parallel_step(name, step, pipeline)
+  if (is_in_parallel_step(step)) return write_in_parallel_step(name, step, pipeline)
 
   if (is_load_var_step(step)) return write_load_var_step(name, step, pipeline)
 

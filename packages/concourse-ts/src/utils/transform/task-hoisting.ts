@@ -1,11 +1,11 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import * as YAML from 'yaml'
 
-import {Pipeline, Task, TaskStep, Transformer} from '../../declarations'
-import {Identifier} from '../identifier'
-import {is_task} from '../is-task'
-import {is_task_step} from '../step-type'
+import { Pipeline, Task, TaskStep, Transformer } from '../../declarations/index.js'
+import { Identifier } from '../identifier/index.js'
+import { is_task } from '../is-task/index.js'
+import { is_task_step } from '../step-type/index.js'
 
 /**
  * Returns the serialised task for a given task step, if the passed task step
@@ -51,18 +51,18 @@ export const apply_task_hoisting: Transformer<TaskHoistingOptions> = (
     work_dir: '.',
   }
 ): void => {
-  pipeline.jobs.forEach((job) =>
-    job.plan.forEach((step) => {
+  for (const job of pipeline.jobs) {
+    for (const step of job.plan) {
       if (!is_task_step(step)) {
-        return
+        continue
       }
 
       if (!step.file) {
-        return
+        continue
       }
 
       step.config = hoist_task(options.work_dir, step)
       step.file = undefined
-    })
-  )
+    }
+  }
 }

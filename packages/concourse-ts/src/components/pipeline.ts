@@ -1,12 +1,12 @@
-import * as Type from '../declarations/types'
-import { Customiser } from '../declarations/customiser'
-import { Resource } from './resource'
-import { Job } from './job'
-import { ResourceType } from './resource-type'
-import { deduplicate_by_identity } from '../utils/array-duplicates'
-import { Task } from './task'
-import { TaskStep } from './step'
-import { get_identifier } from '../utils/identifier'
+import * as Type from '../declarations/types.js'
+import { Customiser } from '../declarations/customiser.js'
+import { Resource } from './resource.js'
+import { Job } from './job.js'
+import { ResourceType } from './resource-type.js'
+import { deduplicate_by_identity } from '../utils/array-duplicates/index.js'
+import { Task } from './task.js'
+import { TaskStep } from './step/index.js'
+import { get_identifier } from '../utils/identifier/index.js'
 
 export class Pipeline<Group extends string = string> {
   private static customiser: Customiser<Pipeline>

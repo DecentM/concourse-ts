@@ -1,9 +1,9 @@
 import path from 'node:path'
 
-import {Pipeline} from '../components/pipeline'
-import {validate} from '../validation'
-import {ValidationWarningType, WarningStore} from '../utils/warning-store'
-import {write_yaml} from './yaml'
+import { Pipeline } from '../components/pipeline.js'
+import { validate } from '../validation/index.js'
+import { ValidationWarningType, WarningStore } from '../utils/warning-store/index.js'
+import { write_yaml } from './yaml.js'
 
 type CompilationResultFile = {
   filename: string

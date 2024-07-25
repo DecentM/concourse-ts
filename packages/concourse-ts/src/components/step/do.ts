@@ -1,11 +1,11 @@
-import {Customiser} from '../../declarations/customiser'
-import * as Type from '../../declarations/types'
-import {AnyStep} from '../../declarations'
+import { Customiser } from '../../declarations/customiser.js'
+import * as Type from '../../declarations/types.js'
+import { AnyStep } from '../../declarations/index.js'
 
-import {Resource} from '../resource'
+import { Resource } from '../resource.js'
 
-import {TaskStep} from './task'
-import {Step} from './base'
+import { TaskStep } from './task.js'
+import { Step } from './base.js'
 
 /**
  * https://concourse-ci.org/do-step.html

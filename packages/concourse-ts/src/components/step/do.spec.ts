@@ -1,10 +1,10 @@
 import test from 'ava'
-import {Resource, ResourceType, Task} from '..'
+import { Resource, ResourceType, Task } from '../index.js'
 
-import {DoStep} from './do'
-import {LoadVarStep} from './load-var'
+import { DoStep } from './do.js'
+import { LoadVarStep } from './load-var.js'
 
-import {default_step} from './test-data/default-steps'
+import { default_step } from './test-data/default-steps.js'
 
 const default_do_step = {
   ...default_step,

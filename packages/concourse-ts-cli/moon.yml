@@ -2,25 +2,3 @@ id: concourse-ts-cli
 language: typescript
 platform: node
 type: library
-
-tasks:
-  build:
-    command: swc
-    args:
-      - --outputPath
-      - $workspaceRoot/dist/packages/concourse-ts-cli
-      - --tsConfig
-      - $workspaceRoot/packages/concourse-ts-cli/tsconfig.lib.json
-      - --main
-      - $workspaceRoot/packages/concourse-ts-cli/src/index.ts
-      - --assets
-      - '["packages/concourse-ts-cli/*.md","packages/concourse-ts-cli/bin/*"]'
-    outputs:
-      - '{options.outputPath}'
-
-  lint:
-    command: eslint
-    args:
-      - '["packages/concourse-ts-cli/**/*.ts"]'
-    outputs:
-      - '{options.outputFile}'

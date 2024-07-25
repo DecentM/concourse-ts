@@ -1,9 +1,9 @@
-import {Task} from '../../declarations'
-import {Identifier} from '../../utils/identifier'
-import {parse_bytes} from '../../utils'
+import { Task } from '../../declarations/index.js'
+import { Identifier } from '../../utils/identifier/index.js'
+import { parse_bytes } from '../../utils/index.js'
 
-import {write_command} from './command'
-import {empty_string_or} from '../../utils/empty_string_or'
+import { write_command } from './command.js'
+import { empty_string_or } from '../../utils/empty_string_or/index.js'
 
 export const write_task = <Input extends Identifier, Output extends Identifier>(
   name: string,
@@ -35,16 +35,13 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
 
     ${empty_string_or(
       task.container_limits?.memory,
-      (memory) =>
-        `task.set_memory_limit(${JSON.stringify(parse_bytes(memory))})`
+      (memory) => `task.set_memory_limit(${JSON.stringify(parse_bytes(memory))})`
     )}
 
     ${empty_string_or(
       task.inputs,
       (inputs) =>
-        `task.add_input(${inputs
-          .map((input) => JSON.stringify(input))
-          .join(', ')})`
+        `task.add_input(${inputs.map((input) => JSON.stringify(input)).join(', ')})`
     )}
 
     ${empty_string_or(

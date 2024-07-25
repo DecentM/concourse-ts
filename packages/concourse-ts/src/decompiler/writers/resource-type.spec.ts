@@ -1,15 +1,15 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import { Type } from '../..'
-import { Job } from '../../components'
-import { Duration, Identifier } from '../../utils'
+import { Type } from '../../index.js'
+import { Job } from '../../components/index.js'
+import { Duration, Identifier } from '../../utils/index.js'
 
-import { write_resource_type } from './resource-type'
+import { write_resource_type } from './resource-type.js'
 
 const chain = (name: string, pipeline: Type.Pipeline) => {
   const code = `
-    import {ResourceType} from '../../components'
+    import {ResourceType} from '../../components/index.js'
 
     ${write_resource_type(name, pipeline)}
   `

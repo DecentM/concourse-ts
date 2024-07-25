@@ -1,9 +1,9 @@
-import * as Type from '../../declarations/types'
-import {Identifier} from '../identifier'
-import {is_pipeline} from '../is-pipeline'
-import {is_get_step, is_put_step, is_task_step} from '../step-type'
-import {visit_pipeline} from './pipeline'
-import {visit_step} from './step'
+import * as Type from '../../declarations/types.js'
+import { Identifier } from '../identifier/index.js'
+import { is_pipeline } from '../is-pipeline/index.js'
+import { is_get_step, is_put_step, is_task_step } from '../step-type/index.js'
+import { visit_pipeline } from './pipeline.js'
+import { visit_step } from './step.js'
 
 export type VariableAttributeVisitor = {
   Attribute: (
@@ -140,11 +140,7 @@ export const visit_variable_attributes = (
               Object.keys(step.config.image_resource.version).forEach((key) => {
                 const value = step.config.image_resource.version[key]
 
-                visitor.Attribute(
-                  value,
-                  key,
-                  step.config.image_resource.version
-                )
+                visitor.Attribute(value, key, step.config.image_resource.version)
               })
             }
           }
@@ -191,11 +187,7 @@ export const visit_variable_attributes = (
 
           if (step.config.params) {
             Object.keys(step.config.params).forEach((key) => {
-              visitor.Attribute(
-                step.config.params[key],
-                key,
-                step.config.params
-              )
+              visitor.Attribute(step.config.params[key], key, step.config.params)
             })
           }
 

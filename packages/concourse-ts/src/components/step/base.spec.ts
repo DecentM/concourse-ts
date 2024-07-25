@@ -1,19 +1,20 @@
-import anyTest, {TestFn} from 'ava'
-import {Resource, Task} from '..'
+import anyTest, { TestFn } from 'ava'
+import { Resource, Task } from '../index.js'
 
-import {ResourceType} from '../resource-type'
+import { ResourceType } from '../resource-type.js'
 
 import {
   default_get_step,
   default_step,
   default_task_step_with_config,
-} from './test-data/default-steps'
+} from './test-data/default-steps.js'
 
-import {deduplicate_by_identity} from '../../utils'
+import { deduplicate_by_identity } from '../../utils/index.js'
 
-import {Step} from './base'
+import { Step } from './base.js'
+import { Identifier } from '../../utils/identifier/index.js'
 
-const test = anyTest as TestFn<{step: Step<never>}>
+const test = anyTest as TestFn<{ step: Step<never> }>
 
 class TStep extends Step<never> {
   public get_resources() {
@@ -73,7 +74,7 @@ test('stores tags', (t) => {
 test('stores across', (t) => {
   t.context.step.add_across({
     values: ['my-a', 'my-b'],
-    var: 'asd',
+    var: 'asd' as Identifier,
     fail_fast: true,
     max_in_flight: 1,
   })
@@ -116,11 +117,11 @@ test('collects base resources', (t) => {
   t.deepEqual(deduplicate_by_identity(result), [r])
   t.deepEqual(t.context.step.serialise(), {
     ...default_step,
-    on_abort: {...default_step, do: [default_get_step]},
-    on_success: {...default_step, do: [default_get_step]},
-    on_error: {...default_step, do: [default_get_step]},
-    on_failure: {...default_step, do: [default_get_step]},
-    ensure: {...default_step, do: [default_get_step]},
+    on_abort: { ...default_step, do: [default_get_step] },
+    on_success: { ...default_step, do: [default_get_step] },
+    on_error: { ...default_step, do: [default_get_step] },
+    on_failure: { ...default_step, do: [default_get_step] },
+    ensure: { ...default_step, do: [default_get_step] },
   })
 })
 
@@ -148,23 +149,23 @@ test('collects base task steps', (t) => {
     ...default_step,
     on_abort: {
       ...default_step,
-      do: [{...default_task_step_with_config, task: 't'}],
+      do: [{ ...default_task_step_with_config, task: 't' }],
     },
     on_success: {
       ...default_step,
-      do: [{...default_task_step_with_config, task: 't'}],
+      do: [{ ...default_task_step_with_config, task: 't' }],
     },
     on_error: {
       ...default_step,
-      do: [{...default_task_step_with_config, task: 't'}],
+      do: [{ ...default_task_step_with_config, task: 't' }],
     },
     on_failure: {
       ...default_step,
-      do: [{...default_task_step_with_config, task: 't'}],
+      do: [{ ...default_task_step_with_config, task: 't' }],
     },
     ensure: {
       ...default_step,
-      do: [{...default_task_step_with_config, task: 't'}],
+      do: [{ ...default_task_step_with_config, task: 't' }],
     },
   })
 })

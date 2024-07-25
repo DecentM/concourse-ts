@@ -1,5 +1,5 @@
 import test from 'ava'
-import {to_identifier, ValidationWarningType, WarningStore} from '.'
+import { to_identifier, ValidationWarningType, WarningStore } from './index.js'
 
 test('returns empty array with no warnings', (t) => {
   const warnings = new WarningStore()
@@ -71,5 +71,5 @@ test('copies all warnings', (t) => {
 })
 
 test('converts location and name to identifier', (t) => {
-  t.is(to_identifier({index: 0, section: 'a'}, 'b'), 'a.b')
+  t.is(to_identifier({ index: 0, section: 'a' }, 'b'), 'a.b')
 })

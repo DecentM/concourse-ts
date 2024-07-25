@@ -1,11 +1,14 @@
 import test from 'ava'
 
-import {Pipeline} from '../components'
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { Pipeline } from '../components/index.js'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {Compilation} from '.'
+import { Compilation } from './index.js'
 
-import create_good_pipeline from './test-data/good.pipeline'
+import create_good_pipeline from './test-data/good.pipeline.js'
 
 test('does not allow non-pipeline inputs', (t) => {
   const compilation = new Compilation()

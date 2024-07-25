@@ -1,12 +1,12 @@
 // https://github.com/concourse/concourse/blob/6841cd592dfe844599b73e333ea66c650f2f237b/atc/step_validator.go#L109
 
-import {ValidationWarningType, WarningStore} from '../../utils/warning-store'
-import {is_get_step, is_put_step} from '../../utils/step-type'
+import { ValidationWarningType, WarningStore } from '../../utils/warning-store'
+import { is_get_step, is_put_step } from '../../utils/step-type'
 
-import * as Type from '../../declarations/types'
-import {validate_identifier} from '../identifier'
-import {find_job_by_name} from '../../utils/find-job'
-import {visit_step} from '../../utils/visitors/step'
+import * as Type from '../../declarations/types.js'
+import { validate_identifier } from './identifier.js'
+import { find_job_by_name } from '../../utils/find-job'
+import { visit_step } from '../../utils/visitors/step'
 
 export const validate_get_steps = (pipeline: Type.Pipeline) => {
   const warnings = new WarningStore()

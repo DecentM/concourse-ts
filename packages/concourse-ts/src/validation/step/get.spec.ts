@@ -1,12 +1,9 @@
 import test from 'ava'
 
-import {Identifier} from '../../utils'
-import {
-  ValidationWarning,
-  ValidationWarningType,
-} from '../../utils/warning-store'
+import { Identifier } from '../../utils/index.js'
+import { ValidationWarning, ValidationWarningType } from '../../utils/warning-store'
 
-import {validate_get_steps} from './get'
+import { validate_get_steps } from './get.js'
 
 test('validates happy path', (t) => {
   const warnings = validate_get_steps({

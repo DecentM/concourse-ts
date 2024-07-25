@@ -1,11 +1,11 @@
 import test from 'ava'
-import {Task} from '../task'
+import { Task } from '../task.js'
 
-import {TaskStep} from './task'
+import { TaskStep } from './task.js'
 import {
   default_task_step,
   default_task_step_config,
-} from './test-data/default-steps'
+} from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   TaskStep.customise((ts) => {

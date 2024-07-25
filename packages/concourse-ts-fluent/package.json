@@ -4,11 +4,12 @@
   "homepage": "https://github.com/DecentM/concourse-ts/tree/main/packages/concourse-ts-fluent",
   "repository": "https://github.com/DecentM/concourse-ts.git",
   "license": "MIT",
-  "type": "commonjs",
-  "scripts": {
-    "build": "nx build",
-    "t": "yarn test",
-    "test": "c8 --100 --reporter=lcov --reporter=text ava"
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   },
   "ava": {
     "extensions": [

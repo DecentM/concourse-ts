@@ -1,18 +1,14 @@
 import test from 'ava'
 import * as ts from 'typescript'
 
-import {Type} from '../../..'
-import {LoadVarStep} from '../../../components'
-import {Identifier} from '../../../utils'
+import { Type } from '../../..'
+import { LoadVarStep } from '../../../components'
+import { Identifier } from '../../../utils/index.js'
 
-import {write_load_var_step} from './load-var'
-import {default_load_var_step} from '../../../components/step/test-data/default-steps'
+import { write_load_var_step } from './load-var'
+import { default_load_var_step } from '../../../components/step/test-data/default-steps'
 
-const chain = (
-  name: string,
-  input: Type.LoadVarStep,
-  pipeline: Type.Pipeline
-) => {
+const chain = (name: string, input: Type.LoadVarStep, pipeline: Type.Pipeline) => {
   const code = `
     import {LoadVarStep} from '../../../components'
 
@@ -40,9 +36,9 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {load_var: 'my-var' as Identifier, file: 'my-file'},
+    { load_var: 'my-var' as Identifier, file: 'my-file' },
     default_pipeline
   )
 
@@ -55,9 +51,9 @@ test('writes empty step', (t) => {
 })
 
 test('writes format', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {load_var: 'my-var' as Identifier, file: 'my-file', format: 'json'},
+    { load_var: 'my-var' as Identifier, file: 'my-file', format: 'json' },
     default_pipeline
   )
 
@@ -71,9 +67,9 @@ test('writes format', (t) => {
 })
 
 test('writes reveal', (t) => {
-  const {result, diagnostics} = chain(
+  const { result, diagnostics } = chain(
     'a',
-    {load_var: 'my-var' as Identifier, file: 'my-file', reveal: false},
+    { load_var: 'my-var' as Identifier, file: 'my-file', reveal: false },
     default_pipeline
   )
 

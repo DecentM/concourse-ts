@@ -1,5 +1,5 @@
-import * as Type from '../../declarations/types'
-import {visit_pipeline} from '../visitors/pipeline'
+import * as Type from '../../declarations/types.js'
+import { visit_pipeline } from '../visitors/pipeline.js'
 
 export const find_job_by_name = (
   job_name: string,

@@ -1,9 +1,9 @@
 import test from 'ava'
 import path from 'path'
 
-import {Job, Pipeline, TaskStep} from '../../components'
+import { Job, Pipeline, TaskStep } from '../../components/index.js'
 
-import {apply_task_hoisting} from '.'
+import { apply_task_hoisting } from './index.js'
 import {
   default_job,
   default_task_step,

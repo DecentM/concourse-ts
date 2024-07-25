@@ -1,9 +1,12 @@
 import test from 'ava'
-import {Type} from '..'
-import {Identifier} from '../utils'
-import {ValidationWarning, ValidationWarningType} from '../utils/warning-store'
+import { Type } from '../index.js'
+import { Identifier } from '../utils/index.js'
+import {
+  ValidationWarning,
+  ValidationWarningType,
+} from '../utils/warning-store/index.js'
 
-import {validate_var_sources} from './var-sources'
+import { validate_var_sources } from './var-sources.js'
 
 test('validates no var_sources', (t) => {
   const warnings = validate_var_sources({

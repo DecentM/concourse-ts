@@ -1,8 +1,8 @@
-import * as Type from '../declarations/types'
+import * as Type from '../declarations/types.js'
 
-import {is_task_step} from '../utils/step-type'
+import { is_task_step } from '../utils/step-type/index.js'
 
-import {ValidationWarningType, WarningStore} from '../utils/warning-store'
+import { ValidationWarningType, WarningStore } from '../utils/warning-store/index.js'
 
 /**
  * https://www.ibm.com/docs/en/aix/7.2?topic=kspsbic-regular-built-in-command-descriptions-korn-shell-posix-shell
