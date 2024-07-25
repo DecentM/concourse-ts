@@ -22,27 +22,15 @@ const chain = async (
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: InParallelStep | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -50,20 +38,18 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', async (t) => {
-  const { result, error } = await chain('a', { in_parallel: [] }, default_pipeline)
+  const { result } = await chain('a', { in_parallel: [] }, default_pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), default_in_parallel_step)
 })
 
 test('writes steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { in_parallel: { steps: [default_in_parallel_step] } },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_in_parallel_step,
     in_parallel: {
@@ -75,13 +61,12 @@ test('writes steps', async (t) => {
 })
 
 test('writes limit', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { in_parallel: { steps: [], limit: 4 } },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_in_parallel_step,
     in_parallel: {
@@ -93,13 +78,12 @@ test('writes limit', async (t) => {
 })
 
 test('writes fail_fast', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { in_parallel: { steps: [], fail_fast: false } },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_in_parallel_step,
     in_parallel: {

@@ -18,27 +18,15 @@ const chain = async (name: string, pipeline: Type.Pipeline) => {
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: Resource | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_resource = {
@@ -76,9 +64,8 @@ test('writes empty resource', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -91,15 +78,10 @@ test("throws if the resource doesn't exist", async (t) => {
     jobs: [],
   }
 
-  await t.throwsAsync(
-    async () => {
-      await chain('a', pipeline)
-    },
-    {
-      any: true,
-      message: 'Resource "a" does not exist in the pipeline',
-    }
-  )
+  await t.throwsAsync(() => chain('a', pipeline), {
+    any: true,
+    message: 'Resource "a" does not exist in the pipeline',
+  })
 })
 
 test('writes source', async (t) => {
@@ -117,9 +99,8 @@ test('writes source', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -141,9 +122,8 @@ test('writes check_every', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -166,9 +146,8 @@ test('writes icon', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -191,9 +170,8 @@ test('writes old_name', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -216,9 +194,8 @@ test('writes public', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -241,9 +218,8 @@ test('writes tags', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -266,9 +242,8 @@ test('writes version', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],
@@ -291,9 +266,8 @@ test('writes webhook_token', async (t) => {
     jobs: [],
   }
 
-  const { result, error } = await chain('a', pipeline)
+  const { result } = await chain('a', pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_resource,
     ...pipeline.resources![0],

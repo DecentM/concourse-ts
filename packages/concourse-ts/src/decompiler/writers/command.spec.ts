@@ -17,27 +17,15 @@ const chain = async (input: Type.Command) => {
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: Command | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'step.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_command = {
@@ -52,9 +40,8 @@ test('writes empty command', async (t) => {
     path: '',
   }
 
-  const { result, error } = await chain(command)
+  const { result } = await chain(command)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), default_command)
 })
 
@@ -64,9 +51,8 @@ test('writes args', async (t) => {
     args: ['my_arg1', 'my_arg2'],
   }
 
-  const { result, error } = await chain(command)
+  const { result } = await chain(command)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_command,
     ...command,
@@ -79,9 +65,8 @@ test('writes dir', async (t) => {
     dir: '.',
   }
 
-  const { result, error } = await chain(command)
+  const { result } = await chain(command)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_command,
     ...command,
@@ -94,9 +79,8 @@ test('writes user', async (t) => {
     user: 'root',
   }
 
-  const { result, error } = await chain(command)
+  const { result } = await chain(command)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_command,
     ...command,

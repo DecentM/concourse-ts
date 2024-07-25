@@ -21,27 +21,15 @@ const chain = async (name: string, input: Type.Step, pipeline: Type.Pipeline) =>
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: AnyStep | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_step = {
@@ -69,19 +57,18 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step modifiers', async (t) => {
-  const { error } = await chain('a', default_step, default_pipeline)
-
-  t.is(error, null)
+  await t.notThrowsAsync(async () => {
+    await chain('a', default_step, default_pipeline)
+  })
 })
 
 test('writes attempts', async (t) => {
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     { ...default_step, attempts: 5 },
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes('attempts = 5'))
 })
 
@@ -98,13 +85,12 @@ test('writes tags', async (t) => {
 })
 
 test('writes timeout', async (t) => {
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     { ...default_step, timeout: '1h2m' as Duration },
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes('step.set_timeout({"hours":1,"minutes":2})'))
 })
 
@@ -116,7 +102,7 @@ test('writes across', async (t) => {
     max_in_flight: 2,
   }
 
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     {
       ...default_step,
@@ -125,61 +111,55 @@ test('writes across', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes(`step.add_across(${JSON.stringify(across0)})`))
 })
 
 test('writes ensure', async (t) => {
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     { ...default_step, ensure: default_step },
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes('step.add_ensure(new TaskStep'))
 })
 
 test('writes on_success', async (t) => {
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     { ...default_step, on_success: default_step },
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes('step.add_on_success(new TaskStep'))
 })
 
 test('writes on_error', async (t) => {
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     { ...default_step, on_error: default_step },
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes('step.add_on_error(new TaskStep'))
 })
 
 test('writes on_failure', async (t) => {
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     { ...default_step, on_failure: default_step },
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes('step.add_on_failure(new TaskStep'))
 })
 
 test('writes on_abort', async (t) => {
-  const { code, error } = await chain(
+  const { code } = await chain(
     'a',
     { ...default_step, on_abort: default_step },
     default_pipeline
   )
 
-  t.is(error, null)
   t.assert(code.includes('step.add_on_abort(new TaskStep'))
 })

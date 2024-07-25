@@ -19,27 +19,15 @@ const chain = async (name: string, input: Type.GetStep, pipeline: Type.Pipeline)
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: GetStep | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -61,35 +49,28 @@ const default_pipeline: Type.Pipeline = {
 }
 
 test('writes empty step', async (t) => {
-  const { result, error } = await chain(
-    'a',
-    { get: 'a' as Identifier },
-    default_pipeline
-  )
+  const { result } = await chain('a', { get: 'a' as Identifier }, default_pipeline)
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), { ...default_get_step, get: 'a' })
 })
 
 test('writes empty step from resource property', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { get: 'b' as Identifier, resource: 'a' as Identifier },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), { ...default_get_step, get: 'a' })
 })
 
 test('writes passed', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { get: 'a' as Identifier, passed: ['step-a', 'step-b'] as Identifier[] },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_get_step,
     get: 'a',
@@ -98,13 +79,12 @@ test('writes passed', async (t) => {
 })
 
 test('writes params', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { get: 'a' as Identifier, params: { my_param: '1' } },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_get_step,
     get: 'a',
@@ -113,24 +93,22 @@ test('writes params', async (t) => {
 })
 
 test('writes trigger', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { get: 'a' as Identifier, trigger: false },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), { ...default_get_step, get: 'a', trigger: false })
 })
 
 test('writes version', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     { get: 'a' as Identifier, version: 'latest' },
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_get_step,
     get: 'a',

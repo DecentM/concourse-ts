@@ -30,27 +30,15 @@ const chain = async (name: string, input: Type.Step, pipeline: Type.Pipeline) =>
   `
 
   const tmpDir = await fs.mkdtemp(path.join(import.meta.dirname))
+  const tmpPath = path.join(tmpDir, 'step.ts')
 
-  let error: Error | null = null
-  let result: AnyStep | null = null
+  await fs.writeFile(tmpPath, code, 'utf-8')
 
-  try {
-    const tmpPath = path.join(tmpDir, 'index.ts')
-
-    await fs.writeFile(tmpPath, code, 'utf-8')
-
-    const loaded = await tsImport(tmpPath, import.meta.url)
-
-    result = loaded.default
-  } catch (error2) {
-    if (error2 instanceof Error) {
-      error = error2
-    }
-  }
+  const loaded = await tsImport(tmpPath, import.meta.url)
 
   await fs.rm(tmpDir, { recursive: true, force: true })
 
-  return { result, error, code }
+  return { result: loaded.default, code }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -73,15 +61,14 @@ const default_pipeline: Type.Pipeline = {
 
 test('throws when passed invalid input', async (t) => {
   await t.throwsAsync(
-    async () => {
-      await chain(
+    () =>
+      chain(
         'a',
         {
           asdasdasd: 1,
         } as unknown as Type.Step,
         default_pipeline
-      )
-    },
+      ),
     {
       any: true,
       message:
@@ -91,7 +78,7 @@ test('throws when passed invalid input', async (t) => {
 })
 
 test('writes do steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -100,7 +87,6 @@ test('writes do steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     do: [],
@@ -108,7 +94,7 @@ test('writes do steps', async (t) => {
 })
 
 test('writes get steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -117,7 +103,6 @@ test('writes get steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     params: undefined,
@@ -130,7 +115,7 @@ test('writes get steps', async (t) => {
 })
 
 test('writes in_parallel steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -139,7 +124,6 @@ test('writes in_parallel steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     in_parallel: {
@@ -151,7 +135,7 @@ test('writes in_parallel steps', async (t) => {
 })
 
 test('writes load_var steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -161,7 +145,6 @@ test('writes load_var steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     load_var: 'my-var',
@@ -172,7 +155,7 @@ test('writes load_var steps', async (t) => {
 })
 
 test('writes put steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -181,7 +164,6 @@ test('writes put steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     put: 'a',
@@ -194,7 +176,7 @@ test('writes put steps', async (t) => {
 })
 
 test('writes set_pipeline steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -204,7 +186,6 @@ test('writes set_pipeline steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     set_pipeline: 'self',
@@ -217,7 +198,7 @@ test('writes set_pipeline steps', async (t) => {
 })
 
 test('writes task steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -226,7 +207,6 @@ test('writes task steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     task: 'a_task',
@@ -242,7 +222,7 @@ test('writes task steps', async (t) => {
 })
 
 test('writes try steps', async (t) => {
-  const { result, error } = await chain(
+  const { result } = await chain(
     'a',
     {
       ...default_step,
@@ -253,7 +233,6 @@ test('writes try steps', async (t) => {
     default_pipeline
   )
 
-  t.is(error, null)
   t.deepEqual(result?.serialise(), {
     ...default_step,
     try: {
