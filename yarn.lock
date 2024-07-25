@@ -76,7 +76,7 @@ __metadata:
     mkdirp: "npm:^3.0.1"
     tmp-promise: "npm:^3.0.3"
     ts-deepmerge: "npm:^7.0.0"
-    ts-node: "npm:^10.9.2"
+    tsx: "npm:^4.16.2"
     verror: "npm:^1.10.1"
   peerDependencies:
     "@decentm/concourse-ts": 0.x
@@ -5575,7 +5575,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.4.0, ts-node@npm:^10.9.2":
+"ts-node@npm:^10.4.0":
   version: 10.9.2
   resolution: "ts-node@npm:10.9.2"
   dependencies:

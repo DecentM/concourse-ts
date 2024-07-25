@@ -1,6 +1,7 @@
 import * as ConcourseTs from '@decentm/concourse-ts'
 
-import path from 'path'
+import path from 'node:path'
+import fs from 'node:fs/promises'
 import * as YAML from 'yaml'
 
 import { HandleOutputParams, handle_output } from '../../lib/handle-output.js'
@@ -27,8 +28,8 @@ export const run_transform_command = async (params: TransformParams) => {
         }
       )
 
-      const pipeline = YAML.parse(input.content)
-      const path_info = path.parse(input.filepath)
+      const pipeline = YAML.parse(await fs.readFile(input, 'utf-8'))
+      const path_info = path.parse(input)
 
       used_transformers.forEach((used_transformer) => {
         const transformer: ConcourseTs.Type.Transformer =

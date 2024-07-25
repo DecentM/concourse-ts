@@ -21,7 +21,7 @@ const read_stream = async (stream: NodeJS.ReadStream) => {
 export const handle_inputs = async (
   params: HandleInputParams,
   stdin_ext: string
-): Promise<Input[]> => {
+): Promise<string[]> => {
   if (typeof params.input === 'string') {
     const globs = await glob(params.input, {
       cwd: process.cwd(),
@@ -32,16 +32,7 @@ export const handle_inputs = async (
       return []
     }
 
-    return Promise.all(
-      globs.map(async (file) => {
-        const buffer = await fsp.readFile(file)
-
-        return {
-          filepath: file,
-          content: buffer.toString('utf-8'),
-        }
-      })
-    )
+    return globs
   }
 
   const content = await read_stream(process.stdin)
@@ -55,10 +46,5 @@ export const handle_inputs = async (
 
   await fsp.writeFile(tmp_file.path, content, 'utf-8')
 
-  return [
-    {
-      filepath: tmp_file.path,
-      content,
-    },
-  ]
+  return [tmp_file.path]
 }
