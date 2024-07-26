@@ -1,4 +1,4 @@
-# Generated with concourse-ts at 23:10:20 on 26/07/2024
+# Generated with concourse-ts at 00:07:53 on 27/07/2024
 #
 # jobs: 2
 # groups: 0
@@ -13,6 +13,27 @@ jobs:
         timeout: 1h
         get: git
         trigger: true
+      - timeout: 6h
+        task: scaffold
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: node
+              tag: 20.16.0-alpine
+          platform: linux
+          run:
+            path: /bin/sh
+            args:
+              - -exuc
+              - /sbin/apk "add" "--no-cache" "--no-progress" "git" &&
+                /usr/local/bin/yarn "dlx" "@moonrepo/cli" "docker" "scaffold"
+                "concourse-ts"
+            dir: git
+          inputs:
+            - name: git
+          outputs:
+            - name: git
       - timeout: 6h
         task: build
         config:
@@ -35,7 +56,7 @@ jobs:
             CONTEXT: git
             TARGET: build
             BUILD_ARG_NODE_ENV: production
-            BUILD_ARG_NODE_VERSION: "20.15"
+            BUILD_ARG_NODE_VERSION: 20.16.0
         privileged: true
       - timeout: 6h
         task: lint
@@ -59,7 +80,7 @@ jobs:
             CONTEXT: git
             TARGET: lint
             BUILD_ARG_NODE_ENV: production
-            BUILD_ARG_NODE_VERSION: "20.15"
+            BUILD_ARG_NODE_VERSION: 20.16.0
         privileged: true
       - timeout: 6h
         task: test
@@ -81,9 +102,9 @@ jobs:
             - name: image
           params:
             CONTEXT: git
-            TARGET: build
+            TARGET: test
             BUILD_ARG_NODE_ENV: production
-            BUILD_ARG_NODE_VERSION: "20.15"
+            BUILD_ARG_NODE_VERSION: 20.16.0
         privileged: true
     max_in_flight: 1
   - name: auto-pipeline

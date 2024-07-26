@@ -21,7 +21,7 @@ RUN yarn workspaces focus -A --production
 FROM proddeps AS devdeps
 WORKDIR /app
 
-RUN apt update && apt install -y python3 make gcc g++
+RUN apt update && apt install -y ca-certificates
 RUN yarn --immutable
 
 #########################################
@@ -40,7 +40,7 @@ RUN yarn moon :build
 FROM build AS test
 WORKDIR /app
 
-RUN yarn moon #testable:test
+RUN yarn moon '#testable:test'
 
 #########################################
 FROM sources AS lint
