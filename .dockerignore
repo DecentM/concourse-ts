@@ -1,2 +1,15 @@
-/node_modules
-/packages/*/node_modules
+Dockerfile
+.ci
+ci
+.github
+.husky
+.vscode
+.moon/cache
+bin
+docs
+.git
+
+node_modules
+packages/*/node_modules
+packages/*/dist
+packages/*/coverage
