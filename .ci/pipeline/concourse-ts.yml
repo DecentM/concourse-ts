@@ -1,13 +1,13 @@
-# Generated with concourse-ts at 19:18:41 on 26/07/2024
+# Generated with concourse-ts at 19:34:39 on 26/07/2024
 #
-# jobs: 3
+# jobs: 2
 # groups: 0
 # resource_types: 1
 # resources: 2
 # var_sources: 0
 
 jobs:
-  - name: install_dependencies
+  - name: checks
     plan:
       - attempts: 3
         timeout: 1h
@@ -32,17 +32,7 @@ jobs:
           inputs:
             - name: git
           outputs:
-            - name: node_modules
-              path: git/node_modules
-    max_in_flight: 1
-  - name: lint
-    plan:
-      - attempts: 3
-        timeout: 1h
-        get: git
-        passed:
-          - install_dependencies
-        trigger: true
+            - name: git
       - timeout: 6h
         task: lint
         config:
@@ -60,8 +50,6 @@ jobs:
             dir: git
           inputs:
             - name: git
-            - name: node_modules
-              path: git/node_modules
     max_in_flight: 1
   - name: auto-pipeline
     plan:
@@ -90,6 +78,7 @@ resources:
       branch: main
       ignore_paths:
         - ci
+        - .ci
     check_every: 1h
     icon: github
     webhook_token: 9a881b9b9f23849475296a8cd768ea1965bc3152df7118e60c145975af6aa58a
@@ -100,6 +89,7 @@ resources:
       branch: main
       paths:
         - ci
+        - .ci
     check_every: 1h
     icon: github
     webhook_token: 1570823665f66932a328791c753672e4d1ff67dd72eab3d6fba8a2fc48edef1e

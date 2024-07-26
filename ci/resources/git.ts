@@ -34,12 +34,12 @@ export const git = create_git_resource({
   branch: 'main',
   repo: 'DecentM/concourse-ts',
   name: 'git',
-  ignore_paths: ['ci'],
+  ignore_paths: ['ci', '.ci'],
 })
 
 export const git_ci = create_git_resource({
   branch: 'main',
   repo: 'DecentM/concourse-ts',
   name: 'git-ci',
-  paths: ['ci'],
+  paths: ['ci', '.ci'],
 })
