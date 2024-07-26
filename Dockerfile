@@ -12,7 +12,7 @@ COPY package.json yarn.lock ./
 FROM depskeleton as proddeps
 WORKDIR /app
 
-RUN yarn workspaces focus -A --production --network-concurrency=5
+RUN yarn workspaces focus -A --production
 
 #########################################
 FROM proddeps as devdeps
