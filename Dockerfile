@@ -7,6 +7,7 @@ FROM base as depskeleton
 WORKDIR /app
 
 COPY package.json yarn.lock ./
+RUN corepack enable
 
 #########################################
 FROM depskeleton as proddeps
