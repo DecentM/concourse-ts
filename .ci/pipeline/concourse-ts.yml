@@ -1,4 +1,4 @@
-# Generated with concourse-ts at 19:34:39 on 26/07/2024
+# Generated with concourse-ts at 20:33:31 on 26/07/2024
 #
 # jobs: 2
 # groups: 0
@@ -14,42 +14,77 @@ jobs:
         get: git
         trigger: true
       - timeout: 6h
-        task: yarn
+        task: build
         config:
           image_resource:
             type: registry-image
             source:
-              repository: node
-              tag: 20.15-alpine
+              repository: concourse/oci-build-task
+              tag: latest
           platform: linux
           run:
-            path: /usr/local/bin/yarn
-            args:
-              - --immutable
-            dir: git
+            path: /usr/bin/build
+            args: []
           caches:
-            - path: ./.yarn/cache
+            - path: cache
           inputs:
             - name: git
           outputs:
-            - name: git
+            - name: image
+          params:
+            CONTEXT: git
+            TARGET: build
+            BUILD_ARG_NODE_ENV: production
+            BUILD_ARG_NODE_VERSION: "20.15"
+        privileged: true
       - timeout: 6h
         task: lint
         config:
           image_resource:
             type: registry-image
             source:
-              repository: node
-              tag: 20.15-alpine
+              repository: concourse/oci-build-task
+              tag: latest
           platform: linux
           run:
-            path: /usr/local/bin/yarn
-            args:
-              - moon
-              - :lint
-            dir: git
+            path: /usr/bin/build
+            args: []
+          caches:
+            - path: cache
           inputs:
             - name: git
+          outputs:
+            - name: image
+          params:
+            CONTEXT: git
+            TARGET: lint
+            BUILD_ARG_NODE_ENV: production
+            BUILD_ARG_NODE_VERSION: "20.15"
+        privileged: true
+      - timeout: 6h
+        task: test
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: concourse/oci-build-task
+              tag: latest
+          platform: linux
+          run:
+            path: /usr/bin/build
+            args: []
+          caches:
+            - path: cache
+          inputs:
+            - name: git
+          outputs:
+            - name: image
+          params:
+            CONTEXT: git
+            TARGET: build
+            BUILD_ARG_NODE_ENV: production
+            BUILD_ARG_NODE_VERSION: "20.15"
+        privileged: true
     max_in_flight: 1
   - name: auto-pipeline
     plan:
