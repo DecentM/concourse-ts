@@ -1,12 +1,68 @@
-# Generated with concourse-ts at 01:30:59 on 26/07/2024
+# Generated with concourse-ts at 19:18:41 on 26/07/2024
 #
-# jobs: 1
+# jobs: 3
 # groups: 0
 # resource_types: 1
-# resources: 1
+# resources: 2
 # var_sources: 0
 
 jobs:
+  - name: install_dependencies
+    plan:
+      - attempts: 3
+        timeout: 1h
+        get: git
+        trigger: true
+      - timeout: 6h
+        task: yarn
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: node
+              tag: 20.15-alpine
+          platform: linux
+          run:
+            path: /usr/local/bin/yarn
+            args:
+              - --immutable
+            dir: git
+          caches:
+            - path: ./.yarn/cache
+          inputs:
+            - name: git
+          outputs:
+            - name: node_modules
+              path: git/node_modules
+    max_in_flight: 1
+  - name: lint
+    plan:
+      - attempts: 3
+        timeout: 1h
+        get: git
+        passed:
+          - install_dependencies
+        trigger: true
+      - timeout: 6h
+        task: lint
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: node
+              tag: 20.15-alpine
+          platform: linux
+          run:
+            path: /usr/local/bin/yarn
+            args:
+              - moon
+              - :lint
+            dir: git
+          inputs:
+            - name: git
+            - name: node_modules
+              path: git/node_modules
+    max_in_flight: 1
   - name: auto-pipeline
     plan:
       - attempts: 3
@@ -27,6 +83,16 @@ resource_types:
       tag: 1.14.7-alpine-20230312
     check_every: 1h
 resources:
+  - name: git
+    type: git
+    source:
+      uri: https://github.com/DecentM/concourse-ts.git
+      branch: main
+      ignore_paths:
+        - ci
+    check_every: 1h
+    icon: github
+    webhook_token: 9a881b9b9f23849475296a8cd768ea1965bc3152df7118e60c145975af6aa58a
   - name: git-ci
     type: git
     source:

@@ -41,8 +41,6 @@ ConcourseTs.LoadVarStep.customise((lvs) => {
 
 ConcourseTs.Command.customise((command) => {
   command.path = '/bin/sh'
-
-  command.add_arg('-exuc')
 })
 
 ConcourseTs.Task.customise((task) => {
