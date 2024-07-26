@@ -1,6 +1,6 @@
-# Generated with concourse-ts at 00:21:26 on 27/07/2024
+# Generated with concourse-ts at 02:37:31 on 27/07/2024
 #
-# jobs: 2
+# jobs: 3
 # groups: 0
 # resource_types: 1
 # resources: 2
@@ -27,8 +27,8 @@ jobs:
             args:
               - -exuc
               - /sbin/apk "add" "--no-cache" "--no-progress" "git" &&
-                /usr/local/bin/yarn "dlx" "@moonrepo/cli" "docker" "scaffold"
-                "concourse-ts"
+                /usr/local/bin/yarn "dlx" "@moonrepo/cli@^1.27.4" "docker"
+                "scaffold" "concourse-ts"
             dir: git
           inputs:
             - name: git
@@ -87,6 +87,107 @@ jobs:
               privileged: true
           fail_fast: true
           limit: 2
+    max_in_flight: 1
+  - name: publish
+    plan:
+      - attempts: 3
+        timeout: 1h
+        get: git
+        passed:
+          - checks
+        trigger: true
+      - timeout: 6h
+        task: scaffold
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: node
+              tag: 20.16.0-alpine
+          platform: linux
+          run:
+            path: /bin/sh
+            args:
+              - -exuc
+              - /sbin/apk "add" "--no-cache" "--no-progress" "git" &&
+                /usr/local/bin/yarn "dlx" "@moonrepo/cli@^1.27.4" "docker"
+                "scaffold" "concourse-ts"
+            dir: git
+          inputs:
+            - name: git
+          outputs:
+            - name: git
+      - timeout: 6h
+        task: build
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: concourse/oci-build-task
+              tag: latest
+          platform: linux
+          run:
+            path: /usr/bin/build
+            args: []
+          caches:
+            - path: cache
+          inputs:
+            - name: git
+          outputs:
+            - name: image
+          params:
+            CONTEXT: git
+            UNPACK_ROOTFS: "true"
+            TARGET: build
+            BUILD_ARG_NODE_ENV: production
+            BUILD_ARG_NODE_VERSION: 20.16.0
+        privileged: true
+      - timeout: 6h
+        across:
+          - var: package
+            values:
+              - concourse-ts
+              - concourse-ts-cli
+              - concourse-ts-fluent
+              - concourse-ts-recipe-auto-pipeline
+              - concourse-ts-recipe-npm-dependencies
+              - concourse-ts-recipe-oci-build
+              - concourse-ts-resource-apache-directory-index
+              - concourse-ts-resource-bitbucket-pr
+              - concourse-ts-resource-curl
+              - concourse-ts-resource-fly
+              - concourse-ts-resource-git
+              - concourse-ts-resource-github-release
+              - concourse-ts-resource-helm3
+              - concourse-ts-resource-k8s
+              - concourse-ts-resource-keyval
+              - concourse-ts-resource-mock
+              - concourse-ts-resource-npm
+              - concourse-ts-resource-oss-github-pr
+              - concourse-ts-resource-pool
+              - concourse-ts-resource-registry-image
+              - concourse-ts-resource-s3
+              - concourse-ts-resource-semver
+              - concourse-ts-resource-slack-alert
+              - concourse-ts-resource-sonarqube
+              - concourse-ts-resource-terraform
+              - concourse-ts-resource-time
+            max_in_flight: 5
+        task: publish
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: node
+              tag: 20.16.0-alpine
+          platform: linux
+          run:
+            path: /bin/ls
+            args:
+              - packages/((.:package))/package.json
+            dir: image/rootfs/app
+          inputs:
+            - name: image
     max_in_flight: 1
   - name: auto-pipeline
     plan:

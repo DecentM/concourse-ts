@@ -44,6 +44,10 @@ const get_pipeline_from_file = async (
 export const run_compile_command = async (params: CompileParams) => {
   const inputs = await handle_inputs(params, '.ts')
 
+  if (inputs.length === 0) {
+    throw new VError(`"${params.input}" did not match any files`)
+  }
+
   const pipelines = (
     await Promise.all(
       inputs.map(async (input) => {
@@ -68,7 +72,7 @@ export const run_compile_command = async (params: CompileParams) => {
               .map((warning) => warning.messages.join(', '))
               .join('\n')
           ),
-          '[ERROR] Error(s) encountered during compilation'
+          'Error(s) encountered during compilation'
         )
       }
 
