@@ -20,7 +20,7 @@ FROM proddeps as devdeps
 WORKDIR /app
 
 RUN apk add --no-cache python3 make gcc g++
-RUN yarn install --immutable --inline-builds
+RUN yarn workspaces focus -A
 
 #########################################
 FROM devdeps as sources
