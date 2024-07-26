@@ -1,4 +1,4 @@
-# Generated with concourse-ts at 00:07:53 on 27/07/2024
+# Generated with concourse-ts at 00:21:26 on 27/07/2024
 #
 # jobs: 2
 # groups: 0
@@ -35,77 +35,58 @@ jobs:
           outputs:
             - name: git
       - timeout: 6h
-        task: build
-        config:
-          image_resource:
-            type: registry-image
-            source:
-              repository: concourse/oci-build-task
-              tag: latest
-          platform: linux
-          run:
-            path: /usr/bin/build
-            args: []
-          caches:
-            - path: cache
-          inputs:
-            - name: git
-          outputs:
-            - name: image
-          params:
-            CONTEXT: git
-            TARGET: build
-            BUILD_ARG_NODE_ENV: production
-            BUILD_ARG_NODE_VERSION: 20.16.0
-        privileged: true
-      - timeout: 6h
-        task: lint
-        config:
-          image_resource:
-            type: registry-image
-            source:
-              repository: concourse/oci-build-task
-              tag: latest
-          platform: linux
-          run:
-            path: /usr/bin/build
-            args: []
-          caches:
-            - path: cache
-          inputs:
-            - name: git
-          outputs:
-            - name: image
-          params:
-            CONTEXT: git
-            TARGET: lint
-            BUILD_ARG_NODE_ENV: production
-            BUILD_ARG_NODE_VERSION: 20.16.0
-        privileged: true
-      - timeout: 6h
-        task: test
-        config:
-          image_resource:
-            type: registry-image
-            source:
-              repository: concourse/oci-build-task
-              tag: latest
-          platform: linux
-          run:
-            path: /usr/bin/build
-            args: []
-          caches:
-            - path: cache
-          inputs:
-            - name: git
-          outputs:
-            - name: image
-          params:
-            CONTEXT: git
-            TARGET: test
-            BUILD_ARG_NODE_ENV: production
-            BUILD_ARG_NODE_VERSION: 20.16.0
-        privileged: true
+        in_parallel:
+          steps:
+            - timeout: 6h
+              task: lint
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: concourse/oci-build-task
+                    tag: latest
+                platform: linux
+                run:
+                  path: /usr/bin/build
+                  args: []
+                caches:
+                  - path: cache
+                inputs:
+                  - name: git
+                outputs:
+                  - name: image
+                params:
+                  CONTEXT: git
+                  TARGET: lint
+                  BUILD_ARG_NODE_ENV: production
+                  BUILD_ARG_NODE_VERSION: 20.16.0
+              privileged: true
+            - timeout: 6h
+              task: test
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: concourse/oci-build-task
+                    tag: latest
+                platform: linux
+                run:
+                  path: /usr/bin/build
+                  args: []
+                caches:
+                  - path: cache
+                inputs:
+                  - name: git
+                outputs:
+                  - name: image
+                params:
+                  CONTEXT: git
+                  TARGET: test
+                  BUILD_ARG_NODE_ENV: production
+                  BUILD_ARG_NODE_VERSION: 20.16.0
+              privileged: true
+          fail_fast: true
+          limit: 2
     max_in_flight: 1
   - name: auto-pipeline
     plan:

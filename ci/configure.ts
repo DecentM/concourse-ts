@@ -54,3 +54,7 @@ ConcourseTs.Task.customise((task) => {
     },
   })
 })
+
+ConcourseTs.InParallelStep.customise((ips) => {
+  ips.fail_fast = true
+})
