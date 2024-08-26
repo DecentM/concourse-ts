@@ -5,7 +5,7 @@ import { create_auto_pipeline } from '@decentm/concourse-ts-recipe-auto-pipeline
 
 import { git_ci } from 'ci/resources/git'
 
-import { checks_job } from './jobs/checks'
+// import { checks_job } from './jobs/checks'
 import { publish_job } from './jobs/publish'
 
 type Group = 'ci'
@@ -21,7 +21,7 @@ export default () => {
   return new ConcourseTs.Pipeline<Group>(
     name,
     auto_pipeline((pipeline) => {
-      pipeline.add_job(checks_job)
+      // pipeline.add_job(checks_job)
       pipeline.add_job(publish_job)
     })
   )

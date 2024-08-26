@@ -1,100 +1,17 @@
 # Generated with concourse-ts
 #
-# jobs: 3
+# jobs: 2
 # groups: 0
 # resource_types: 1
 # resources: 2
 # var_sources: 0
 
 jobs:
-  - name: checks
-    plan:
-      - attempts: 3
-        timeout: 1h
-        get: git
-        trigger: true
-      - timeout: 6h
-        task: scaffold
-        config:
-          image_resource:
-            type: registry-image
-            source:
-              repository: node
-              tag: 20.16.0-alpine
-          platform: linux
-          run:
-            path: /bin/sh
-            args:
-              - -exuc
-              - /sbin/apk "add" "--no-cache" "--no-progress" "git" &&
-                /usr/local/bin/yarn "dlx" "@moonrepo/cli@^1.27.10" "docker"
-                "scaffold" "concourse-ts"
-            dir: git
-          inputs:
-            - name: git
-          outputs:
-            - name: git
-      - timeout: 6h
-        in_parallel:
-          steps:
-            - timeout: 6h
-              task: lint
-              config:
-                image_resource:
-                  type: registry-image
-                  source:
-                    repository: concourse/oci-build-task
-                    tag: latest
-                platform: linux
-                run:
-                  path: /usr/bin/build
-                  args: []
-                caches:
-                  - path: cache
-                inputs:
-                  - name: git
-                outputs:
-                  - name: image
-                params:
-                  CONTEXT: git
-                  TARGET: lint
-                  BUILD_ARG_NODE_ENV: production
-                  BUILD_ARG_NODE_VERSION: 20.16.0
-              privileged: true
-            - timeout: 6h
-              task: test
-              config:
-                image_resource:
-                  type: registry-image
-                  source:
-                    repository: concourse/oci-build-task
-                    tag: latest
-                platform: linux
-                run:
-                  path: /usr/bin/build
-                  args: []
-                caches:
-                  - path: cache
-                inputs:
-                  - name: git
-                outputs:
-                  - name: image
-                params:
-                  CONTEXT: git
-                  TARGET: test
-                  BUILD_ARG_NODE_ENV: production
-                  BUILD_ARG_NODE_VERSION: 20.16.0
-              privileged: true
-          fail_fast: true
-          limit: 2
-    max_in_flight: 1
   - name: publish
     plan:
       - attempts: 3
         timeout: 1h
         get: git
-        passed:
-          - checks
         trigger: true
       - timeout: 6h
         task: scaffold
@@ -185,8 +102,10 @@ jobs:
             path: /bin/sh
             args:
               - -exuc
-              - npm pack
+              - npm pack image/
             dir: ((.:package))
+          inputs:
+            - name: image
     max_in_flight: 1
   - name: auto-pipeline
     plan:

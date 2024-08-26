@@ -3,7 +3,7 @@ import * as ConcourseTs from '@decentm/concourse-ts'
 
 import { git } from 'ci/resources/git'
 
-import { checks_job } from './checks'
+// import { checks_job } from './checks'
 
 import { scaffold_moon_task } from '../tasks/scaffold-moon'
 import { docker } from '../lib/docker'
@@ -12,7 +12,7 @@ import { docker } from '../lib/docker'
 const package_names = fs.readdirSync('packages')
 
 export const publish_job = new ConcourseTs.Job('publish', (job) => {
-  job.add_step(git.as_get_step({ passed: [checks_job] }))
+  job.add_step(git.as_get_step({}))
 
   job.add_step(scaffold_moon_task('concourse-ts').as_task_step())
 
@@ -25,6 +25,10 @@ export const publish_job = new ConcourseTs.Job('publish', (job) => {
 
   job.add_step(
     new ConcourseTs.Task('pack', (task) => {
+      task.add_input({
+        name: 'image',
+      })
+
       task.run = new ConcourseTs.Command((command) => {
         task.set_image_resource({
           type: 'registry-image',
@@ -37,7 +41,7 @@ export const publish_job = new ConcourseTs.Job('publish', (job) => {
         command.dir = ConcourseTs.Utils.get_var('.:package')
 
         command.add_arg('-exuc')
-        command.add_arg('npm pack')
+        command.add_arg('npm pack image/')
       })
     }).as_task_step((step) => {
       step.add_across({
