@@ -2,12 +2,12 @@ import fs from 'node:fs'
 import * as ConcourseTs from '@decentm/concourse-ts'
 
 import { git } from 'ci/resources/git'
-import { NODE_VERSION } from 'ci/consts'
 
 import { checks_job } from './checks'
 
 import { scaffold_moon_task } from '../tasks/scaffold-moon'
 import { docker } from '../lib/docker'
+import { create_npm_resource } from 'ci/resources/npm'
 
 const package_names = fs.readdirSync('packages')
 
@@ -23,31 +23,16 @@ export const publish_job = new ConcourseTs.Job('publish', (job) => {
     ).as_task_step()
   )
 
-  job.add_step(
-    new ConcourseTs.Task('publish', (task) => {
-      task.add_input({ name: 'image' })
+  for (const package_name of package_names) {
+    const package_npm = create_npm_resource({ package: package_name })
 
-      task.set_image_resource({
-        type: 'registry-image',
-        source: {
-          repository: 'node',
-          tag: `${NODE_VERSION}-alpine`,
+    job.add_step(
+      package_npm.as_put_step({
+        inputs: [ConcourseTs.Utils.get_identifier('image')],
+        params: {
+          path: `image/rootfs/app/packages/${package_name}/`,
         },
       })
-
-      task.run = new ConcourseTs.Command((command) => {
-        command.dir = 'image/rootfs/app'
-        command.path = '/bin/ls'
-        command.add_arg(
-          `packages/${ConcourseTs.Utils.get_var('.:package')}/package.json`
-        )
-      })
-    }).as_task_step((step) => {
-      step.add_across({
-        var: ConcourseTs.Utils.get_identifier('package'),
-        values: package_names,
-        max_in_flight: 5,
-      })
-    })
-  )
+    )
+  }
 })
