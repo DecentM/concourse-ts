@@ -1,0 +1,10 @@
+/src/
+/.tsimp/
+/coverage/
+/node_modules/
+/.npmignore
+/moon.yml
+/tsconfig.json
+/tsconfig.lib.json
+/typedoc.json
+!/dist/
