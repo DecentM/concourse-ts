@@ -6,10 +6,9 @@ import { Identifier } from '../utils/identifier/index.js'
 
 const write_yaml_pipeline = (pipeline: Pipeline): string => {
   const document = new Document(pipeline)
-  const now = new Date()
 
   const lines: string[] = [
-    `Generated with concourse-ts at ${now.toLocaleTimeString()} on ${now.toLocaleDateString()}`,
+    `Generated with concourse-ts`,
     '',
     `jobs: ${pipeline.jobs.length}`,
     `groups: ${pipeline.groups?.length ?? 0}`,
