@@ -29,19 +29,15 @@ export const publish_job = new ConcourseTs.Job('publish', (job) => {
         name: 'image',
       })
 
-      task.run = new ConcourseTs.Command((command) => {
-        task.set_image_resource({
-          type: 'registry-image',
-          source: {
-            repository: 'node',
-            tag: '20.16.0-alpine',
-          },
-        })
+      task.add_output({
+        name: 'package',
+      })
 
-        command.dir = ConcourseTs.Utils.get_var('.:package')
+      task.run = new ConcourseTs.Command((command) => {
+        command.dir = `image/rootfs/app/packages/${ConcourseTs.Utils.get_var('.:package')}`
 
         command.add_arg('-exuc')
-        command.add_arg('npm pack image/')
+        command.add_arg('tar -czf ../../../../../package/package.tar.gz package.json dist')
       })
     }).as_task_step((step) => {
       step.add_across({

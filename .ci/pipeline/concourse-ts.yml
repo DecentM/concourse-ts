@@ -95,17 +95,19 @@ jobs:
           image_resource:
             type: registry-image
             source:
-              repository: node
-              tag: 20.16.0-alpine
+              repository: alpine
+              tag: "3.20"
           platform: linux
           run:
             path: /bin/sh
             args:
               - -exuc
-              - npm pack image/
-            dir: ((.:package))
+              - tar -czf ../../../../../package/package.tar.gz package.json dist
+            dir: image/rootfs/app/packages/((.:package))
           inputs:
             - name: image
+          outputs:
+            - name: package
     max_in_flight: 1
   - name: auto-pipeline
     plan:
