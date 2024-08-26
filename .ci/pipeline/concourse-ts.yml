@@ -2,8 +2,8 @@
 #
 # jobs: 3
 # groups: 0
-# resource_types: 2
-# resources: 28
+# resource_types: 1
+# resources: 2
 # var_sources: 0
 
 jobs:
@@ -142,188 +142,51 @@ jobs:
             BUILD_ARG_NODE_ENV: production
             BUILD_ARG_NODE_VERSION: 20.16.0
         privileged: true
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts
-        params:
-          path: image/rootfs/app/packages/concourse-ts/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-cli
-        params:
-          path: image/rootfs/app/packages/concourse-ts-cli/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-fluent
-        params:
-          path: image/rootfs/app/packages/concourse-ts-fluent/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-recipe-auto-pipeline
-        params:
-          path: image/rootfs/app/packages/concourse-ts-recipe-auto-pipeline/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-recipe-npm-dependencies
-        params:
-          path: image/rootfs/app/packages/concourse-ts-recipe-npm-dependencies/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-recipe-oci-build
-        params:
-          path: image/rootfs/app/packages/concourse-ts-recipe-oci-build/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-apache-directory-index
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-apache-directory-index/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-bitbucket-pr
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-bitbucket-pr/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-curl
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-curl/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-fly
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-fly/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-git
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-git/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-github-release
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-github-release/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-helm3
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-helm3/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-k8s
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-k8s/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-keyval
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-keyval/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-mock
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-mock/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-npm
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-npm/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-oss-github-pr
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-oss-github-pr/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-pool
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-pool/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-registry-image
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-registry-image/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-s3
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-s3/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-semver
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-semver/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-slack-alert
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-slack-alert/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-sonarqube
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-sonarqube/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-terraform
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-terraform/
-        inputs:
-          - image
-      - attempts: 2
-        timeout: 2h
-        put: concourse-ts-resource-time
-        params:
-          path: image/rootfs/app/packages/concourse-ts-resource-time/
-        inputs:
-          - image
+      - timeout: 6h
+        across:
+          - values:
+              - concourse-ts
+              - concourse-ts-cli
+              - concourse-ts-fluent
+              - concourse-ts-recipe-auto-pipeline
+              - concourse-ts-recipe-npm-dependencies
+              - concourse-ts-recipe-oci-build
+              - concourse-ts-resource-apache-directory-index
+              - concourse-ts-resource-bitbucket-pr
+              - concourse-ts-resource-curl
+              - concourse-ts-resource-fly
+              - concourse-ts-resource-git
+              - concourse-ts-resource-github-release
+              - concourse-ts-resource-helm3
+              - concourse-ts-resource-k8s
+              - concourse-ts-resource-keyval
+              - concourse-ts-resource-mock
+              - concourse-ts-resource-npm
+              - concourse-ts-resource-oss-github-pr
+              - concourse-ts-resource-pool
+              - concourse-ts-resource-registry-image
+              - concourse-ts-resource-s3
+              - concourse-ts-resource-semver
+              - concourse-ts-resource-slack-alert
+              - concourse-ts-resource-sonarqube
+              - concourse-ts-resource-terraform
+              - concourse-ts-resource-time
+            var: package
+            max_in_flight: 5
+        task: pack
+        config:
+          image_resource:
+            type: registry-image
+            source:
+              repository: node
+              tag: 20.16.0-alpine
+          platform: linux
+          run:
+            path: /bin/sh
+            args:
+              - -exuc
+              - npm pack
+            dir: ((.:package))
     max_in_flight: 1
   - name: auto-pipeline
     plan:
@@ -344,12 +207,6 @@ resource_types:
       repository: concourse/git-resource
       tag: 1.14.7-alpine-20230312
     check_every: 1h
-  - name: npm
-    type: registry-image
-    source:
-      repository: timotto/concourse-npm-resource
-      tag: fbd2113
-    check_every: 1h
 resources:
   - name: git
     type: git
@@ -362,292 +219,6 @@ resources:
     check_every: 1h
     icon: github
     webhook_token: 9a881b9b9f23849475296a8cd768ea1965bc3152df7118e60c145975af6aa58a
-  - name: concourse-ts
-    type: npm
-    source:
-      package: concourse-ts
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 88cf680cdd6620d2e266874d85ee773d7737b34d8aff853a6d069e5a75f5a100
-  - name: concourse-ts-cli
-    type: npm
-    source:
-      package: concourse-ts-cli
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: d23f662991078caf16ae685af3702dd20edf735655cf9aa813d7aab0c6cd01af
-  - name: concourse-ts-fluent
-    type: npm
-    source:
-      package: concourse-ts-fluent
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 1b30dc2ccd144034be390b246d0a7d89275a3558e86a2e5ad517ae61b9ab2dc4
-  - name: concourse-ts-recipe-auto-pipeline
-    type: npm
-    source:
-      package: concourse-ts-recipe-auto-pipeline
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 781c64406c238dc8b11ffc8951641c299cc9616a490e7f2baecb4343ce132e4e
-  - name: concourse-ts-recipe-npm-dependencies
-    type: npm
-    source:
-      package: concourse-ts-recipe-npm-dependencies
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: efa7dc03e4d29ae66f8003d309ad1a38b2d3bfa64f54b24dee8590bfe83003cf
-  - name: concourse-ts-recipe-oci-build
-    type: npm
-    source:
-      package: concourse-ts-recipe-oci-build
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 803afb7d25fbed51f2a6f3065e42200e8d6806e8d5402c16eab6a1a546e0088e
-  - name: concourse-ts-resource-apache-directory-index
-    type: npm
-    source:
-      package: concourse-ts-resource-apache-directory-index
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: da42498c73a6d526eadb27387afa1c490295df58cefcca02d61d866155c84bf7
-  - name: concourse-ts-resource-bitbucket-pr
-    type: npm
-    source:
-      package: concourse-ts-resource-bitbucket-pr
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: e8b78cf78e5a058c02e9eaf46a050d3ce8bec3d6aa6295c0e0ecd675eeb07f10
-  - name: concourse-ts-resource-curl
-    type: npm
-    source:
-      package: concourse-ts-resource-curl
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 6221c43d9829937156e036f30fccaa5ee9d02a5ef1cc5cdc83ec6ccb422a7c4c
-  - name: concourse-ts-resource-fly
-    type: npm
-    source:
-      package: concourse-ts-resource-fly
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 065f74319fe192d4d02834822dc2ba7f438d923f61e86beeaae7123e80f315b4
-  - name: concourse-ts-resource-git
-    type: npm
-    source:
-      package: concourse-ts-resource-git
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 577250b080178d78f267000a47309ae26c410c0a6f5de8586c81329eaaca5ddc
-  - name: concourse-ts-resource-github-release
-    type: npm
-    source:
-      package: concourse-ts-resource-github-release
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 4c97f5f27782181b4bf01c5344d4094666360664b2d3a6299aedfa44550182ae
-  - name: concourse-ts-resource-helm3
-    type: npm
-    source:
-      package: concourse-ts-resource-helm3
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 4903492986597a6571b1c9df5429fe6ceddc6f42345db5cb1b659dd78494e5a0
-  - name: concourse-ts-resource-k8s
-    type: npm
-    source:
-      package: concourse-ts-resource-k8s
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 5ba01be7bdc8b5918569bcf09b15380f1eb5d0a76589d79071daa4c473957399
-  - name: concourse-ts-resource-keyval
-    type: npm
-    source:
-      package: concourse-ts-resource-keyval
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 8560af3112d8ddf251d2ad1beeb69e8782e2fb841f5d37cef098d6dfe22c7bd7
-  - name: concourse-ts-resource-mock
-    type: npm
-    source:
-      package: concourse-ts-resource-mock
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: d3df521fcb3bb7dffda49bacff93efc27c7c93bdab95ceb4a06dd27771dc15ee
-  - name: concourse-ts-resource-npm
-    type: npm
-    source:
-      package: concourse-ts-resource-npm
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 9bf33224a4afa5a312afa92b23cd25de0f720350b22c2007d0830f344999811c
-  - name: concourse-ts-resource-oss-github-pr
-    type: npm
-    source:
-      package: concourse-ts-resource-oss-github-pr
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 4513a928ba6a885eb3153e78efc8e642b7fccbcf90f6ec74911ec309b4428692
-  - name: concourse-ts-resource-pool
-    type: npm
-    source:
-      package: concourse-ts-resource-pool
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: b19c865eb2792a417e3ea8d911ae58b1015a6c47705675e059f420fb508f7857
-  - name: concourse-ts-resource-registry-image
-    type: npm
-    source:
-      package: concourse-ts-resource-registry-image
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 1863da218d97beea0ea79629db2c24619012750dbdf4bf89779f62f81ab56f74
-  - name: concourse-ts-resource-s3
-    type: npm
-    source:
-      package: concourse-ts-resource-s3
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 6f23afa96c935fa2a5295c709203defe15326c88b823a5abe648248f0bab8cef
-  - name: concourse-ts-resource-semver
-    type: npm
-    source:
-      package: concourse-ts-resource-semver
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 7ca0b9671f09aea208985ed9220b102c63be8cc0645908659e1b4c75b8586bda
-  - name: concourse-ts-resource-slack-alert
-    type: npm
-    source:
-      package: concourse-ts-resource-slack-alert
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 363296ae118bab9eaf22fc022f93eafd57f748dbced10555b462c13137e002bd
-  - name: concourse-ts-resource-sonarqube
-    type: npm
-    source:
-      package: concourse-ts-resource-sonarqube
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 24e273e38d62abfac7056489fbc0fff71d4d496013211bdb1d9c408e37e4ee4b
-  - name: concourse-ts-resource-terraform
-    type: npm
-    source:
-      package: concourse-ts-resource-terraform
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: 4f1dff151774b8780dc1238ab47a96c594a47410abfe85c01e830bd026845891
-  - name: concourse-ts-resource-time
-    type: npm
-    source:
-      package: concourse-ts-resource-time
-      scope: decentm
-      registry:
-        uri: https://registry.npmjs.org
-        token: ((npm.automation-token))
-    check_every: 1h
-    icon: npm
-    webhook_token: fb24f633f0634d5f14e455cea211be45636b3a7d235fbffd6c87455f6af3bec2
   - name: git-ci
     type: git
     source:
