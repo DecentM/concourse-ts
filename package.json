@@ -15,7 +15,7 @@
     "prepare": "husky install",
     "docs": "typedoc",
     "concourse-ts": "tsx packages/concourse-ts-cli/src/bin.ts",
-    "ci": "yarn concourse-ts compile",
+    "ci": "yarn concourse-ts compile && yarn concourse-ts transform",
     "postci": "yarn concourse-ts transform"
   },
   "devDependencies": {

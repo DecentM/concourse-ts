@@ -1,11 +1,3 @@
-# Generated with concourse-ts
-#
-# jobs: 2
-# groups: 0
-# resource_types: 2
-# resources: 28
-# var_sources: 0
-
 jobs:
   - name: publish
     plan:
@@ -59,242 +51,738 @@ jobs:
             BUILD_ARG_NODE_ENV: production
             BUILD_ARG_NODE_VERSION: 20.16.0
         privileged: true
-      - on_success:
-          do:
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts
-              params:
-                path: packages/concourse-ts.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-cli
-              params:
-                path: packages/concourse-ts-cli.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-fluent
-              params:
-                path: packages/concourse-ts-fluent.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-recipe-auto-pipeline
-              params:
-                path: packages/concourse-ts-recipe-auto-pipeline.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-recipe-npm-dependencies
-              params:
-                path: packages/concourse-ts-recipe-npm-dependencies.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-recipe-oci-build
-              params:
-                path: packages/concourse-ts-recipe-oci-build.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-apache-directory-index
-              params:
-                path: packages/concourse-ts-resource-apache-directory-index.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-bitbucket-pr
-              params:
-                path: packages/concourse-ts-resource-bitbucket-pr.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-curl
-              params:
-                path: packages/concourse-ts-resource-curl.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-fly
-              params:
-                path: packages/concourse-ts-resource-fly.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-git
-              params:
-                path: packages/concourse-ts-resource-git.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-github-release
-              params:
-                path: packages/concourse-ts-resource-github-release.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-helm3
-              params:
-                path: packages/concourse-ts-resource-helm3.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-k8s
-              params:
-                path: packages/concourse-ts-resource-k8s.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-keyval
-              params:
-                path: packages/concourse-ts-resource-keyval.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-mock
-              params:
-                path: packages/concourse-ts-resource-mock.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-npm
-              params:
-                path: packages/concourse-ts-resource-npm.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-oss-github-pr
-              params:
-                path: packages/concourse-ts-resource-oss-github-pr.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-pool
-              params:
-                path: packages/concourse-ts-resource-pool.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-registry-image
-              params:
-                path: packages/concourse-ts-resource-registry-image.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-s3
-              params:
-                path: packages/concourse-ts-resource-s3.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-semver
-              params:
-                path: packages/concourse-ts-resource-semver.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-slack-alert
-              params:
-                path: packages/concourse-ts-resource-slack-alert.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-sonarqube
-              params:
-                path: packages/concourse-ts-resource-sonarqube.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-terraform
-              params:
-                path: packages/concourse-ts-resource-terraform.tar.gz
-              inputs:
-                - packages
-            - attempts: 2
-              timeout: 2h
-              put: concourse-ts-resource-time
-              params:
-                path: packages/concourse-ts-resource-time.tar.gz
-              inputs:
-                - packages
-        timeout: 6h
-        across:
-          - values:
-              - concourse-ts
-              - concourse-ts-cli
-              - concourse-ts-fluent
-              - concourse-ts-recipe-auto-pipeline
-              - concourse-ts-recipe-npm-dependencies
-              - concourse-ts-recipe-oci-build
-              - concourse-ts-resource-apache-directory-index
-              - concourse-ts-resource-bitbucket-pr
-              - concourse-ts-resource-curl
-              - concourse-ts-resource-fly
-              - concourse-ts-resource-git
-              - concourse-ts-resource-github-release
-              - concourse-ts-resource-helm3
-              - concourse-ts-resource-k8s
-              - concourse-ts-resource-keyval
-              - concourse-ts-resource-mock
-              - concourse-ts-resource-npm
-              - concourse-ts-resource-oss-github-pr
-              - concourse-ts-resource-pool
-              - concourse-ts-resource-registry-image
-              - concourse-ts-resource-s3
-              - concourse-ts-resource-semver
-              - concourse-ts-resource-slack-alert
-              - concourse-ts-resource-sonarqube
-              - concourse-ts-resource-terraform
-              - concourse-ts-resource-time
-            var: package
-            max_in_flight: 5
-        task: pack
-        config:
-          image_resource:
-            type: registry-image
-            source:
-              repository: alpine
-              tag: "3.20"
-          platform: linux
-          run:
-            path: /bin/sh
-            args:
-              - -exuc
-              - tar -czf ../../../../../packages/((.:package)).tar.gz
-                package.json dist
-            dir: image/rootfs/app/packages/((.:package))
-          inputs:
-            - name: image
-          outputs:
-            - name: packages
-        output_mapping:
-          packages: packages
+      - in_parallel:
+          fail_fast: true
+          limit: 5
+          steps:
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-cli/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-cli
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-cli
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-fluent/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-fluent
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-fluent
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-recipe-auto-pipeline/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-recipe-auto-pipeline
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-recipe-auto-pipeline
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-recipe-npm-dependencies/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-recipe-npm-dependencies
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-recipe-npm-dependencies
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-recipe-oci-build/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-recipe-oci-build
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-recipe-oci-build
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-apache-directory-index/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-apache-directory-index
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-apache-directory-index
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-bitbucket-pr/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-bitbucket-pr
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-bitbucket-pr
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-curl/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-curl
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-curl
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-fly/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-fly
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-fly
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-git/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-git
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-git
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-github-release/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-github-release
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-github-release
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-helm3/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-helm3
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-helm3
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-k8s/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-k8s
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-k8s
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-keyval/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-keyval
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-keyval
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-mock/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-mock
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-mock
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-npm/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-npm
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-npm
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-oss-github-pr/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-oss-github-pr
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-oss-github-pr
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-pool/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-pool
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-pool
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-registry-image/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-registry-image
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-registry-image
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-s3/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-s3
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-s3
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-semver/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-semver
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-semver
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-slack-alert/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-slack-alert
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-slack-alert
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-sonarqube/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-sonarqube
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-sonarqube
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-terraform/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-terraform
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-terraform
+            - timeout: 6h
+              task: pack
+              config:
+                image_resource:
+                  type: registry-image
+                  source:
+                    repository: alpine
+                    tag: "3.20"
+                platform: linux
+                run:
+                  path: /bin/sh
+                  args:
+                    - -exuc
+                    - tar -czf
+                      ../../../../../package-concourse-ts-resource-time/package.tar.gz
+                      package.json dist
+                  dir: image/rootfs/app/packages/concourse-ts-resource-time
+                inputs:
+                  - name: image
+                outputs:
+                  - name: package-concourse-ts-resource-time
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts
+        params:
+          path: package-concourse-ts/package.tar.gz
+        inputs:
+          - package-concourse-ts
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-cli
+        params:
+          path: package-concourse-ts-cli/package.tar.gz
+        inputs:
+          - package-concourse-ts-cli
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-fluent
+        params:
+          path: package-concourse-ts-fluent/package.tar.gz
+        inputs:
+          - package-concourse-ts-fluent
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-recipe-auto-pipeline
+        params:
+          path: package-concourse-ts-recipe-auto-pipeline/package.tar.gz
+        inputs:
+          - package-concourse-ts-recipe-auto-pipeline
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-recipe-npm-dependencies
+        params:
+          path: package-concourse-ts-recipe-npm-dependencies/package.tar.gz
+        inputs:
+          - package-concourse-ts-recipe-npm-dependencies
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-recipe-oci-build
+        params:
+          path: package-concourse-ts-recipe-oci-build/package.tar.gz
+        inputs:
+          - package-concourse-ts-recipe-oci-build
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-apache-directory-index
+        params:
+          path: package-concourse-ts-resource-apache-directory-index/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-apache-directory-index
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-bitbucket-pr
+        params:
+          path: package-concourse-ts-resource-bitbucket-pr/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-bitbucket-pr
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-curl
+        params:
+          path: package-concourse-ts-resource-curl/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-curl
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-fly
+        params:
+          path: package-concourse-ts-resource-fly/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-fly
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-git
+        params:
+          path: package-concourse-ts-resource-git/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-git
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-github-release
+        params:
+          path: package-concourse-ts-resource-github-release/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-github-release
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-helm3
+        params:
+          path: package-concourse-ts-resource-helm3/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-helm3
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-k8s
+        params:
+          path: package-concourse-ts-resource-k8s/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-k8s
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-keyval
+        params:
+          path: package-concourse-ts-resource-keyval/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-keyval
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-mock
+        params:
+          path: package-concourse-ts-resource-mock/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-mock
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-npm
+        params:
+          path: package-concourse-ts-resource-npm/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-npm
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-oss-github-pr
+        params:
+          path: package-concourse-ts-resource-oss-github-pr/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-oss-github-pr
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-pool
+        params:
+          path: package-concourse-ts-resource-pool/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-pool
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-registry-image
+        params:
+          path: package-concourse-ts-resource-registry-image/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-registry-image
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-s3
+        params:
+          path: package-concourse-ts-resource-s3/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-s3
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-semver
+        params:
+          path: package-concourse-ts-resource-semver/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-semver
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-slack-alert
+        params:
+          path: package-concourse-ts-resource-slack-alert/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-slack-alert
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-sonarqube
+        params:
+          path: package-concourse-ts-resource-sonarqube/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-sonarqube
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-terraform
+        params:
+          path: package-concourse-ts-resource-terraform/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-terraform
+      - attempts: 2
+        timeout: 2h
+        put: concourse-ts-resource-time
+        params:
+          path: package-concourse-ts-resource-time/package.tar.gz
+        inputs:
+          - package-concourse-ts-resource-time
     max_in_flight: 1
   - name: auto-pipeline
     plan:

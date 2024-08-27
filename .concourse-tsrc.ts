@@ -8,5 +8,14 @@ export default rc({
   transform: {
     input: '.ci/pipeline/*.yml',
     output: '.ci/pipeline/',
+    transformers: ['apply_across_polyfill'],
+    options: {
+      apply_across_polyfill: {
+        in_parallel: {
+          fail_fast: true,
+          limit: 5,
+        },
+      },
+    },
   },
 })
