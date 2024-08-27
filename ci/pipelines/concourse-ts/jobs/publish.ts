@@ -30,14 +30,14 @@ export const publish_job = new ConcourseTs.Job('publish', (job) => {
       })
 
       task.add_output({
-        name: 'package',
+        name: 'packages',
       })
 
       task.run = new ConcourseTs.Command((command) => {
         command.dir = `image/rootfs/app/packages/${ConcourseTs.Utils.get_var('.:package')}`
 
         command.add_arg('-exuc')
-        command.add_arg('tar -czf ../../../../../package/package.tar.gz package.json dist')
+        command.add_arg(`tar -czf ../../../../../packages/${ConcourseTs.Utils.get_var('.:package')}.tar.gz package.json dist`)
       })
     }).as_task_step((step) => {
       step.add_across({

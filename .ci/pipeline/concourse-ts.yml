@@ -102,12 +102,13 @@ jobs:
             path: /bin/sh
             args:
               - -exuc
-              - tar -czf ../../../../../package/package.tar.gz package.json dist
+              - tar -czf ../../../../../packages/((.:package)).tar.gz
+                package.json dist
             dir: image/rootfs/app/packages/((.:package))
           inputs:
             - name: image
           outputs:
-            - name: package
+            - name: packages
     max_in_flight: 1
   - name: auto-pipeline
     plan:
