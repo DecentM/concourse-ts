@@ -7,7 +7,7 @@ import { git } from 'ci/resources/git'
 
 import { scaffold_moon_task } from '../tasks/scaffold-moon'
 import { docker } from '../lib/docker'
-// import { create_npm_resource } from 'ci/resources/npm'
+import { create_npm_resource } from 'ci/resources/npm'
 
 const package_names = fs.readdirSync('packages')
 
@@ -45,19 +45,20 @@ export const publish_job = new ConcourseTs.Job('publish', (job) => {
         var: ConcourseTs.Utils.get_identifier('package'),
         max_in_flight: 5,
       })
+
+      step.set_output_mapping('packages', ConcourseTs.Utils.get_identifier('packages'))
+
+      for (const package_name of package_names) {
+        const package_npm = create_npm_resource({ package: package_name })
+
+        step.add_on_success(package_npm.as_put_step({
+          inputs: [ConcourseTs.Utils.get_identifier('packages')],
+          params: {
+            path: `packages/${package_name}.tar.gz`,
+          },
+        }))
+      }
     })
   )
 
-  // for (const package_name of package_names) {
-  //   const package_npm = create_npm_resource({ package: package_name })
-
-  //   job.add_step(
-  //     package_npm.as_put_step({
-  //       inputs: [ConcourseTs.Utils.get_identifier('image')],
-  //       params: {
-  //         path: `image/rootfs/app/packages/${package_name}/`,
-  //       },
-  //     })
-  //   )
-  // }
 })
