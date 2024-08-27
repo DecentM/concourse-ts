@@ -317,7 +317,7 @@ __metadata:
   resolution: "@decentm/concourse-ts@workspace:packages/concourse-ts"
   dependencies:
     "@eslint/eslintrc": "npm:^3.1.0"
-    "@eslint/js": "npm:^9.8.0"
+    "@eslint/js": "npm:^9.9.1"
     "@types/lodash.clonedeep": "npm:^4.5.9"
     "@types/node": "npm:^22.5.0"
     "@types/prettier": "npm:^3.0.0"
@@ -553,17 +553,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.9.1":
+"@eslint/js@npm:9.9.1, @eslint/js@npm:^9.9.1":
   version: 9.9.1
   resolution: "@eslint/js@npm:9.9.1"
   checksum: 10c0/a3a91de2ce78469f7c4eee78c1eba77360706e1d0fa0ace2e19102079bcf237b851217c85ea501dc92c4c3719d60d9df966977abc8554d4c38e3638c1f53dcb2
-  languageName: node
-  linkType: hard
-
-"@eslint/js@npm:^9.8.0":
-  version: 9.8.0
-  resolution: "@eslint/js@npm:9.8.0"
-  checksum: 10c0/42edaae6b020436410454579509dcb6a8cd5b260e9f18e037fd803ae28d35eb13663d4019f0ab8ba686a19d3c4a43b0e11394c148e23345377ab694da0e83262
   languageName: node
   linkType: hard
 
@@ -2098,7 +2091,7 @@ __metadata:
   resolution: "concourse-ts@workspace:."
   dependencies:
     "@eslint/eslintrc": "npm:^3.1.0"
-    "@eslint/js": "npm:^9.8.0"
+    "@eslint/js": "npm:^9.9.1"
     "@moonrepo/cli": "npm:^1.27.10"
     "@types/eslint": "npm:^9"
     "@types/eslint__js": "npm:^8.42.3"
