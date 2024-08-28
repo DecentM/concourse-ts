@@ -31,7 +31,7 @@
     "husky": "^9.1.5",
     "jsdom": "~24.1.1",
     "prettier": "^3.3.3",
-    "sort-package-json": "^2.10.0",
+    "sort-package-json": "^2.10.1",
     "tsx": "^4.17.0",
     "typedoc": "^0.25.13",
     "typedoc-github-wiki-theme": "^2.0.0",
