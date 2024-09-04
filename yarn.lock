@@ -333,7 +333,7 @@ __metadata:
     tslib: "npm:^2.7.0"
     tsx: "npm:^4.19.0"
     verror: "npm:^1.10.1"
-    yaml: "npm:^2.5.0"
+    yaml: "npm:^2.5.1"
   peerDependencies:
     typescript: ^5.5.4
   languageName: unknown
@@ -5930,12 +5930,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "yaml@npm:2.5.0"
+"yaml@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "yaml@npm:2.5.1"
   bin:
     yaml: bin.mjs
-  checksum: 10c0/771a1df083c8217cf04ef49f87244ae2dd7d7457094425e793b8f056159f167602ce172aa32d6bca21f787d24ec724aee3cecde938f6643564117bd151452631
+  checksum: 10c0/40fba5682898dbeeb3319e358a968fe886509fab6f58725732a15f8dda3abac509f91e76817c708c9959a15f786f38ff863c1b88062d7c1162c5334a7d09cb4a
   languageName: node
   linkType: hard
 
