@@ -33,7 +33,7 @@
     "prettier": "^3.3.3",
     "sort-package-json": "^2.10.1",
     "tsx": "^4.19.0",
-    "typedoc": "^0.25.13",
+    "typedoc": "^0.26.6",
     "typedoc-github-wiki-theme": "^2.0.0",
     "typedoc-plugin-coverage": "^3.3.0",
     "typedoc-plugin-markdown": "^4.0.3",
