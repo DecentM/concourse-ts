@@ -28,7 +28,7 @@
     "@decentm/concourse-ts": "0.x"
   },
   "devDependencies": {
-    "ava": "^6.1.3",
+    "ava": "^6.2.0",
     "c8": "^10.1.2",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
