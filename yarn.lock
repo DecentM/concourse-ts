@@ -69,7 +69,7 @@ __metadata:
     mkdirp: "npm:^3.0.1"
     tmp-promise: "npm:^3.0.3"
     ts-deepmerge: "npm:^7.0.1"
-    tsx: "npm:^4.19.1"
+    tsx: "npm:^4.19.2"
     verror: "npm:^1.10.1"
   peerDependencies:
     "@decentm/concourse-ts": 0.x
@@ -331,7 +331,7 @@ __metadata:
     tmp-promise: "npm:^3.0.3"
     tsimp: "npm:^2.0.12"
     tslib: "npm:^2.8.0"
-    tsx: "npm:^4.19.1"
+    tsx: "npm:^4.19.2"
     verror: "npm:^1.10.1"
     yaml: "npm:^2.6.0"
   peerDependencies:
@@ -2097,7 +2097,7 @@ __metadata:
     jsdom: "npm:~25.0.1"
     prettier: "npm:^3.3.3"
     sort-package-json: "npm:^2.10.1"
-    tsx: "npm:^4.19.1"
+    tsx: "npm:^4.19.2"
     typedoc: "npm:^0.25.13"
     typedoc-github-wiki-theme: "npm:^2.0.0"
     typedoc-plugin-coverage: "npm:^3.3.0"
@@ -5558,9 +5558,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:^4.19.1":
-  version: 4.19.1
-  resolution: "tsx@npm:4.19.1"
+"tsx@npm:^4.19.2":
+  version: 4.19.2
+  resolution: "tsx@npm:4.19.2"
   dependencies:
     esbuild: "npm:~0.23.0"
     fsevents: "npm:~2.3.3"
@@ -5570,7 +5570,7 @@ __metadata:
       optional: true
   bin:
     tsx: dist/cli.mjs
-  checksum: 10c0/cbea9baf57e7406fa0ecc2c03b9bb2501ee740dc28c938f949180a646a28e5d65e7cccbfba340508923bfd45e90320ef9eef7f815cae4515b6ef2ee429edc7ee
+  checksum: 10c0/63164b889b1d170403e4d8753a6755dec371f220f5ce29a8e88f1f4d6085a784a12d8dc2ee669116611f2c72757ac9beaa3eea5c452796f541bdd2dc11753721
   languageName: node
   linkType: hard
 
