@@ -59,7 +59,7 @@ __metadata:
     "@decentm/concourse-ts-recipe-oci-build": "npm:0.1.1"
     "@decentm/concourse-ts-resource-npm": "npm:0.2.1"
     "@decentm/concourse-ts-resource-registry-image": "npm:0.2.2"
-    "@types/node": "npm:^22.8.5"
+    "@types/node": "npm:^22.8.6"
     "@types/tmp": "npm:^0.2.6"
     "@types/verror": "npm:^1.10.10"
     commander: "npm:^12.1.0"
@@ -319,7 +319,7 @@ __metadata:
     "@eslint/eslintrc": "npm:^3.1.0"
     "@eslint/js": "npm:^9.13.0"
     "@types/lodash.clonedeep": "npm:^4.5.9"
-    "@types/node": "npm:^22.8.5"
+    "@types/node": "npm:^22.8.6"
     "@types/prettier": "npm:^3.0.0"
     "@types/verror": "npm:^1.10.10"
     ava: "npm:^6.2.0"
@@ -1189,12 +1189,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.8.5":
-  version: 22.8.5
-  resolution: "@types/node@npm:22.8.5"
+"@types/node@npm:^22.8.6":
+  version: 22.8.6
+  resolution: "@types/node@npm:22.8.6"
   dependencies:
     undici-types: "npm:~6.19.8"
-  checksum: 10c0/5e43553026c83f18bfa381d35c8fd608e69d12d0f0fe4601e8bb98b651a3b240be9d66c1f2f4decdbebb41d55b18e89238b02f3992d820d89801b9b3625ba8ab
+  checksum: 10c0/d3a11f2549234a91a4c5d0ff35ab4bdcb7ba34db4d3f1d189be39b8bd41c19aac98d117150a95a9c5a9d45b1014135477ea240b2b8317c86ae3d3cf1c3b3f8f4
   languageName: node
   linkType: hard
 
