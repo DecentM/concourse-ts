@@ -2209,7 +2209,7 @@ __metadata:
     sort-package-json: "npm:^2.12.0"
     tsx: "npm:^4.19.2"
     typedoc: "npm:^0.25.13"
-    typedoc-github-wiki-theme: "npm:^2.0.0"
+    typedoc-github-wiki-theme: "npm:^2.1.0"
     typedoc-plugin-coverage: "npm:^3.4.0"
     typedoc-plugin-markdown: "npm:^4.0.3"
     typescript: "npm:~5.7.2"
@@ -5755,12 +5755,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-github-wiki-theme@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "typedoc-github-wiki-theme@npm:2.0.0"
+"typedoc-github-wiki-theme@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "typedoc-github-wiki-theme@npm:2.1.0"
   peerDependencies:
-    typedoc-plugin-markdown: ">=4.0.0"
-  checksum: 10c0/3d9bb2d63f08dbaa1217005a8a0c224d5c00471843f6ab96546ab16c074132ba1fb9891eec859446eb32f55f557694421affd31287d5b0df096ee90510375c5a
+    typedoc-plugin-markdown: ">=4.3.0"
+  checksum: 10c0/7b9082577d7f0f339a6750067ab4fb75224998efb2f938435c5f5475bee44502ecdec37785b2b7d8eaa35ac4e4f005102bc271060260fe0ef8a22631d93d5244
   languageName: node
   linkType: hard
 
