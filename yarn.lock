@@ -2113,7 +2113,7 @@ __metadata:
     typedoc: "npm:^0.25.13"
     typedoc-github-wiki-theme: "npm:^2.1.0"
     typedoc-plugin-coverage: "npm:^3.4.0"
-    typedoc-plugin-markdown: "npm:^4.0.3"
+    typedoc-plugin-markdown: "npm:^4.3.1"
     typescript: "npm:~5.7.2"
     typescript-eslint: "npm:^8.17.0"
   languageName: unknown
@@ -5675,12 +5675,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "typedoc-plugin-markdown@npm:4.0.3"
+"typedoc-plugin-markdown@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "typedoc-plugin-markdown@npm:4.3.1"
   peerDependencies:
-    typedoc: 0.25.x
-  checksum: 10c0/5fae1a1833221e2627454b264b866f349db6fa4e62b1642015944e8db432d8c2656ae661e02ba029fb9d52309ce57fabbb7441f2933c665714add9818bd823d2
+    typedoc: 0.27.x
+  checksum: 10c0/031e7d61611899fc4f45953575b7b63734c34379c1f9791b42e0ab4605dd2fff952dd35d53d8edd8068afdc9b127858a6b93fda94ec065e8a6ab869012e84500
   languageName: node
   linkType: hard
 
