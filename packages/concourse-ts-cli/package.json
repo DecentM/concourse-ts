@@ -20,7 +20,7 @@
     "@types/node": "^22.10.1",
     "commander": "^12.1.0",
     "cosmiconfig": "^9.0.0",
-    "cosmiconfig-typescript-loader": "^6.0.0",
+    "cosmiconfig-typescript-loader": "^6.1.0",
     "fast-glob": "^3.3.2",
     "mkdirp": "^3.0.1",
     "tmp-promise": "^3.0.3",
