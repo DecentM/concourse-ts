@@ -24,7 +24,7 @@
     "@moonrepo/cli": "^1.30.5",
     "@types/eslint": "^9",
     "@types/eslint__js": "^8.42.3",
-    "@typescript-eslint/eslint-plugin": "8.18.0",
+    "@typescript-eslint/eslint-plugin": "8.18.1",
     "@typescript-eslint/parser": "8.18.0",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "9.1.0",
