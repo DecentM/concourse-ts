@@ -2333,7 +2333,7 @@ __metadata:
     tsx: "npm:^4.19.2"
     typedoc: "npm:^0.25.13"
     typedoc-github-wiki-theme: "npm:^2.1.0"
-    typedoc-plugin-coverage: "npm:^3.4.0"
+    typedoc-plugin-coverage: "npm:^3.4.1"
     typedoc-plugin-markdown: "npm:^4.0.3"
     typescript: "npm:~5.7.2"
     typescript-eslint: "npm:^8.19.0"
@@ -5983,12 +5983,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-coverage@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "typedoc-plugin-coverage@npm:3.4.0"
+"typedoc-plugin-coverage@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "typedoc-plugin-coverage@npm:3.4.1"
   peerDependencies:
     typedoc: 0.25.x || 0.26.x || 0.27.x
-  checksum: 10c0/e7ff91ed90487589f6b2a5cdbd5fd414f7cea219f4ea515c77994db5129655c8967afb7e5757766241383b6583306d68e35bb67246c8b432938d54bae6a345c4
+  checksum: 10c0/cc7f24b4fad73e5e3af064fdb4ff2b7353b3069c47224504ab7ce25defd8c0f0c3710d53743e84da8a75db89139bfd0fbb444f57a205cf2c5a1bb4a820c2a6d7
   languageName: node
   linkType: hard
 
