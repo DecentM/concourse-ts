@@ -38,7 +38,7 @@
     "typedoc-plugin-coverage": "^3.4.1",
     "typedoc-plugin-markdown": "^4.0.3",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.19.0"
+    "typescript-eslint": "^8.19.1"
   },
   "engines": {
     "node": "20.16.0"
