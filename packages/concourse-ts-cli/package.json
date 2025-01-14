@@ -17,7 +17,7 @@
     }
   },
   "dependencies": {
-    "@types/node": "^22.10.5",
+    "@types/node": "^22.10.6",
     "commander": "^13.0.0",
     "cosmiconfig": "^9.0.0",
     "cosmiconfig-typescript-loader": "^6.1.0",
