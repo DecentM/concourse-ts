@@ -23,7 +23,7 @@ export const is_duration = (
   try {
     parse_duration(input, extra_valid_units)
     return true
-  } catch (e) {
+  } catch {
     return false
   }
 }
