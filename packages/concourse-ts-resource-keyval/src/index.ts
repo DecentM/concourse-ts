@@ -15,7 +15,7 @@ export type PutParams = {
 
 export type GetParams = Record<string, never>
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'swce/keyval-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

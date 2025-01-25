@@ -351,7 +351,13 @@ export type GetParams = {
   describe_ref_options?: string
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<
+  Source,
+  PutParams,
+  GetParams,
+  'registry-image',
+  RegistryImage.Source<'concourse/git-resource'>
+>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

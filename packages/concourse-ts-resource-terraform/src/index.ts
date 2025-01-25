@@ -245,7 +245,7 @@ type PutParams = (EnvName | EnvNameFile | GenerateRandomName | EnvNameInSource) 
   lock_timeout?: ConcourseTs.Utils.Duration
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'ljfranklin/terraform-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

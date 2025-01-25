@@ -44,7 +44,7 @@ export type PutParams = Record<string, ConcourseTs.Type.YamlValue>
 
 export type GetParams = never
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'srinivasavasu/concourse-k8s'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

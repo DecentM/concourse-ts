@@ -99,7 +99,7 @@ export type PutParams = {
 
 export type GetParams = never
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'arbourd/concourse-slack-alert-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

@@ -63,7 +63,7 @@ export type GetParams = {
   skip_download?: boolean
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'timotto/concourse-npm-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',
