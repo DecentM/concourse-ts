@@ -90,7 +90,7 @@ export type PutParams = Record<string, never>
 
 export type GetParams = Record<string, never>
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'concourse/time-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

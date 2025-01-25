@@ -152,7 +152,7 @@ export type GetParams = {
   include_source_zip?: boolean
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<''>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

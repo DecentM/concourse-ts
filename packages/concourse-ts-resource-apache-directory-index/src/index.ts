@@ -33,7 +33,7 @@ export type PutParams = never
  */
 export type GetParams = Record<string, never>
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'mastertinner/apache-directory-index-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

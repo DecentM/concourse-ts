@@ -225,7 +225,7 @@ export type GetParams = {
   }
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'cathive/concourse-sonarqube-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

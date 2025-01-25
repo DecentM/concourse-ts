@@ -79,7 +79,7 @@ export type GetParams = {
   skip?: boolean
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'decentm/concourse-fly-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

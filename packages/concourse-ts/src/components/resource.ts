@@ -26,6 +26,8 @@ export class Resource<
   Source extends Type.Config = Type.Config,
   PutParams extends Type.Config = Type.Config,
   GetParams extends Type.Config = Type.Config,
+  ResourceTypeType extends string = string,
+  ResourceTypeConfig extends Type.Config = Type.Config,
 > {
   private static customiser: Customiser<Resource>
 
@@ -89,7 +91,7 @@ export class Resource<
 
   constructor(
     name: string,
-    private type: ResourceType,
+    private type: ResourceType<ResourceTypeType, ResourceTypeConfig>,
     customise?: Customiser<Resource<Source, PutParams, GetParams>>
   ) {
     this.name = name

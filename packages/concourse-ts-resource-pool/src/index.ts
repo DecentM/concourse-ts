@@ -197,7 +197,7 @@ export type PutParams =
   | PutParamsRemove
   | PutParamsUpdate
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'concourse/pool-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

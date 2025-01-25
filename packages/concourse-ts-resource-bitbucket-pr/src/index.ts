@@ -145,7 +145,7 @@ export type GetParams = {
   fetch_upstream?: boolean
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'zarplata/concourse-git-bitbucket-pr-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

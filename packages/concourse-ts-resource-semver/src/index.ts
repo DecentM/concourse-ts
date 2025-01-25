@@ -297,7 +297,7 @@ export type PutParams = (BumpPre | PutParamsFile) & {
   get_latest?: boolean
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'concourse/semver-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

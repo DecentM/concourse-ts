@@ -229,7 +229,7 @@ export type PutParams = {
   delete_previous_comments?: boolean
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'teliaoss/github-pr-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

@@ -78,7 +78,7 @@ export type GetParams = {
   create_files_via_params?: Record<string, string>
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams,'registry-image', RegistryImage.Source<'concourse/mock-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',

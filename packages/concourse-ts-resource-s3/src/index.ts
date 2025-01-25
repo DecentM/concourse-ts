@@ -133,7 +133,7 @@ export type PutParams = {
   content_type?: string
 }
 
-export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams>
+export type Resource = ConcourseTs.Resource<Source, PutParams, GetParams, 'registry-image', RegistryImage.Source<'concourse/s3-resource'>>
 
 export type ResourceType = ConcourseTs.ResourceType<
   'registry-image',
