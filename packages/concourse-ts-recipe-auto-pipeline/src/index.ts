@@ -9,7 +9,9 @@ export type AutoPipelineOptions<Group extends string = never> = {
   /**
    * A Resource that contains at least one valid concourse-ts pipeline file
    */
-  resource: ConcourseTs.Resource
+  // Doesn't matter what kind of resource it is, we just need some yamls from it
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resource: ConcourseTs.Resource<any, any, any, string, any>
   /**
    * The path inside the resource that points to one concourse-ts pipeline file.
    * Relative to the resource root.
