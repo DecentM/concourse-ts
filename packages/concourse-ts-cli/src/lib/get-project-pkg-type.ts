@@ -1,12 +1,13 @@
 import path from 'node:path';
 import VError from 'verror';
+import { tsImport } from 'tsx/esm/api';
 
 export const get_project_pkg_type = async (tsconfig_path?: string): Promise<string | null> => {
   const project_root = tsconfig_path ? path.dirname(tsconfig_path) : process.cwd();
   const package_json_path = path.resolve(project_root, 'package.json');
 
   try {
-    const package_json = await import(package_json_path);
+    const package_json = await tsImport(package_json_path, import.meta.url);
 
     if (!package_json.type) {
       throw new VError('The project must have a "type" field in its package.json');
