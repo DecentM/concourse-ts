@@ -5,6 +5,7 @@ import { HandleInputParams, handle_inputs } from '../../lib/handle-inputs.js'
 import { HandleOutputParams, handle_output } from '../../lib/handle-output.js'
 import { tsImport } from 'tsx/esm/api'
 import { is_pipeline } from 'packages/concourse-ts/src/utils/index.js'
+import { get_project_pkg_type } from '../../lib/get-project-pkg-type.js'
 
 export type CompileParams = HandleInputParams &
   HandleOutputParams & {
@@ -46,6 +47,17 @@ export const run_compile_command = async (params: CompileParams) => {
 
   if (inputs.length === 0) {
     throw new VError(`"${params.input}" did not match any files`)
+  }
+
+  const package_type = await get_project_pkg_type(params.project)
+
+  // Print out a friendly error if the package isn't ESM, to prevent a confusing
+  // error later on.
+  if (package_type !== 'module') {
+    throw new VError(
+      new VError(`Package type is "${package_type}"`),
+      'The project must be of type "module" (ESM) in order to compile pipelines'
+    )
   }
 
   const pipelines = (

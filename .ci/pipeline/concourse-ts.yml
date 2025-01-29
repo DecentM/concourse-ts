@@ -12,14 +12,14 @@ jobs:
             type: registry-image
             source:
               repository: node
-              tag: 20.16.0-alpine
+              tag: 22.13.1-alpine
           platform: linux
           run:
             path: /bin/sh
             args:
               - -exuc
               - /sbin/apk "add" "--no-cache" "--no-progress" "git" &&
-                /usr/local/bin/yarn "dlx" "@moonrepo/cli@^1.27.10" "docker"
+                /usr/local/bin/yarn "dlx" "@moonrepo/cli@^1.31.3" "docker"
                 "scaffold" "concourse-ts"
             dir: git
           inputs:
@@ -49,7 +49,7 @@ jobs:
             UNPACK_ROOTFS: "true"
             TARGET: build
             BUILD_ARG_NODE_ENV: production
-            BUILD_ARG_NODE_VERSION: 20.16.0
+            BUILD_ARG_NODE_VERSION: 22.13.1
         privileged: true
       - in_parallel:
           fail_fast: true
