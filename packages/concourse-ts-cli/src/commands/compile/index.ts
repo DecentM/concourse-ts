@@ -51,7 +51,10 @@ export const run_compile_command = async (params: CompileParams) => {
   const pipelines = (
     await Promise.all(
       inputs.map(async (input) => {
-        const file = await tsImport(input, import.meta.url)
+        const file = await tsImport(input, {
+          parentURL: import.meta.url,
+          tsconfig: params.project,
+        })
 
         return get_pipeline_from_file(file.default)
       })
