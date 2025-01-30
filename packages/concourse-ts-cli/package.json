@@ -38,7 +38,7 @@
     "@decentm/concourse-ts-recipe-npm-dependencies": "0.1.1",
     "@decentm/concourse-ts-recipe-oci-build": "0.1.1",
     "@decentm/concourse-ts-resource-npm": "0.2.1",
-    "@decentm/concourse-ts-resource-registry-image": "0.2.2"
+    "@decentm/concourse-ts-resource-registry-image": "0.3.0"
   },
   "devDependencies": {
     "@types/tmp": "^0.2.6",
