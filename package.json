@@ -37,7 +37,7 @@
     "typedoc": "^0.27.6",
     "typedoc-github-wiki-theme": "^2.1.0",
     "typedoc-plugin-coverage": "^3.4.1",
-    "typedoc-plugin-markdown": "^4.4.1",
+    "typedoc-plugin-markdown": "^4.4.2",
     "typescript": "~5.7.3",
     "typescript-eslint": "^8.23.0"
   },
