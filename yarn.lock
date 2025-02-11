@@ -395,7 +395,7 @@ __metadata:
     c8: "npm:^10.1.3"
     cpy-cli: "npm:^5.0.0"
     lodash.clonedeep: "npm:^4.5.0"
-    pkgroll: "npm:^2.8.0"
+    pkgroll: "npm:^2.8.2"
     rimraf: "npm:^6.0.1"
     tmp-promise: "npm:^3.0.3"
     tsimp: "npm:^2.0.12"
@@ -3203,6 +3203,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-walker@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "estree-walker@npm:0.6.1"
+  checksum: 10c0/6dabc855faa04a1ffb17b6a9121b6008ba75ab5a163ad9dc3d7fca05cfda374c5f5e91418d783496620ca75e99a73c40874d8b75f23b4117508cc8bde78e7b41
+  languageName: node
+  linkType: hard
+
 "esutils@npm:^2.0.2, esutils@npm:^2.0.3":
   version: 2.0.3
   resolution: "esutils@npm:2.0.3"
@@ -5009,9 +5016,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pkgroll@npm:^2.8.0":
-  version: 2.8.0
-  resolution: "pkgroll@npm:2.8.0"
+"pkgroll@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "pkgroll@npm:2.8.2"
   dependencies:
     "@rollup/plugin-alias": "npm:^5.1.1"
     "@rollup/plugin-commonjs": "npm:^28.0.2"
@@ -5024,14 +5031,15 @@ __metadata:
     esbuild: "npm:^0.24.2"
     magic-string: "npm:^0.30.17"
     rollup: "npm:^4.29.1"
+    rollup-pluginutils: "npm:^2.8.2"
   peerDependencies:
     typescript: ^4.1 || ^5.0
   peerDependenciesMeta:
     typescript:
       optional: true
   bin:
-    pkgroll: dist/cli.js
-  checksum: 10c0/21eb9cc27a88f32eb0860e282f072b5098a0fd9c42549dd7ae1df181845424ce03d4ebc90f411abc00aff332bcbf9b7368ece0a28e509de5cb60a4976033de23
+    pkgroll: dist/cli.mjs
+  checksum: 10c0/9cdbe74bb1f9c929f9b643ccd39aff7dced358f5a59258b60ad28d44cf6f6c8b7b4bd02c809c9a552cdb9a24bde8f623f029aded73caab358c418f81b490bafa
   languageName: node
   linkType: hard
 
@@ -5302,6 +5310,15 @@ __metadata:
   bin:
     rimraf: dist/esm/bin.mjs
   checksum: 10c0/b30b6b072771f0d1e73b4ca5f37bb2944ee09375be9db5f558fcd3310000d29dfcfa93cf7734d75295ad5a7486dc8e40f63089ced1722a664539ffc0c3ece8c6
+  languageName: node
+  linkType: hard
+
+"rollup-pluginutils@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "rollup-pluginutils@npm:2.8.2"
+  dependencies:
+    estree-walker: "npm:^0.6.1"
+  checksum: 10c0/20947bec5a5dd68b5c5c8423911e6e7c0ad834c451f1a929b1f4e2bc08836ad3f1a722ef2bfcbeca921870a0a283f13f064a317dc7a6768496e98c9a641ba290
   languageName: node
   linkType: hard
 
