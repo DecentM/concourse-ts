@@ -128,7 +128,7 @@ __metadata:
     fast-glob: "npm:^3.3.3"
     mkdirp: "npm:^3.0.1"
     tmp-promise: "npm:^3.0.3"
-    ts-deepmerge: "npm:^7.0.2"
+    ts-deepmerge: "npm:^7.0.3"
     tsx: "npm:^4.19.4"
     verror: "npm:^1.10.1"
   peerDependencies:
@@ -5924,10 +5924,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-deepmerge@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "ts-deepmerge@npm:7.0.2"
-  checksum: 10c0/fd46cf217004020979d6fa628b38a2cf8a689180a8ecde319e76806fb4a61e9e1896b4ba8b805dc75662d2a777983b8e7b5c49666952369dc8cc4e3a0a7d13d0
+"ts-deepmerge@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "ts-deepmerge@npm:7.0.3"
+  checksum: 10c0/f466a8c5fb65c568cd45e537ab42deb032842e34fc175973edf7771a8b8b4094a2ede65af07bc287e58cb241da82f48f10fb38e41c74dc9a3951fc85b2ec1522
   languageName: node
   linkType: hard
 
