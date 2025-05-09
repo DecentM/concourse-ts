@@ -97,3 +97,30 @@ test('refuses non-http(s) URLs', (t) => {
     }),
   ])
 })
+
+test('refuses invalid CSS', (t) => {
+  const warnings = validate_display({
+    jobs: [],
+    display: {
+      background_filter: 'aaa',
+    },
+  })
+
+  t.deepEqual(warnings.get_warnings(), [
+    new ValidationWarning({
+      type: ValidationWarningType.Fatal,
+      messages: ['background_filter is not valid CSS: "aaa". Invalid value for `backdrop-filter` property'],
+    }),
+  ])
+})
+
+test('allows valid CSS', (t) => {
+  const warnings = validate_display({
+    jobs: [],
+    display: {
+      background_filter: 'blur(5px)',
+    },
+  })
+
+  t.deepEqual(warnings.get_warnings(), [])
+})

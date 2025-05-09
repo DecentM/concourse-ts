@@ -380,6 +380,7 @@ type GroupConfig<GroupName extends Identifier = Identifier> = {
 
 type DisplayConfig = {
   background_image?: string
+  background_filter?: string
 }
 
 /**

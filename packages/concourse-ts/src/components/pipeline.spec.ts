@@ -8,6 +8,7 @@ import { ResourceType } from './resource-type.js'
 import { Task } from './task.js'
 
 const image_url = 'https://example.com/image.jpg'
+const image_filter = 'blur(5px)'
 
 const default_pipeline = {
   groups: undefined,
@@ -17,6 +18,7 @@ const default_pipeline = {
   var_sources: undefined,
   display: {
     background_image: image_url,
+    background_filter: image_filter,
   },
 }
 
@@ -40,6 +42,7 @@ const default_job = {
 
 Pipeline.customise((pipeline) => {
   pipeline.set_background_image_url(image_url)
+  pipeline.set_background_filter(image_filter)
 })
 
 test('runs static customiser', (t) => {

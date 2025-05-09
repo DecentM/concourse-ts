@@ -12,6 +12,14 @@ export class PipelineBuilder {
 
     const pipeline = new ConcourseTs.Pipeline(this._name)
 
+    if (this._background_image) {
+      pipeline.set_background_image_url(this._background_image)
+    }
+
+    if (this._background_filter) {
+      pipeline.set_background_filter(this._background_filter)
+    }
+
     this._group_customisers.forEach((customise) => {
       const group_builder = new GroupBuilder()
       customise(group_builder)
@@ -40,6 +48,22 @@ export class PipelineBuilder {
 
   public name(name: string): PipelineBuilder {
     this._name = name
+
+    return this
+  }
+
+  private _background_image: string
+
+  public background_image(url: string): PipelineBuilder {
+    this._background_image = url
+
+    return this
+  }
+
+  private _background_filter: string
+
+  public background_filter(filter: string): PipelineBuilder {
+    this._background_filter = filter
 
     return this
   }
