@@ -115,6 +115,20 @@ export class Pipeline<Group extends string = string> {
     this.display.background_image = url
   }
 
+  /**
+   * Sets the given CSS filter to the background image of the pipeline in
+   * Concourse's UI. Has no effect on builds.
+   *
+   * https://concourse-ci.org/pipelines.html#schema.display_config.background_filter
+   *
+   * @param filter CSS filter to apply to the background image.
+   */
+  public set_background_filter = (filter: string) => {
+    if (!this.display) this.display = {}
+
+    this.display.background_filter = filter
+  }
+
   private groups?: Type.Pipeline['groups']
 
   private var_sources?: Type.VarSource[]

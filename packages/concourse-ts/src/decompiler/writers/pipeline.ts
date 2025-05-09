@@ -30,9 +30,21 @@ export const write_pipeline = (name: string, pipeline: Pipeline): string => {
     ${empty_string_or(
       pipeline.display,
       (display) =>
-        `pipeline.set_background_image_url(${JSON.stringify(
-          display.background_image
-        )})`
+        [
+          empty_string_or(
+            display.background_image,
+            (background_image) => `pipeline.set_background_image_url(${JSON.stringify(
+              background_image
+            )})`
+          ),
+
+          empty_string_or(
+            display.background_filter,
+            (background_filter) => `pipeline.set_background_filter(${JSON.stringify(
+              background_filter
+            )})`
+          ),
+        ].join('\n')
     )}
 
     ${empty_string_or(pipeline.var_sources, (var_sources) =>

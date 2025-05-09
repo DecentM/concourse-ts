@@ -48,6 +48,7 @@ test('writes display', async (t) => {
     jobs: [],
     display: {
       background_image: 'https://example.com/image.jpg',
+      background_filter: 'blur(5px)',
     },
   }
 

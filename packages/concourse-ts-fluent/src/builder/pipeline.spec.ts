@@ -39,6 +39,36 @@ test('builds pipeline', (t) => {
   })
 })
 
+test('sets background image', (t) => {
+  const pipeline = new PipelineBuilder()
+    .name('test')
+    .background_image('a.jpg')
+
+  const result = JSON.parse(JSON.stringify(pipeline.build().serialise()))
+
+  t.deepEqual(result, {
+    display: {
+      background_image: 'a.jpg',
+    },
+    jobs: [],
+  })
+})
+
+test('sets background filter', (t) => {
+  const pipeline = new PipelineBuilder()
+    .name('test')
+    .background_filter('blur(5px)')
+
+  const result = JSON.parse(JSON.stringify(pipeline.build().serialise()))
+
+  t.deepEqual(result, {
+    display: {
+      background_filter: 'blur(5px)',
+    },
+    jobs: [],
+  })
+})
+
 test('throws when building without a name', (t) => {
   const builder = new PipelineBuilder()
 
