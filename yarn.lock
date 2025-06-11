@@ -129,7 +129,7 @@ __metadata:
     mkdirp: "npm:^3.0.1"
     tmp-promise: "npm:^3.0.3"
     ts-deepmerge: "npm:^7.0.3"
-    tsx: "npm:^4.19.4"
+    tsx: "npm:^4.20.0"
     verror: "npm:^1.10.1"
   peerDependencies:
     "@decentm/concourse-ts": 0.x
@@ -392,7 +392,7 @@ __metadata:
     tmp-promise: "npm:^3.0.3"
     tsimp: "npm:^2.0.12"
     tslib: "npm:^2.8.1"
-    tsx: "npm:^4.19.4"
+    tsx: "npm:^4.20.0"
     verror: "npm:^1.10.1"
     yaml: "npm:^2.8.0"
   peerDependencies:
@@ -1446,22 +1446,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.33.1":
-  version: 8.33.1
-  resolution: "@typescript-eslint/parser@npm:8.33.1"
-  dependencies:
-    "@typescript-eslint/scope-manager": "npm:8.33.1"
-    "@typescript-eslint/types": "npm:8.33.1"
-    "@typescript-eslint/typescript-estree": "npm:8.33.1"
-    "@typescript-eslint/visitor-keys": "npm:8.33.1"
-    debug: "npm:^4.3.4"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0
-    typescript: ">=4.8.4 <5.9.0"
-  checksum: 10c0/be1c1313c342d956f5adfbd56f79865894cc9cabf93992515a690559c3758538868270671b222f90e4cabc2dcab82256aeb3ccea7502de9cc69e47b9b17ed45f
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/parser@npm:8.34.0":
   version: 8.34.0
   resolution: "@typescript-eslint/parser@npm:8.34.0"
@@ -2373,7 +2357,7 @@ __metadata:
     jsdom: "npm:~26.1.0"
     prettier: "npm:^3.5.3"
     sort-package-json: "npm:^3.2.1"
-    tsx: "npm:^4.19.4"
+    tsx: "npm:^4.20.0"
     typedoc: "npm:^0.27.9"
     typedoc-github-wiki-theme: "npm:^2.1.0"
     typedoc-plugin-coverage: "npm:^4.0.1"
@@ -5794,9 +5778,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:^4.19.4":
-  version: 4.19.4
-  resolution: "tsx@npm:4.19.4"
+"tsx@npm:^4.20.0":
+  version: 4.20.0
+  resolution: "tsx@npm:4.20.0"
   dependencies:
     esbuild: "npm:~0.25.0"
     fsevents: "npm:~2.3.3"
@@ -5806,7 +5790,7 @@ __metadata:
       optional: true
   bin:
     tsx: dist/cli.mjs
-  checksum: 10c0/f7b8d44362343fbde1f2ecc9832d243a450e1168dd09702a545ebe5f699aa6912e45b431a54b885466db414cceda48e5067b36d182027c43b2c02a4f99d8721e
+  checksum: 10c0/17a247c1949f3eb8c1a49cd77c7fa5cb6844a6519b158d58fdb325ffc48e6eac6890d38addce1db28d146968be9e0a775252feb5eb4612f2cabffef400b517e6
   languageName: node
   linkType: hard
 
