@@ -1635,22 +1635,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.34.0":
-  version: 8.34.0
-  resolution: "@typescript-eslint/parser@npm:8.34.0"
-  dependencies:
-    "@typescript-eslint/scope-manager": "npm:8.34.0"
-    "@typescript-eslint/types": "npm:8.34.0"
-    "@typescript-eslint/typescript-estree": "npm:8.34.0"
-    "@typescript-eslint/visitor-keys": "npm:8.34.0"
-    debug: "npm:^4.3.4"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0
-    typescript: ">=4.8.4 <5.9.0"
-  checksum: 10c0/a829be00ea3455c1e50983c8b44476fbfc9329d019764e407c4d591a95dbd168f83f13e309751242bb4fdc02f89cb51ca5cdc912a12b10f69eebcb1c46dcc39b
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/parser@npm:8.34.1":
   version: 8.34.1
   resolution: "@typescript-eslint/parser@npm:8.34.1"
@@ -2575,7 +2559,7 @@ __metadata:
     typedoc: "npm:^0.27.9"
     typedoc-github-wiki-theme: "npm:^2.1.0"
     typedoc-plugin-coverage: "npm:^4.0.1"
-    typedoc-plugin-markdown: "npm:^4.4.2"
+    typedoc-plugin-markdown: "npm:^4.6.4"
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.34.1"
   languageName: unknown
@@ -6170,12 +6154,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:^4.4.2":
-  version: 4.4.2
-  resolution: "typedoc-plugin-markdown@npm:4.4.2"
+"typedoc-plugin-markdown@npm:^4.6.4":
+  version: 4.6.4
+  resolution: "typedoc-plugin-markdown@npm:4.6.4"
   peerDependencies:
-    typedoc: 0.27.x
-  checksum: 10c0/93112f0f06f1c0bc7eec1ba7f9034b88a6817a92ec41e491e8ac73c23a5fbda84df537d136395295737499fc1d5afa94d1500a1921b1a967248dc5d3054fc9d6
+    typedoc: 0.28.x
+  checksum: 10c0/c5ddd363c49edf6eb848b13924b3c50af93dd8a719c24c525e0f41090b3b9fd94e4779bdc60f9ee3b7da72f316925789e00abfa2fc50b5822e94c24fe49e471c
   languageName: node
   linkType: hard
 
