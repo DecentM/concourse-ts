@@ -27,7 +27,7 @@
     "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "8.35.0",
     "@typescript-eslint/parser": "8.35.0",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.0",
     "eslint-config-prettier": "10.1.5",
     "husky": "^9.1.7",
     "jsdom": "~26.1.0",
