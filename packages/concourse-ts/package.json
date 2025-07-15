@@ -39,7 +39,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.31.0",
     "@types/lodash.clonedeep": "^4.5.9",
-    "@types/node": "^24.0.13",
+    "@types/node": "^24.0.14",
     "@types/prettier": "^3.0.0",
     "@types/verror": "^1.10.11",
     "ava": "^6.4.1",
