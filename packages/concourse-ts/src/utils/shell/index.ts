@@ -2,13 +2,9 @@ import VError from 'verror'
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { is_shebang, parse_shebang } from './helpers.js'
+import { Command } from '../../components/command.js'
 
-type ImportedScript = {
-  path: string
-  args: string[]
-  script: string
-}
+import { is_shebang, parse_shebang } from './helpers.js'
 
 /**
  * Imports a script from disk into a format usable in a Command.
@@ -18,7 +14,7 @@ type ImportedScript = {
  * @param {string} file_path
  * @returns {ImportedScript}
  */
-export const import_script = (file_path: string): ImportedScript => {
+export const import_script = (file_path: string): Command => {
   const pathInfo = path.parse(file_path)
   const fullPath = path.resolve(file_path)
 
@@ -43,15 +39,15 @@ export const import_script = (file_path: string): ImportedScript => {
 
   const shebang = parse_shebang(firstLine)
 
-  if (!shebang.path) {
+  if (!shebang.path || !shebang.path.startsWith('/')) {
     throw new VError(
       `Script "${pathInfo.base}" cannot be imported, because its shebang does not define a binary (for example: #!/bin/sh)`
     )
   }
 
-  return {
-    path: shebang.path,
-    args: shebang.args,
-    script: scriptLines.join('\n'),
-  }
+  return new Command((command) => {
+    command.path = shebang.path
+    command.add_args(...shebang.args)
+    command.add_args(scriptLines.join('\n').trim())
+  })
 }

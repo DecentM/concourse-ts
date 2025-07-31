@@ -4,6 +4,30 @@ import fs from 'node:fs/promises'
 
 import { import_script } from './index.js'
 
+test('imports scripts with shebang', (t) => {
+  t.deepEqual(
+    import_script(path.resolve(import.meta.dirname, 'test/path-no-args.sh')).serialise(),
+    {
+      dir: undefined,
+      user: undefined,
+      path: '/bin/sh',
+      args: ['echo This is a test'],
+    }
+  )
+})
+
+test('imports scripts with shebang and args', (t) => {
+  t.deepEqual(
+    import_script(path.resolve(import.meta.dirname, 'test/path-with-args.sh')).serialise(),
+    {
+      dir: undefined,
+      user: undefined,
+      path: '/bin/sh',
+      args: ['-exu', 'echo This is a test'],
+    }
+  )
+})
+
 test('does not import scripts without shebang', (t) => {
   const fullPath = path.resolve(import.meta.dirname, 'test/script-no-shebang.sh')
 
@@ -35,13 +59,15 @@ test('does not import files with missing path from shebang', (t) => {
         'Script "no-path.sh" cannot be imported, because its shebang does not define a binary (for example: #!/bin/sh)',
     }
   )
+})
 
-  t.deepEqual(
-    import_script(path.resolve(import.meta.dirname, 'test/no-path-just-args.sh')),
+test('does not import files with only arguments in shebang', (t) => {
+  t.throws(
+    () => import_script(path.resolve(import.meta.dirname, 'test/no-path-just-args.sh')),
     {
-      path: '-e',
-      args: [],
-      script: '\necho This is a test\n',
+      any: true,
+      message:
+        'Script "no-path-just-args.sh" cannot be imported, because its shebang does not define a binary (for example: #!/bin/sh)',
     }
   )
 })
