@@ -17,7 +17,7 @@ export class ResourceType<
     ResourceType.customiser = init
   }
 
-  private resource_customiser: Customiser<Resource>
+  private resource_customiser: Customiser<Resource<never, never, never, never, never>>
 
   public customise_resource = <
     Source extends Declaration.Config = Declaration.Config,
