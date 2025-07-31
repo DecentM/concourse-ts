@@ -8,5 +8,6 @@ export * from './identifier/index.js'
 export * from './duration/index.js'
 export * from './warning-store/index.js'
 export * from './is-pipeline/index.js'
+export * from './shell/index.js'
 
 export * as Transform from './transform/index.js'

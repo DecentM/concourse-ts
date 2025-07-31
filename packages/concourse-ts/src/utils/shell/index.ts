@@ -2,30 +2,25 @@ import VError from 'verror'
 import fs from 'node:fs'
 import path from 'node:path'
 
-export const is_shebang = (line: string) => {
-  return line.startsWith('#!')
+import { is_shebang, parse_shebang } from './helpers.js'
+
+type ImportedScript = {
+  path: string
+  args: string[]
+  script: string
 }
 
-export const parse_shebang = (shebang: string) => {
-  if (!is_shebang(shebang)) {
-    return {
-      path: '',
-      args: [],
-    }
-  }
-
-  const cmdline = shebang.slice(2)
-  const [path, ...args] = cmdline.split(' ')
-
-  return {
-    path,
-    args,
-  }
-}
-
-export const import_script = (filePath: string) => {
-  const pathInfo = path.parse(filePath)
-  const fullPath = path.resolve(filePath)
+/**
+ * Imports a script from disk into a format usable in a Command.
+ *
+ * {@link Command:class}
+ *
+ * @param {string} file_path
+ * @returns {ImportedScript}
+ */
+export const import_script = (file_path: string): ImportedScript => {
+  const pathInfo = path.parse(file_path)
+  const fullPath = path.resolve(file_path)
 
   if (!fs.existsSync(fullPath)) {
     throw new VError(`File does not exist at ${fullPath}`)

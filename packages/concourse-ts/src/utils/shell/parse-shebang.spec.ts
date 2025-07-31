@@ -1,5 +1,5 @@
 import test from 'ava'
-import { parse_shebang } from './index.js'
+import { parse_shebang } from './helpers.js'
 
 const empty_result = {
   path: '',

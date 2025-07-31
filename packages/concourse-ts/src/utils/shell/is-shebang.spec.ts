@@ -1,5 +1,5 @@
 import test from 'ava'
-import { is_shebang } from './index.js'
+import { is_shebang } from './helpers.js'
 
 test('finds shebangs', (t) => {
   t.true(is_shebang('#!'))
