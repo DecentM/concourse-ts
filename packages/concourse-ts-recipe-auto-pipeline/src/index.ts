@@ -73,15 +73,15 @@ export const create_auto_pipeline =
       command.path = 'concourse-ts'
 
       // Turn Typescript into YAML
-      command.add_arg('compile')
+      command.add_args('compile')
 
       // Input path
-      command.add_arg('-i')
-      command.add_arg(options.path)
+      command.add_args('-i')
+      command.add_args(options.path)
 
       // Output path
-      command.add_arg('-o')
-      command.add_arg('../output')
+      command.add_args('-o')
+      command.add_args('../output')
     })
 
     const transform_command = new ConcourseTs.Command((command) => {
@@ -90,23 +90,23 @@ export const create_auto_pipeline =
       command.path = 'concourse-ts'
 
       // Run transforms over the pipeline
-      command.add_arg('transform')
+      command.add_args('transform')
 
       // Input path
-      command.add_arg('-i')
-      command.add_arg('../output/pipeline/*.yml')
+      command.add_args('-i')
+      command.add_args('../output/pipeline/*.yml')
 
       // Output path
-      command.add_arg('-o')
-      command.add_arg('../output/pipeline')
+      command.add_args('-o')
+      command.add_args('../output/pipeline')
     })
 
     const compile_and_transform = ConcourseTs.Utils.join_commands(
       (args, command) => {
         command.path = '/bin/sh'
-        command.add_arg('-exuc')
+        command.add_args('-exuc')
 
-        command.add_arg(args.join(' && '))
+        command.add_args(args.join(' && '))
       },
       compile_command,
       transform_command

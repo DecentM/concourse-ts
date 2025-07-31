@@ -137,7 +137,7 @@ test('collects tasks', (t) => {
 
     ajt.run = new Command((ajtc) => {
       ajtc.path = 'echo'
-      ajtc.add_arg('ajtc')
+      ajtc.add_args('ajtc')
     })
   })
 

@@ -6,17 +6,17 @@ import { Command } from '../../components/index.js'
 test('joins commands', (t) => {
   const a = new Command((a) => {
     a.path = 'echo'
-    a.add_arg('Hello, world!')
+    a.add_args('Hello, world!')
   })
 
   const b = new Command((a) => {
     a.path = 'echo'
-    a.add_arg('mynames Jeff!')
+    a.add_args('mynames Jeff!')
   })
 
   const joined = join_commands(
     (args, command) => {
-      command.add_arg(args.join(' && '))
+      command.add_args(args.join(' && '))
     },
     a,
     b
@@ -33,12 +33,12 @@ test('joins commands', (t) => {
 test('joins commands with multiple arguments', (t) => {
   const a = new Command((a) => {
     a.path = 'echo'
-    a.add_arg('Hello, world!')
-    a.add_arg('mynames Jeff!')
+    a.add_args('Hello, world!')
+    a.add_args('mynames Jeff!')
   })
 
   const joined = join_commands((args, command) => {
-    command.add_arg(args.join(' && '))
+    command.add_args(args.join(' && '))
   }, a)
 
   t.deepEqual(joined.serialise(), {
@@ -53,11 +53,11 @@ test('copies dir', (t) => {
   const a = new Command((a) => {
     a.path = 'echo'
     a.dir = '/app'
-    a.add_arg('Hello, world!')
+    a.add_args('Hello, world!')
   })
 
   const joined = join_commands((args, command) => {
-    command.add_arg(args.join(' && '))
+    command.add_args(args.join(' && '))
   }, a)
 
   t.deepEqual(joined.serialise(), {
@@ -72,11 +72,11 @@ test('copies user', (t) => {
   const a = new Command((a) => {
     a.path = 'echo'
     a.user = '1000'
-    a.add_arg('Hello, world!')
+    a.add_args('Hello, world!')
   })
 
   const joined = join_commands((args, command) => {
-    command.add_arg(args.join(' && '))
+    command.add_args(args.join(' && '))
   }, a)
 
   t.deepEqual(joined.serialise(), {

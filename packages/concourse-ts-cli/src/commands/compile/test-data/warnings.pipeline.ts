@@ -16,7 +16,7 @@ export default () => {
             })
             task.run = new Command((command) => {
               command.path = 'which'
-              command.add_arg('echo')
+              command.add_args('echo')
             })
           }).as_task_step()
         )

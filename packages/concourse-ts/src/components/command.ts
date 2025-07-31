@@ -40,14 +40,14 @@ export class Command {
   private args: string[] = []
 
   /**
-   * Adds an argument to this Command
+   * Adds arguments to this Command
    *
    * https://concourse-ci.org/tasks.html#schema.command.args
    *
-   * @param {string} arg
+   * @param {string[]} args
    */
-  public add_arg = (arg: string) => {
-    this.args.push(arg)
+  public add_args = (...arg: string[]) => {
+    this.args.push(...arg)
   }
 
   /**

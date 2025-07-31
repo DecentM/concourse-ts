@@ -35,7 +35,7 @@ test('runs instance customiser', (t) => {
 test('stores args', (t) => {
   const command = new Command()
 
-  command.add_arg('my-arg')
+  command.add_args('my-arg')
 
   t.deepEqual(command.serialise(), {
     path: undefined,

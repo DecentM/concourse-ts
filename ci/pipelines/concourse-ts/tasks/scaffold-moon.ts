@@ -22,19 +22,19 @@ export const scaffold_moon_task = (pkg: string) =>
     const scaffold = new ConcourseTs.Command((command) => {
       command.dir = git.name
       command.path = '/usr/local/bin/yarn'
-      command.add_arg('dlx')
-      command.add_arg(`@moonrepo/cli@${pkgJson.devDependencies['@moonrepo/cli']}`)
-      command.add_arg('docker')
-      command.add_arg('scaffold')
-      command.add_arg(pkg)
+      command.add_args('dlx')
+      command.add_args(`@moonrepo/cli@${pkgJson.devDependencies['@moonrepo/cli']}`)
+      command.add_args('docker')
+      command.add_args('scaffold')
+      command.add_args(pkg)
     })
 
     const scaffold_and_install_git = ConcourseTs.Utils.join_commands(
       (args, command) => {
         command.path = '/bin/sh'
 
-        command.add_arg('-exuc')
-        command.add_arg(args.join(' && '))
+        command.add_args('-exuc')
+        command.add_args(args.join(' && '))
       },
       alpine.apk_add('git'),
       scaffold

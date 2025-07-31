@@ -18,7 +18,7 @@ export class CommandBuilder {
   }
 
   public arg(arg: string): CommandBuilder {
-    this.command.add_arg(arg)
+    this.command.add_args(arg)
 
     return this
   }

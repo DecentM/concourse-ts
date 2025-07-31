@@ -14,8 +14,8 @@ import { Customiser } from '../../declarations/index.js'
  * const final_command = join_commands((args, command) => {
  *   command.path = '/bin/sh'
  *
- *   command.add_arg('-exuc')
- *   command.add_arg(args.join(' && '))
+ *   command.add_args('-exuc')
+ *   command.add_args(args.join(' && '))
  * }, command_a, command_b)
  * ```
  *
