@@ -24,8 +24,8 @@ test('does not serialise duplicate resource types', (t) => {
   gs1.set_get(r1)
   gs2.set_get(r2)
 
-  j.add_step(gs1)
-  j.add_step(gs2)
+  j.add_steps(gs1)
+  j.add_steps(gs2)
 
   p.add_job(j)
 
@@ -57,7 +57,7 @@ test('throws if the type is unassigned', (t) => {
 test('stores tags', (t) => {
   const rt = new ResourceType('my-rt')
 
-  rt.add_tag('my tag 1')
+  rt.add_tags('my tag 1')
 
   const result = rt.serialise()
 
@@ -117,11 +117,11 @@ test('runs resource customiser', (t) => {
   const rt = new ResourceType('my-rt')
 
   rt.customise_resource((resource) => {
-    resource.add_tag('customised')
+    resource.add_tags('customised')
   })
 
   const resource = rt.create_resource('my-r', (my_r) => {
-    my_r.icon = 'a'
+    my_r.set_icon('a')
   })
 
   t.deepEqual(resource.serialise(), {
@@ -140,7 +140,7 @@ test('runs resource customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const rt = new ResourceType('rt', (rt) => {
-    rt.add_tag('added')
+    rt.add_tags('added')
   })
 
   t.deepEqual(rt.serialise(), {

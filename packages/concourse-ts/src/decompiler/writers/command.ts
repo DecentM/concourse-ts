@@ -9,14 +9,14 @@ export const write_command = (command: Command): string => {
 
     ${empty_string_or(
       command.path,
-      (path) => `command.path = ${JSON.stringify(path)}`
+      (path) => `command.set_path(${JSON.stringify(path)})`
     )}
 
     ${empty_string_or(command.dir, (dir) => `command.dir = ${JSON.stringify(dir)}`)}
 
     ${empty_string_or(
       command.user,
-      (user) => `command.user = ${JSON.stringify(user)}`
+      (user) => `command.set_user(${JSON.stringify(user)})`
     )}
   })`
 }

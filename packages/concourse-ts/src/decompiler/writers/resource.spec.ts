@@ -187,7 +187,7 @@ test('writes public', async (t) => {
         name: 'a' as Identifier,
         type: 'at' as Identifier,
         source: {},
-        public: false,
+        public: true,
       },
     ],
     jobs: [],
@@ -199,7 +199,7 @@ test('writes public', async (t) => {
     ...default_resource,
     ...pipeline.resources![0],
     source: undefined,
-    public: false,
+    public: true,
   })
 })
 

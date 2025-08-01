@@ -20,12 +20,11 @@ export const write_task_step = (
 
     ${empty_string_or(
       step.image,
-      (image) => `step.image = ${JSON.stringify(image)}`
+      (image) => `step.set_image(${JSON.stringify(image)})`
     )}
 
     ${empty_string_or(
-      step.privileged,
-      (privileged) => `step.privileged = ${privileged}`
+      step.privileged, () => `step.set_privileged()`
     )}
 
     ${empty_string_or(step.vars, (vars) => `step.set_vars(${JSON.stringify(vars)})`)}

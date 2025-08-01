@@ -21,7 +21,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const command = new Command((a) => {
-    a.dir = '/a'
+    a.set_dir('/a')
   })
 
   t.deepEqual(command.serialise(), {

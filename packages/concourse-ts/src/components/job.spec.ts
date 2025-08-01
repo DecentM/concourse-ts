@@ -10,7 +10,7 @@ import { default_job, default_step } from './step/test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   Job.customise((job) => {
-    job.max_in_flight = 2
+    job.set_max_in_flight(2)
   })
 
   const job = new Job('a')
@@ -26,30 +26,30 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const job = new Job('a', (a) => {
-    a.interruptible = false
+    a.set_old_name('my-old-name')
   })
 
   t.deepEqual(job.serialise(), {
     ...default_job,
     name: 'a',
-    interruptible: false,
+    old_name: 'my-old-name',
   })
 })
 
 test('stores steps', (t) => {
   const job = new Job('a')
 
-  job.add_step(
+  job.add_steps(
     new LoadVarStep('lv', (lv) => {
-      lv.file = 'my-file'
-      lv.load_var = 'my-var'
+      lv.set_file('my-file')
+      lv.set_load_var('my-var')
     })
   )
 
   job.add_step_first(
     new LoadVarStep('lv', (lv) => {
-      lv.file = 'my-file-first'
-      lv.load_var = 'my-var-first'
+      lv.set_file('my-file-first')
+      lv.set_load_var('my-var-first')
     })
   )
 
@@ -78,7 +78,7 @@ test('stores steps', (t) => {
 test('stores old_name', (t) => {
   const job = new Job('a')
 
-  job.old_name = 'my-old-name'
+  job.set_old_name('my-old-name')
 
   t.deepEqual(job.serialise(), {
     ...default_job,
@@ -95,8 +95,8 @@ test('stores on_success', (t) => {
 
   job.add_on_success(
     new LoadVarStep('lv', (lv) => {
-      lv.file = 'my-file'
-      lv.load_var = 'my-var'
+      lv.set_file('my-file')
+      lv.set_load_var('my-var')
     })
   )
 
@@ -126,8 +126,8 @@ test('stores on_error', (t) => {
 
   job.add_on_error(
     new LoadVarStep('lv', (lv) => {
-      lv.file = 'my-file'
-      lv.load_var = 'my-var'
+      lv.set_file('my-file')
+      lv.set_load_var('my-var')
     })
   )
 
@@ -157,8 +157,8 @@ test('stores on_failure', (t) => {
 
   job.add_on_failure(
     new LoadVarStep('lv', (lv) => {
-      lv.file = 'my-file'
-      lv.load_var = 'my-var'
+      lv.set_file('my-file')
+      lv.set_load_var('my-var')
     })
   )
 
@@ -188,8 +188,8 @@ test('stores on_abort', (t) => {
 
   job.add_on_abort(
     new LoadVarStep('lv', (lv) => {
-      lv.file = 'my-file'
-      lv.load_var = 'my-var'
+      lv.set_file('my-file')
+      lv.set_load_var('my-var')
     })
   )
 
@@ -219,8 +219,8 @@ test('stores ensure', (t) => {
 
   job.add_ensure(
     new LoadVarStep('lv', (lv) => {
-      lv.file = 'my-file'
-      lv.load_var = 'my-var'
+      lv.set_file('my-file')
+      lv.set_load_var('my-var')
     })
   )
 
@@ -264,7 +264,7 @@ test('collects resources', (t) => {
     })
   )
 
-  job.add_step(r.as_get_step())
+  job.add_steps(r.as_get_step())
   job.add_on_success(r.as_get_step())
   job.add_on_error(r.as_get_step())
   job.add_on_failure(r.as_get_step())
@@ -281,10 +281,10 @@ test('collects task steps', (t) => {
   const job = new Job('a')
 
   const ts = new Task('t', (t) => {
-    t.platform = 'linux'
+    t.set_platform('linux')
   }).as_task_step()
 
-  job.add_step(ts)
+  job.add_steps(ts)
   job.add_on_success(ts)
   job.add_on_error(ts)
   job.add_on_failure(ts)

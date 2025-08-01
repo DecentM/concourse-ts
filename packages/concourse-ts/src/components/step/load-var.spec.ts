@@ -7,7 +7,7 @@ import { default_load_var_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   LoadVarStep.customise((lvs) => {
-    lvs.attempts = 2
+    lvs.set_attempts(2)
   })
 
   const lvs = new LoadVarStep('a')
@@ -22,7 +22,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const lvs = new LoadVarStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(lvs.serialise(), {
@@ -51,7 +51,7 @@ test('collects task steps', (t) => {
 
 test('exposes resulting var', (t) => {
   const lvs = new LoadVarStep('a')
-  lvs.load_var = 'a'
+  lvs.set_load_var('a')
 
   t.is(lvs.var, get_var('.:a'))
   t.true(is_var(lvs.var))

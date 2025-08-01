@@ -133,18 +133,18 @@ test('stores var-sources', (t) => {
 
 test('collects tasks', (t) => {
   const task = new Task('ajt', (ajt) => {
-    ajt.platform = 'linux'
+    ajt.set_platform('linux')
 
-    ajt.run = new Command((ajtc) => {
-      ajtc.path = 'echo'
+    ajt.set_run(new Command((ajtc) => {
+      ajtc.set_path('echo')
       ajtc.add_args('ajtc')
-    })
+    }))
   })
 
   const pipeline = new Pipeline('a', (a) => {
     a.add_job(
       new Job('aj', (aj) => {
-        aj.add_step(task.as_task_step())
+        aj.add_steps(task.as_task_step())
       })
     )
   })
@@ -162,7 +162,7 @@ test('serialises resources', (t) => {
   const r = new Resource('r', rt)
 
   const job = new Job('aj', (aj) => {
-    aj.add_step(r.as_get_step())
+    aj.add_steps(r.as_get_step())
   })
 
   const pipeline = new Pipeline('a', (a) => {

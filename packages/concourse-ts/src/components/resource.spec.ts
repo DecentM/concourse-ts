@@ -7,15 +7,15 @@ import { ResourceType, Resource, Job } from '../index.js'
 
 test.beforeEach(() => {
   Resource.customise((resource) => {
-    resource.add_tag('customised')
+    resource.add_tags('customised')
   })
 
   Resource.customise_get_step((gs) => {
-    gs.add_tag('static')
+    gs.add_tags('static')
   })
 
   Resource.customise_put_step((ps) => {
-    ps.add_tag('static')
+    ps.add_tags('static')
   })
 })
 
@@ -41,7 +41,7 @@ test('stores versions', (t) => {
 test('stores tags', (t) => {
   const r = new ResourceType('my-rt').create_resource('r')
 
-  r.add_tag('my tag 1')
+  r.add_tags('my tag 1')
 
   const result = r.serialise()
 
@@ -93,7 +93,7 @@ test('runs get-step customiser', (t) => {
 
   const r = new Resource('my-r', rt, (r) => {
     r.customise_get_step((gs) => {
-      gs.add_tag('customised')
+      gs.add_tags('customised')
     })
   })
 
@@ -116,7 +116,7 @@ test('runs put-step customiser', (t) => {
 
   const r = new Resource('my-r', rt, (r) => {
     r.customise_put_step((gs) => {
-      gs.add_tag('customised')
+      gs.add_tags('customised')
     })
   })
 
@@ -146,7 +146,7 @@ test('creates put step', (t) => {
       inputs: 'all',
     },
     (ps) => {
-      ps.add_tag('tag')
+      ps.add_tags('tag')
     }
   )
 
@@ -181,7 +181,7 @@ test('creates get step', (t) => {
       trigger: false,
     },
     (ps) => {
-      ps.add_tag('tag')
+      ps.add_tags('tag')
     }
   )
 
@@ -193,7 +193,7 @@ test('creates get step', (t) => {
     },
     tags: ['static', 'tag'],
     passed: ['j'],
-    trigger: false,
+    trigger: undefined,
     version: undefined,
     resource: undefined,
   })

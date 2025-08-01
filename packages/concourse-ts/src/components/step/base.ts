@@ -62,10 +62,18 @@ export abstract class Step<StepType extends Type.Step> {
     this.timeout = get_duration(timeout)
   }
 
+  private attempts: number
+
   /**
+   * Sets the number of attempts for this step.
+   *
    * https://concourse-ci.org/attempts-step.html
+   *
+   * @param {number} attempts
    */
-  public attempts: number
+  public set_attempts = (attempts: number) => {
+    this.attempts = attempts
+  }
 
   protected tags: Type.Tags
 
@@ -156,7 +164,7 @@ export abstract class Step<StepType extends Type.Step> {
    *
    * @param {...string[]} tags
    */
-  public add_tag = (...tags: string[]) => {
+  public add_tags = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
     this.tags.push(...tags)
@@ -266,8 +274,5 @@ export abstract class Step<StepType extends Type.Step> {
     }
   }
 
-  /**
-   * @internal Used by the compiler
-   */
   public abstract serialise(): StepType
 }

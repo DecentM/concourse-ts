@@ -17,6 +17,9 @@ export const empty_string_or = <T = unknown>(
         ? value_factory(predicate)
         : ''
 
+    case 'boolean':
+      return predicate ? value_factory(predicate) : ''
+
     default:
       return value_factory(predicate)
   }

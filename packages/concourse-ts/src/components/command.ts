@@ -32,10 +32,14 @@ export class Command {
     }
   }
 
+  private path?: Type.FilePath
+
   /**
    * https://concourse-ci.org/tasks.html#schema.command.path
    */
-  public path?: Type.FilePath
+  public set_path = (path: Type.FilePath) => {
+    this.path = path
+  }
 
   private args: string[] = []
 
@@ -50,15 +54,23 @@ export class Command {
     this.args.push(...arg)
   }
 
+  private dir?: Type.DirPath
+
   /**
    * https://concourse-ci.org/tasks.html#schema.command.dir
    */
-  public dir?: Type.DirPath
+  public set_dir = (dir: Type.DirPath) => {
+    this.dir = dir
+  }
+
+  public user?: string
 
   /**
    * https://concourse-ci.org/tasks.html#schema.command.user
    */
-  public user?: string
+  public set_user = (user: string) => {
+    this.user = user
+  }
 
   /**
    * Converts this Command to its JSON representation

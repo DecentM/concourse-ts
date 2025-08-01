@@ -6,7 +6,7 @@ import { default_put_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   PutStep.customise((ps) => {
-    ps.attempts = 2
+    ps.set_attempts(2)
   })
 
   const ps = new PutStep('a')
@@ -21,7 +21,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const ps = new PutStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(ps.serialise(), {
@@ -124,7 +124,7 @@ test('stores get_params', (t) => {
 test('stores no_get', (t) => {
   const ps = new PutStep('ps')
 
-  ps.no_get = true
+  ps.set_no_get()
 
   t.deepEqual(ps.serialise(), {
     ...default_put_step,

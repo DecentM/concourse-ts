@@ -12,10 +12,10 @@ export const write_set_pipeline_step = (
 
     ${empty_string_or(
       step.set_pipeline,
-      (set_pipeline) => `step.set_pipeline = ${JSON.stringify(set_pipeline)}`
+      (set_pipeline) => `step.set_pipeline(${JSON.stringify(set_pipeline)})`
     )}
 
-    ${empty_string_or(step.file, (file) => `step.file = ${JSON.stringify(file)}`)}
+    ${empty_string_or(step.file, (file) => `step.set_file(${JSON.stringify(file)})`)}
 
     ${empty_string_or(
       step.instance_vars,
@@ -32,6 +32,6 @@ export const write_set_pipeline_step = (
           .join(', ')})`
     )}
 
-    ${empty_string_or(step.team, (team) => `step.team = ${JSON.stringify(team)}`)}
+    ${empty_string_or(step.team, (team) => `step.set_team(${JSON.stringify(team)})`)}
   })`
 }

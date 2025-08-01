@@ -34,8 +34,6 @@ export class TryStep extends Step<Type.TryStep> {
 
   /**
    * @internal Used by the compiler
-   *
-   * @returns {TaskStep[]}
    */
   public get_task_steps() {
     const result = this.get_base_task_steps()
@@ -47,6 +45,9 @@ export class TryStep extends Step<Type.TryStep> {
     return result
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resources(): Resource[] {
     const result = this.get_base_resources()
 

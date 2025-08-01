@@ -13,13 +13,13 @@ export const write_step_base = (
   let result = `
     ${empty_string_or(
       step.attempts,
-      (attempts) => `${variable_name}.attempts = ${attempts}`
+      (attempts) => `${variable_name}.set_attempts(${attempts})`
     )}
 
     ${empty_string_or(
       step.tags,
       (tags) =>
-        `${variable_name}.add_tag(${tags
+        `${variable_name}.add_tags(${tags
           .map((tag) => JSON.stringify(tag))
           .join(', ')})`
     )}

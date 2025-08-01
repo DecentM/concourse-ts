@@ -10,7 +10,7 @@ import {
 
 test('runs static customiser', (t) => {
   TryStep.customise((ts) => {
-    ts.attempts = 2
+    ts.set_attempts(2)
   })
 
   const ts = new TryStep('a')
@@ -25,7 +25,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const ts = new TryStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(ts.serialise(), {
@@ -61,7 +61,7 @@ test('collects task steps', (t) => {
   const ts = new TryStep('a')
 
   const task = new Task('t', (t) => {
-    t.platform = 'linux'
+    t.set_platform('linux')
   })
 
   const task_step = task.as_task_step()

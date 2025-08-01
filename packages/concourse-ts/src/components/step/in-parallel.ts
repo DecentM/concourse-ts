@@ -29,13 +29,31 @@ export class InParallelStep extends Step<Type.InParallelStep> {
 
   private steps: AnyStep[] = []
 
-  public add_step = (...steps: AnyStep[]) => {
+  public add_steps = (...steps: AnyStep[]) => {
     this.steps.push(...steps)
   }
 
-  public limit: number
+  private limit: number
 
-  public fail_fast: boolean
+  /**
+   * https://concourse-ci.org/in-parallel-step.html#schema.in_parallel_config.limit
+   *
+   * @param {number} limit
+   */
+  public set_limit(limit: number) {
+    this.limit = limit
+  }
+
+  private fail_fast: boolean
+
+  /**
+   * Sets "fail_fast" to true - avoid calling to keep false
+   *
+   * https://concourse-ci.org/in-parallel-step.html#fail_fast
+   */
+  public set_fail_fast() {
+    this.fail_fast = true
+  }
 
   /**
    * @internal Used by the compiler

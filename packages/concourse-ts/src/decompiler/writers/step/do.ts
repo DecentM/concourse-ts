@@ -11,7 +11,7 @@ export const write_do_step = (name: string, step: DoStep, pipeline: Pipeline) =>
     ${empty_string_or(step.do, (do_step) =>
       do_step
         .map((step) => {
-          return `step.add_step(${write_step(name, step, pipeline)})`
+          return `step.add_steps(${write_step(name, step, pipeline)})`
         })
         .join('\n')
     )}

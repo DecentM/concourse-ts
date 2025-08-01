@@ -11,7 +11,7 @@ export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
           return empty_string_or(
             step,
             (step) =>
-              `job.add_step(${write_step(`${name}_step-${index}`, step, pipeline)})`
+              `job.add_steps(${write_step(`${name}_step-${index}`, step, pipeline)})`
           )
         })
         .join('\n')
@@ -19,27 +19,25 @@ export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
 
     ${empty_string_or(
       job.build_log_retention,
-      () => `job.build_log_retention = ${JSON.stringify(job.build_log_retention)}`
+      (build_log_retention) => `job.set_build_log_retention(${JSON.stringify(build_log_retention)})`
     )}
 
     ${empty_string_or(
-      job.disable_manual_trigger,
-      () => `job.disable_manual_trigger = ${job.disable_manual_trigger}`
+      job.disable_manual_trigger, () => `job.set_disable_manual_trigger()`
     )}
 
     ${empty_string_or(
-      job.interruptible,
-      () => `job.interruptible = ${job.interruptible}`
+      job.interruptible, () => `job.set_interruptible()`
     )}
 
     ${empty_string_or(
       job.max_in_flight,
-      () => `job.max_in_flight = ${job.max_in_flight}`
+      (max_in_flight) => `job.set_max_in_flight(${max_in_flight})`
     )}
 
     ${empty_string_or(
       job.old_name,
-      () => `job.old_name = ${JSON.stringify(job.old_name)}`
+      (old_name) => `job.set_old_name(${JSON.stringify(old_name)})`
     )}
 
     ${empty_string_or(
@@ -79,7 +77,7 @@ export const write_job = (name: string, job: Job, pipeline: Pipeline) => {
       (ensure) => `job.add_ensure(${write_step(`${name}_ensure`, ensure, pipeline)})`
     )}
 
-    ${empty_string_or(job.public, (is_public) => `job.public = ${is_public}`)}
+    ${empty_string_or(job.public, () => `job.set_public()`)}
 
     ${empty_string_or(job.serial_groups, (serial_groups) =>
       serial_groups

@@ -36,7 +36,7 @@ test.beforeEach((t) => {
 
 test('runs static customiser', (t) => {
   Step.customise_base((step) => {
-    step.attempts = 2
+    step.set_attempts(2)
   })
 
   const step = new TStep('a')
@@ -63,7 +63,7 @@ test('stores timeout', (t) => {
 test('stores tags', (t) => {
   const step = new TStep('no-tags')
 
-  step.add_tag('tagged')
+  step.add_tags('tagged')
 
   t.deepEqual(step.serialise(), {
     ...default_step,
@@ -127,7 +127,7 @@ test('collects base resources', (t) => {
 
 test('collects base task steps', (t) => {
   const ts = new Task('t', (t) => {
-    t.platform = 'linux'
+    t.set_platform('linux')
   }).as_task_step()
 
   const result0 = t.context.step.get_resources()

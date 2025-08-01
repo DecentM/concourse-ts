@@ -13,7 +13,7 @@ const default_do_step = {
 
 test('runs static customiser', (t) => {
   DoStep.customise((ds) => {
-    ds.attempts = 2
+    ds.set_attempts(2)
   })
 
   const ds = new DoStep('a')
@@ -28,7 +28,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const ds = new DoStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(ds.serialise(), {
@@ -40,16 +40,16 @@ test('runs instance customiser', (t) => {
 test('stores steps', (t) => {
   const ds = new DoStep('ds')
   const step = new LoadVarStep('lvs', (lvs) => {
-    lvs.load_var = 'a'
-    lvs.file = '/a'
+    lvs.set_load_var('a')
+    lvs.set_file('/a')
   })
   const step1 = new LoadVarStep('lvs1', (lvs) => {
-    lvs.load_var = 'b'
-    lvs.file = '/b'
+    lvs.set_load_var('b')
+    lvs.set_file('/b')
   })
 
-  ds.add_step(step)
-  ds.add_step_first(step1)
+  ds.add_steps(step)
+  ds.add_steps_first(step1)
 
   t.deepEqual(ds.serialise(), {
     ...default_step,
@@ -84,7 +84,7 @@ test('collects resources', (t) => {
     })
   )
 
-  ds.add_step(r.as_get_step())
+  ds.add_steps(r.as_get_step())
 
   const result = ds.get_resources()
 
@@ -96,10 +96,10 @@ test('collects task steps', (t) => {
   const ds = new DoStep('a')
 
   const ts = new Task('t', (t) => {
-    t.platform = 'linux'
+    t.set_platform('linux')
   }).as_task_step()
 
-  ds.add_step(ts)
+  ds.add_steps(ts)
 
   const result = ds.get_task_steps()
 

@@ -25,7 +25,7 @@ export const write_in_parallel_step = (
     ${empty_string_or(steps, () =>
       steps
         .map((step, index) => {
-          return `step.add_step(${write_step(
+          return `step.add_steps(${write_step(
             `${name}_step-${index}`,
             step,
             pipeline
@@ -34,8 +34,8 @@ export const write_in_parallel_step = (
         .join('\n')
     )}
 
-    ${empty_string_or(limit, () => `step.limit = ${limit}`)}
+    ${empty_string_or(limit, () => `step.set_limit(${limit})`)}
 
-    ${empty_string_or(fail_fast, () => `step.fail_fast = ${fail_fast}`)}
+    ${empty_string_or(fail_fast, () => `step.set_fail_fast()`)}
   })`
 }

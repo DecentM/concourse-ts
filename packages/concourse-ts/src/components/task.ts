@@ -103,17 +103,25 @@ export class Task<
     }
   }
 
+  private platform: Type.Platform
+
   /**
    * https://concourse-ci.org/tasks.html#schema.task-config.platform
    */
-  public platform: Type.Platform
+  public set_platform = (platform: Type.Platform) => {
+    this.platform = platform
+  }
+
+  private run: Command
 
   /**
    * https://concourse-ci.org/tasks.html#schema.task-config.run
    *
    * {@link Command}
    */
-  public run: Command
+  public set_run = (run: Command) => {
+    this.run = run
+  }
 
   private caches: Type.TaskCache[] = []
 
@@ -200,10 +208,14 @@ export class Task<
     }
   }
 
+  private rootfs_uri?: string
+
   /**
    * https://concourse-ci.org/tasks.html#schema.task-config.rootfs_uri
    */
-  public rootfs_uri?: string
+  public set_rootfs_uri = (rootfs_uri: string) => {
+    this.rootfs_uri = rootfs_uri
+  }
 
   /**
    * Creates a TaskStep that already has this Task configured.

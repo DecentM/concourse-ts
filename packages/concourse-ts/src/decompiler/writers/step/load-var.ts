@@ -12,16 +12,16 @@ export const write_load_var_step = (
 
     ${empty_string_or(
       step.load_var,
-      (load_var) => `step.load_var = ${JSON.stringify(load_var)}`
+      (load_var) => `step.set_load_var(${JSON.stringify(load_var)})`
     )}
 
-    ${empty_string_or(step.file, (file) => `step.file = ${JSON.stringify(file)}`)}
+    ${empty_string_or(step.file, (file) => `step.set_file(${JSON.stringify(file)})`)}
 
     ${empty_string_or(
       step.format,
-      (format) => `step.format = ${JSON.stringify(format)}`
+      (format) => `step.set_format(${JSON.stringify(format)})`
     )}
 
-    ${empty_string_or(step.reveal, (reveal) => `step.reveal = ${reveal}`)}
+    ${empty_string_or(step.reveal, () => `step.set_reveal()`)}
   })`
 }

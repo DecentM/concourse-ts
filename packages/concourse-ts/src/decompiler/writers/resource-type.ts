@@ -26,7 +26,7 @@ export const write_resource_type = (
 
     ${empty_string_or(
       resource_type.source,
-      (source) => `rt.source = ${JSON.stringify(source)}`
+      (source) => `rt.set_source(${JSON.stringify(source)})`
     )}
 
     ${empty_string_or(
@@ -47,12 +47,12 @@ export const write_resource_type = (
 
     ${empty_string_or(
       resource_type.privileged,
-      (privileged) => `rt.privileged = ${privileged}`
+      () => `rt.set_privileged()`
     )}
 
     ${empty_string_or(
       resource_type.tags,
-      (tags) => `rt.add_tag(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
+      (tags) => `rt.add_tags(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
     )}
   })`
 }

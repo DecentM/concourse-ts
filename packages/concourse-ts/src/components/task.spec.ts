@@ -33,19 +33,19 @@ test('runs instance customiser', (t) => {
 
 test('runs task-step customiser', (t) => {
   Task.customise_task_step((ts) => {
-    ts.add_tag('static')
+    ts.add_tags('static')
   })
 
   const task = new Task('my-t', (my_t) => {
     my_t.customise_task_step((gs) => {
-      gs.add_tag('customised')
+      gs.add_tags('customised')
     })
   })
 
   t.deepEqual(
     task
       .as_task_step((ts) => {
-        ts.add_tag('instance')
+        ts.add_tags('instance')
       })
       .serialise(),
     {
@@ -148,7 +148,7 @@ test('stores outputs', (t) => {
 
 test('stores commands', (t) => {
   const task = new Task('a', (a) => {
-    a.run = new Command()
+    a.set_run(new Command())
   })
 
   t.deepEqual(task.serialise(), {

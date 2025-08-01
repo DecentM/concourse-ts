@@ -18,7 +18,7 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
 
     ${empty_string_or(
       task.platform,
-      (platform) => `task.platform = ${JSON.stringify(platform)}`
+      (platform) => `task.set_platform(${JSON.stringify(platform)})`
     )}
 
     ${empty_string_or(task.run, (run) => `task.run = ${write_command(run)}`)}
@@ -59,7 +59,7 @@ export const write_task = <Input extends Identifier, Output extends Identifier>(
 
     ${empty_string_or(
       task.rootfs_uri,
-      (rootfs_uri) => `task.rootfs_uri = ${JSON.stringify(rootfs_uri)}`
+      (rootfs_uri) => `task.set_rootfs_uri(${JSON.stringify(rootfs_uri)})`
     )}
   })`
 }

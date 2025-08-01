@@ -6,7 +6,7 @@ import { Pipeline } from '../pipeline.js'
 
 test('runs static customiser', (t) => {
   SetPipelineStep.customise((sps) => {
-    sps.attempts = 2
+    sps.set_attempts(2)
   })
 
   const sps = new SetPipelineStep('a')
@@ -21,7 +21,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const sps = new SetPipelineStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(sps.serialise(), {
@@ -102,7 +102,7 @@ test('stores var_files', (t) => {
 test('stores set-pipeline', (t) => {
   const sps = new SetPipelineStep('a')
 
-  sps.set_pipeline = new Pipeline('my-pipeline')
+  sps.set_pipeline(new Pipeline('my-pipeline'))
 
   t.deepEqual(sps.serialise(), {
     ...default_set_pipeline_step,

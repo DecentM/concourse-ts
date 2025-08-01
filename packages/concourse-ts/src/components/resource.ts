@@ -87,7 +87,11 @@ export class Resource<
     this.put_step_customiser = init
   }
 
-  public name: string
+  private name: string
+
+  public set_name = (name: string) => {
+    this.name = name
+  }
 
   constructor(
     name: string,
@@ -123,7 +127,14 @@ export class Resource<
     return result
   }
 
-  public source?: Source
+  private source?: Source
+
+  /**
+   * https://concourse-ci.org/resources.html#schema.resource.source
+   */
+  public set_source = (source: Source) => {
+    this.source = source
+  }
 
   private check_every?: Duration
 
@@ -131,18 +142,38 @@ export class Resource<
     this.check_every = get_duration(input)
   }
 
+  private icon?: string
+
   /**
-   * https://materialdesignicons.com/
+   * https://pictogrammers.com/library/mdi/
    */
-  public icon?: string
+  public set_icon = (icon: string) => {
+    this.icon = icon
+  }
 
-  public old_name?: string
+  private old_name?: string
 
-  public public?: boolean
+  /**
+   * https://concourse-ci.org/resources.html#schema.resource.old_name
+   */
+  public set_old_name = (old_name: string) => {
+    this.old_name = old_name
+  }
+
+  private public?: boolean
+
+  /**
+   * Sets "public" to true - avoid calling to keep false
+   *
+   * https://concourse-ci.org/resources.html#schema.resource.public
+   */
+  public set_public = () => {
+    this.public = true
+  }
 
   private tags?: Type.Tags
 
-  public add_tag = (...tags: string[]) => {
+  public add_tags = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
     this.tags.push(...tags)
@@ -154,7 +185,11 @@ export class Resource<
     this.version = version
   }
 
-  public webhook_token?: string
+  private webhook_token?: string
+
+  public set_webhook_token = (webhook_token: string) => {
+    this.webhook_token = webhook_token
+  }
 
   public as_put_step = (
     input?: AsPutStepInput<PutParams>,
@@ -208,8 +243,8 @@ export class Resource<
         step.add_passed(...input.passed)
       }
 
-      if (type_of(input?.trigger) === 'boolean') {
-        step.trigger = input.trigger
+      if (type_of(input?.trigger) === 'boolean' && input.trigger) {
+        step.set_trigger()
       }
 
       if (customise) {

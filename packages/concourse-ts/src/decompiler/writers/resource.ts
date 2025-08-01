@@ -23,7 +23,7 @@ export const write_resource = (
   )}, (r) => {
     ${empty_string_or(
       resource.source,
-      (source) => `r.source = ${JSON.stringify(source)}`
+      (source) => `r.set_source(${JSON.stringify(source)})`
     )}
 
     ${empty_string_or(
@@ -32,18 +32,18 @@ export const write_resource = (
         `r.set_check_every(${JSON.stringify(parse_duration(check_every))})`
     )}
 
-    ${empty_string_or(resource.icon, (icon) => `r.icon = ${JSON.stringify(icon)}`)}
+    ${empty_string_or(resource.icon, (icon) => `r.set_icon(${JSON.stringify(icon)})`)}
 
     ${empty_string_or(
       resource.old_name,
-      (old_name) => `r.old_name = ${JSON.stringify(old_name)}`
+      (old_name) => `r.set_old_name(${JSON.stringify(old_name)})`
     )}
 
-    ${empty_string_or(resource.public, (is_public) => `r.public = ${is_public}`)}
+    ${empty_string_or(resource.public, () => `r.set_public()`)}
 
     ${empty_string_or(
       resource.tags,
-      (tags) => `r.add_tag(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
+      (tags) => `r.add_tags(${tags.map((tag) => JSON.stringify(tag)).join(', ')})`
     )}
 
     ${empty_string_or(
@@ -53,7 +53,7 @@ export const write_resource = (
 
     ${empty_string_or(
       resource.webhook_token,
-      (webhook_token) => `r.webhook_token = ${JSON.stringify(webhook_token)}`
+      (webhook_token) => `r.set_webhook_token(${JSON.stringify(webhook_token)})`
     )}
   })`
 }

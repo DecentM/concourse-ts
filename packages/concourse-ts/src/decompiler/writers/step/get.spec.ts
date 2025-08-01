@@ -22,11 +22,13 @@ const chain = async (name: string, input: Type.GetStep, pipeline: Type.Pipeline)
 
   await fs.writeFile(tmpPath, code, 'utf-8')
 
-  const loaded = await tsImport(tmpPath, import.meta.url)
+  try {
+    const loaded = await tsImport(tmpPath, import.meta.url)
 
-  await fs.rm(tmpDir, { recursive: true, force: true })
-
-  return { result: loaded.default, code }
+    return { result: loaded.default, code }
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true })
+  }
 }
 
 const default_pipeline: Type.Pipeline = {
@@ -94,11 +96,11 @@ test('writes params', async (t) => {
 test('writes trigger', async (t) => {
   const { result } = await chain(
     'a',
-    { get: 'a' as Identifier, trigger: false },
+    { get: 'a' as Identifier, trigger: true },
     default_pipeline
   )
 
-  t.deepEqual(result?.serialise(), { ...default_get_step, get: 'a', trigger: false })
+  t.deepEqual(result?.serialise(), { ...default_get_step, get: 'a', trigger: true })
 })
 
 test('writes version', async (t) => {

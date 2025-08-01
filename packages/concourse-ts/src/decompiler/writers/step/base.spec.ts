@@ -25,11 +25,13 @@ const chain = async (name: string, input: Type.Step, pipeline: Type.Pipeline) =>
 
   await fs.writeFile(tmpPath, code, 'utf-8')
 
-  const loaded = await tsImport(tmpPath, import.meta.url)
+  try {
+    const loaded = await tsImport(tmpPath, import.meta.url)
 
-  await fs.rm(tmpDir, { recursive: true, force: true })
-
-  return { result: loaded.default, code }
+    return { result: loaded.default, code }
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true })
+  }
 }
 
 const default_step = {
@@ -69,7 +71,7 @@ test('writes attempts', async (t) => {
     default_pipeline
   )
 
-  t.assert(code.includes('attempts = 5'))
+  t.assert(code.includes('set_attempts(5)'))
 })
 
 test('writes tags', async (t) => {
@@ -80,7 +82,7 @@ test('writes tags', async (t) => {
       default_pipeline
     )
 
-    t.assert(code.includes('step.add_tag("tag-a", "tag-b")'))
+    t.assert(code.includes('step.add_tags("tag-a", "tag-b")'))
   })
 })
 

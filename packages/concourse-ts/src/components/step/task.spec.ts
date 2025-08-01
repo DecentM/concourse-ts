@@ -9,7 +9,7 @@ import {
 
 test('runs static customiser', (t) => {
   TaskStep.customise((ts) => {
-    ts.attempts = 2
+    ts.set_attempts(2)
   })
 
   const ts = new TaskStep('a')
@@ -25,7 +25,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const ts = new TaskStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(ts.serialise(), {

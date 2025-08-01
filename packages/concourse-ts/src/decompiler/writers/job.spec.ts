@@ -107,7 +107,7 @@ test('writes interruptible', async (t) => {
   const job: Type.Job = {
     name: 'j' as Identifier,
     plan: [],
-    interruptible: false,
+    interruptible: undefined,
   }
 
   const { result } = await chain(job, { jobs: [job] })

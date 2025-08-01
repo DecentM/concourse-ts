@@ -87,12 +87,23 @@ export class PutStep<
     }
   }
 
-  public no_get?: boolean
+  private no_get?: boolean
+
+  /**
+   * Sets "no_get" to true - avoid calling to keep false
+   *
+   * https://concourse-ci.org/put-step.html#no_get
+   */
+  public set_no_get = () => {
+    this.no_get = true
+  }
 
   public serialise() {
+    const resource = this.resource?.serialise()
+
     const result: Type.PutStep = {
       ...this.serialise_base(),
-      put: get_identifier(this.resource?.name),
+      put: get_identifier(resource?.name),
 
       // This will rename the resource, but it's the same as "put" above.
       resource: undefined,

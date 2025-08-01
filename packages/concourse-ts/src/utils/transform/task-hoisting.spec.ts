@@ -23,9 +23,9 @@ test('hoists all tasks', (t) => {
 
     p.add_job(
       new Job('pj', (pj) => {
-        pj.add_step(ts)
-        pj.add_step(ntts)
-        pj.add_step(ets)
+        pj.add_steps(ts)
+        pj.add_steps(ntts)
+        pj.add_steps(ets)
       })
     )
   })

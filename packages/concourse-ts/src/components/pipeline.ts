@@ -173,7 +173,6 @@ export class Pipeline<Group extends string = string> {
 
   /**
    * @internal Used by the compiler
-   * @returns {Task[]}
    */
   public get_tasks = (): Task[] => {
     return this.get_task_steps().map((task_step) => {
@@ -183,7 +182,6 @@ export class Pipeline<Group extends string = string> {
 
   /**
    * @internal Used by the compiler
-   * @returns {TaskStep[]}
    */
   public get_task_steps = () => {
     const result: TaskStep[] = []

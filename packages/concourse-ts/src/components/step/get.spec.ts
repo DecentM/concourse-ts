@@ -6,7 +6,7 @@ import { default_get_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   GetStep.customise((ds) => {
-    ds.attempts = 2
+    ds.set_attempts(2)
   })
 
   const gs = new GetStep('a')
@@ -22,7 +22,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const gs = new GetStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(gs.serialise(), {

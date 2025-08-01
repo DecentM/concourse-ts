@@ -42,7 +42,7 @@ export class GetStep<
   /**
    * @internal Used by the compiler
    */
-  public get_task_steps() {
+  public get_task_steps = () => {
     return this.get_base_task_steps()
   }
 
@@ -77,14 +77,29 @@ export class GetStep<
     this.params = params
   }
 
-  public trigger: boolean
+  private trigger: boolean
 
-  public version: Type.Version
+  /**
+   * Sets "trigger" to true - avoid calling to keep false
+   *
+   * https://concourse-ci.org/get-step.html#trigger
+   */
+  public set_trigger = () => {
+    this.trigger = true
+  }
+
+  private version: Type.Version
+
+  public set_version = (version: Type.Version) => {
+    this.version = version
+  }
 
   public serialise(): Type.GetStep {
+    const resource = this.resource?.serialise()
+
     return {
       ...this.serialise_base(),
-      get: get_identifier(this.resource?.name),
+      get: get_identifier(resource?.name),
 
       // This will rename the resource, but it's the same as "get" above.
       resource: undefined,

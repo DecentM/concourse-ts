@@ -30,13 +30,34 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
     }
   }
 
-  public load_var?: string
+  private load_var?: string
 
-  public file?: Type.FilePath
+  public set_load_var = (load_var: string) => {
+    this.load_var = load_var
+  }
 
-  public format?: Type.LoadVarStep['format']
+  private file?: Type.FilePath
 
-  public reveal: boolean
+  public set_file = (file: Type.FilePath) => {
+    this.file = file
+  }
+
+  private format?: Type.LoadVarStep['format']
+
+  public set_format = (format: Type.LoadVarStep['format']) => {
+    this.format = format
+  }
+
+  private reveal: boolean
+
+  /**
+   * Sets "reveal" to true - avoid calling to keep false
+   *
+   * https://concourse-ci.org/load-var-step.html#schema.load-var.reveal
+   */
+  public set_reveal = () => {
+    this.reveal = true
+  }
 
   public get var() {
     return get_var(`.:${this.load_var}`)
@@ -44,13 +65,14 @@ export class LoadVarStep extends Step<Type.LoadVarStep> {
 
   /**
    * @internal Used by the compiler
-   *
-   * @returns {TaskStep[]}
    */
   public get_task_steps() {
     return this.get_base_task_steps()
   }
 
+  /**
+   * @internal Used by the compiler
+   */
   public get_resources(): Resource[] {
     return this.get_base_resources()
   }

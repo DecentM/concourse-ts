@@ -27,6 +27,6 @@ export const write_put_step = (name: string, step: PutStep, pipeline: Pipeline) 
       (get_params) => `step.set_get_params(${JSON.stringify(get_params)})`
     )}
 
-    ${empty_string_or(step.no_get, (no_get) => `step.no_get = ${no_get}`)}
+    ${empty_string_or(step.no_get, () => `step.set_no_get()}`)}
   })`
 }

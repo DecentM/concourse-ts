@@ -6,7 +6,7 @@ import { default_in_parallel_step } from './test-data/default-steps.js'
 
 test('runs static customiser', (t) => {
   InParallelStep.customise((ips) => {
-    ips.attempts = 2
+    ips.set_attempts(2)
   })
 
   const ips = new InParallelStep('a')
@@ -21,7 +21,7 @@ test('runs static customiser', (t) => {
 
 test('runs instance customiser', (t) => {
   const ips = new InParallelStep('a', (a) => {
-    a.add_tag('instance')
+    a.add_tags('instance')
   })
 
   t.deepEqual(ips.serialise(), {
@@ -45,7 +45,7 @@ test('collects resources', (t) => {
   t.is(result0.length, 0)
   t.deepEqual(result0, [])
 
-  ips.add_step(r.as_get_step())
+  ips.add_steps(r.as_get_step())
 
   const result = ips.get_resources()
 
@@ -57,12 +57,12 @@ test('collects task steps', (t) => {
   const ips = new InParallelStep('a')
 
   const task = new Task('t', (t) => {
-    t.platform = 'linux'
+    t.set_platform('linux')
   })
 
   const ts = task.as_task_step()
 
-  ips.add_step(ts)
+  ips.add_steps(ts)
 
   const result = ips.get_task_steps()
 

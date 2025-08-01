@@ -48,9 +48,20 @@ export class TaskStep<
     this.file = file
   }
 
-  public image?: string
+  private image?: string
 
-  public privileged: boolean
+  public set_image = (image: string) => {
+    this.image = image
+  }
+
+  private privileged?: boolean
+
+  /**
+   * Sets "privileged" to true - avoid calling to keep false
+   */
+  public set_privileged = () => {
+    this.privileged = true
+  }
 
   private vars: Type.Vars
 

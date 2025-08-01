@@ -46,8 +46,8 @@ export class DoStep extends Step<Type.DoStep> {
    *
    * @param {AnyStep} step
    */
-  public add_step = (step: AnyStep) => {
-    this.do.push(step)
+  public add_steps = (...steps: AnyStep[]) => {
+    this.do.push(...steps)
   }
 
   /**
@@ -55,8 +55,8 @@ export class DoStep extends Step<Type.DoStep> {
    *
    * @param {AnyStep} step
    */
-  public add_step_first = (step: AnyStep) => {
-    this.do.unshift(step)
+  public add_steps_first = (...steps: AnyStep[]) => {
+    this.do.unshift(...steps)
   }
 
   /**
@@ -67,9 +67,9 @@ export class DoStep extends Step<Type.DoStep> {
   public get_resources(): Resource[] {
     const result = this.get_base_resources()
 
-    this.do.forEach((step) => {
+    for (const step of this.do) {
       result.push(...step.get_resources())
-    })
+    }
 
     return result
   }
@@ -82,18 +82,13 @@ export class DoStep extends Step<Type.DoStep> {
   public get_task_steps(): TaskStep[] {
     const result = this.get_base_task_steps()
 
-    this.do.forEach((step) => {
+    for (const step of this.do) {
       result.push(...step.get_task_steps())
-    })
+    }
 
     return result
   }
 
-  /**
-   * @internal Used by the compiler
-   *
-   * @returns {Type.DoStep}
-   */
   public serialise() {
     const result: Type.DoStep = {
       ...this.serialise_base(),

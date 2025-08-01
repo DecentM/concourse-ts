@@ -116,10 +116,14 @@ export class ResourceType<
     return this.type
   }
 
+  private source?: Source
+
   /**
    * https://concourse-ci.org/resource-types.html#schema.resource_type.source
    */
-  public source?: Source
+  public set_source = (source: Source) => {
+    this.source = source
+  }
 
   private check_every?: Duration
 
@@ -179,7 +183,11 @@ export class ResourceType<
     }
   }
 
+  private privileged?: boolean
+
   /**
+   * Sets "privileged" to true - avoid calling to keep false
+   *
    * Default false. If set to true, the resource's containers will be run with
    * full capabilities, as determined by the worker backend the task runs on.
    *
@@ -195,7 +203,9 @@ export class ResourceType<
    *
    * https://concourse-ci.org/resource-types.html#schema.resource_type.privileged
    */
-  public privileged?: boolean
+  public set_privileged = () => {
+    this.privileged = true
+  }
 
   private tags?: Declaration.Tags
 
@@ -206,7 +216,7 @@ export class ResourceType<
    *
    * @param {string[]} tags
    */
-  public add_tag = (...tags: string[]) => {
+  public add_tags = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
     this.tags.push(...tags)

@@ -28,9 +28,17 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     }
   }
 
-  public set_pipeline: Pipeline | string
+  private pipeline: Pipeline | string
 
-  public file?: Type.FilePath
+  public set_pipeline = (pipeline: Pipeline | string) => {
+    this.pipeline = pipeline
+  }
+
+  private file?: Type.FilePath
+
+  public set_file = (file: Type.FilePath) => {
+    this.file = file
+  }
 
   private instance_vars: Type.Vars
 
@@ -62,7 +70,11 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     this.var_files.push(...paths)
   }
 
-  public team?: string
+  private team?: string
+
+  public set_team = (team: string) => {
+    this.team = team
+  }
 
   /**
    * @internal Used by the compiler
@@ -82,9 +94,9 @@ export class SetPipelineStep extends Step<Type.SetPipelineStep> {
     const result: Type.SetPipelineStep = {
       ...this.serialise_base(),
       set_pipeline:
-        typeof this.set_pipeline === 'string'
-          ? get_identifier(this.set_pipeline)
-          : get_identifier(this.set_pipeline?.name),
+        typeof this.pipeline === 'string'
+          ? get_identifier(this.pipeline)
+          : get_identifier(this.pipeline?.name),
       file: this.file,
       instance_vars: this.instance_vars,
       vars: this.vars,

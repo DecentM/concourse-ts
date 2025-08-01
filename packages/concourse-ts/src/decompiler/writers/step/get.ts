@@ -27,12 +27,12 @@ export const write_get_step = (name: string, step: GetStep, pipeline: Pipeline) 
 
     ${empty_string_or(
       step.trigger,
-      (trigger) => `step.trigger = ${JSON.stringify(trigger)}`
+      (trigger) => `step.set_trigger(${JSON.stringify(trigger)})`
     )}
 
     ${empty_string_or(
       step.version,
-      (version) => `step.version = ${JSON.stringify(version)}`
+      (version) => `step.set_version(${JSON.stringify(version)})`
     )}
   })`
 }

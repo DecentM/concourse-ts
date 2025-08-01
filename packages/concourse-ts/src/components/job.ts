@@ -52,7 +52,7 @@ export class Job {
    *
    * @param {...AnyStep[]} steps Steps to add to the Job in order.
    */
-  public add_step = (...steps: AnyStep[]) => {
+  public add_steps = (...steps: AnyStep[]) => {
     this.plan.push(...steps)
   }
 
@@ -64,34 +64,60 @@ export class Job {
    * @param steps @param {...AnyStep[]} steps Steps to add to the beginning of
    * the Job in order.
    */
-  public add_step_first = (...steps: AnyStep[]) => {
+  public add_steps_first = (...steps: AnyStep[]) => {
     this.plan.unshift(...steps)
   }
+
+  private build_log_retention?: Type.BuildLogRetentionPolicy
 
   /**
    * https://concourse-ci.org/jobs.html#schema.job.build_log_retention
    */
-  public build_log_retention?: Type.BuildLogRetentionPolicy
+  public set_build_log_retention = (
+    build_log_retention: Type.BuildLogRetentionPolicy
+  ) => {
+    this.build_log_retention = build_log_retention
+  }
+
+  private disable_manual_trigger?: boolean
 
   /**
+   * Sets "disable_manual_trigger" to true - avoid calling to keep false
+   *
    * https://concourse-ci.org/jobs.html#schema.job.disable_manual_trigger
    */
-  public disable_manual_trigger?: boolean
+  public set_disable_manual_trigger = () => {
+    this.disable_manual_trigger = true
+  }
+
+  private interruptible?: boolean
 
   /**
-   * https://concourse-ci.org/jobs.html#schema.job.interruptible
+   * Sets "interruptible" to true - avoid calling to keep false
+   *
+   * https://concourse-ci.org/jobs.html#interruptible
    */
-  public interruptible?: boolean
+  public set_interruptible = () => {
+    this.interruptible = true
+  }
+
+  private max_in_flight?: number
 
   /**
    * https://concourse-ci.org/jobs.html#schema.job.max_in_flight
    */
-  public max_in_flight?: number
+  public set_max_in_flight = (max_in_flight: number) => {
+    this.max_in_flight = max_in_flight
+  }
+
+  private old_name?: string
 
   /**
    * https://concourse-ci.org/jobs.html#schema.job.old_name
    */
-  public old_name?: string
+  public set_old_name = (old_name: string) => {
+    this.old_name = old_name
+  }
 
   private on_success?: DoStep
 
@@ -113,7 +139,7 @@ export class Job {
 
     if (!this.on_success) this.on_success = new DoStep(`${this.name}_on_success`)
 
-    this.on_success.add_step(step)
+    this.on_success.add_steps(step)
   }
 
   private on_failure?: DoStep
@@ -139,7 +165,7 @@ export class Job {
 
     if (!this.on_failure) this.on_failure = new DoStep(`${this.name}_on_failure`)
 
-    this.on_failure.add_step(step)
+    this.on_failure.add_steps(step)
   }
 
   private on_error?: DoStep
@@ -165,7 +191,7 @@ export class Job {
 
     if (!this.on_error) this.on_error = new DoStep(`${this.name}_on_error`)
 
-    this.on_error.add_step(step)
+    this.on_error.add_steps(step)
   }
 
   private on_abort?: DoStep
@@ -191,7 +217,7 @@ export class Job {
 
     if (!this.on_abort) this.on_abort = new DoStep(`${this.name}_on_abort`)
 
-    this.on_abort.add_step(step)
+    this.on_abort.add_steps(step)
   }
 
   private ensure?: DoStep
@@ -216,18 +242,30 @@ export class Job {
 
     if (!this.ensure) this.ensure = new DoStep(`${this.name}_ensure`)
 
-    this.ensure.add_step(step)
+    this.ensure.add_steps(step)
   }
 
-  /**
-   * https://concourse-ci.org/jobs.html#schema.job.public
-   */
-  public public: boolean
+  private public: boolean
 
   /**
+   * Sets "public" to true - avoid calling to keep false
+   *
+   * https://concourse-ci.org/jobs.html#schema.job.public
+   */
+  public set_public = () => {
+    this.public = true
+  }
+
+  private serial: boolean
+
+  /**
+   * Sets "serial" to true - avoid calling to keep false
+   *
    * https://concourse-ci.org/jobs.html#schema.job.serial
    */
-  public serial: boolean
+  public set_serial = () => {
+    this.serial = true
+  }
 
   private serial_groups?: string[]
 
@@ -243,9 +281,7 @@ export class Job {
   }
 
   /**
-   * @internal Used by the compiler to get all resources
-   *
-   * @returns {Resource[]} All resources used by this job
+   * @internal Used by the compiler
    */
   public get_resources = (): Resource[] => {
     const result: Resource[] = []
@@ -279,9 +315,7 @@ export class Job {
   }
 
   /**
-   * @internal Used by the compiler to get all task steps
-   *
-   * @returns {TaskStep[]} All the task steps in this job
+   * @internal Used by the compiler
    */
   public get_task_steps = () => {
     const result: TaskStep[] = []
