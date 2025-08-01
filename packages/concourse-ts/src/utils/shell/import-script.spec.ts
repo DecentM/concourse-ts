@@ -4,9 +4,26 @@ import fs from 'node:fs/promises'
 
 import { import_script } from './index.js'
 
+import { Command } from '../../components/command.js'
+
+test('runs customiser', (t) => {
+  const customiser = (command) => {
+    command.set_path('/bin/true')
+  }
+
+  const command = new Command(import_script(path.resolve(import.meta.dirname, 'test/path-no-args.sh'), customiser))
+
+  t.deepEqual(command.serialise(), {
+    dir: undefined,
+    user: undefined,
+    path: '/bin/true',
+    args: ['echo This is a test'],
+  })
+})
+
 test('imports scripts with shebang', (t) => {
   t.deepEqual(
-    import_script(path.resolve(import.meta.dirname, 'test/path-no-args.sh')).serialise(),
+    new Command(import_script(path.resolve(import.meta.dirname, 'test/path-no-args.sh'))).serialise(),
     {
       dir: undefined,
       user: undefined,
@@ -18,7 +35,7 @@ test('imports scripts with shebang', (t) => {
 
 test('imports scripts with shebang and args', (t) => {
   t.deepEqual(
-    import_script(path.resolve(import.meta.dirname, 'test/path-with-args.sh')).serialise(),
+    new Command(import_script(path.resolve(import.meta.dirname, 'test/path-with-args.sh'))).serialise(),
     {
       dir: undefined,
       user: undefined,

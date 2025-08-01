@@ -15,7 +15,7 @@ import { Customiser } from '../../declarations/customiser.js'
  * @param {string} file_path
  * @returns {ImportedScript}
  */
-export const import_script = (file_path: string): Customiser<Command> => {
+export const import_script = (file_path: string, customise?: Customiser<Command>): Customiser<Command> => {
   const pathInfo = path.parse(file_path)
   const fullPath = path.resolve(file_path)
 
@@ -50,5 +50,9 @@ export const import_script = (file_path: string): Customiser<Command> => {
     command.set_path(shebang.path)
     command.add_args(...shebang.args)
     command.add_args(scriptLines.join('\n').trim())
+
+    if (customise) {
+      customise(command)
+    }
   }
 }
