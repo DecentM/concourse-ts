@@ -86,7 +86,9 @@ export class Task<
    *
    * @param {Resource | Type.AnonymousResource<string>} input
    */
-  public set_image_resource = (input: Resource | Type.AnonymousResource<string>) => {
+  public set_image_resource = (
+    input: Resource<never, never, never, never, never> | Type.AnonymousResource<string>
+  ) => {
     if (input instanceof Resource) {
       const serialised = input.serialise()
 
