@@ -4,7 +4,7 @@ import { Command } from './command.js'
 
 test.beforeEach(() => {
   Command.customise((command) => {
-    command.user = 'root'
+    command.set_user('root')
   })
 })
 
@@ -36,10 +36,11 @@ test('stores args', (t) => {
   const command = new Command()
 
   command.add_args('my-arg')
+  command.add_args_before('my-arg-before')
 
   t.deepEqual(command.serialise(), {
     path: undefined,
-    args: ['my-arg'],
+    args: ['my-arg-before', 'my-arg'],
     dir: undefined,
     user: 'root',
   })

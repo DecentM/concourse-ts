@@ -46,7 +46,7 @@ test('stores steps', (t) => {
     })
   )
 
-  job.add_step_first(
+  job.add_steps_first(
     new LoadVarStep('lv', (lv) => {
       lv.set_file('my-file-first')
       lv.set_load_var('my-var-first')

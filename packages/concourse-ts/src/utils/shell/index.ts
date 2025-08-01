@@ -5,6 +5,7 @@ import path from 'node:path'
 import { Command } from '../../components/command.js'
 
 import { is_shebang, parse_shebang } from './helpers.js'
+import { Customiser } from '../../declarations/customiser.js'
 
 /**
  * Imports a script from disk into a format usable in a Command.
@@ -14,7 +15,7 @@ import { is_shebang, parse_shebang } from './helpers.js'
  * @param {string} file_path
  * @returns {ImportedScript}
  */
-export const import_script = (file_path: string): Command => {
+export const import_script = (file_path: string): Customiser<Command> => {
   const pathInfo = path.parse(file_path)
   const fullPath = path.resolve(file_path)
 
@@ -45,9 +46,9 @@ export const import_script = (file_path: string): Command => {
     )
   }
 
-  return new Command((command) => {
+  return (command) => {
     command.set_path(shebang.path)
     command.add_args(...shebang.args)
     command.add_args(scriptLines.join('\n').trim())
-  })
+  }
 }

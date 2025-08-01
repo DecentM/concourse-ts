@@ -54,6 +54,17 @@ export class Command {
     this.args.push(...arg)
   }
 
+  /**
+   * Adds arguments before the existing arguments to this Command.
+   *
+   * https://concourse-ci.org/tasks.html#schema.command.args
+   *
+   * @param {string[]} args
+   */
+  public add_args_before = (...arg: string[]) => {
+    this.args.unshift(...arg)
+  }
+
   private dir?: Type.DirPath
 
   /**
