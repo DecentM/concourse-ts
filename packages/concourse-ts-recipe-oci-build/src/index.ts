@@ -34,10 +34,10 @@ export const create_oci_build =
   (input: OciBuildTaskInput): ConcourseTs.Type.Recipe<ConcourseTs.Task> =>
   (customise) =>
   (task) => {
-    task.platform = 'linux'
+    task.set_platform('linux')
 
     task.customise_task_step((task_step) => {
-      task_step.privileged = true
+      task_step.set_privileged()
     })
 
     task.set_image_resource({
@@ -48,7 +48,9 @@ export const create_oci_build =
       },
     })
 
-    task.set_params({ CONTEXT: input.resource.name })
+    const input_resource = input.resource.serialise()
+
+    task.set_params({ CONTEXT: input_resource.name })
 
     if (input.options?.output_oci) {
       task.set_params({ OUTPUT_OCI: 'true' })
@@ -130,7 +132,7 @@ export const create_oci_build =
     }
 
     task.add_input({
-      name: input.resource.name,
+      name: input_resource.name,
     })
 
     task.add_output({
@@ -141,9 +143,9 @@ export const create_oci_build =
       path: 'cache',
     })
 
-    task.run = new ConcourseTs.Command((command) => {
-      command.path = '/usr/bin/build'
-    })
+    task.set_run(new ConcourseTs.Command((command) => {
+      command.set_path('/usr/bin/build')
+    }))
 
     if (customise) {
       customise(task)

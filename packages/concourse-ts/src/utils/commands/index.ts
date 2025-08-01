@@ -56,8 +56,8 @@ export const join_commands = (
   })
 
   return new Command((command) => {
-    if (dir) command.dir = dir
-    if (user) command.user = user
+    if (dir) command.set_dir(dir)
+    if (user) command.set_user(user)
 
     customise(args, command)
   })

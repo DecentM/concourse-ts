@@ -35,8 +35,6 @@ const create_cli_command_task = <Group extends string = never>(
   command: ConcourseTs.Command
 ) => {
   return new ConcourseTs.Task('compile', (task) => {
-    task.platform = 'linux'
-
     task.add_input({
       name: input,
     })
@@ -53,7 +51,7 @@ const create_cli_command_task = <Group extends string = never>(
       },
     })
 
-    task.run = command
+    task.set_run(command)
   })
 }
 
@@ -67,10 +65,13 @@ export const create_auto_pipeline =
       trigger: true,
     })
 
-    const compile_command = new ConcourseTs.Command((command) => {
-      command.dir = options.resource.name
+    const resource = options.resource.serialise()
 
-      command.path = 'concourse-ts'
+    const compile_command = new ConcourseTs.Command((command) => {
+
+      command.set_dir(resource.name)
+
+      command.set_path('concourse-ts')
 
       // Turn Typescript into YAML
       command.add_args('compile')
@@ -85,9 +86,7 @@ export const create_auto_pipeline =
     })
 
     const transform_command = new ConcourseTs.Command((command) => {
-      command.dir = '.'
-
-      command.path = 'concourse-ts'
+      command.set_path('concourse-ts')
 
       // Run transforms over the pipeline
       command.add_args('transform')
@@ -103,7 +102,7 @@ export const create_auto_pipeline =
 
     const compile_and_transform = ConcourseTs.Utils.join_commands(
       (args, command) => {
-        command.path = '/bin/sh'
+        command.set_path('/bin/sh')
         command.add_args('-exuc')
 
         command.add_args(args.join(' && '))
@@ -113,7 +112,7 @@ export const create_auto_pipeline =
     )
 
     const compile_task = create_cli_command_task(
-      ConcourseTs.Utils.get_identifier(options.resource.name),
+      ConcourseTs.Utils.get_identifier(resource.name),
       options,
       compile_and_transform
     )
@@ -121,27 +120,26 @@ export const create_auto_pipeline =
     const set_compiled_pipeline_step = new ConcourseTs.SetPipelineStep(
       'set-compiled-pipeline',
       (step) => {
-        step.set_pipeline = pipeline
-        step.file = `output/pipeline/${pipeline.name}.yml`
+        step.set_pipeline(pipeline)
+        step.set_file(`output/pipeline/${pipeline.name}.yml`)
       }
     )
 
     const set_pipeline_step = new ConcourseTs.SetPipelineStep(
       'set-pipeline',
       (step) => {
-        step.set_pipeline = pipeline
-        step.file = `${options.resource.name}/${options.path}`
+        step.set_pipeline(pipeline)
+        step.set_file(`${resource.name}/${options.path}`)
       }
     )
 
     const auto_pipeline_job = new ConcourseTs.Job('auto-pipeline', (job) => {
-      job.add_step(get_resource_step)
+      job.add_steps(get_resource_step)
 
       if (options.cli_tag) {
-        job.add_step(compile_task.as_task_step())
-        job.add_step(set_compiled_pipeline_step)
+        job.add_steps(compile_task.as_task_step(), set_compiled_pipeline_step)
       } else {
-        job.add_step(set_pipeline_step)
+        job.add_steps(set_pipeline_step)
       }
     })
 

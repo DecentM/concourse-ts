@@ -46,7 +46,7 @@ export const import_script = (file_path: string): Command => {
   }
 
   return new Command((command) => {
-    command.path = shebang.path
+    command.set_path(shebang.path)
     command.add_args(...shebang.args)
     command.add_args(scriptLines.join('\n').trim())
   })

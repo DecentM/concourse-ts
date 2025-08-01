@@ -63,7 +63,7 @@ export class Command {
     this.dir = dir
   }
 
-  public user?: string
+  private user?: string
 
   /**
    * https://concourse-ci.org/tasks.html#schema.command.user

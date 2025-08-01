@@ -120,34 +120,35 @@ export const create_npm_dependencies =
         pkg.name,
         input.resource_type,
         (r) => {
-          r.icon = 'npm'
-          r.source = {
+          r.set_icon('npm')
+          r.set_source({
             package: pkg.name,
             scope: pkg.scope,
             registry: {
               uri: input.registry ?? 'https://registry.npmjs.org',
               token: input.registry_token,
             },
-          }
+          })
         }
       )
 
       const load_var = new ConcourseTs.LoadVarStep(
-        `load-${npm_package.name}`,
+        `load-${pkg.name}`,
         (lvs) => {
-          lvs.load_var = `${npm_package.name}-version`
-          lvs.file = `${npm_package.name}/version`
+          lvs.set_load_var(`${pkg.name}-version`)
+          lvs.set_file(`${pkg.name}/version`)
         }
       )
 
-      step.add_step(
+      step.add_steps(
         new ConcourseTs.DoStep(`load_${pkg.name}`, (ds) => {
-          ds.add_step(
+          ds.add_steps(
             npm_package.as_get_step({
               params: { skip_download: true },
-            })
+            }),
+
+            load_var,
           )
-          ds.add_step(load_var)
         })
       )
 

@@ -4,9 +4,9 @@ export default () => {
   return new Pipeline('a', (pipeline) => {
     pipeline.add_job(
       new Job('aj', (job) => {
-        job.add_step(
+        job.add_steps(
           new Task('at', (task) => {
-            task.platform = 'linux'
+            task.set_platform('linux')
             task.set_image_resource({
               type: 'registry-image',
               source: {
@@ -14,10 +14,10 @@ export default () => {
                 tag: 'latest',
               },
             })
-            task.run = new Command((command) => {
-              command.path = 'echo'
+            task.set_run(new Command((command) => {
+              command.set_path('echo')
               command.add_args('Hello, world!')
-            })
+            }))
           }).as_task_step()
         )
       })
