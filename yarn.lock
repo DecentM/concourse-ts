@@ -417,7 +417,7 @@ __metadata:
     cpy-cli: "npm:^5.0.0"
     csstree-validator: "npm:^4.0.1"
     lodash.clonedeep: "npm:^4.5.0"
-    pkgroll: "npm:^2.15.1"
+    pkgroll: "npm:^2.15.3"
     rimraf: "npm:^6.0.1"
     tmp-promise: "npm:^3.0.3"
     tsimp: "npm:^2.0.12"
@@ -2102,6 +2102,13 @@ __metadata:
   version: 1.0.1
   resolution: "ci-parallel-vars@npm:1.0.1"
   checksum: 10c0/80952f699cbbc146092b077b4f3e28d085620eb4e6be37f069b4dbb3db0ee70e8eec3beef4ebe70ff60631e9fc743b9d0869678489f167442cac08b260e5ac08
+  languageName: node
+  linkType: hard
+
+"cjs-module-lexer@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "cjs-module-lexer@npm:2.1.0"
+  checksum: 10c0/91cf28686dc3948e4a06dfa03a2fccb14b7a97471ffe7ae0124f62060ddf2de28e8e997f60007babe6e122b1b06a47c01a1b72cc015f185824d9cac3ccfa5533
   languageName: node
   linkType: hard
 
@@ -4631,9 +4638,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pkgroll@npm:^2.15.1":
-  version: 2.15.1
-  resolution: "pkgroll@npm:2.15.1"
+"pkgroll@npm:^2.15.3":
+  version: 2.15.3
+  resolution: "pkgroll@npm:2.15.3"
   dependencies:
     "@rollup/plugin-alias": "npm:^5.1.1"
     "@rollup/plugin-commonjs": "npm:^28.0.6"
@@ -4642,6 +4649,7 @@ __metadata:
     "@rollup/plugin-json": "npm:^6.1.0"
     "@rollup/plugin-node-resolve": "npm:^16.0.1"
     "@rollup/pluginutils": "npm:^5.2.0"
+    cjs-module-lexer: "npm:^2.1.0"
     esbuild: "npm:^0.25.8"
     magic-string: "npm:^0.30.17"
     rollup: "npm:^4.46.2"
@@ -4653,7 +4661,7 @@ __metadata:
       optional: true
   bin:
     pkgroll: dist/cli.mjs
-  checksum: 10c0/7b87170aef472a2c1076cdbc8adb018e2db651b144145103d1431c296727ce933c10161f9bf61c55c5128beb113827d7d8496d709c280ba7b35e718f38b8fc44
+  checksum: 10c0/4479eb6b1e6d7a2036097e4e1ca0a5a8e18be90bcd36e5480fb9a6dacea8895cce8f33e24bdbcad0ef24a1520ff997fc52637313e10f0c14fcae97b4ac4d64b7
   languageName: node
   linkType: hard
 
