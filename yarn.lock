@@ -1472,22 +1472,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.39.1":
-  version: 8.39.1
-  resolution: "@typescript-eslint/parser@npm:8.39.1"
-  dependencies:
-    "@typescript-eslint/scope-manager": "npm:8.39.1"
-    "@typescript-eslint/types": "npm:8.39.1"
-    "@typescript-eslint/typescript-estree": "npm:8.39.1"
-    "@typescript-eslint/visitor-keys": "npm:8.39.1"
-    debug: "npm:^4.3.4"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0
-    typescript: ">=4.8.4 <6.0.0"
-  checksum: 10c0/da30372c4e8dee48a0c421996bf0bf73a62a57039ee6b817eda64de2d70fdb88dd20b50615c81be7e68fd29cdd7852829b859bb8539b4a4c78030f93acaf5664
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/parser@npm:8.40.0":
   version: 8.40.0
   resolution: "@typescript-eslint/parser@npm:8.40.0"
@@ -2347,7 +2331,7 @@ __metadata:
     "@types/eslint": "npm:^9"
     "@types/eslint__js": "npm:^9.14.0"
     "@typescript-eslint/eslint-plugin": "npm:8.39.1"
-    "@typescript-eslint/parser": "npm:8.39.1"
+    "@typescript-eslint/parser": "npm:8.40.0"
     eslint: "npm:^9.34.0"
     eslint-config-prettier: "npm:10.1.8"
     husky: "npm:^9.1.7"
