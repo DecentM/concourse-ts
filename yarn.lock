@@ -417,7 +417,7 @@ __metadata:
     cpy-cli: "npm:^6.0.0"
     csstree-validator: "npm:^4.0.1"
     lodash.clonedeep: "npm:^4.5.0"
-    pkgroll: "npm:^2.15.3"
+    pkgroll: "npm:^2.15.4"
     rimraf: "npm:^6.0.1"
     tmp-promise: "npm:^3.0.3"
     tsimp: "npm:^2.0.12"
@@ -4351,9 +4351,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pkgroll@npm:^2.15.3":
-  version: 2.15.3
-  resolution: "pkgroll@npm:2.15.3"
+"pkgroll@npm:^2.15.4":
+  version: 2.15.4
+  resolution: "pkgroll@npm:2.15.4"
   dependencies:
     "@rollup/plugin-alias": "npm:^5.1.1"
     "@rollup/plugin-commonjs": "npm:^28.0.6"
@@ -4374,7 +4374,7 @@ __metadata:
       optional: true
   bin:
     pkgroll: dist/cli.mjs
-  checksum: 10c0/4479eb6b1e6d7a2036097e4e1ca0a5a8e18be90bcd36e5480fb9a6dacea8895cce8f33e24bdbcad0ef24a1520ff997fc52637313e10f0c14fcae97b4ac4d64b7
+  checksum: 10c0/cc35bcbb13d3df52e10d4d7f2d798b386b42981f4adac5930ded8b3ebaded039238c953b98916c6c6c186c737f89b28553c5f14d700c31a5c91ff2a325035d91
   languageName: node
   linkType: hard
 
