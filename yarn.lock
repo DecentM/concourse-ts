@@ -2395,7 +2395,7 @@ __metadata:
     "@types/eslint": "npm:^9"
     "@types/eslint__js": "npm:^9.14.0"
     "@typescript-eslint/eslint-plugin": "npm:8.43.0"
-    "@typescript-eslint/parser": "npm:8.43.0"
+    "@typescript-eslint/parser": "npm:8.44.0"
     eslint: "npm:^9.35.0"
     eslint-config-prettier: "npm:10.1.8"
     husky: "npm:^9.1.7"
