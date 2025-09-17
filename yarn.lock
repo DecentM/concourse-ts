@@ -149,7 +149,7 @@ __metadata:
     "@types/node": "npm:^24.5.1"
     "@types/tmp": "npm:^0.2.6"
     "@types/verror": "npm:^1.10.11"
-    clean-stack: "npm:^5.2.0"
+    clean-stack: "npm:^5.3.0"
     commander: "npm:^14.0.1"
     cosmiconfig: "npm:^9.0.0"
     cosmiconfig-typescript-loader: "npm:^6.1.0"
@@ -2133,12 +2133,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clean-stack@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "clean-stack@npm:5.2.0"
+"clean-stack@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "clean-stack@npm:5.3.0"
   dependencies:
     escape-string-regexp: "npm:5.0.0"
-  checksum: 10c0/0de47a4152e49dcdeede5f47d7bb9a39a3ea748acb1cd2f0160dbee972d920be81390cb4c5566e6b795791b9efb12359e89fdd7c2e63b36025d59529558570f1
+  checksum: 10c0/1aa8b6772eed1f678a9dcf6e02c74c59f26b6fdad26eaaca1dc6a367ff19c924315836b6143484c2686366758e05396f1ac0f32aaa70481b11d8e23790947ca0
   languageName: node
   linkType: hard
 
