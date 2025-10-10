@@ -152,7 +152,7 @@ __metadata:
     clean-stack: "npm:^5.3.0"
     commander: "npm:^14.0.1"
     cosmiconfig: "npm:^9.0.0"
-    cosmiconfig-typescript-loader: "npm:^6.1.0"
+    cosmiconfig-typescript-loader: "npm:^6.2.0"
     fast-glob: "npm:^3.3.3"
     mkdirp: "npm:^3.0.1"
     tmp-promise: "npm:^3.0.3"
@@ -2315,16 +2315,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig-typescript-loader@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "cosmiconfig-typescript-loader@npm:6.1.0"
+"cosmiconfig-typescript-loader@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "cosmiconfig-typescript-loader@npm:6.2.0"
   dependencies:
-    jiti: "npm:^2.4.1"
+    jiti: "npm:^2.6.1"
   peerDependencies:
     "@types/node": "*"
     cosmiconfig: ">=9"
     typescript: ">=5"
-  checksum: 10c0/5e3baf85a9da7dcdd7ef53a54d1293400eed76baf0abb3a41bf9fcc789f1a2653319443471f9a1dc32951f1de4467a6696ccd0f88640e7827f1af6ff94ceaf1a
+  checksum: 10c0/0fd8fd9b9b6a04eec75617b965ce0a1f63310fe29a361c1f95cb971e05dbbb935291899c2b15abfd69e09db58dbe97077f24a7c61414bbc6c3e78349b4314ad7
   languageName: node
   linkType: hard
 
@@ -3580,12 +3580,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "jiti@npm:2.4.1"
+"jiti@npm:^2.6.1":
+  version: 2.6.1
+  resolution: "jiti@npm:2.6.1"
   bin:
     jiti: lib/jiti-cli.mjs
-  checksum: 10c0/3cf67d1b952a9e8cffbb4f96527880da6cdb58a1eae2a6d2deb4645621dfc8b766d21549f71c6153a2094a40bb635ffafed4cd0dd42f3b3263b187d1ee846225
+  checksum: 10c0/79b2e96a8e623f66c1b703b98ec1b8be4500e1d217e09b09e343471bbb9c105381b83edbb979d01cef18318cc45ce6e153571b6c83122170eefa531c64b6789b
   languageName: node
   linkType: hard
 
