@@ -445,7 +445,7 @@ __metadata:
     cpy-cli: "npm:^6.0.0"
     csstree-validator: "npm:^4.0.1"
     lodash.clonedeep: "npm:^4.5.0"
-    pkgroll: "npm:^2.18.1"
+    pkgroll: "npm:^2.19.0"
     rimraf: "npm:^6.0.1"
     tmp-promise: "npm:^3.0.3"
     tsimp: "npm:^2.0.12"
@@ -4409,9 +4409,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pkgroll@npm:^2.18.1":
-  version: 2.18.1
-  resolution: "pkgroll@npm:2.18.1"
+"pkgroll@npm:^2.19.0":
+  version: 2.19.0
+  resolution: "pkgroll@npm:2.19.0"
   dependencies:
     "@rollup/plugin-alias": "npm:^5.1.1"
     "@rollup/plugin-commonjs": "npm:^28.0.6"
@@ -4425,6 +4425,7 @@ __metadata:
     magic-string: "npm:^0.30.17"
     rollup: "npm:^4.46.2"
     rollup-pluginutils: "npm:^2.8.2"
+    yaml: "npm:^2.8.1"
   peerDependencies:
     typescript: ^4.1 || ^5.0
   peerDependenciesMeta:
@@ -4432,7 +4433,7 @@ __metadata:
       optional: true
   bin:
     pkgroll: dist/cli.mjs
-  checksum: 10c0/cfda2afe7cf8b4a4ec048eda92077dbfe1fb4b92e6bfce4ab1fa654a054bd5aaefebc503c12db722c495c06944393c885603134a110760d1772f2f463ed27ac6
+  checksum: 10c0/7835b67ad911f3536bb7a73b415573e2a4aa709992ffe56f801b22fb46a20ae2f3b430cf991340eb5de522b708e881e6899063665a2ed6fe5be50635242fee6d
   languageName: node
   linkType: hard
 
