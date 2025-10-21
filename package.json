@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.37.0",
+    "@eslint/js": "^9.38.0",
     "@moonrepo/cli": "^1.41.5",
     "@types/eslint": "^9",
     "@types/eslint__js": "^9.14.0",
