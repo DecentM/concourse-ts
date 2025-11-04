@@ -157,7 +157,7 @@ __metadata:
     "@types/node": "npm:^24.10.0"
     "@types/tmp": "npm:^0.2.6"
     "@types/verror": "npm:^1.10.11"
-    clean-stack: "npm:^5.3.0"
+    clean-stack: "npm:^6.0.0"
     commander: "npm:^14.0.2"
     cosmiconfig: "npm:^9.0.0"
     cosmiconfig-typescript-loader: "npm:^6.2.0"
@@ -2159,12 +2159,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clean-stack@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "clean-stack@npm:5.3.0"
+"clean-stack@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "clean-stack@npm:6.0.0"
   dependencies:
     escape-string-regexp: "npm:5.0.0"
-  checksum: 10c0/1aa8b6772eed1f678a9dcf6e02c74c59f26b6fdad26eaaca1dc6a367ff19c924315836b6143484c2686366758e05396f1ac0f32aaa70481b11d8e23790947ca0
+    url-extras: "npm:^0.1.0"
+  checksum: 10c0/b60364af130d03d5132938867b3026c751900db1f159fb163a4d389c98ec2f941a89077c50837267dd6843fbd506328ee004aaae6d2a0cb69de743f20eaff6ac
   languageName: node
   linkType: hard
 
@@ -5612,6 +5613,13 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
+  languageName: node
+  linkType: hard
+
+"url-extras@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "url-extras@npm:0.1.0"
+  checksum: 10c0/353ca8190921d793bedaf765b55f94c1d719d1fd696c9a5dafeaf1b4532c1de936649925a0d699aa9613555b8dac82078e51d0a65cb1e48b92817ed68a527b60
   languageName: node
   linkType: hard
 
