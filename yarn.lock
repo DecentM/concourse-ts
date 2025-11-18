@@ -2421,7 +2421,7 @@ __metadata:
     "@moonrepo/cli": "npm:^1.41.7"
     "@types/eslint": "npm:^9"
     "@types/eslint__js": "npm:^9.14.0"
-    "@typescript-eslint/eslint-plugin": "npm:8.46.4"
+    "@typescript-eslint/eslint-plugin": "npm:8.47.0"
     "@typescript-eslint/parser": "npm:8.46.4"
     eslint: "npm:^9.39.1"
     eslint-config-prettier: "npm:10.1.8"
