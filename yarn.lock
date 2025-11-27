@@ -2509,7 +2509,7 @@ __metadata:
     husky: "npm:^9.1.7"
     jsdom: "npm:~27.2.0"
     prettier: "npm:^3.6.2"
-    sort-package-json: "npm:^3.4.0"
+    sort-package-json: "npm:^3.5.0"
     tsx: "npm:^4.20.6"
     typedoc: "npm:^0.27.9"
     typedoc-github-wiki-theme: "npm:^2.1.0"
@@ -5267,27 +5267,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sort-object-keys@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "sort-object-keys@npm:1.1.3"
-  checksum: 10c0/3bf62398658d3ff4bbca0db4ed8f42f98abc41433859f63d02fb0ab953fbe5526be240ec7e5d85aa50fcab6c937f3fa7015abf1ecdeb3045a2281c53953886bf
+"sort-object-keys@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "sort-object-keys@npm:2.0.1"
+  checksum: 10c0/3bbe9d210a24ace65ede8abc4c57ea3280082f7c16fa88c9428eb3a39c85c2ab8a56767e61798bb9c74c272d50a3dbedc20df7065fdf0526c8746fa6b084c6c0
   languageName: node
   linkType: hard
 
-"sort-package-json@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "sort-package-json@npm:3.4.0"
+"sort-package-json@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "sort-package-json@npm:3.5.0"
   dependencies:
     detect-indent: "npm:^7.0.1"
     detect-newline: "npm:^4.0.1"
     git-hooks-list: "npm:^4.0.0"
     is-plain-obj: "npm:^4.1.0"
     semver: "npm:^7.7.1"
-    sort-object-keys: "npm:^1.1.3"
+    sort-object-keys: "npm:^2.0.0"
     tinyglobby: "npm:^0.2.12"
   bin:
     sort-package-json: cli.js
-  checksum: 10c0/1adb7860eee770fa51ac1c810c2fa2483ab47bf150d1fc2437ef28314ee928142a51245ba22aac8a8c662f431609fc633d404bcdd93acbf54d5a056253741218
+  checksum: 10c0/616520c9df6430df5768f1e47aa87876b3d1a98e5168810d341831afc284124c52eab08f97a1786a815c45e2dd0dd6d6797f09d770d8c1021c46005a60732055
   languageName: node
   linkType: hard
 
