@@ -2525,7 +2525,7 @@ __metadata:
     husky: "npm:^9.1.7"
     jsdom: "npm:~27.3.0"
     prettier: "npm:^3.7.4"
-    sort-package-json: "npm:^3.5.1"
+    sort-package-json: "npm:^3.6.0"
     tsx: "npm:^4.21.0"
     typedoc: "npm:^0.27.9"
     typedoc-github-wiki-theme: "npm:^2.1.0"
@@ -5312,9 +5312,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sort-package-json@npm:^3.5.1":
-  version: 3.5.1
-  resolution: "sort-package-json@npm:3.5.1"
+"sort-package-json@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "sort-package-json@npm:3.6.0"
   dependencies:
     detect-indent: "npm:^7.0.2"
     detect-newline: "npm:^4.0.1"
@@ -5325,7 +5325,7 @@ __metadata:
     tinyglobby: "npm:^0.2.15"
   bin:
     sort-package-json: cli.js
-  checksum: 10c0/8c15a571ed07e6d56069516395f36e5145a631f863a22a2ba4e0a8b13e535c7364d1b1ff8942fe5e58449ff2df44b99af92b1bce4b573435c3c17a4b21abdfe4
+  checksum: 10c0/977621b4541e6a107612524c8838a516425786b1d85fad9366416d3736989b1075d40511a28f0b3c47b9a0d7c1197f828af0cc3e350cdf793d1301d427178968
   languageName: node
   linkType: hard
 
