@@ -1799,6 +1799,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/parser@npm:8.51.0":
+  version: 8.51.0
+  resolution: "@typescript-eslint/parser@npm:8.51.0"
+  dependencies:
+    "@typescript-eslint/scope-manager": "npm:8.51.0"
+    "@typescript-eslint/types": "npm:8.51.0"
+    "@typescript-eslint/typescript-estree": "npm:8.51.0"
+    "@typescript-eslint/visitor-keys": "npm:8.51.0"
+    debug: "npm:^4.3.4"
+  peerDependencies:
+    eslint: ^8.57.0 || ^9.0.0
+    typescript: ">=4.8.4 <6.0.0"
+  checksum: 10c0/b6aab1d82cc98a77aaae7637bf2934980104799793b3fd5b893065d930fe9b23cd6c2059d6f73fb454ea08f9e956e84fa940310d8435092a14be645a42062d94
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/project-service@npm:8.50.1":
   version: 8.50.1
   resolution: "@typescript-eslint/project-service@npm:8.50.1"
@@ -2663,7 +2679,7 @@ __metadata:
     typedoc-plugin-coverage: "npm:^4.0.2"
     typedoc-plugin-markdown: "npm:^4.4.2"
     typescript: "npm:~5.9.3"
-    typescript-eslint: "npm:^8.50.1"
+    typescript-eslint: "npm:^8.51.0"
   languageName: unknown
   linkType: soft
 
@@ -6028,18 +6044,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-eslint@npm:^8.50.1":
-  version: 8.50.1
-  resolution: "typescript-eslint@npm:8.50.1"
+"typescript-eslint@npm:^8.51.0":
+  version: 8.51.0
+  resolution: "typescript-eslint@npm:8.51.0"
   dependencies:
-    "@typescript-eslint/eslint-plugin": "npm:8.50.1"
-    "@typescript-eslint/parser": "npm:8.50.1"
-    "@typescript-eslint/typescript-estree": "npm:8.50.1"
-    "@typescript-eslint/utils": "npm:8.50.1"
+    "@typescript-eslint/eslint-plugin": "npm:8.51.0"
+    "@typescript-eslint/parser": "npm:8.51.0"
+    "@typescript-eslint/typescript-estree": "npm:8.51.0"
+    "@typescript-eslint/utils": "npm:8.51.0"
   peerDependencies:
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
-  checksum: 10c0/481095a249c48fa1d3551c50ceb8dcfba22413d6175f586ee802200342478a24b566b49d59e618c835631e4071ba1902d8549dc6467f47adb3079d00394d614f
+  checksum: 10c0/ae26e783e7c2e1e2b20c278e5d743fc9aa0ea0ce3c3c06c53f7b0913617ec75d40cb8732fec85e95071e87a5a90fa0867e2c3a11d7b8fec986c55460cc652b47
   languageName: node
   linkType: hard
 
