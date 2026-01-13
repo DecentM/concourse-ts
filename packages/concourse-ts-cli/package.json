@@ -17,7 +17,7 @@
     }
   },
   "dependencies": {
-    "@types/node": "^25.0.6",
+    "@types/node": "^25.0.7",
     "clean-stack": "^6.0.0",
     "commander": "^14.0.2",
     "cosmiconfig": "^9.0.0",
