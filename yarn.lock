@@ -154,7 +154,7 @@ __metadata:
     "@decentm/concourse-ts-recipe-oci-build": "npm:0.1.1"
     "@decentm/concourse-ts-resource-npm": "npm:0.2.1"
     "@decentm/concourse-ts-resource-registry-image": "npm:0.3.0"
-    "@types/node": "npm:^25.0.7"
+    "@types/node": "npm:^25.0.8"
     "@types/tmp": "npm:^0.2.6"
     "@types/verror": "npm:^1.10.11"
     clean-stack: "npm:^6.0.0"
@@ -445,7 +445,7 @@ __metadata:
     "@eslint/eslintrc": "npm:^3.3.3"
     "@eslint/js": "npm:^9.39.2"
     "@types/lodash.clonedeep": "npm:^4.5.9"
-    "@types/node": "npm:^25.0.7"
+    "@types/node": "npm:^25.0.8"
     "@types/prettier": "npm:^3.0.0"
     "@types/verror": "npm:^1.10.11"
     ava: "npm:^6.4.1"
@@ -1690,12 +1690,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.0.7":
-  version: 25.0.7
-  resolution: "@types/node@npm:25.0.7"
+"@types/node@npm:^25.0.8":
+  version: 25.0.8
+  resolution: "@types/node@npm:25.0.8"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/a9feeb16a6487621ef96158e7a9759f89e3c1726189c7b19a9e6d3e0d581499c62e441e120e5a334e9eb01bc4d26644f27767fd5931d6d4f177d14f4f8e3f9ab
+  checksum: 10c0/2282464cd928ab184b2310b79899c76bfaa88c8d14640dfab2f9218fdee7e2d916056492de683aa3a26050c8f3bbcade0305616a55277a7c344926c0393149e0
   languageName: node
   linkType: hard
 
@@ -1787,22 +1787,6 @@ __metadata:
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
   checksum: 10c0/c28925423023853591696f20844c9365ad4353c8beb004fc5ccc1995903c42202070165a2c750f53abf43420ff8daa19d874010efc4ba925311ca2f320ce55fe
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/parser@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/parser@npm:8.52.0"
-  dependencies:
-    "@typescript-eslint/scope-manager": "npm:8.52.0"
-    "@typescript-eslint/types": "npm:8.52.0"
-    "@typescript-eslint/typescript-estree": "npm:8.52.0"
-    "@typescript-eslint/visitor-keys": "npm:8.52.0"
-    debug: "npm:^4.4.3"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0
-    typescript: ">=4.8.4 <6.0.0"
-  checksum: 10c0/a11304db8068850e04dfcaa2728b73940635f3857c7d0a24cda002d0ad2d9af4ffec44c30f52c91385b065decbf9f134a7337f54d00289160fbbff76fca7649b
   languageName: node
   linkType: hard
 
