@@ -234,7 +234,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@decentm/concourse-ts-recipe-npm-dependencies@workspace:packages/concourse-ts-recipe-npm-dependencies"
   dependencies:
-    type-fest: "npm:^5.3.1"
+    type-fest: "npm:^5.4.0"
   peerDependencies:
     "@decentm/concourse-ts": 0.x
     "@decentm/concourse-ts-resource-npm": 0.x
@@ -1787,22 +1787,6 @@ __metadata:
     eslint: ^8.57.0 || ^9.0.0
     typescript: ">=4.8.4 <6.0.0"
   checksum: 10c0/c28925423023853591696f20844c9365ad4353c8beb004fc5ccc1995903c42202070165a2c750f53abf43420ff8daa19d874010efc4ba925311ca2f320ce55fe
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/parser@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@typescript-eslint/parser@npm:8.52.0"
-  dependencies:
-    "@typescript-eslint/scope-manager": "npm:8.52.0"
-    "@typescript-eslint/types": "npm:8.52.0"
-    "@typescript-eslint/typescript-estree": "npm:8.52.0"
-    "@typescript-eslint/visitor-keys": "npm:8.52.0"
-    debug: "npm:^4.4.3"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0
-    typescript: ">=4.8.4 <6.0.0"
-  checksum: 10c0/a11304db8068850e04dfcaa2728b73940635f3857c7d0a24cda002d0ad2d9af4ffec44c30f52c91385b065decbf9f134a7337f54d00289160fbbff76fca7649b
   languageName: node
   linkType: hard
 
@@ -6008,12 +5992,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "type-fest@npm:5.3.1"
+"type-fest@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "type-fest@npm:5.4.0"
   dependencies:
     tagged-tag: "npm:^1.0.0"
-  checksum: 10c0/3282cf11f5e8708321c109b5a72967702cf4c3b928b4d77f5819600b23915dc6a6b8f16cde4182cfbad308973ed3eeea544825cafe9657634ac1f331dc940315
+  checksum: 10c0/be786ce335612aa621d686657f7531740767fefee704c8a9fa2871d2f6ae85b39963d29d655cf34474ba413ee1209e1cf94c2c37a8174728eca2289b5bd7e277
   languageName: node
   linkType: hard
 
