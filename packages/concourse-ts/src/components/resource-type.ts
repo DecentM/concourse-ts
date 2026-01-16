@@ -38,7 +38,7 @@ export class ResourceType<
    * Pipeline-provided resource types can override the core resource types by
    * specifying the same name.
    *
-   * https://concourse-ci.org/resource-types.html#schema.resource_type.name
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    */
   public name: string
 
@@ -57,7 +57,7 @@ export class ResourceType<
   /**
    * Creates a new resource preconfigured with this resource type.
    *
-   * https://concourse-ci.org/resources.html
+   * https://concourse-ci.org/docs/resources/
    *
    * @param {string} name
    * @param {Customiser<Resource<Source, PutParams, GetParams>>} customise
@@ -97,7 +97,7 @@ export class ResourceType<
    * the core type that it's overriding. This is useful for bringing in a newer
    * or forked `registry-image` resource.
    *
-   * https://concourse-ci.org/resource-types.html#schema.resource_type.type
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    *
    * @param {string | ResourceType} input
    */
@@ -119,7 +119,7 @@ export class ResourceType<
   private source?: Source
 
   /**
-   * https://concourse-ci.org/resource-types.html#schema.resource_type.source
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    */
   public set_source = (source: Source) => {
     this.source = source
@@ -132,7 +132,7 @@ export class ResourceType<
    * type. Acceptable interval options are defined by the time.ParseDuration
    * function.
    *
-   * https://concourse-ci.org/resource-types.html#schema.resource_type.check_every
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    *
    * @param {DurationInput | 'never'} input
    */
@@ -151,7 +151,7 @@ export class ResourceType<
    * type, and is a black box to Concourse; it is merged with (duplicate fields
    * are overwritten by) resource.source and passed to the resource at runtime.
    *
-   * https://concourse-ci.org/resource-types.html#schema.resource_type.defaults
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    *
    * @param {Declaration.Config} defaults
    */
@@ -170,7 +170,7 @@ export class ResourceType<
    * Arbitrary config to pass when running the get to fetch the resource type's
    * image.
    *
-   * https://concourse-ci.org/resource-types.html#schema.resource_type.params
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    *
    * @param {Declaration.Config} params
    */
@@ -201,7 +201,7 @@ export class ResourceType<
    * to the resource type to decide dynamically, so as to prevent privilege
    * escalation via third-party resource type exploits.
    *
-   * https://concourse-ci.org/resource-types.html#schema.resource_type.privileged
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    */
   public set_privileged = () => {
     this.privileged = true
@@ -212,7 +212,7 @@ export class ResourceType<
   /**
    * Adds one or more tags to this resource type.
    *
-   * https://concourse-ci.org/tags-step.html#schema.tags
+   * https://concourse-ci.org/docs/resource-types/#resource_type-schema
    *
    * @param {string[]} tags
    */

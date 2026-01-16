@@ -8,6 +8,13 @@ import { AnyStep } from '../../declarations/any-step.js'
 
 import { TaskStep } from './task.js'
 
+/**
+ * Base class for all Concourse step types. Provides common functionality
+ * such as timeouts, attempts, tags, and lifecycle hooks (on_success, on_failure,
+ * on_error, on_abort, ensure).
+ *
+ * https://concourse-ci.org/docs/steps/
+ */
 export abstract class Step<StepType extends Type.Step> {
   private static base_customiser: Customiser<Step<Type.Step>>
 
@@ -43,7 +50,7 @@ export abstract class Step<StepType extends Type.Step> {
   private across: Type.Across[]
 
   /**
-   * https://concourse-ci.org/across-step.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/across/#across-step-modifier
    *
    * @param {Across} across The modifier to add
    */
@@ -54,7 +61,7 @@ export abstract class Step<StepType extends Type.Step> {
   }
 
   /**
-   * https://concourse-ci.org/timeout-step.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/timeout/#timeout-step-modifier
    *
    * @param {DurationInput} timeout
    */
@@ -67,7 +74,7 @@ export abstract class Step<StepType extends Type.Step> {
   /**
    * Sets the number of attempts for this step.
    *
-   * https://concourse-ci.org/attempts-step.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/attempts/#attempts-step-modifier
    *
    * @param {number} attempts
    */
@@ -160,7 +167,7 @@ export abstract class Step<StepType extends Type.Step> {
   }
 
   /**
-   * https://concourse-ci.org/tags-step.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/tags/#tags-step-modifier
    *
    * @param {...string[]} tags
    */
@@ -175,7 +182,7 @@ export abstract class Step<StepType extends Type.Step> {
   /**
    * Adds a step to be run after this one succeeds.
    *
-   * https://concourse-ci.org/on-success-step.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/on-success/#on_success-step-hook
    *
    * @param {AnyStep} step
    */
@@ -190,7 +197,7 @@ export abstract class Step<StepType extends Type.Step> {
   /**
    * Adds a step to be run after this one fails.
    *
-   * https://concourse-ci.org/on-failure-hook.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/on-failure/#on_failure-step-hook
    *
    * @param {AnyStep} step
    */
@@ -205,7 +212,7 @@ export abstract class Step<StepType extends Type.Step> {
   /**
    * Adds a step to be run after this one errors.
    *
-   * https://concourse-ci.org/on-error-hook.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/on-error/#on_error-step-hook
    *
    * @param {AnyStep} step
    */
@@ -220,7 +227,7 @@ export abstract class Step<StepType extends Type.Step> {
   /**
    * Adds a step to be run after this one is aborted.
    *
-   * https://concourse-ci.org/on-abort-hook.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/on-abort/#on_abort-step-hook
    *
    * @param {AnyStep} step
    */
@@ -235,7 +242,7 @@ export abstract class Step<StepType extends Type.Step> {
   /**
    * Adds a step to always be run after this one.
    *
-   * https://concourse-ci.org/ensure-hook.html
+   * https://concourse-ci.org/docs/steps/modifier-and-hooks/ensure/#ensure-step-hook
    *
    * @param {AnyStep} step
    */
@@ -274,5 +281,11 @@ export abstract class Step<StepType extends Type.Step> {
     }
   }
 
+  /**
+   * Serialises this step into a valid Concourse configuration fixture.
+   * The returned value needs to be converted into YAML to be used in Concourse.
+   *
+   * @returns {StepType}
+   */
   public abstract serialise(): StepType
 }

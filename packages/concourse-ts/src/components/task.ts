@@ -10,7 +10,7 @@ import { Resource } from './resource.js'
 import { TaskStep } from './step/index.js'
 
 /**
- * https://concourse-ci.org/tasks.html
+ * https://concourse-ci.org/docs/tasks/
  */
 export class Task<
   Input extends Identifier = Identifier,
@@ -57,7 +57,7 @@ export class Task<
   }
 
   /**
-   * https://concourse-ci.org/tasks.html
+   * https://concourse-ci.org/docs/tasks/
    *
    * @param {string} name The name of the task. Only used for error messages,
    * task names are not included in the serialised output
@@ -82,7 +82,7 @@ export class Task<
    * Sets the image_resource of this task. If you pass a Resource, this function
    * will create an anonymous resource from it automatically.
    *
-   * https://concourse-ci.org/tasks.html#schema.task-config.image_resource
+   * https://concourse-ci.org/docs/tasks/#task-config-schema
    *
    * @param {Resource | Type.AnonymousResource<string>} input
    */
@@ -108,7 +108,7 @@ export class Task<
   private platform: Type.Platform
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.task-config.platform
+   * https://concourse-ci.org/docs/tasks/#task-config-schema
    */
   public set_platform = (platform: Type.Platform) => {
     this.platform = platform
@@ -117,7 +117,7 @@ export class Task<
   private run: Command
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.task-config.run
+   * https://concourse-ci.org/docs/tasks/#command-schema
    *
    * {@link Command}
    */
@@ -128,7 +128,7 @@ export class Task<
   private caches: Type.TaskCache[] = []
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.task-config.caches
+   * https://concourse-ci.org/docs/tasks/#task-config-schema
    *
    * @param {Type.TaskCache} input
    */
@@ -139,7 +139,7 @@ export class Task<
   private container_limits: Type.ContainerLimits
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.container_limits.cpu
+   * https://concourse-ci.org/docs/tasks/#container_limits-schema
    *
    * @param {number} input The amount of shares to allocate to this task
    */
@@ -150,7 +150,7 @@ export class Task<
   }
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.container_limits.memory
+   * https://concourse-ci.org/docs/tasks/#container_limits-schema
    *
    * @param {BytesInput} input
    */
@@ -161,7 +161,7 @@ export class Task<
   private inputs: Type.TaskInput<string>[]
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.task-config.inputs
+   * https://concourse-ci.org/docs/tasks/#input-schema
    *
    * @param {Type.TaskInput<string>} input
    */
@@ -174,7 +174,7 @@ export class Task<
   private outputs: Type.TaskOutput<string>[]
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.task-config.outputs
+   * https://concourse-ci.org/docs/tasks/#output-schema
    *
    * @param {Type.TaskOutput<string>} output
    */
@@ -197,7 +197,7 @@ export class Task<
    * //               ^ {a: '1', b: '2'}
    * ```
    *
-   * https://concourse-ci.org/tasks.html#schema.task-config.params
+   * https://concourse-ci.org/docs/tasks/#task-config-schema
    *
    * @param {Type.EnvVars} params
    */
@@ -213,7 +213,7 @@ export class Task<
   private rootfs_uri?: string
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.task-config.rootfs_uri
+   * https://concourse-ci.org/docs/tasks/#task-config-schema
    */
   public set_rootfs_uri = (rootfs_uri: string) => {
     this.rootfs_uri = rootfs_uri

@@ -1,5 +1,5 @@
 /**
- * https://concourse-ci.org/implementing-resource-types.html#resource-metadata
+ * https://concourse-ci.org/docs/resource-types/implementing/#metadata
  */
 export const BuildMetadata = {
   BuildId: '$BUILD_ID',
@@ -13,6 +13,6 @@ export const BuildMetadata = {
 } as const
 
 /**
- * https://concourse-ci.org/implementing-resource-types.html#resource-metadata
+ * https://concourse-ci.org/docs/resource-types/implementing/#metadata
  */
 export type BuildMetadata = (typeof BuildMetadata)[keyof typeof BuildMetadata]

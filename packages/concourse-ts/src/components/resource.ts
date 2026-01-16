@@ -22,6 +22,13 @@ type AsGetStepInput<GetParams> = {
   trigger?: boolean
 }
 
+/**
+ * A resource is an external entity that can be checked, fetched (get), and
+ * pushed (put). Resources are versioned and can trigger jobs when new versions
+ * are detected.
+ *
+ * https://concourse-ci.org/docs/resources/
+ */
 export class Resource<
   Source extends Type.Config = Type.Config,
   PutParams extends Type.Config = Type.Config,
@@ -31,12 +38,26 @@ export class Resource<
 > {
   private static customiser: Customiser<Resource>
 
+  /**
+   * Customises all Resources constructed after calling this function.
+   *
+   * {@link Type.Customiser}
+   *
+   * @param {Customiser<Resource>} init
+   */
   public static customise = (init: Customiser<Resource>) => {
     Resource.customiser = init
   }
 
   private static get_step_customiser: Customiser<GetStep, Resource>
 
+  /**
+   * Customises all GetSteps created from any Resource's as_get_step method.
+   *
+   * {@link Type.Customiser}
+   *
+   * @param init Customiser function receiving the GetStep and the Resource it was created from
+   */
   public static customise_get_step = <
     Source extends Type.Config = Type.Config,
     PutParams extends Type.Config = Type.Config,
@@ -52,6 +73,13 @@ export class Resource<
 
   private static put_step_customiser: Customiser<PutStep, Resource>
 
+  /**
+   * Customises all PutSteps created from any Resource's as_put_step method.
+   *
+   * {@link Type.Customiser}
+   *
+   * @param init Customiser function receiving the PutStep and the Resource it was created from
+   */
   public static customise_put_step = <
     Source extends Type.Config = Type.Config,
     PutParams extends Type.Config = Type.Config,
@@ -67,6 +95,14 @@ export class Resource<
 
   private get_step_customiser: Customiser<GetStep, Resource>
 
+  /**
+   * Customises GetSteps created from this specific Resource instance's
+   * as_get_step method.
+   *
+   * {@link Type.Customiser}
+   *
+   * @param init Customiser function receiving the GetStep and this Resource
+   */
   public customise_get_step = (
     init: Customiser<
       GetStep<Source, PutParams, GetParams>,
@@ -78,6 +114,14 @@ export class Resource<
 
   private put_step_customiser: Customiser<PutStep, Resource>
 
+  /**
+   * Customises PutSteps created from this specific Resource instance's
+   * as_put_step method.
+   *
+   * {@link Type.Customiser}
+   *
+   * @param init Customiser function receiving the PutStep and this Resource
+   */
   public customise_put_step = (
     init: Customiser<
       PutStep<Source, PutParams, GetParams>,
@@ -89,6 +133,14 @@ export class Resource<
 
   private name: string
 
+  /**
+   * Sets the name of the resource. The name is used to reference the resource
+   * in jobs and steps.
+   *
+   * https://concourse-ci.org/docs/resources/#resource-schema
+   *
+   * @param {string} name The resource name
+   */
   public set_name = (name: string) => {
     this.name = name
   }
@@ -130,7 +182,7 @@ export class Resource<
   private source?: Source
 
   /**
-   * https://concourse-ci.org/resources.html#schema.resource.source
+   * https://concourse-ci.org/docs/resources/#resource-schema
    */
   public set_source = (source: Source) => {
     this.source = source
@@ -138,6 +190,14 @@ export class Resource<
 
   private check_every?: Duration
 
+  /**
+   * Sets how frequently to check for new versions of the resource.
+   * Use 'never' to disable automatic checking.
+   *
+   * https://concourse-ci.org/docs/resources/#resource-schema
+   *
+   * @param {DurationInput | 'never'} input Duration between checks
+   */
   public set_check_every = (input: DurationInput | 'never') => {
     this.check_every = get_duration(input)
   }
@@ -145,7 +205,12 @@ export class Resource<
   private icon?: string
 
   /**
-   * https://pictogrammers.com/library/mdi/
+   * Sets the Material Design icon to display for this resource in the UI.
+   * See https://pictogrammers.com/library/mdi/ for available icons.
+   *
+   * https://concourse-ci.org/docs/resources/#resource-schema
+   *
+   * @param {string} icon The icon name (e.g., 'git', 'docker')
    */
   public set_icon = (icon: string) => {
     this.icon = icon
@@ -154,7 +219,7 @@ export class Resource<
   private old_name?: string
 
   /**
-   * https://concourse-ci.org/resources.html#schema.resource.old_name
+   * https://concourse-ci.org/docs/resources/#resource-schema
    */
   public set_old_name = (old_name: string) => {
     this.old_name = old_name
@@ -165,7 +230,7 @@ export class Resource<
   /**
    * Sets "public" to true - avoid calling to keep false
    *
-   * https://concourse-ci.org/resources.html#schema.resource.public
+   * https://concourse-ci.org/docs/resources/#resource-schema
    */
   public set_public = () => {
     this.public = true
@@ -173,6 +238,14 @@ export class Resource<
 
   private tags?: Type.Tags
 
+  /**
+   * Adds tags to specify which workers should run the resource's check,
+   * get, and put operations.
+   *
+   * https://concourse-ci.org/docs/resources/#resource-schema
+   *
+   * @param {...string[]} tags Worker tags
+   */
   public add_tags = (...tags: string[]) => {
     if (!this.tags) this.tags = []
 
@@ -181,16 +254,42 @@ export class Resource<
 
   private version?: Type.Version
 
+  /**
+   * Pins the resource to a specific version. When set, only this version
+   * will be used unless explicitly unpinned.
+   *
+   * https://concourse-ci.org/docs/resources/#resource-schema
+   *
+   * @param {Type.Version} version The version to pin to
+   */
   public set_version = (version: Type.Version) => {
     this.version = version
   }
 
   private webhook_token?: string
 
+  /**
+   * Sets a token for webhook-triggered checking. When set, external systems
+   * can notify Concourse of new versions via webhook.
+   *
+   * https://concourse-ci.org/docs/resources/#resource-schema
+   *
+   * @param {string} webhook_token The webhook token
+   */
   public set_webhook_token = (webhook_token: string) => {
     this.webhook_token = webhook_token
   }
 
+  /**
+   * Creates a PutStep for pushing to this resource. The step can be added
+   * to a job's plan.
+   *
+   * https://concourse-ci.org/docs/steps/put/
+   *
+   * @param {AsPutStepInput<PutParams>} input Optional params and inputs for the put
+   * @param {Customiser<PutStep>} customise Optional customiser for the created step
+   * @returns {PutStep} A configured PutStep for this resource
+   */
   public as_put_step = (
     input?: AsPutStepInput<PutParams>,
     customise?: Customiser<PutStep<Source, PutParams, GetParams>>
@@ -220,6 +319,16 @@ export class Resource<
     })
   }
 
+  /**
+   * Creates a GetStep for fetching this resource. The step can be added
+   * to a job's plan.
+   *
+   * https://concourse-ci.org/docs/steps/get/
+   *
+   * @param {AsGetStepInput<GetParams>} input Optional params, passed jobs, and trigger flag
+   * @param {Customiser<GetStep>} customise Optional customiser for the created step
+   * @returns {GetStep} A configured GetStep for this resource
+   */
   public as_get_step = (
     input?: AsGetStepInput<GetParams>,
     customise?: Customiser<GetStep<Source, PutParams, GetParams>>
@@ -253,6 +362,11 @@ export class Resource<
     })
   }
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {Type.Resource} The serialised resource configuration
+   */
   public serialise() {
     if (!this.type) {
       throw new VError('Cannot serialise resource without a resource type', {

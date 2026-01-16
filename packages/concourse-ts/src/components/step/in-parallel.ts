@@ -5,9 +5,22 @@ import { Step } from './base.js'
 import { Resource } from '../resource.js'
 import { AnyStep } from '../../declarations/index.js'
 
+/**
+ * Performs steps in parallel. This step is useful for running multiple
+ * independent operations concurrently to reduce overall build time.
+ *
+ * https://concourse-ci.org/docs/steps/in-parallel/
+ */
 export class InParallelStep extends Step<Type.InParallelStep> {
   private static customiser: Customiser<InParallelStep>
 
+  /**
+   * Customises all InParallelSteps constructed after calling this function.
+   *
+   * {@link Type.Customiser}
+   *
+   * @param {Customiser<InParallelStep>} init
+   */
   public static customise = (init: Customiser<InParallelStep>) => {
     InParallelStep.customiser = init
   }
@@ -29,6 +42,13 @@ export class InParallelStep extends Step<Type.InParallelStep> {
 
   private steps: AnyStep[] = []
 
+  /**
+   * Adds steps to be executed in parallel.
+   *
+   * https://concourse-ci.org/docs/steps/in-parallel/#in_parallel_config-schema
+   *
+   * @param {...AnyStep[]} steps The steps to execute in parallel
+   */
   public add_steps = (...steps: AnyStep[]) => {
     this.steps.push(...steps)
   }
@@ -36,9 +56,12 @@ export class InParallelStep extends Step<Type.InParallelStep> {
   private limit: number
 
   /**
-   * https://concourse-ci.org/in-parallel-step.html#schema.in_parallel_config.limit
+   * Sets the maximum number of steps to run at a time. By default all steps
+   * are run at once.
    *
-   * @param {number} limit
+   * https://concourse-ci.org/docs/steps/in-parallel/#in_parallel_config-schema
+   *
+   * @param {number} limit Maximum parallel steps
    */
   public set_limit(limit: number) {
     this.limit = limit
@@ -49,7 +72,7 @@ export class InParallelStep extends Step<Type.InParallelStep> {
   /**
    * Sets "fail_fast" to true - avoid calling to keep false
    *
-   * https://concourse-ci.org/in-parallel-step.html#fail_fast
+   * https://concourse-ci.org/docs/steps/in-parallel/#in_parallel_config-schema
    */
   public set_fail_fast() {
     this.fail_fast = true
@@ -81,6 +104,11 @@ export class InParallelStep extends Step<Type.InParallelStep> {
     return result
   }
 
+  /**
+   * @internal Used by the compiler
+   *
+   * @returns {Type.InParallelStep} The serialised in_parallel step configuration
+   */
   public serialise() {
     const result: Type.InParallelStep = {
       ...this.serialise_base(),

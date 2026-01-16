@@ -2,7 +2,7 @@ import { Customiser } from '../declarations/customiser.js'
 import * as Type from '../declarations/types.js'
 
 /**
- * https://concourse-ci.org/tasks.html#schema.command
+ * https://concourse-ci.org/docs/tasks/#command-schema
  */
 export class Command {
   private static customiser: Customiser<Command>
@@ -18,7 +18,7 @@ export class Command {
   }
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.command
+   * https://concourse-ci.org/docs/tasks/#command-schema
    *
    * @param {Type.Customiser} customise
    */
@@ -35,7 +35,7 @@ export class Command {
   private path?: Type.FilePath
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.command.path
+   * https://concourse-ci.org/docs/tasks/#command-schema
    */
   public set_path = (path: Type.FilePath) => {
     this.path = path
@@ -46,7 +46,7 @@ export class Command {
   /**
    * Adds arguments to this Command
    *
-   * https://concourse-ci.org/tasks.html#schema.command.args
+   * https://concourse-ci.org/docs/tasks/#command-schema
    *
    * @param {string[]} args
    */
@@ -57,7 +57,7 @@ export class Command {
   /**
    * Adds arguments before the existing arguments to this Command.
    *
-   * https://concourse-ci.org/tasks.html#schema.command.args
+   * https://concourse-ci.org/docs/tasks/#command-schema
    *
    * @param {string[]} args
    */
@@ -68,7 +68,7 @@ export class Command {
   private dir?: Type.DirPath
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.command.dir
+   * https://concourse-ci.org/docs/tasks/#command-schema
    */
   public set_dir = (dir: Type.DirPath) => {
     this.dir = dir
@@ -77,7 +77,7 @@ export class Command {
   private user?: string
 
   /**
-   * https://concourse-ci.org/tasks.html#schema.command.user
+   * https://concourse-ci.org/docs/tasks/#command-schema
    */
   public set_user = (user: string) => {
     this.user = user

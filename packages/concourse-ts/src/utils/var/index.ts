@@ -1,7 +1,7 @@
 /**
  * Branded type for vars
  *
- * https://concourse-ci.org/vars.html#var-syntax
+ * https://concourse-ci.org/docs/vars/#var-syntax
  *
  * {@link is_var}
  *
@@ -12,7 +12,7 @@ export type Var = string & {__type: 'Var'}
 /**
  * Returns if the input is a valid variable.
  *
- * https://concourse-ci.org/vars.html#var-syntax
+ * https://concourse-ci.org/docs/vars/#var-syntax
  *
  * Example:
  * ```typescript
@@ -43,7 +43,7 @@ export const is_var = (input: string): input is Var => {
  * Coerces the input into a Var. If the input is a valid Var, returns the input
  * as-is. Otherwise, wraps the input string in `(())` to make it a valid var.
  *
- * https://concourse-ci.org/vars.html#var-syntax
+ * https://concourse-ci.org/docs/vars/#var-syntax
  *
  * {@link is_identifier}
  *

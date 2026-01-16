@@ -7,7 +7,7 @@ import { DoStep, TaskStep } from './step/index.js'
 import { AnyStep } from '../declarations/index.js'
 
 /**
- * https://concourse-ci.org/jobs.html
+ * https://concourse-ci.org/docs/jobs/
  */
 export class Job {
   private static customiser: Customiser<Job>
@@ -26,7 +26,7 @@ export class Job {
   /**
    * Constructs a new Job
    *
-   * https://concourse-ci.org/jobs.html
+   * https://concourse-ci.org/docs/jobs/
    *
    * @param {string} name The name of the step. This will be visible in the Concourse UI.
    * @param {Customiser<Job>} init Optional customiser function that runs during construction.
@@ -71,7 +71,7 @@ export class Job {
   private build_log_retention?: Type.BuildLogRetentionPolicy
 
   /**
-   * https://concourse-ci.org/jobs.html#schema.job.build_log_retention
+   * https://concourse-ci.org/docs/jobs/#build_log_retention_policy-schema
    */
   public set_build_log_retention = (
     build_log_retention: Type.BuildLogRetentionPolicy
@@ -84,7 +84,7 @@ export class Job {
   /**
    * Sets "disable_manual_trigger" to true - avoid calling to keep false
    *
-   * https://concourse-ci.org/jobs.html#schema.job.disable_manual_trigger
+   * https://concourse-ci.org/docs/jobs/#job-schema
    */
   public set_disable_manual_trigger = () => {
     this.disable_manual_trigger = true
@@ -95,7 +95,7 @@ export class Job {
   /**
    * Sets "interruptible" to true - avoid calling to keep false
    *
-   * https://concourse-ci.org/jobs.html#interruptible
+   * https://concourse-ci.org/docs/jobs/#job-schema
    */
   public set_interruptible = () => {
     this.interruptible = true
@@ -104,7 +104,7 @@ export class Job {
   private max_in_flight?: number
 
   /**
-   * https://concourse-ci.org/jobs.html#schema.job.max_in_flight
+   * https://concourse-ci.org/docs/jobs/#job-schema
    */
   public set_max_in_flight = (max_in_flight: number) => {
     this.max_in_flight = max_in_flight
@@ -113,7 +113,7 @@ export class Job {
   private old_name?: string
 
   /**
-   * https://concourse-ci.org/jobs.html#schema.job.old_name
+   * https://concourse-ci.org/docs/jobs/#job-schema
    */
   public set_old_name = (old_name: string) => {
     this.old_name = old_name
@@ -126,7 +126,7 @@ export class Job {
    * step added to this Job will always be a DoStep, with the passed step added
    * onto it as the last Step.
    *
-   * https://concourse-ci.org/jobs.html#schema.job.on_success
+   * https://concourse-ci.org/docs/jobs/#job-schema
    *
    * @param {AnyStep} step The Step to execute when this job succeeds.
    * @returns {void}
@@ -152,7 +152,7 @@ export class Job {
    * The real step added to this Job will always be a DoStep, with the passed
    * step added onto it as the last Step.
    *
-   * https://concourse-ci.org/jobs.html#schema.job.on_failure
+   * https://concourse-ci.org/docs/jobs/#job-schema
    *
    * @param {AnyStep} step The Step to execute when this job fails.
    * @returns {void}
@@ -178,7 +178,7 @@ export class Job {
    * The real step added to this Job will always be a DoStep, with the passed
    * step added onto it as the last Step.
    *
-   * https://concourse-ci.org/jobs.html#schema.job.on_error
+   * https://concourse-ci.org/docs/jobs/#job-schema
    *
    * @param {AnyStep} step The Step to execute when this job errors.
    * @returns {void}
@@ -204,7 +204,7 @@ export class Job {
    * The real step added to this Job will always be a DoStep, with the passed
    * step added onto it as the last Step.
    *
-   * https://concourse-ci.org/jobs.html#schema.job.on_abort
+   * https://concourse-ci.org/docs/jobs/#job-schema
    *
    * @param {AnyStep} step The Step to execute when this job is aborted.
    * @returns {void}
@@ -229,7 +229,7 @@ export class Job {
    * The real step added to this Job will always be a DoStep, with the passed
    * step added onto it as the last Step.
    *
-   * https://concourse-ci.org/jobs.html#schema.job.ensure
+   * https://concourse-ci.org/docs/jobs/#job-schema
    *
    * @param {AnyStep} step The Step to execute when this job finishes.
    * @returns {void}
@@ -250,7 +250,7 @@ export class Job {
   /**
    * Sets "public" to true - avoid calling to keep false
    *
-   * https://concourse-ci.org/jobs.html#schema.job.public
+   * https://concourse-ci.org/docs/jobs/#job-schema
    */
   public set_public = () => {
     this.public = true
@@ -261,7 +261,7 @@ export class Job {
   /**
    * Sets "serial" to true - avoid calling to keep false
    *
-   * https://concourse-ci.org/jobs.html#schema.job.serial
+   * https://concourse-ci.org/docs/jobs/#job-schema
    */
   public set_serial = () => {
     this.serial = true
@@ -270,7 +270,7 @@ export class Job {
   private serial_groups?: string[]
 
   /**
-   * https://concourse-ci.org/jobs.html#schema.job.serial_groups
+   * https://concourse-ci.org/docs/jobs/#job-schema
    *
    * @param {string} serial_groups
    */
