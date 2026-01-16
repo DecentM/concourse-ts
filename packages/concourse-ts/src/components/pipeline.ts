@@ -62,7 +62,7 @@ export class Pipeline<Group extends string = string> {
    *
    * ----
    *
-   * https://concourse-ci.org/pipelines.html#schema.pipeline.jobs
+   * https://concourse-ci.org/docs/jobs/#job-schema
    *
    * @param {Job} job The job to add
    * @param {Group} group If specified, the job will be added to this group
@@ -104,7 +104,7 @@ export class Pipeline<Group extends string = string> {
    * Sets the given URL as the background image of the pipeline in Concourse's
    * UI. Has no effect on builds.
    *
-   * https://concourse-ci.org/pipelines.html#schema.display_config.background_image
+   * https://concourse-ci.org/docs/pipelines/#display_config-schema
    *
    * @param {string} url URL to the image file, must be an absolute, direct link
    * to a browser-compatible image file (redirects allowed).
@@ -119,7 +119,7 @@ export class Pipeline<Group extends string = string> {
    * Sets the given CSS filter to the background image of the pipeline in
    * Concourse's UI. Has no effect on builds.
    *
-   * https://concourse-ci.org/pipelines.html#schema.display_config.background_filter
+   * https://concourse-ci.org/docs/pipelines/#display_config-schema
    *
    * @param filter CSS filter to apply to the background image.
    */
@@ -135,9 +135,9 @@ export class Pipeline<Group extends string = string> {
 
   /**
    * Adds one or more [Var
-   * Sources](https://concourse-ci.org/vars.html#var-sources) to this pipeline.
+   * Sources](https://concourse-ci.org/docs/vars/#var-sources-experimental) to this pipeline.
    *
-   * https://concourse-ci.org/pipelines.html#schema.pipeline.var_sources
+   * https://concourse-ci.org/docs/pipelines/#pipeline-schema
    *
    * @param var_sources
    */

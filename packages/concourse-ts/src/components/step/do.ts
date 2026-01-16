@@ -8,7 +8,7 @@ import { TaskStep } from './task.js'
 import { Step } from './base.js'
 
 /**
- * https://concourse-ci.org/do-step.html
+ * https://concourse-ci.org/docs/steps/do/
  */
 export class DoStep extends Step<Type.DoStep> {
   private static customiser: Customiser<DoStep>

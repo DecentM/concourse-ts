@@ -4,7 +4,7 @@ import { validate_identifier } from '../../validation/identifier.js'
 import { type_of } from '../type-of/index.js'
 
 /**
- * https://concourse-ci.org/config-basics.html#schema.identifier
+ * https://concourse-ci.org/docs/config-basics/#identifier-schema
  *
  * {@link is_identifier}
  *
@@ -15,7 +15,7 @@ export type Identifier = string & { __type: 'Identifier' }
 /**
  * Returns if the input is a valid Identifier, using the compiler's validator.
  *
- * https://concourse-ci.org/config-basics.html#schema.identifier
+ * https://concourse-ci.org/docs/config-basics/#identifier-schema
  *
  * Example:
  * ```typescript
@@ -60,7 +60,7 @@ export const is_identifier = <IdentifierType extends Identifier = Identifier>(
  * Returns the input string if it's a valid identifier, converted to the
  * Identifier type. Throws if the passed input fails Identifier validation.
  *
- * https://concourse-ci.org/config-basics.html#schema.identifier
+ * https://concourse-ci.org/docs/config-basics/#identifier-schema
  *
  * {@link is_identifier}
  *

@@ -21,7 +21,7 @@ export type YamlValue =
 /**
  * JSON representation of {@link ResourceType:class}
  *
- * https://concourse-ci.org/resource-types.html
+ * https://concourse-ci.org/docs/resource-types/
  */
 export type ResourceType = {
   name: Identifier
@@ -37,7 +37,7 @@ export type ResourceType = {
 /**
  * JSON representation of {@link Resource:class}
  *
- * https://concourse-ci.org/resources.html
+ * https://concourse-ci.org/docs/resources/
  */
 export type Resource = {
   name: Identifier
@@ -59,7 +59,7 @@ export type Resource = {
  *
  * Used by {@link Task}
  *
- * https://concourse-ci.org/tasks.html#schema.task-config.image_resource
+ * https://concourse-ci.org/docs/tasks/#task-config-schema
  */
 export type AnonymousResource<AnonymousIdentifier extends string = Identifier> = {
   type: AnonymousIdentifier
@@ -73,7 +73,7 @@ export type AnonymousResource<AnonymousIdentifier extends string = Identifier> =
  *
  * Used by {@link Task}
  *
- * https://concourse-ci.org/tasks.html#schema.task-config.run
+ * https://concourse-ci.org/docs/tasks/#command-schema
  */
 export type Command = {
   path: FilePath
@@ -83,7 +83,7 @@ export type Command = {
 }
 
 /**
- * https://concourse-ci.org/tasks.html#schema.task-config.caches
+ * https://concourse-ci.org/docs/tasks/#task-config-schema
  *
  * Used by {@link Task}
  */
@@ -92,7 +92,7 @@ export type TaskCache = {
 }
 
 /**
- * https://concourse-ci.org/tasks.html#schema.task-config.container_limits
+ * https://concourse-ci.org/docs/tasks/#container_limits-schema
  *
  * Used by {@link Task}
  */
@@ -102,7 +102,7 @@ export type ContainerLimits = {
 }
 
 /**
- * https://concourse-ci.org/tasks.html#schema.task-config.platform
+ * https://concourse-ci.org/docs/tasks/#task-config-schema
  *
  * Used by {@link Task}
  */
@@ -111,7 +111,7 @@ export type Platform = 'linux' | 'darwin' | 'windows'
 /**
  * JSON representation of {@link Task:class}
  *
- * https://concourse-ci.org/tasks.html
+ * https://concourse-ci.org/docs/tasks/
  */
 export type Task<Input extends Identifier, Output extends Identifier> = {
   platform: Platform
@@ -126,7 +126,7 @@ export type Task<Input extends Identifier, Output extends Identifier> = {
 }
 
 /**
- * https://concourse-ci.org/across-step.html#schema.across
+ * https://concourse-ci.org/docs/steps/modifier-and-hooks/across/#across-step-modifier
  */
 export type Across<IdentifierType extends string = Identifier> = {
   var: IdentifierType
@@ -138,7 +138,7 @@ export type Across<IdentifierType extends string = Identifier> = {
 /**
  * Common members held by all steps.
  *
- * https://concourse-ci.org/steps.html
+ * https://concourse-ci.org/docs/steps/
  */
 export type StepBase = {
   timeout?: Duration
@@ -153,7 +153,7 @@ export type StepBase = {
 }
 
 /**
- * https://concourse-ci.org/get-step.html
+ * https://concourse-ci.org/docs/steps/get/
  */
 export type GetStep = {
   get: Identifier
@@ -165,12 +165,12 @@ export type GetStep = {
 } & StepBase
 
 /**
- * https://concourse-ci.org/put-step.html#schema.put.inputs
+ * https://concourse-ci.org/docs/steps/put/#put-step
  */
 export type Inputs = 'detect' | 'all' | Identifier[]
 
 /**
- * https://concourse-ci.org/put-step.html
+ * https://concourse-ci.org/docs/steps/put/
  */
 export type PutStep = {
   put: Identifier
@@ -182,7 +182,7 @@ export type PutStep = {
 } & StepBase
 
 /**
- * https://concourse-ci.org/tasks.html#schema.task-config.inputs
+ * https://concourse-ci.org/docs/tasks/#input-schema
  *
  * TransferType is for specifying input and output names to keep user codebase
  * type-safe.
@@ -194,7 +194,7 @@ export type TaskInput<TransferType extends string> = {
 }
 
 /**
- * https://concourse-ci.org/tasks.html#schema.task-config.outputs
+ * https://concourse-ci.org/docs/tasks/#output-schema
  */
 export type TaskOutput<TransferType extends string> = {
   name: TransferType
@@ -202,7 +202,7 @@ export type TaskOutput<TransferType extends string> = {
 }
 
 /**
- * https://concourse-ci.org/task-step.html
+ * https://concourse-ci.org/docs/steps/task/
  */
 export type TaskStep<
   Input extends Identifier = Identifier,
@@ -220,7 +220,7 @@ export type TaskStep<
 } & StepBase
 
 /**
- * https://concourse-ci.org/set-pipeline-step.html
+ * https://concourse-ci.org/docs/steps/set-pipeline/
  */
 export type SetPipelineStep = {
   set_pipeline: Identifier | 'self'
@@ -232,7 +232,7 @@ export type SetPipelineStep = {
 } & StepBase
 
 /**
- * https://concourse-ci.org/load-var-step.html#schema.load-var.format
+ * https://concourse-ci.org/docs/steps/load-var/#load_var-step
  */
 export type LoadVarStep = {
   load_var: Identifier
@@ -248,21 +248,21 @@ export type InParallelConfig = {
 }
 
 /**
- * https://concourse-ci.org/in-parallel-step.html
+ * https://concourse-ci.org/docs/steps/in-parallel/
  */
 export type InParallelStep = {
   in_parallel: Step[] | InParallelConfig
 } & StepBase
 
 /**
- * https://concourse-ci.org/do-step.html
+ * https://concourse-ci.org/docs/steps/do/
  */
 export type DoStep = {
   do: Step[]
 } & StepBase
 
 /**
- * https://concourse-ci.org/try-step.html
+ * https://concourse-ci.org/docs/steps/try/
  */
 export type TryStep = {
   try: Step
@@ -282,7 +282,7 @@ export type Step =
   | TryStep
 
 /**
- * https://concourse-ci.org/jobs.html#schema.job.build_log_retention
+ * https://concourse-ci.org/docs/jobs/#build_log_retention_policy-schema
  */
 export type BuildLogRetentionPolicy = {
   days?: number
@@ -291,7 +291,7 @@ export type BuildLogRetentionPolicy = {
 }
 
 /**
- * https://concourse-ci.org/jobs.html
+ * https://concourse-ci.org/docs/jobs/
  */
 export type Job = {
   name: Identifier
@@ -365,7 +365,7 @@ type VarSourceSecretsManager = VarSourceBase & {
 }
 
 /**
- * https://concourse-ci.org/vars.html#var-sources
+ * https://concourse-ci.org/docs/vars/#var-sources-experimental
  */
 export type VarSource =
   | VarSourceDummy
@@ -384,7 +384,7 @@ type DisplayConfig = {
 }
 
 /**
- * https://concourse-ci.org/pipelines.html
+ * https://concourse-ci.org/docs/pipelines/
  */
 export type Pipeline = {
   jobs: Job[]

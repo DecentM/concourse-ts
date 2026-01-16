@@ -25,7 +25,7 @@ export type VariableAttributeVisitor = {
  * This visitor visits every attribute in a Step, or a Pipeline that can have
  * variable interpolation.
  *
- * https://concourse-ci.org/vars.html#dynamic-vars
+ * https://concourse-ci.org/docs/vars/#dynamic-vars
  *
  * @param {Step | Pipeline} component The component to traverse
  * @param {StringVisitor} visitor
