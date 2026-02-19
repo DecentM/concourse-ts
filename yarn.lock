@@ -462,7 +462,7 @@ __metadata:
     cpy-cli: "npm:^7.0.0"
     csstree-validator: "npm:^4.0.1"
     lodash.clonedeep: "npm:^4.5.0"
-    pkgroll: "npm:^2.26.0"
+    pkgroll: "npm:^2.26.2"
     rimraf: "npm:^6.1.3"
     tmp-promise: "npm:^3.0.3"
     tsimp: "npm:^2.0.12"
@@ -1748,22 +1748,6 @@ __metadata:
     eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
     typescript: ">=4.8.4 <6.0.0"
   checksum: 10c0/26e56d14562b3d2d34b366859ec56668fdac909d6ea534451cdb4267846ff50dcccd0026a4eba71ca41f7c8bdef30ef1356620c1ff2363ad64bd8fad33a72b19
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/parser@npm:8.55.0":
-  version: 8.55.0
-  resolution: "@typescript-eslint/parser@npm:8.55.0"
-  dependencies:
-    "@typescript-eslint/scope-manager": "npm:8.55.0"
-    "@typescript-eslint/types": "npm:8.55.0"
-    "@typescript-eslint/typescript-estree": "npm:8.55.0"
-    "@typescript-eslint/visitor-keys": "npm:8.55.0"
-    debug: "npm:^4.4.3"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0
-    typescript: ">=4.8.4 <6.0.0"
-  checksum: 10c0/8b8f8caf64a43b98bff8e7bb99cd62d7c72daeee44e80e0a5f693dd376d9c898997e0b9fd5521604d1445bcb24552f54aed5cae022072f8c354a2baf2a452284
   languageName: node
   linkType: hard
 
@@ -4923,9 +4907,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pkgroll@npm:^2.26.0":
-  version: 2.26.0
-  resolution: "pkgroll@npm:2.26.0"
+"pkgroll@npm:^2.26.2":
+  version: 2.26.2
+  resolution: "pkgroll@npm:2.26.2"
   dependencies:
     "@rollup/plugin-alias": "npm:^6.0.0"
     "@rollup/plugin-commonjs": "npm:^29.0.0"
@@ -4946,7 +4930,7 @@ __metadata:
       optional: true
   bin:
     pkgroll: dist/cli.mjs
-  checksum: 10c0/759f3475cfd3da19d9bc92537f4ce616dbfb82c127acebba912a38946680d0d5e567159df9f48ce32801ebe69c28820ba1a43e4d13ab2b1269c56a75b621e6cb
+  checksum: 10c0/244e10f4d429cc431c7a8c45261962c0e968dac7cfb9a9edc898515bbdb7d299addf21e2ec8bf7d6a669080de34fcfcd4a647c3b9622338c7f13022e328f63b5
   languageName: node
   linkType: hard
 
