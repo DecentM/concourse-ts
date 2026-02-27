@@ -20,7 +20,7 @@
     "postci": "yarn concourse-ts transform"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/eslintrc": "^3.3.4",
     "@eslint/js": "^9.39.2",
     "@moonrepo/cli": "^1.41.7",
     "@types/eslint": "^9",
