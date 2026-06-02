@@ -19,7 +19,7 @@
   "dependencies": {
     "@types/node": "^25.3.1",
     "clean-stack": "^6.0.0",
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "cosmiconfig": "^9.0.0",
     "cosmiconfig-typescript-loader": "^6.2.0",
     "fast-glob": "^3.3.3",
